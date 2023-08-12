@@ -95,8 +95,26 @@ source $ZSH/oh-my-zsh.sh
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-#
-# Example aliases
+
+
+# The 'config' alias simplifies Git commands by using a custom
+# repository location and working directory. It's used to manage
+# configuration files and dotfiles centrally.
+
 alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+
+# Alias Explanation:
+#   - '--git-dir=$HOME/dotfiles/': Custom Git repository path.
+#   - '--work-tree=$HOME': Working directory set to home.
+
+# Example Usage:
+#   - 'config status': Check repo status.
+#   - 'config add file.txt': Stage changes.
+#   - 'config commit -m "Update"': Commit changes.
+#   - 'config push origin main': Push changes.
+
+# Useful for managing dotfiles across systems.
+
+# Other example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
