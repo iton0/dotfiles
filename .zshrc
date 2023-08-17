@@ -128,8 +128,11 @@ alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 
 # Useful for managing dotfiles across systems.
 
-# Using this alias, you can update package information and upgrade packages in one command.
-alias update='sudo apt-get update && sudo apt-get upgrade'
+# Using this alias, you can update package information 
+# and upgrade packages in one command.
+# Additional autoremoves any packages no longer in use.
+
+alias update='sudo apt-get update && sudo apt-get upgrade && sudo apt-get autoremove'
 
 # Other example aliases
 # alias zshconfig="mate ~/.zshrc"
