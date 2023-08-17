@@ -137,9 +137,9 @@ alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 # Using this alias, you can update package information 
 # and upgrade packages in one command.
 # Additional autoremoves any packages no longer in use.
-# Current package managers: apt and flatpak.
+# Current package managers: apt, npm, and flatpak.
 
-alias update='sudo apt-get update && sudo apt-get upgrade && sudo apt-get autoremove && flatpak update'
+alias update='sudo apt-get update && sudo apt-get upgrade && sudo apt-get autoremove && flatpak update && npm update -g'
 
 # Other example aliases
 # alias zshconfig="mate ~/.zshrc"
