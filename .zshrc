@@ -98,7 +98,7 @@ source /usr/share/doc/fzf/examples/completion.zsh
  if [[ -n $SSH_CONNECTION ]]; then
    export EDITOR='nvim'
  else
-   export EDITOR='nvim'
+   export EDITOR='vim'
  fi
 
 # Compilation flags
