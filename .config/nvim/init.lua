@@ -119,7 +119,7 @@ require('lazy').setup({
   },
 
   {
-    -- Theme inspired by Atom
+    -- Theme inspired by TokyoNight
     'folke/tokyonight.nvim',
     priority = 1000,
     config = function()
