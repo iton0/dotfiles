@@ -149,7 +149,9 @@ require('lazy').setup({
     opts = {
       char = '┊',
       show_trailing_blankline_indent = false,
+      show_first_indent_level = false,
       use_treesitter = true,
+      show_current_context = false
     },
   },
 
@@ -213,6 +215,7 @@ vim.o.hlsearch = false
 -- Make relative line numbers default
 vim.wo.number = true
 vim.wo.relativenumber = true
+
 -- Enable mouse mode
 vim.o.mouse = 'a'
 
