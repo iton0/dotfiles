@@ -149,6 +149,7 @@ require('lazy').setup({
     opts = {
       char = '┊',
       show_trailing_blankline_indent = false,
+      use_treesitter = true,
     },
   },
 
