@@ -195,7 +195,6 @@ require('lazy').setup({
   require 'kickstart.plugins.debug',
   require 'kickstart.plugins.autopairs',
 
-
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
   --    up-to-date with whatever is in the kickstart repo.
