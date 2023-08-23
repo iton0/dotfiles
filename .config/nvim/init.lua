@@ -222,8 +222,14 @@ vim.o.mouse = 'a'
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.o.clipboard = 'unnamedplus'
--- Enable break indent
-vim.o.breakindent = true
+
+-- Set wrap options
+vim.opt.wrap = true      -- Enable line wrapping
+vim.opt.linebreak = true -- Wrap lines at word boundaries
+
+-- Set wrap behavior
+vim.opt.breakindent = true -- Indent wrapped lines
+vim.opt.showbreak = " ↪ " -- Symbol to indicate wrapped lines
 
 -- Save undo history
 vim.o.undofile = true
