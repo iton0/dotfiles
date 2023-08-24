@@ -76,6 +76,9 @@ require('lazy').setup({
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
+
+      -- DAP plugin
+      { 'mfussenegger/nvim-dap', opts = { "python", "java", "cpp" } },
     },
   },
 
