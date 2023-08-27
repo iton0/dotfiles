@@ -57,6 +57,9 @@ require('lazy').setup({
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
 
+  --Simultaneous text selection
+  'mg979/vim-visual-multi',
+
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
