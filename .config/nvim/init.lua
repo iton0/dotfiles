@@ -130,6 +130,10 @@ require('lazy').setup({
     priority = 1000,
     config = function()
       vim.cmd.colorscheme 'tokyonight-storm'
+      -- Makes the current line number yellow
+      vim.cmd([[highlight CursorLineNr ctermfg=Yellow guifg=#FFFF00]])
+      -- Makes the surround line numbers light grey
+      vim.cmd([[highlight LineNr ctermfg=LightGray guifg=LightGray]])
     end,
   },
 
