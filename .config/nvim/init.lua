@@ -282,6 +282,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+-- Set up autocmds to save files
+-- when focus is lost and when switching buffers
+vim.api.nvim_exec([[
+  autocmd FocusLost * :wa
+  autocmd BufLeave * :wa
+]], false)
+
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
