@@ -283,9 +283,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Set up autocmds to save files
--- when focus is lost and when switching buffers
+-- when  switching buffers
 vim.api.nvim_exec([[
-  autocmd FocusLost * :wa
   autocmd BufLeave * :wa
 ]], false)
 
