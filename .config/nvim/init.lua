@@ -131,6 +131,12 @@ require('lazy').setup({
       vim.cmd([[highlight CursorLineNr ctermfg=Yellow guifg=#FFFF00]])
       -- Makes the surround line numbers light grey
       vim.cmd([[highlight LineNr ctermfg=LightGray guifg=LightGray]])
+      -- Within your 'tokyonight-storm' color scheme configuration
+      vim.cmd([[highlight CursorLine guibg=NONE ctermbg=NONE]])
+      -- Makes the Neovim transparent
+      vim.cmd([[highlight Normal guibg=NONE ctermbg=NONE]])
+      -- Make comment color lighter
+      vim.cmd([[highlight Comment guifg=#5D678E ctermbg=DarkGray]])
     end,
   },
 

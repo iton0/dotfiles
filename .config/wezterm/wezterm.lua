@@ -27,7 +27,7 @@ config.window_background_image = '/home/iton/.config/wezterm/background.gif'
 
 config.window_background_image_hsb = {
 	-- Darken the background image by reducing it to 1/3rd
-	brightness = 0.3,
+	brightness = 0.25,
 
 	-- You can adjust the hue by scaling its value.
 	-- a multiplier of 1.0 leaves the value unchanged.
