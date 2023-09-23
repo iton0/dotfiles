@@ -126,7 +126,7 @@ require('lazy').setup({
     'folke/tokyonight.nvim',
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'tokyonight-storm'
+      vim.cmd.colorscheme 'tokyonight-moon'
       -- Makes the current line number yellow
       vim.cmd([[highlight CursorLineNr ctermfg=Yellow guifg=#FFFF00]])
       -- Makes the surround line numbers light grey
@@ -135,8 +135,13 @@ require('lazy').setup({
       vim.cmd([[highlight CursorLine guibg=NONE ctermbg=NONE]])
       -- Makes the Neovim transparent
       vim.cmd([[highlight Normal guibg=NONE ctermbg=NONE]])
-      -- Make comment color lighter
-      vim.cmd([[highlight Comment guifg=#5D678E ctermbg=DarkGray]])
+      -- Set transparency for the entire diagnostic area
+      vim.cmd [[highlight LspDiagnosticsDefault guibg=NONE ctermbg=NONE]]
+      -- Set transparency for the entire diagnostic area, including empty space
+      vim.cmd [[highlight SignColumn guibg=NONE ctermbg=NONE]]
+      vim.cmd [[highlight NonText guibg=NONE ctermbg=NONE]]
+      vim.cmd [[highlight NormalNC guibg=NONE ctermbg=NONE]]
+      vim.cmd [[highlight VertSplit guibg=NONE ctermbg=NONE]]
     end,
   },
 
@@ -266,6 +271,9 @@ vim.o.completeopt = 'menuone,noselect'
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
+
+-- Set Python executable
+vim.g.python3_host_prog = '/usr/bin/python3'
 
 -- [[ Basic Keymaps ]]
 
