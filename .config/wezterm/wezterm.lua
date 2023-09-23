@@ -13,35 +13,37 @@ end
 -- This is where you actually apply your config choices
 
 -- Color and Appearance
-config.color_scheme = 'Tokyo Night Day (Gogh)'
+config.color_scheme = 'tokyonight_storm'
 
 config.anti_alias_custom_block_glyphs = true
-config.bold_brightens_ansi_colors = "BrightAndBold"
+config.custom_block_glyphs = false
+config.allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace"
+config.bold_brightens_ansi_colors = "BrightOnly"
 
 -- Window Setting
 config.initial_cols = 80
 config.initial_rows = 24
+config.adjust_window_size_when_changing_font_size = false
 
-
-config.window_background_image = '/home/iton/.config/wezterm/background.gif'
-
-config.window_background_image_hsb = {
-	-- Darken the background image by reducing it to 1/3rd
-	brightness = 0.25,
-
-	-- You can adjust the hue by scaling its value.
-	-- a multiplier of 1.0 leaves the value unchanged.
-	hue = 1.0,
-
-	-- You can adjust the saturation also.
-	saturation = 1.0,
+local dimmer = { brightness = 0.25 }
+config.background = {
+	{
+		source = {
+			File = { path = '/home/iton/.config/wezterm/background/background1.gif', speed = 2.0 },
+		},
+		hsb = dimmer,
+		height = "Contain",
+		width = "Contain",
+		horizontal_align = "Left",
+		vertical_align = "Top",
+		repeat_y = "Mirror",
+	},
 }
-
 config.window_padding = {
-	left = '0cell',
-	right = '0cell',
-	top = '0cell',
-	bottom = '0cell',
+	left = '0px',
+	right = '0px',
+	top = '0px',
+	bottom = '0px',
 }
 
 config.window_frame = {
@@ -62,6 +64,14 @@ config.hide_mouse_cursor_when_typing = true
 
 config.enable_wayland = false
 
+config.tiling_desktop_environments = {
+	'X11 GNOME Shell',
+}
+
+-- Mouse & Cursor
+config.alternate_buffer_wheel_scroll_speed = 3
+
+config.default_cursor_style = 'SteadyBlock'
 
 -- Font
 config.font =
@@ -70,6 +80,7 @@ config.font =
 config.font_size = 15
 config.cell_width = 1.0
 config.line_height = 1.0
+config.unicode_version = 8
 
 -- and finally, return the configuration to wezterm
 return config
