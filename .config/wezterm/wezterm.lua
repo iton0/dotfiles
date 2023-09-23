@@ -25,15 +25,15 @@ config.initial_cols = 80
 config.initial_rows = 24
 config.adjust_window_size_when_changing_font_size = false
 
-local dimmer = { brightness = 0.25 }
+local dimmer = { brightness = 0.3 }
 config.background = {
 	{
 		source = {
-			File = { path = '/home/iton/.config/wezterm/background/background1.gif', speed = 2.0 },
+			File = { path = '/home/iton/.config/wezterm/background/background1.gif' },
 		},
 		hsb = dimmer,
 		height = "Contain",
-		width = "Contain",
+		width = "Cover",
 		horizontal_align = "Left",
 		vertical_align = "Top",
 		repeat_y = "Mirror",
@@ -81,6 +81,8 @@ config.font_size = 15
 config.cell_width = 1.0
 config.line_height = 1.0
 config.unicode_version = 8
+config.font_shaper = "Harfbuzz"
+config.freetype_load_target = "Normal"
 
 -- and finally, return the configuration to wezterm
 return config
