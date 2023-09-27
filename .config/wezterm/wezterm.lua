@@ -7,7 +7,7 @@ local config = {}
 -- In newer versions of wezterm, use the config_builder which will
 -- help provide clearer error messages
 if wezterm.config_builder then
-	config = wezterm.config_builder()
+   config = wezterm.config_builder()
 end
 
 -- This is where you actually apply your config choices
@@ -27,36 +27,36 @@ config.adjust_window_size_when_changing_font_size = false
 
 local dimmer = { brightness = 0.3 }
 config.background = {
-	{
-		source = {
-			File = { path = '/home/iton/.config/wezterm/background/background1.gif' },
-		},
-		hsb = dimmer,
-		height = "Contain",
-		width = "Cover",
-		horizontal_align = "Left",
-		vertical_align = "Top",
-		repeat_y = "Mirror",
-	},
+   {
+      source = {
+         File = { path = '/home/iton/.config/wezterm/background/background1.gif' },
+      },
+      hsb = dimmer,
+      height = "Contain",
+      width = "Cover",
+      horizontal_align = "Left",
+      vertical_align = "Top",
+      repeat_y = "Mirror",
+   },
 }
 config.window_padding = {
-	left = '0px',
-	right = '0px',
-	top = '0px',
-	bottom = '0px',
+   left = '0px',
+   right = '0px',
+   top = '0px',
+   bottom = '0px',
 }
 
 config.window_frame = {
-	inactive_titlebar_bg = '#1a1b26',
-	active_titlebar_bg = '#1f2335',
-	inactive_titlebar_fg = '#6b7280',
-	active_titlebar_fg = '#ffffff',
-	inactive_titlebar_border_bottom = '#1f2335',
-	active_titlebar_border_bottom = '#1f2335',
-	button_fg = '#6b7280',
-	button_bg = '#1f2335',
-	button_hover_fg = '#ffffff',
-	button_hover_bg = '#292d47',
+   inactive_titlebar_bg = '#1a1b26',
+   active_titlebar_bg = '#1f2335',
+   inactive_titlebar_fg = '#6b7280',
+   active_titlebar_fg = '#ffffff',
+   inactive_titlebar_border_bottom = '#1f2335',
+   active_titlebar_border_bottom = '#1f2335',
+   button_fg = '#6b7280',
+   button_bg = '#1f2335',
+   button_hover_fg = '#ffffff',
+   button_hover_bg = '#292d47',
 }
 
 config.enable_tab_bar = false
@@ -65,7 +65,7 @@ config.hide_mouse_cursor_when_typing = true
 config.enable_wayland = false
 
 config.tiling_desktop_environments = {
-	'X11 GNOME Shell',
+   'X11 GNOME Shell',
 }
 
 -- Mouse & Cursor
