@@ -70,7 +70,7 @@ config.tiling_desktop_environments = {
 
 -- Mouse, Cursor, & Keyboard
 config.scrollback_lines = 5000
-config.alternate_buffer_wheel_scroll_speed = 4
+config.alternate_buffer_wheel_scroll_speed = 5
 
 config.default_cursor_style = 'SteadyBlock'
 
