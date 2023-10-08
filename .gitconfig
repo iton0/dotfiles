@@ -3,3 +3,5 @@
 	email = iton442@gmail.com
 [core]
 	editor = nvim
+[init]
+	defaultBranch = main
