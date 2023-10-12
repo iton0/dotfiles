@@ -201,6 +201,15 @@ require('lazy').setup({
     build = ':TSUpdate',
   },
 
+  -- improved location list navigation
+  {
+    "cbochs/portal.nvim",
+    -- Optional dependencies
+    dependencies = {
+      "cbochs/grapple.nvim",
+      "ThePrimeagen/harpoon"
+    },
+  },
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
@@ -309,6 +318,10 @@ require('telescope').setup {
     },
   },
 }
+
+-- Enable opening portals both forwards and backwards for portal.nvim
+vim.keymap.set("n", "<leader>o", "<cmd>Portal jumplist backward<cr>")
+vim.keymap.set("n", "<leader>i", "<cmd>Portal jumplist forward<cr>")
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
