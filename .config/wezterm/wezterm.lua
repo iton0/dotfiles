@@ -13,7 +13,7 @@ end
 -- This is where you actually apply your config choices
 
 -- Color and Appearance
-config.color_scheme = 'tokyonight_storm'
+config.color_scheme = 'Tokyo Night (Gogh)'
 
 config.anti_alias_custom_block_glyphs = true
 config.custom_block_glyphs = false
