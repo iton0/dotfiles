@@ -3,6 +3,8 @@
 	email = iton442@gmail.com
 [core]
 	editor = nvim
+	autocrlf = input
+	whitespace = space-before-tab
 [init]
 	defaultBranch = main
 [color]
