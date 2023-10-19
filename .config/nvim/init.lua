@@ -26,10 +26,11 @@ local function set_indentation(filetype, tabstop, shiftwidth)
     filetype .. ' setlocal tabstop=' .. tabstop .. ' shiftwidth=' .. shiftwidth .. ' expandtab')
 end
 
-set_indentation('javascript', 2, 2)
 set_indentation('cpp', 4, 4)
 set_indentation('java', 4, 4)
+set_indentation('php', 4, 4)
 set_indentation('python', 4, 4)
+set_indentation('javascript', 2, 2)
 set_indentation('html', 2, 2)
 set_indentation('css', 2, 2)
 set_indentation('lua', 2, 2)
