@@ -53,6 +53,13 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
 
+  checker = {
+    -- automatically check for plugin updates
+    enabled = true,     -- Set this to true to enable update checking
+    concurrency = 4,    -- You can configure the concurrency here
+    notify = true,      -- Receive notifications when updates are found
+    frequency = 604800, -- Check for updates every week
+  },
   -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
