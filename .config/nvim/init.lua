@@ -148,7 +148,7 @@ require('lazy').setup({
     -- See `:help lualine.txt`
     opts = {
       options = {
-        icons_enabled = true,
+        icons_enabled = false,
         theme = 'tokyonight',
         component_separators = '|',
         section_separators = '',
@@ -225,7 +225,6 @@ require('lazy').setup({
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
--- NOTE: You can change these options as you wish!
 
 -- Set highlight on search
 vim.o.hlsearch = false
@@ -238,7 +237,6 @@ vim.wo.relativenumber = true
 vim.o.mouse = 'a'
 
 -- Sync clipboard between OS and Neovim.
---  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.o.clipboard = 'unnamedplus'
 
@@ -345,7 +343,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'java', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc',
+  ensure_installed = { 'c', 'cpp', 'java', 'lua', 'python', 'rust', 'javascript', 'typescript', 'vimdoc',
     'vim' },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
