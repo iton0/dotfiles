@@ -121,24 +121,10 @@ require('lazy').setup({
   {
     -- Theme inspired by TokyoNight
     'folke/tokyonight.nvim',
+    lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'tokyonight-storm'
-      -- Makes the current line number yellow
-      vim.cmd([[highlight CursorLineNr ctermfg=Yellow guifg=#FFFF00]])
-      -- Makes the surround line numbers light grey
-      vim.cmd([[highlight LineNr ctermfg=LightGray guifg=LightGray]])
-      -- Within your 'tokyonight-storm' color scheme configuration
-      vim.cmd([[highlight CursorLine guibg=NONE ctermbg=NONE]])
-      -- Makes the Neovim transparent
-      vim.cmd([[highlight Normal guibg=NONE ctermbg=NONE]])
-      -- Set transparency for the entire diagnostic area
-      vim.cmd [[highlight LspDiagnosticsDefault guibg=NONE ctermbg=NONE]]
-      -- Set transparency for the entire diagnostic area, including empty space
-      vim.cmd [[highlight SignColumn guibg=NONE ctermbg=NONE]]
-      vim.cmd [[highlight NonText guibg=NONE ctermbg=NONE]]
-      vim.cmd [[highlight NormalNC guibg=NONE ctermbg=NONE]]
-      vim.cmd [[highlight VertSplit guibg=NONE ctermbg=NONE]]
+      vim.cmd [[colorscheme tokyonight-storm]]
     end,
   },
 
@@ -207,9 +193,6 @@ require('lazy').setup({
       "ThePrimeagen/harpoon"
     },
   },
-  -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
-  --       These are some example plugins that I've included in the kickstart repository.
-  --       Uncomment any of the lines below to enable them.
   require 'kickstart.plugins.autoformat',
   require 'kickstart.plugins.debug',
   require 'kickstart.plugins.autopairs',
@@ -225,6 +208,27 @@ require('lazy').setup({
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
+
+-- Makes the current line number yellow
+vim.cmd([[highlight CursorLineNr ctermfg=Yellow guifg=#FFFF00]])
+
+-- Makes the surround line numbers light grey
+vim.cmd([[highlight LineNr ctermfg=LightGray guifg=LightGray]])
+
+-- Within your 'tokyonight-storm' color scheme configuration
+vim.cmd([[highlight CursorLine guibg=NONE ctermbg=NONE]])
+
+-- Makes the Neovim transparent
+vim.cmd([[highlight Normal guibg=NONE ctermbg=NONE]])
+
+-- Set transparency for the entire diagnostic area
+vim.cmd [[highlight LspDiagnosticsDefault guibg=NONE ctermbg=NONE]]
+
+-- Set transparency for the entire diagnostic area, including empty space
+vim.cmd [[highlight SignColumn guibg=NONE ctermbg=NONE]]
+vim.cmd [[highlight NonText guibg=NONE ctermbg=NONE]]
+vim.cmd [[highlight NormalNC guibg=NONE ctermbg=NONE]]
+vim.cmd [[highlight VertSplit guibg=NONE ctermbg=NONE]]
 
 -- Set highlight on search
 vim.o.hlsearch = false
