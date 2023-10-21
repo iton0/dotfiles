@@ -201,7 +201,8 @@ require('lazy').setup({
     build = ':TSUpdate',
   },
 
-  -- improved location list navigation
+  -- Improved location list navigation
+  -- Labelled floating window showing a snippet of some buffer
   {
     "cbochs/portal.nvim",
     -- Optional dependencies
