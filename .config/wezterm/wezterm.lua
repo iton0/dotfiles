@@ -40,10 +40,10 @@ config.background = {
    },
 }
 config.window_padding = {
-   left = '0px',
-   right = '0px',
-   top = '0px',
-   bottom = '0px',
+   left = '1px',
+   right = '1px',
+   top = '1px',
+   bottom = '1px',
 }
 
 config.window_frame = {
@@ -57,10 +57,15 @@ config.window_frame = {
    button_bg = '#1f2335',
    button_hover_fg = '#ffffff',
    button_hover_bg = '#292d47',
+   border_left_color = 'black',
+   border_right_color = 'black',
+   border_bottom_color = 'black',
+   border_top_color = 'black',
 }
 
 config.enable_tab_bar = false
 config.hide_mouse_cursor_when_typing = true
+config.warn_about_missing_glyphs = false
 
 config.enable_wayland = false
 
