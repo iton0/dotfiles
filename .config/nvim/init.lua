@@ -41,7 +41,6 @@ set_indentation('lua', 2, 2)
 --  You can also configure plugins after the setup call,
 --    as they will be available in your neovim runtime.
 require('lazy').setup({
-  -- NOTE: First, some plugins that don't require any configuration
 
   checker = {
     -- automatically check for plugin updates
@@ -59,6 +58,9 @@ require('lazy').setup({
 
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
+
+  -- Adds web devicons
+  'nvim-tree/nvim-web-devicons',
 
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
@@ -101,7 +103,7 @@ require('lazy').setup({
     event = 'VeryLazy',
     init = function()
       vim.o.timeout = true
-      vim.o.timeout = 500
+      vim.o.timeout = 3000
     end,
     opts = {}
   },
@@ -150,7 +152,7 @@ require('lazy').setup({
     lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd [[colorscheme tokyonight-night]]
+      vim.cmd.colorscheme 'tokyonight-storm'
     end,
   },
 
@@ -158,11 +160,15 @@ require('lazy').setup({
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     -- See `:help lualine.txt`
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+      opts = true,
+    },
     opts = {
       options = {
-        icons_enabled = false,
+        icons_enabled = true,
         theme = 'auto',
-        component_separators = '|',
+        component_separators = { left = '\\ ', right = ' //' },
         section_separators = '',
       },
     },
@@ -204,11 +210,11 @@ require('lazy').setup({
   -- Improved location list navigation
   -- Labelled floating window showing a snippet of some buffer
   {
-    "cbochs/portal.nvim",
+    'cbochs/portal.nvim',
     -- Optional dependencies
     dependencies = {
-      "cbochs/grapple.nvim",
-      "ThePrimeagen/harpoon"
+      'cbochs/grapple.nvim',
+      'ThePrimeagen/harpoon'
     },
   },
   require 'kickstart.plugins.autoformat',
