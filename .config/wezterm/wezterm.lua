@@ -25,14 +25,14 @@ config.initial_cols = 80
 config.initial_rows = 24
 config.adjust_window_size_when_changing_font_size = false
 
-local dimmer = { brightness = 0.35 }
+local dimmer = { brightness = 0.5 }
 config.background = {
    {
       source = {
-         File = { path = '/home/iton/.config/wezterm/background/background0.gif' },
+         File = { path = '/home/iton/.config/wezterm/background/background2.gif' },
       },
       hsb = dimmer,
-      height = "Contain",
+      height = "Cover",
       width = "Cover",
       horizontal_align = "Left",
       vertical_align = "Top",
