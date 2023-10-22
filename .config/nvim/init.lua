@@ -162,7 +162,6 @@ require('lazy').setup({
     -- See `:help lualine.txt`
     dependencies = {
       'nvim-tree/nvim-web-devicons',
-      opts = true,
     },
     opts = {
       options = {
@@ -171,6 +170,13 @@ require('lazy').setup({
         component_separators = { left = '||', right = '||' },
         section_separators = '',
       },
+      sections = {
+        lualine_x = {
+          'filetype',
+          'fileformat',
+          'encoding',
+        }
+      }
     },
   },
 
