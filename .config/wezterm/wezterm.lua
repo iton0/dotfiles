@@ -15,6 +15,11 @@ end
 -- Color and Appearance
 config.color_scheme = 'Tokyo Night (Gogh)'
 
+config.colors = {
+   cursor_bg = "#FFD700",
+   cursor_fg = 'black',
+}
+
 config.anti_alias_custom_block_glyphs = true
 config.custom_block_glyphs = false
 config.allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace"
