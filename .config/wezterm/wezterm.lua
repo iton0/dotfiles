@@ -21,7 +21,7 @@ config.colors = {
 }
 
 config.anti_alias_custom_block_glyphs = true
-config.custom_block_glyphs = false
+config.custom_block_glyphs = true
 config.allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace"
 config.bold_brightens_ansi_colors = "BrightOnly"
 
