@@ -31,8 +31,8 @@ return {
         },
       },
       lualine_x = {
-        'fileformat',
         'encoding',
+        'fileformat',
       }
     }
   },

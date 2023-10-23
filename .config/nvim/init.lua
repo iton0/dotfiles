@@ -103,7 +103,7 @@ require('lazy').setup({
     event = 'VeryLazy',
     init = function()
       vim.o.timeout = true
-      vim.o.timeout = 3000
+      vim.o.timeout = 5000
     end,
     opts = {}
   },
@@ -164,7 +164,7 @@ require('lazy').setup({
 -- See `:help vim.o`
 
 -- Adjust Neovim visual elements
-vim.cmd([[highlight CursorLineNr ctermfg=Yellow guifg=#FFFF00]])
+vim.cmd([[highlight CursorLineNr ctermfg=Yellow guifg=#FFD700]])
 vim.cmd([[highlight LineNr ctermfg=LightGray guifg=LightGray]])
 vim.cmd([[highlight CursorLine guibg=NONE ctermbg=NONE]])
 vim.cmd([[highlight Normal guibg=NONE ctermbg=NONE]])
