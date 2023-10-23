@@ -107,78 +107,6 @@ require('lazy').setup({
     end,
     opts = {}
   },
-  {
-    -- Adds git related signs to the gutter, as well as utilities for managing changes
-    'lewis6991/gitsigns.nvim',
-    opts = {
-      -- See `:help gitsigns.txt`
-      signs = {
-        add = { text = ' +' },
-        change = { text = ' |' },
-        delete = { text = ' _' },
-        topdelete = { text = ' ‾' },
-        changedelete = { text = ' ~' },
-      },
-      on_attach = function(bufnr)
-        vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'Preview git hunk' })
-
-        -- don't override the built-in and fugitive keymaps
-        local gs = package.loaded.gitsigns
-        vim.keymap.set({ 'n', 'v' }, ']c', function()
-          if vim.wo.diff then
-            return ']c'
-          end
-          vim.schedule(function()
-            gs.next_hunk()
-          end)
-          return '<Ignore>'
-        end, { expr = true, buffer = bufnr, desc = 'Jump to next hunk' })
-        vim.keymap.set({ 'n', 'v' }, '[c', function()
-          if vim.wo.diff then
-            return '[c'
-          end
-          vim.schedule(function()
-            gs.prev_hunk()
-          end)
-          return '<Ignore>'
-        end, { expr = true, buffer = bufnr, desc = 'Jump to previous hunk' })
-      end,
-    },
-  },
-
-  {
-    -- Theme inspired by TokyoNight
-    'folke/tokyonight.nvim',
-    lazy = false,
-    priority = 1000,
-    config = function()
-      vim.cmd.colorscheme 'tokyonight-storm'
-    end,
-  },
-
-  {
-    -- Set lualine as statusline
-    'nvim-lualine/lualine.nvim',
-    -- See `:help lualine.txt`
-    dependencies = {
-      'nvim-tree/nvim-web-devicons',
-    },
-    opts = {
-      options = {
-        icons_enabled = true,
-        theme = 'auto',
-        component_separators = { left = '||', right = '||' },
-        section_separators = '',
-      },
-      sections = {
-        lualine_x = {
-          'filetype',
-          'fileformat',
-          'encoding',
-        }
-      }
-    },
-  },
 
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {}, lazy = false, },
@@ -213,19 +141,15 @@ require('lazy').setup({
     build = ':TSUpdate',
   },
 
-  -- Improved location list navigation
-  -- Labelled floating window showing a snippet of some buffer
   {
-    'cbochs/portal.nvim',
-    -- Optional dependencies
-    dependencies = {
-      'cbochs/grapple.nvim',
-      'ThePrimeagen/harpoon'
-    },
   },
   require 'kickstart.plugins.autoformat',
   require 'kickstart.plugins.debug',
   require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.theme',
+  require 'kickstart.plugins.portal',
+  require 'kickstart.plugins.lualine',
+  require 'kickstart.plugins.gitsigns',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
