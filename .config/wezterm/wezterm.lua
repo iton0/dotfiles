@@ -18,6 +18,7 @@ config.color_scheme = 'Tokyo Night (Gogh)'
 config.colors = {
    cursor_bg = "#FFD700",
    cursor_fg = 'black',
+   cursor_border = '#FFD700',
 }
 
 config.anti_alias_custom_block_glyphs = true
