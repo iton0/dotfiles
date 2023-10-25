@@ -20,21 +20,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Add your autocmd events here for adjusting indentation settings
-local function set_indentation(filetype, tabstop, shiftwidth)
-  vim.api.nvim_command('autocmd FileType ' ..
-    filetype .. ' setlocal tabstop=' .. tabstop .. ' shiftwidth=' .. shiftwidth .. ' expandtab')
-end
-
-set_indentation('cpp', 4, 4)
-set_indentation('java', 4, 4)
-set_indentation('php', 4, 4)
-set_indentation('python', 4, 4)
-set_indentation('javascript', 2, 2)
-set_indentation('html', 2, 2)
-set_indentation('css', 2, 2)
-set_indentation('lua', 2, 2)
-
 -- NOTE: Here is where you install your plugins.
 --  You can configure plugins using the `config` key.
 --
@@ -143,13 +128,13 @@ require('lazy').setup({
 
   {
   },
-  require 'kickstart.plugins.autoformat',
-  require 'kickstart.plugins.debug',
-  require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.theme',
-  require 'kickstart.plugins.portal',
   require 'kickstart.plugins.lualine',
   require 'kickstart.plugins.gitsigns',
+  require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.autoformat',
+  require 'kickstart.plugins.portal',
+  require 'kickstart.plugins.debug',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
@@ -211,7 +196,7 @@ vim.wo.signcolumn = 'yes'
 
 -- Decrease update time
 vim.o.updatetime = 250
-vim.o.timeoutlen = 300
+vim.o.timeoutlen = 500
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -287,8 +272,8 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 vim.defer_fn(function()
   require('nvim-treesitter.configs').setup {
     -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed = { 'c', 'cpp', 'java', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim',
-      'bash' },
+    ensure_installed = { 'html', 'cpp', 'java', 'lua', 'python', 'javascript', 'typescript',
+      'vimdoc', 'vim', },
 
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
     auto_install = false,
