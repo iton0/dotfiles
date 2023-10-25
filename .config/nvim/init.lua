@@ -30,7 +30,6 @@ require('lazy').setup({
   checker = {
     -- automatically check for plugin updates
     enabled = true,     -- Set this to true to enable update checking
-    event = "VeryLazy",
     concurrency = 4,    -- You can configure the concurrency here
     notify = true,      -- Receive notifications when updates are found
     frequency = 604800, -- Check for updates every week
@@ -136,7 +135,6 @@ require('lazy').setup({
   require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.autoformat',
   require 'kickstart.plugins.portal',
-  require 'kickstart.plugins.debug',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping

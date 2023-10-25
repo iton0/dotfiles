@@ -5,7 +5,6 @@
 
 return {
   'neovim/nvim-lspconfig',
-  lazy = true,
   config = function()
     -- Switch for controlling whether you want autoformatting.
     --  Use :KickstartFormatToggle to toggle autoformatting on or off
