@@ -30,6 +30,7 @@ require('lazy').setup({
   checker = {
     -- automatically check for plugin updates
     enabled = true,     -- Set this to true to enable update checking
+    event = "VeryLazy",
     concurrency = 4,    -- You can configure the concurrency here
     notify = true,      -- Receive notifications when updates are found
     frequency = 604800, -- Check for updates every week
@@ -39,19 +40,19 @@ require('lazy').setup({
   'tpope/vim-rhubarb',
 
   --Simultaneous text selection
-  'mg979/vim-visual-multi',
+  { 'mg979/vim-visual-multi',      event = "VeryLazy", },
 
   -- Detect tabstop and shiftwidth automatically
-  'tpope/vim-sleuth',
+  { 'tpope/vim-sleuth', },
 
   -- Adds web devicons
-  'nvim-tree/nvim-web-devicons',
-
+  { 'nvim-tree/nvim-web-devicons', lazy = true },
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
   {
     -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
+    lazy = true,
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
       { 'williamboman/mason.nvim', config = true },
@@ -69,16 +70,17 @@ require('lazy').setup({
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
+    lazy = true,
     dependencies = {
       -- Snippet Engine & its associated nvim-cmp source
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
+      { 'L3MON4D3/LuaSnip',             lazy = true, },
+      { 'saadparwaiz1/cmp_luasnip',     lazy = true, },
 
       -- Adds LSP completion capabilities
-      'hrsh7th/cmp-nvim-lsp',
+      { 'hrsh7th/cmp-nvim-lsp',         lazy = true },
 
       -- Adds a number of user-friendly snippets
-      'rafamadriz/friendly-snippets',
+      { 'rafamadriz/friendly-snippets', lazy = true, },
     },
   },
 
@@ -94,7 +96,7 @@ require('lazy').setup({
   },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {}, lazy = false, },
+  { 'numToStr/Comment.nvim', opts = {}, },
 
   -- Fuzzy Finder (files, lsp, etc)
   {
