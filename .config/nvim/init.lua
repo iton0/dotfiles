@@ -39,19 +39,18 @@ require('lazy').setup({
   'tpope/vim-rhubarb',
 
   --Simultaneous text selection
-  { 'mg979/vim-visual-multi',      event = "VeryLazy", },
+  { 'mg979/vim-visual-multi', event = "VeryLazy", },
 
   -- Detect tabstop and shiftwidth automatically
   { 'tpope/vim-sleuth', },
 
   -- Adds web devicons
-  { 'nvim-tree/nvim-web-devicons', lazy = true },
+  'nvim-tree/nvim-web-devicons',
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
   {
     -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
-    lazy = true,
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
       { 'williamboman/mason.nvim', config = true },
@@ -69,17 +68,16 @@ require('lazy').setup({
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
-    lazy = true,
     dependencies = {
       -- Snippet Engine & its associated nvim-cmp source
-      { 'L3MON4D3/LuaSnip',             lazy = true, },
-      { 'saadparwaiz1/cmp_luasnip',     lazy = true, },
+      'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip',
 
       -- Adds LSP completion capabilities
-      { 'hrsh7th/cmp-nvim-lsp',         lazy = true },
+      'hrsh7th/cmp-nvim-lsp',
 
       -- Adds a number of user-friendly snippets
-      { 'rafamadriz/friendly-snippets', lazy = true, },
+      'rafamadriz/friendly-snippets',
     },
   },
 
@@ -89,7 +87,7 @@ require('lazy').setup({
     event = 'VeryLazy',
     init = function()
       vim.o.timeout = true
-      vim.o.timeout = 5000
+      vim.o.timeout = 300
     end,
     opts = {}
   },
@@ -132,8 +130,8 @@ require('lazy').setup({
   require 'kickstart.plugins.theme',
   require 'kickstart.plugins.lualine',
   require 'kickstart.plugins.gitsigns',
-  require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.autoformat',
+  require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.portal',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
