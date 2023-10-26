@@ -39,13 +39,13 @@ require('lazy').setup({
   'tpope/vim-rhubarb',
 
   --Simultaneous text selection
-  { 'mg979/vim-visual-multi', event = "VeryLazy", },
+  { 'mg979/vim-visual-multi',      event = "VeryLazy", },
 
   -- Detect tabstop and shiftwidth automatically
-  { 'tpope/vim-sleuth', },
+  'tpope/vim-sleuth',
 
   -- Adds web devicons
-  'nvim-tree/nvim-web-devicons',
+  { 'nvim-tree/nvim-web-devicons', lazy = true, },
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
   {
@@ -53,21 +53,30 @@ require('lazy').setup({
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
-      { 'williamboman/mason.nvim', config = true },
+      {
+        'williamboman/mason.nvim',
+        config = true
+      },
       'williamboman/mason-lspconfig.nvim',
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim',       tag = 'legacy', event = 'LspAttach', opts = {} },
+      {
+        'j-hui/fidget.nvim',
+        tag = 'legacy',
+        event = 'LspAttach',
+        opts = {}
+      },
 
       -- Additional lua configuration, makes nvim stuff amazing!
-      'folke/neodev.nvim',
+      { 'folke/neodev.nvim', ft = "lua" },
     },
   },
 
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
+    event = "InsertEnter",
     dependencies = {
       -- Snippet Engine & its associated nvim-cmp source
       'L3MON4D3/LuaSnip',
@@ -84,7 +93,7 @@ require('lazy').setup({
   -- Useful plugin to show you pending keybinds.
   {
     'folke/which-key.nvim',
-    event = 'VeryLazy',
+    lazy = true,
     init = function()
       vim.o.timeout = true
       vim.o.timeout = 300
@@ -93,12 +102,17 @@ require('lazy').setup({
   },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {}, },
+  {
+    'numToStr/Comment.nvim',
+    event = "VeryLazy",
+    opts = {},
+  },
 
   -- Fuzzy Finder (files, lsp, etc)
   {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
+    event = "VeryLazy",
     dependencies = {
       'nvim-lua/plenary.nvim',
       -- Fuzzy Finder Algorithm which requires local dependencies to be built.
