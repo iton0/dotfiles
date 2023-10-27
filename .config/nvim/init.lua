@@ -93,7 +93,7 @@ require('lazy').setup({
   -- Useful plugin to show you pending keybinds.
   {
     'folke/which-key.nvim',
-    lazy = true,
+    event = "VeryLazy",
     init = function()
       vim.o.timeout = true
       vim.o.timeout = 300
