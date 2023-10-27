@@ -143,7 +143,7 @@ alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 # Additional autoremoves any packages no longer in use.
 # Current package managers: apt, npm, and flatpak.
 
-alias update='sudo apt-get update && sudo apt-get upgrade && sudo apt-get autoremove && sudo apt-get autoclean && sudo apt-get clean && sudo snap refresh && flatpak update && luarocks update && npm update -g'
+alias update='sudo apt-fast update && sudo apt-fast upgrade && sudo apt-fast autoremove && sudo apt-fast autoclean && sudo apt-fast clean && sudo snap refresh && flatpak update && luarocks update && npm update -g'
 
 # Other example aliases
 # alias zshconfig="mate ~/.zshrc"
