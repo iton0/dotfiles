@@ -146,6 +146,7 @@ require('lazy').setup({
   require 'kickstart.plugins.gitsigns',
   require 'kickstart.plugins.autoformat',
   require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.coderunner',
   require 'kickstart.plugins.portal',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
@@ -252,6 +253,9 @@ require('telescope').setup {
     },
   },
 }
+
+-- Code Runner keymaps
+vim.keymap.set('n', '<leader>x', ':RunCode<CR>', { noremap = true, silent = false })
 
 -- Enable opening portals both forwards and backwards for portal.nvim
 vim.keymap.set("n", "<leader>o", "<cmd>Portal jumplist backward<cr>")
