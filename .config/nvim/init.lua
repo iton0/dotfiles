@@ -20,143 +20,27 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- NOTE: Here is where you install your plugins.
---  You can configure plugins using the `config` key.
---
---  You can also configure plugins after the setup call,
---    as they will be available in your neovim runtime.
+-- [[ Plugins ]]
 require('lazy').setup({
 
-  checker = {
-    -- automatically check for plugin updates
-    enabled = true,     -- Set this to true to enable update checking
-    concurrency = 4,    -- You can configure the concurrency here
-    notify = true,      -- Receive notifications when updates are found
-    frequency = 604800, -- Check for updates every week
-  },
-  -- Git related plugins
-  'tpope/vim-fugitive',
-  'tpope/vim-rhubarb',
-
-  --Simultaneous text selection
-  { 'mg979/vim-visual-multi',      event = "VeryLazy", },
-
-  -- Detect tabstop and shiftwidth automatically
-  'tpope/vim-sleuth',
-
-  -- Adds web devicons
-  { 'nvim-tree/nvim-web-devicons', lazy = true, },
-  -- NOTE: This is where your plugins related to LSP can be installed.
-  --  The configuration is done below. Search for lspconfig to find it below.
-  {
-    -- LSP Configuration & Plugins
-    'neovim/nvim-lspconfig',
-    dependencies = {
-      -- Automatically install LSPs to stdpath for neovim
-      {
-        'williamboman/mason.nvim',
-        config = true
-      },
-      'williamboman/mason-lspconfig.nvim',
-
-      -- Useful status updates for LSP
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      {
-        'j-hui/fidget.nvim',
-        tag = 'legacy',
-        event = 'LspAttach',
-        opts = {}
-      },
-
-      -- Additional lua configuration, makes nvim stuff amazing!
-      { 'folke/neodev.nvim', ft = "lua" },
-    },
-  },
-
-  {
-    -- Autocompletion
-    'hrsh7th/nvim-cmp',
-    event = "InsertEnter",
-    dependencies = {
-      -- Snippet Engine & its associated nvim-cmp source
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
-
-      -- Adds LSP completion capabilities
-      'hrsh7th/cmp-nvim-lsp',
-
-      -- Adds a number of user-friendly snippets
-      'rafamadriz/friendly-snippets',
-    },
-  },
-
-  -- Useful plugin to show you pending keybinds.
-  {
-    'folke/which-key.nvim',
-    event = "VeryLazy",
-    init = function()
-      vim.o.timeout = true
-      vim.o.timeout = 300
-    end,
-    opts = {}
-  },
-
-  -- "gc" to comment visual regions/lines
-  {
-    'numToStr/Comment.nvim',
-    event = "VeryLazy",
-    opts = {},
-  },
-
-  -- Fuzzy Finder (files, lsp, etc)
-  {
-    'nvim-telescope/telescope.nvim',
-    branch = '0.1.x',
-    event = "VeryLazy",
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      -- Fuzzy Finder Algorithm which requires local dependencies to be built.
-      -- Only load if `make` is available. Make sure you have the system
-      -- requirements installed.
-      {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        -- NOTE: If you are having trouble with this installation,
-        --       refer to the README for telescope-fzf-native for more instructions.
-        build = 'make',
-        cond = function()
-          return vim.fn.executable 'make' == 1
-        end,
-      },
-    },
-  },
-
-  {
-    -- Highlight, edit, and navigate code
-    'nvim-treesitter/nvim-treesitter',
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter-textobjects',
-    },
-    build = ':TSUpdate',
-  },
-
-  {
-  },
+  require 'kickstart.plugins.init',
+  require 'kickstart.plugins.lsp',
+  require 'kickstart.plugins.cmp',
+  require 'kickstart.plugins.fuzzyfinder',
+  require 'kickstart.plugins.treesitter',
   require 'kickstart.plugins.theme',
   require 'kickstart.plugins.lualine',
   require 'kickstart.plugins.gitsigns',
+  require 'kickstart.plugins.whichkey',
+  require 'kickstart.plugins.comment',
   require 'kickstart.plugins.autoformat',
   require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.coderunner',
   require 'kickstart.plugins.portal',
 
-  -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-  --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
-  --    up-to-date with whatever is in the kickstart repo.
-  --    Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  --
-  --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
-  -- { import = 'custom.plugins' },
-}, {})
+  -- The second arguement here changes
+  -- the default lazy.nvim configuration
+}, { require 'lazyconfig' })
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -212,7 +96,7 @@ vim.o.updatetime = 250
 vim.o.timeoutlen = 500
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
+vim.o.completeopt = 'menu,menuone,noselect'
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
@@ -472,6 +356,7 @@ mason_lspconfig.setup_handlers {
 -- See `:help cmp`
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
+local lspkind = require 'lspkind'
 require('luasnip.loaders.from_vscode').lazy_load()
 luasnip.config.setup {}
 
@@ -480,6 +365,13 @@ cmp.setup {
     expand = function(args)
       luasnip.lsp_expand(args.body)
     end,
+  },
+  formatting = {
+    format = lspkind.cmp_format({
+      mode = 'symbol',       -- show only symbol annotations
+      maxwidth = 50,         -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+      ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+    })
   },
   mapping = cmp.mapping.preset.insert {
     ['<C-n>'] = cmp.mapping.select_next_item(),
