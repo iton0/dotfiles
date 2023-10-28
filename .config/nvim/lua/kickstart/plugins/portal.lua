@@ -2,7 +2,7 @@ return {
 	-- Improved location list navigation
 	-- Labelled floating window showing a snippet of some buffer
 	'cbochs/portal.nvim',
-	event = 'BufEnter',
+	event = { 'BufReadPre', 'BufNewFile' },
 	-- Optional dependencies
 	dependencies = {
 		'cbochs/grapple.nvim',

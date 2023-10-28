@@ -1,8 +1,5 @@
 -- Configuration for lazy.nvim
 return {
-  defaults = {
-    lazy = true,
-  },
   install = {
     colorscheme = { 'tokyonight' }
   },

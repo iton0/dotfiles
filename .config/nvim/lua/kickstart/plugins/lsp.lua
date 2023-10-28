@@ -2,6 +2,7 @@
 return {
   -- LSP Configuration & Plugins
   'neovim/nvim-lspconfig',
+  event = 'InsertEnter',
   dependencies = {
     -- Automatically install LSPs to stdpath for neovim
     {
@@ -20,6 +21,11 @@ return {
     },
 
     -- Additional lua configuration, makes nvim stuff amazing!
-    { 'folke/neodev.nvim', ft = "lua" },
+    {
+      'folke/neodev.nvim',
+      event = 'FileType',
+      pattern = 'lua',
+      opts = {}
+    },
   },
 }
