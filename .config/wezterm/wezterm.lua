@@ -31,9 +31,10 @@ config.adjust_window_size_when_changing_font_size = false
 
 local dimmer = { brightness = 0.5 }
 config.background = {
+
    {
       source = {
-         File = { path = '/home/iton/.config/wezterm/background/background2.gif' },
+         File = { path = '/home/iton/.config/wezterm/background/background3.gif' },
       },
       hsb = dimmer,
       height = "Cover",
@@ -44,10 +45,10 @@ config.background = {
    },
 }
 config.window_padding = {
-   left = '1px',
-   right = '1px',
-   top = '1px',
-   bottom = '1px',
+   left = '0cell',
+   right = '0cell',
+   top = '0cell',
+   bottom = '0cell',
 }
 
 config.window_frame = {
@@ -72,10 +73,6 @@ config.hide_mouse_cursor_when_typing = true
 config.warn_about_missing_glyphs = false
 
 config.enable_wayland = false
-
-config.tiling_desktop_environments = {
-   'X11 GNOME Shell',
-}
 
 -- Mouse, Cursor, & Keyboard
 config.scrollback_lines = 5000
