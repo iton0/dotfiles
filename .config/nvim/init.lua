@@ -26,7 +26,7 @@ require('lazy').setup({
   require 'kickstart.plugins.init',
   require 'kickstart.plugins.lsp',
   require 'kickstart.plugins.cmp',
-  require 'kickstart.plugins.fuzzyfinder',
+  require 'kickstart.plugins.telescope',
   require 'kickstart.plugins.treesitter',
   require 'kickstart.plugins.theme',
   require 'kickstart.plugins.lualine',
