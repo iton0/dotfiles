@@ -81,6 +81,9 @@ vim.opt.showbreak = " ↪ " -- Symbol to indicate wrapped lines
 -- Save undo history
 vim.o.undofile = true
 
+-- Automatically save files on buffer switch or exist
+vim.o.autowrite = true
+
 -- Case-insensitive searching UNLESS \C or capital in search
 vim.o.ignorecase = true
 vim.o.smartcase = true
