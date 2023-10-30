@@ -21,7 +21,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Code Runner keymaps
-vim.keymap.set('n', '<leader>x', ':RunCode<CR>', { noremap = true, silent = false })
+vim.keymap.set('n', '<leader>xx', ':RunCode<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>xc', ':RunClose<CR>', { noremap = true, silent = true })
 
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
