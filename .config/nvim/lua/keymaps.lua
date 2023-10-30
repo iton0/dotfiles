@@ -20,6 +20,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+-- Code Runner keymaps
+vim.keymap.set('n', '<leader>x', ':RunCode<CR>', { noremap = true, silent = false })
+
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
