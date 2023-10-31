@@ -15,12 +15,12 @@ vim.o.mouse = 'a'
 vim.o.clipboard = 'unnamedplus'
 
 -- Set wrap options
-vim.opt.wrap = true      -- Enable line wrapping
-vim.opt.linebreak = true -- Wrap lines at word boundaries
+vim.o.wrap = true      -- Enable line wrapping
+vim.o.linebreak = true -- Wrap lines at word boundaries
 
 -- Set wrap behavior
-vim.opt.breakindent = true -- Indent wrapped lines
-vim.opt.showbreak = " ↪ " -- Symbol to indicate wrapped lines
+vim.o.breakindent = true -- Indent wrapped lines
+vim.o.showbreak = " ↪ " -- Symbol to indicate wrapped lines
 
 -- Save undo history
 vim.o.undofile = true
