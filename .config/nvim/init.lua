@@ -40,7 +40,32 @@ require('lazy').setup({
 
   -- The second arguement here changes
   -- the default lazy.nvim configuration
-}, { require 'lazyconfig' })
+}, {
+  install = {
+    colorscheme = { 'tokyonight' }
+  },
+  checker = {
+    -- automatically check for plugin updates
+    enabled = true,
+    concurrency = 4,
+    notify = false,
+    frequency = 43200, -- Check for updates every 12 hours
+  },
+  change_detection = {
+    notify = false,
+  },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "gzip",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      }
+    }
+  }
+})
 
 -- [[ Setting options ]]
 require('options')
