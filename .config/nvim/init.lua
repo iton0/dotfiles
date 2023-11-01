@@ -35,6 +35,7 @@ require('lazy').setup({
   require 'kickstart.plugins.comment',
   require 'kickstart.plugins.autoformat',
   require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.debug',
   require 'kickstart.plugins.coderunner',
   require 'kickstart.plugins.portal',
 
