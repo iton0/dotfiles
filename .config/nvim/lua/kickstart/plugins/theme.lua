@@ -1,7 +1,8 @@
 return {
 	-- Theme inspired by TokyoNight
 	'folke/tokyonight.nvim',
-	lazy = false,
+	-- lazy = false,
+	event = 'BufEnter',
 	priority = 1000,
 	config = function()
 		vim.cmd([[colorscheme tokyonight-storm]])
