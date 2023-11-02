@@ -14,15 +14,15 @@ end
 config.color_scheme = 'Tokyo Night (Gogh)'
 
 config.colors = {
-   cursor_bg = "#FFD700",
+   cursor_bg = '#FFD700',
    cursor_fg = 'black',
    cursor_border = '#FFD700',
 }
 
 config.anti_alias_custom_block_glyphs = true
 config.custom_block_glyphs = true
-config.allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace"
-config.bold_brightens_ansi_colors = "BrightOnly"
+config.allow_square_glyphs_to_overflow_width = 'WhenFollowedBySpace'
+config.bold_brightens_ansi_colors = 'BrightOnly'
 
 -- Window Setting
 config.initial_cols = 80
@@ -37,11 +37,11 @@ config.background = {
          File = { path = '/home/iton/.config/wezterm/background/background3.gif' },
       },
       hsb = dimmer,
-      height = "Cover",
-      width = "Cover",
-      horizontal_align = "Left",
-      vertical_align = "Top",
-      repeat_y = "Mirror",
+      height = 'Cover',
+      width = 'Cover',
+      horizontal_align = 'Left',
+      vertical_align = 'Top',
+      repeat_y = 'Mirror',
    },
 }
 config.window_padding = {
@@ -95,8 +95,8 @@ config.font_size = 15
 config.cell_width = 1.0
 config.line_height = 1.0
 config.unicode_version = 8
-config.font_shaper = "Harfbuzz"
-config.freetype_load_target = "Normal"
+config.font_shaper = 'Harfbuzz'
+config.freetype_load_target = 'Normal'
 
 -- and finally, return the configuration to wezterm
 return config
