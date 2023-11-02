@@ -33,6 +33,7 @@ require('lazy').setup({
   require('kickstart.plugins.gitsigns'),
   require('kickstart.plugins.whichkey'),
   require('kickstart.plugins.comment'),
+  require('kickstart.plugins.linter'),
   require('kickstart.plugins.autoformat'),
   require('kickstart.plugins.conform'),
   require('kickstart.plugins.autopairs'),

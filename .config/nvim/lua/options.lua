@@ -20,7 +20,7 @@ vim.o.linebreak = true -- Wrap lines at word boundaries
 
 -- Set wrap behavior
 vim.o.breakindent = true -- Indent wrapped lines
-vim.o.showbreak = " ↪ " -- Symbol to indicate wrapped lines
+vim.o.showbreak = ' ↪ ' -- Symbol to indicate wrapped lines
 
 -- Save undo history
 vim.o.undofile = true
@@ -40,7 +40,7 @@ vim.o.updatetime = 250
 vim.o.timeoutlen = 500
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menu,menuone,noselect'
+vim.o.completeopt = 'menu,menuone,preview,noselect'
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
