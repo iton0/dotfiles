@@ -7,43 +7,44 @@ vim.g.maplocalleader = ' '
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system {
+  vim.fn.system({
     'git',
     'clone',
     '--filter=blob:none',
     'https://github.com/folke/lazy.nvim.git',
     '--branch=stable', -- latest stable release
     lazypath,
-  }
+  })
 end
 vim.opt.rtp:prepend(lazypath)
 
 -- [[ Plugins ]]
 require('lazy').setup({
 
-  require 'kickstart.plugins.init',
-  require 'kickstart.plugins.lsp',
-  require 'kickstart.plugins.cmp',
-  require 'kickstart.plugins.telescope',
-  require 'kickstart.plugins.treesitter',
-  require 'kickstart.plugins.theme',
-  require 'kickstart.plugins.lualine',
-  require 'kickstart.plugins.gitsigns',
-  require 'kickstart.plugins.whichkey',
-  require 'kickstart.plugins.comment',
-  require 'kickstart.plugins.autoformat',
-  require 'kickstart.plugins.autopairs',
-  require 'kickstart.plugins.debug',
-  require 'kickstart.plugins.coderunner',
-  require 'kickstart.plugins.portal',
+  require('kickstart.plugins.init'),
+  require('kickstart.plugins.lsp'),
+  require('kickstart.plugins.cmp'),
+  require('kickstart.plugins.telescope'),
+  require('kickstart.plugins.treesitter'),
+  require('kickstart.plugins.theme'),
+  require('kickstart.plugins.lualine'),
+  require('kickstart.plugins.gitsigns'),
+  require('kickstart.plugins.whichkey'),
+  require('kickstart.plugins.comment'),
+  require('kickstart.plugins.autoformat'),
+  require('kickstart.plugins.conform'),
+  require('kickstart.plugins.autopairs'),
+  require('kickstart.plugins.debug'),
+  require('kickstart.plugins.coderunner'),
+  require('kickstart.plugins.portal'),
 
   -- The second arguement here changes
   -- the default lazy.nvim configuration
 }, {
   install = {
-    colorscheme = { 'tokyonight' }
+    colorscheme = { 'tokyonight' },
   },
   checker = {
     -- automatically check for plugin updates
@@ -58,14 +59,14 @@ require('lazy').setup({
   performance = {
     rtp = {
       disabled_plugins = {
-        "gzip",
-        "tarPlugin",
-        "tohtml",
-        "tutor",
-        "zipPlugin",
-      }
-    }
-  }
+        'gzip',
+        'tarPlugin',
+        'tohtml',
+        'tutor',
+        'zipPlugin',
+      },
+    },
+  },
 })
 
 -- [[ Setting options ]]
