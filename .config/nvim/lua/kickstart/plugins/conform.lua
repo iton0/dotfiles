@@ -6,16 +6,21 @@
 -- the rest of the file types
 return {
 	'stevearc/conform.nvim',
-	ft = { 'javascript', 'typescript', 'html', 'css' },
-	cmd = { 'ConformInfo' },
+	event = { 'BufReadPre', 'BufNewFile' },
 	opts = {
 		formatters_by_ft = {
-			javascript = { { 'prettierd', 'prettier' } },
-			typescript = { { 'prettierd', 'prettier' } },
-			html = { { 'prettierd', 'prettier' } },
-			css = { { 'prettierd', 'prettier' } },
+			javascript = { 'prettierd' },
+			typescript = { 'prettierd' },
+			html = { 'prettierd' },
+			css = { 'prettierd' },
+			lua = { 'stylua' },
+			cpp = { 'clang-format' },
+			c = { 'clang-format' },
+			java = { 'google-java-format' },
+			python = { 'black' },
+			php = { 'php-cs-fixer' },
 		},
-		format_on_save = { timeout_ms = 500, lsp_fallback = true },
+		format_on_save = { async = false, timeout_ms = 500, lsp_fallback = true },
 		formatters = {
 			shfmt = {
 				prepend_args = { '-i', '2' },
