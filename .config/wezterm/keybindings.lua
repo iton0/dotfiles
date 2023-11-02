@@ -1,43 +1,43 @@
-local wezterm = require 'wezterm'
+local wezterm = require('wezterm')
 
 return {
    {
       key = 'c',
       mods = 'SUPER',
-      action = wezterm.action.CopyTo 'Clipboard',
+      action = wezterm.action.CopyTo('Clipboard'),
    },
    {
       key = 'v',
       mods = 'SUPER',
-      action = wezterm.action.PasteFrom 'Clipboard',
+      action = wezterm.action.PasteFrom('Clipboard'),
    },
    {
       key = 'c',
       mods = 'CTRL|SHIFT',
-      action = wezterm.action.CopyTo 'Clipboard',
+      action = wezterm.action.CopyTo('Clipboard'),
    },
    {
       key = 'v',
       mods = 'CTRL|SHIFT',
-      action = wezterm.action.PasteFrom 'Clipboard',
+      action = wezterm.action.PasteFrom('Clipboard'),
    },
    {
       key = 'Copy',
-      action = wezterm.action.CopyTo 'Clipboard',
+      action = wezterm.action.CopyTo('Clipboard'),
    },
    {
       key = 'Paste',
-      action = wezterm.action.PasteFrom 'Clipboard',
+      action = wezterm.action.PasteFrom('Clipboard'),
    },
    {
       key = 'Insert',
       mods = 'CTRL',
-      action = wezterm.action.CopyTo 'PrimarySelection',
+      action = wezterm.action.CopyTo('PrimarySelection'),
    },
    {
       key = 'Insert',
       mods = 'SHIFT',
-      action = wezterm.action.PasteFrom 'PrimarySelection',
+      action = wezterm.action.PasteFrom('PrimarySelection'),
    },
    {
       key = 'm',
@@ -92,22 +92,22 @@ return {
    {
       key = 't',
       mods = 'SUPER',
-      action = wezterm.action.SpawnTab 'CurrentPaneDomain',
+      action = wezterm.action.SpawnTab('CurrentPaneDomain'),
    },
    {
       key = 't',
       mods = 'CTRL|SHIFT',
-      action = wezterm.action.SpawnTab 'CurrentPaneDomain',
+      action = wezterm.action.SpawnTab('CurrentPaneDomain'),
    },
    {
       key = 'T',
       mods = 'SUPER|SHIFT',
-      action = wezterm.action.SpawnTab 'DefaultDomain',
+      action = wezterm.action.SpawnTab('DefaultDomain'),
    },
    {
       key = 'w',
       mods = 'SUPER',
-      action = wezterm.action.CloseCurrentTab { confirm = true },
+      action = wezterm.action.CloseCurrentTab({ confirm = true }),
    },
    {
       key = '1',
@@ -157,7 +157,7 @@ return {
    {
       key = 'w',
       mods = 'CTRL|SHIFT',
-      action = wezterm.action.CloseCurrentTab { confirm = true },
+      action = wezterm.action.CloseCurrentTab({ confirm = true }),
    },
    {
       key = '1',
@@ -267,12 +267,12 @@ return {
    {
       key = 'k',
       mods = 'SUPER',
-      action = wezterm.action.ClearScrollback 'ScrollbackOnly',
+      action = wezterm.action.ClearScrollback('ScrollbackOnly'),
    },
    {
       key = 'K',
       mods = 'CTRL|SHIFT',
-      action = wezterm.action.ClearScrollback 'ScrollbackOnly',
+      action = wezterm.action.ClearScrollback('ScrollbackOnly'),
    },
    {
       key = 'L',
@@ -287,17 +287,17 @@ return {
    {
       key = 'U',
       mods = 'CTRL|SHIFT',
-      action = wezterm.action.CharSelect { copy_on_select = true, copy_to = 'ClipboardAndPrimarySelection' },
+      action = wezterm.action.CharSelect({ copy_on_select = true, copy_to = 'ClipboardAndPrimarySelection' }),
    },
    {
       key = 'f',
       mods = 'SUPER',
-      action = wezterm.action.Search { CaseSensitiveString = '' },
+      action = wezterm.action.Search({ CaseSensitiveString = '' }),
    },
    {
       key = 'F',
       mods = 'CTRL|SHIFT',
-      action = wezterm.action.Search { CaseSensitiveString = '' },
+      action = wezterm.action.Search({ CaseSensitiveString = '' }),
    },
    {
       key = 'X',
@@ -312,52 +312,52 @@ return {
    {
       key = '"',
       mods = 'CTRL|SHIFT',
-      action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' },
+      action = wezterm.action.SplitVertical({ domain = 'CurrentPaneDomain' }),
    },
    {
       key = '%',
       mods = 'CTRL|SHIFT',
-      action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' },
+      action = wezterm.action.SplitHorizontal({ domain = 'CurrentPaneDomain' }),
    },
    {
       key = 'LeftArrow',
       mods = 'CTRL|SHIFT|ALT',
-      action = wezterm.action.AdjustPaneSize { 'Left', 1 },
+      action = wezterm.action.AdjustPaneSize({ 'Left', 1 }),
    },
    {
       key = 'RightArrow',
       mods = 'CTRL|SHIFT|ALT',
-      action = wezterm.action.AdjustPaneSize { 'Right', 1 },
+      action = wezterm.action.AdjustPaneSize({ 'Right', 1 }),
    },
    {
       key = 'UpArrow',
       mods = 'CTRL|SHIFT|ALT',
-      action = wezterm.action.AdjustPaneSize { 'Up', 1 },
+      action = wezterm.action.AdjustPaneSize({ 'Up', 1 }),
    },
    {
       key = 'DownArrow',
       mods = 'CTRL|SHIFT|ALT',
-      action = wezterm.action.AdjustPaneSize { 'Down', 1 },
+      action = wezterm.action.AdjustPaneSize({ 'Down', 1 }),
    },
    {
       key = 'LeftArrow',
       mods = 'CTRL|SHIFT',
-      action = wezterm.action.ActivatePaneDirection 'Left',
+      action = wezterm.action.ActivatePaneDirection('Left'),
    },
    {
       key = 'RightArrow',
       mods = 'CTRL|SHIFT',
-      action = wezterm.action.ActivatePaneDirection 'Right',
+      action = wezterm.action.ActivatePaneDirection('Right'),
    },
    {
       key = 'UpArrow',
       mods = 'CTRL|SHIFT',
-      action = wezterm.action.ActivatePaneDirection 'Up',
+      action = wezterm.action.ActivatePaneDirection('Up'),
    },
    {
       key = 'DownArrow',
       mods = 'CTRL|SHIFT',
-      action = wezterm.action.ActivatePaneDirection 'Down',
+      action = wezterm.action.ActivatePaneDirection('Down'),
    },
    {
       key = 'Z',

@@ -1,5 +1,5 @@
 -- Pull in the wezterm API
-local wezterm = require 'wezterm'
+local wezterm = require('wezterm')
 
 -- This table will hold the configuration.
 local config = {}
@@ -88,8 +88,7 @@ local keybindings = require('keybindings')
 config.keys = keybindings
 
 -- Font
-config.font =
-    wezterm.font('FiraCode Nerd Font')
+config.font = wezterm.font('FiraCode Nerd Font')
 
 config.font_size = 15
 config.cell_width = 1.0
