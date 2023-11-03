@@ -11,18 +11,20 @@ return {
       icons_enabled = true,
       theme = 'auto',
       component_separators = '',
-      section_separators = '',
+      section_separators = ' ',
     },
     sections = {
       lualine_a = {
         {
           'mode',
-          fmt = function(str) return str:sub(1, 1) end,
-        }
+          fmt = function(str)
+            return str:sub(1, 1)
+          end,
+        },
       },
       lualine_c = {
         {
-          "filetype",
+          'filetype',
           padding = { left = 1, right = 0 },
           colored = true,
           icon_only = true,
@@ -33,13 +35,13 @@ return {
       },
       lualine_x = {
         {
-          require("lazy.status").updates,
-          cond = require("lazy.status").has_updates,
-          color = { fg = "#ff9e64" },
+          require('lazy.status').updates,
+          cond = require('lazy.status').has_updates,
+          color = { fg = '#ff9e64' },
         },
         'encoding',
         'fileformat',
-      }
-    }
-  }
+      },
+    },
+  },
 }
