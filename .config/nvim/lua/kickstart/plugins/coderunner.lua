@@ -1,9 +1,9 @@
 return {
   'CRAG666/code_runner.nvim',
-  event = 'BufWritePre',
+  event = { 'BufReadPost', 'BufWritePre' },
   opts = {
     filetype = {
-      python = "python3 -u"
-    }
-  }
+      python = 'python3 -u',
+    },
+  },
 }
