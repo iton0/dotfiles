@@ -6,7 +6,7 @@ return {
     event = { 'BufReadPost', 'BufNewFile' },
     dependencies = {
       'tpope/vim-fugitive',
-    }
+    },
   },
 
   -- Detect tabstop and shiftwidth automatically
@@ -19,7 +19,6 @@ return {
       vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
       vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
       vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
-    end
+    end,
   },
-
 }
