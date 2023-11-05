@@ -5,7 +5,7 @@
 
 return {
   'neovim/nvim-lspconfig',
-  event = 'VeryLazy',
+  event = { 'BufReadPre', 'BufNewFile' },
   config = function()
     -- Switch for controlling whether you want autoformatting.
     --  Use :KickstartFormatToggle to toggle autoformatting on or off
@@ -61,12 +61,12 @@ return {
               return
             end
 
-            vim.lsp.buf.format {
+            vim.lsp.buf.format({
               async = false,
               filter = function(c)
                 return c.id == client.id
               end,
-            }
+            })
           end,
         })
       end,

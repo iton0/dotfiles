@@ -8,9 +8,7 @@ return {
       javascript = { 'eslint_d' },
       typescript = { 'eslint_d' },
       css = { 'stylelint' },
-      java = { 'checkstyle' },
-      cpp = { 'cpplint' },
-      c = { 'cpplint' },
+      python = { 'pylint' },
       php = { 'phpstan' },
     }
 
