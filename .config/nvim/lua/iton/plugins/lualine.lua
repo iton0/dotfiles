@@ -2,7 +2,6 @@ return {
   -- Set lualine as statusline
   'nvim-lualine/lualine.nvim',
   -- See `:help lualine.txt`
-  event = { 'BufReadPre', 'BufNewFile' },
   dependencies = {
     'nvim-tree/nvim-web-devicons',
   },
