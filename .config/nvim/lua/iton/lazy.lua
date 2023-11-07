@@ -35,4 +35,11 @@ require('lazy').setup({ { import = 'iton.plugins' } }, {
   change_detection = {
     notify = false,
   },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        'tutor',
+      },
+    },
+  },
 })
