@@ -90,7 +90,6 @@ return {
               analysis = { typCheckingMode = 'strict' },
             },
           },
-          intelephense = {},
           jdtls = {
             redhat = {
               telemetry = { enabled = false },

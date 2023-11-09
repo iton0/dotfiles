@@ -18,7 +18,7 @@ return {
 			c = { 'clang-format' },
 			java = { 'google-java-format' },
 			python = { 'black' },
-			php = { 'php-cs-fixer' },
+			php = { 'phpcbf' },
 		},
 		format_on_save = { async = false, timeout_ms = 500, lsp_fallback = true },
 		formatters = {
