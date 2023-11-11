@@ -30,7 +30,7 @@ require('lazy').setup({ { import = 'iton.plugins' } }, {
     enabled = true,
     concurrency = 4,
     notify = false,
-    frequency = 43200, -- Check for updates every 12 hours
+    frequency = 86400, -- Check for updates every 24 hours
   },
   change_detection = {
     notify = false,
