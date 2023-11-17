@@ -136,9 +136,18 @@ return {
     -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
     {
       'j-hui/fidget.nvim',
-      tag = 'legacy',
       event = 'LspAttach',
-      opts = {},
+      opts = {
+        progress = {
+          poll_rate = 2,
+          suppress_on_insert = true,
+          ignore_done_already = true,
+          display = {
+            render_limit = 2,
+            done_ttl = 2,
+          },
+        },
+      },
     },
 
     -- Additional lua configuration, makes nvim stuff amazing!
