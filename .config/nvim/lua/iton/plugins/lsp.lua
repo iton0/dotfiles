@@ -18,9 +18,8 @@ return {
           'WhoIsSethDaniel/mason-tool-installer.nvim',
           opts = {
             auto_update = true,
-            run_on_start = true,
             start_delay = 3000,
-            debounce_hours = 5,
+            debounce_hours = 3,
           },
         },
       },
@@ -139,7 +138,7 @@ return {
       event = 'LspAttach',
       opts = {
         progress = {
-          poll_rate = 2,
+          poll_rate = 5,
           suppress_on_insert = true,
           ignore_done_already = true,
           display = {
