@@ -1,19 +1,21 @@
---  The configuration is done below. Search for lspconfig to find it below.
 return {
   -- LSP Configuration & Plugins
   'neovim/nvim-lspconfig',
   event = { 'BufReadPre', 'BufNewFile' },
   dependencies = {
     -- Automatically install LSPs to stdpath for neovim
+    'williamboman/mason.nvim',
     {
-      'williamboman/mason.nvim',
-      dependencies = {
-        {
-          'williamboman/mason-lspconfig.nvim',
-          opts = {
-            automatic_installation = true,
-          },
-        },
+      'williamboman/mason-lspconfig.nvim',
+      opts = {
+        automatic_installation = true,
+      },
+    },
+    {
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
+      opts = {
+        auto_update = true,
+        start_delay = 5000,
       },
     },
 
