@@ -7,16 +7,16 @@ local config = {}
 -- In newer versions of wezterm, use the config_builder which will
 -- help provide clearer error messages
 if wezterm.config_builder then
-   config = wezterm.config_builder()
+  config = wezterm.config_builder()
 end
 
 -- Color and Appearance
 config.color_scheme = 'Tokyo Night (Gogh)'
 
 config.colors = {
-   cursor_bg = '#FFD700',
-   cursor_fg = 'black',
-   cursor_border = '#FFD700',
+  cursor_bg = '#FFD700',
+  cursor_fg = 'black',
+  cursor_border = '#FFD700',
 }
 
 config.anti_alias_custom_block_glyphs = true
@@ -29,43 +29,43 @@ config.initial_cols = 80
 config.initial_rows = 25
 config.adjust_window_size_when_changing_font_size = false
 
-local dimmer = { brightness = 0.2 }
+local dimmer = { brightness = 0.15 }
 config.background = {
 
-   {
-      source = {
-         File = { path = '/home/iton/.config/wezterm/background/background3.gif' },
-      },
-      hsb = dimmer,
-      height = 'Cover',
-      width = 'Cover',
-      horizontal_align = 'Left',
-      vertical_align = 'Top',
-      repeat_y = 'Mirror',
-   },
+  {
+    source = {
+      File = { path = '/home/iton/.config/wezterm/background/background3.gif' },
+    },
+    hsb = dimmer,
+    height = 'Cover',
+    width = 'Cover',
+    horizontal_align = 'Left',
+    vertical_align = 'Top',
+    repeat_y = 'Mirror',
+  },
 }
 config.window_padding = {
-   left = '0cell',
-   right = '0cell',
-   top = '0cell',
-   bottom = '0cell',
+  left = '0cell',
+  right = '0cell',
+  top = '0cell',
+  bottom = '0cell',
 }
 
 config.window_frame = {
-   inactive_titlebar_bg = '#1a1b26',
-   active_titlebar_bg = '#1f2335',
-   inactive_titlebar_fg = '#6b7280',
-   active_titlebar_fg = '#ffffff',
-   inactive_titlebar_border_bottom = '#1f2335',
-   active_titlebar_border_bottom = '#1f2335',
-   button_fg = '#6b7280',
-   button_bg = '#1f2335',
-   button_hover_fg = '#ffffff',
-   button_hover_bg = '#292d47',
-   border_left_color = 'black',
-   border_right_color = 'black',
-   border_bottom_color = 'black',
-   border_top_color = 'black',
+  inactive_titlebar_bg = '#1a1b26',
+  active_titlebar_bg = '#1f2335',
+  inactive_titlebar_fg = '#6b7280',
+  active_titlebar_fg = '#ffffff',
+  inactive_titlebar_border_bottom = '#1f2335',
+  active_titlebar_border_bottom = '#1f2335',
+  button_fg = '#6b7280',
+  button_bg = '#1f2335',
+  button_hover_fg = '#ffffff',
+  button_hover_bg = '#292d47',
+  border_left_color = 'black',
+  border_right_color = 'black',
+  border_bottom_color = 'black',
+  border_top_color = 'black',
 }
 
 config.enable_tab_bar = false
