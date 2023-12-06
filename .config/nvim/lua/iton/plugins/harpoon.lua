@@ -15,14 +15,24 @@ return {
       desc = 'View marks',
     },
     {
-      '<leader>hn',
-      "<cmd>lua require('harpoon.ui').nav_next()<cr>",
-      desc = 'Go to next harpoon mark',
+      '<leader>1',
+      "<cmd>lua require('harpoon.ui').nav_file(1)<cr>",
+      desc = 'Navigate to File 1',
     },
     {
-      '<leader>hj',
-      "<cmd>lua require('harpoon.ui').nav_prev()<cr>",
-      desc = 'Go to previous harpoon mark',
+      '<leader>2',
+      "<cmd>lua require('harpoon.ui').nav_file(2)<cr>",
+      desc = 'Navigate to File 2',
+    },
+    {
+      '<leader>3',
+      "<cmd>lua require('harpoon.ui').nav_file(3)<cr>",
+      desc = 'Navigate to File 3',
+    },
+    {
+      '<leader>4',
+      "<cmd>lua require('harpoon.ui').nav_file(4)<cr>",
+      desc = 'Navigate to File 4',
     },
   },
 }

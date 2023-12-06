@@ -15,7 +15,6 @@ return {
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       opts = {
         auto_update = true,
-        start_delay = 5000,
       },
     },
 

@@ -1,8 +1,7 @@
 -- Fuzzy Finder (files, lsp, etc)
 return {
   'nvim-telescope/telescope.nvim',
-  version = false,
-  -- event = 'VeryLazy',
+  tag = '0.1.5',
   keys = {
     { '<leader>' },
   },

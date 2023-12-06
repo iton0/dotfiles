@@ -21,7 +21,7 @@ vim.o.mouse = 'a'
 vim.o.clipboard = 'unnamedplus'
 
 -- Set wrap options
-vim.o.wrap = true      -- Enable line wrapping
+vim.o.wrap = true -- Enable line wrapping
 vim.o.linebreak = true -- Wrap lines at word boundaries
 
 -- Set wrap behavior
@@ -52,4 +52,4 @@ vim.o.completeopt = 'menu,menuone,preview,noselect'
 vim.o.termguicolors = true
 
 -- Set Python executable
-vim.g.python3_host_prog = '/usr/bin/python3'
+-- vim.g.python3_host_prog = '/usr/bin/python3'

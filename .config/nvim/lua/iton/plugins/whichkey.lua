@@ -1,7 +1,7 @@
 -- Useful plugin to show you pending keybinds.
 return {
   'folke/which-key.nvim',
-  event = 'VeryLazy',
+  event = 'ColorScheme',
   init = function()
     vim.o.timeout = true
     vim.o.timeout = 300
