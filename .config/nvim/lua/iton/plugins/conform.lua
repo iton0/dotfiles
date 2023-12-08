@@ -8,9 +8,15 @@ return {
   event = { 'BufReadPre', 'BufNewFile' },
   opts = {
     formatters_by_ft = {
-      javascript = { 'prettierd', 'prettier' },
-      typescript = { 'prettierd', 'prettier' },
-      lua = { 'stylua' }
+      javascript = { 'prettierd' },
+      typescript = { 'prettierd' },
+      lua = { 'stylua' },
+      html = { 'prettierd' },
+      css = { 'prettierd' },
+      cpp = { 'clang-format' },
+      c = { 'clang-format' },
+      python = { 'black' },
+      php = { 'phpcbf' },
     },
     format_on_save = { async = false, timeout_ms = 500, lsp_fallback = true },
     formatters = {
