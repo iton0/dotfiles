@@ -51,5 +51,9 @@ vim.o.completeopt = 'menu,menuone,preview,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
--- Set Python executable
--- vim.g.python3_host_prog = '/usr/bin/python3'
+-- Set fold options for fold.lua
+vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+vim.o.foldcolumn = '1'
+vim.o.foldlevel = 99
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
