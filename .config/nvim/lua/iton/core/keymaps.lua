@@ -16,6 +16,20 @@ vim.keymap.set('n', '<c-k>', '<c-w>k', { noremap = true, silent = true, desc = '
 vim.keymap.set('n', '<c-l>', '<c-w>l', { noremap = true, silent = true, desc = 'Go to right window' })
 vim.keymap.set('n', '<c-w>', '<c-w>w', { noremap = true, silent = true, desc = 'Switch windows' })
 
+-- Folding configuration
+vim.api.nvim_set_option('foldmethod', 'expr')
+vim.api.nvim_set_option('foldexpr', 'nvim_treesitter#foldexpr()')
+vim.api.nvim_set_option('foldtext', 'v:lua.MyFoldText()')
+
+function MyFoldText()
+  local line = vim.fn.getline(vim.v.foldstart)
+  return '' .. line
+end
+
+vim.api.nvim_set_var('MyFoldText', MyFoldText)
+
+vim.keymap.set('n', '<CR>', ':normal! za<CR>', { noremap = true, silent = true, desc = 'Toggle Fold' })
+
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
