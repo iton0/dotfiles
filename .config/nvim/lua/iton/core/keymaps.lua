@@ -9,11 +9,12 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
--- Remap for moving between splits
-vim.keymap.set('n', '<leader>th', '<C-w>h', { noremap = true, silent = true, desc = 'Move to split on left' })
-vim.keymap.set('n', '<leader>tj', '<C-w>j', { noremap = true, silent = true, desc = 'Move to split below' })
-vim.keymap.set('n', '<leader>tk', '<C-w>k', { noremap = true, silent = true, desc = 'Move to split above' })
-vim.keymap.set('n', '<leader>tl', '<C-w>l', { noremap = true, silent = true, desc = 'Move to split on right' })
+-- Remap for window movement
+vim.keymap.set('n', '<c-h>', '<c-w>h', { noremap = true, silent = true, desc = 'Go to left window' })
+vim.keymap.set('n', '<c-j>', '<c-w>j', { noremap = true, silent = true, desc = 'Go to down window' })
+vim.keymap.set('n', '<c-k>', '<c-w>k', { noremap = true, silent = true, desc = 'Go to up window' })
+vim.keymap.set('n', '<c-l>', '<c-w>l', { noremap = true, silent = true, desc = 'Go to right window' })
+vim.keymap.set('n', '<c-w>', '<c-w>w', { noremap = true, silent = true, desc = 'Switch windows' })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
