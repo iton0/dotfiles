@@ -5,18 +5,8 @@ return {
   dependencies = {
     -- Automatically install LSPs to stdpath for neovim
     'williamboman/mason.nvim',
-    {
-      'williamboman/mason-lspconfig.nvim',
-      opts = {
-        automatic_installation = true,
-      },
-    },
-    {
-      'WhoIsSethDaniel/mason-tool-installer.nvim',
-      opts = {
-        auto_update = true,
-      },
-    },
+    'williamboman/mason-lspconfig.nvim',
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
 
     -- Useful status updates for LSP
     -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
@@ -37,15 +27,7 @@ return {
     },
 
     -- Additional lua configuration, makes nvim stuff amazing!
-    {
-      'folke/neodev.nvim',
-      opts = {
-        library = {
-          plugins = { 'nvim-dap-ui' },
-          types = true,
-        },
-      },
-    },
+    'folke/neodev.nvim',
   },
   config = function()
     -- [[ Configure LSP ]]
@@ -95,8 +77,13 @@ return {
 
     -- mason-lspconfig requires that these setup functions are called in this order
     -- before setting up the servers.
+    require('mason-tool-installer').setup({
+      auto_update = true,
+    })
     require('mason').setup()
-    require('mason-lspconfig').setup()
+    require('mason-lspconfig').setup({
+      automatic_installation = true,
+    })
 
     -- Enable the following language servers
     --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -129,7 +116,12 @@ return {
     }
 
     -- Setup neovim lua configuration
-    require('neodev').setup()
+    require('neodev').setup({
+      library = {
+        plugins = { 'nvim-dap-ui' },
+        types = true,
+      },
+    })
 
     -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
     local capabilities = vim.lsp.protocol.make_client_capabilities()
