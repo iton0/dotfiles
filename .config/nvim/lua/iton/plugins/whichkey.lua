@@ -4,7 +4,7 @@ return {
   event = 'VeryLazy',
   init = function()
     vim.o.timeout = true
-    vim.o.timeout = 300
+    vim.o.timeout = 500
   end,
   config = function()
     -- document existing key chains
