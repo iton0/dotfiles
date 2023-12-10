@@ -3,7 +3,7 @@ return {
   -- Git related plugins
   {
     'tpope/vim-rhubarb',
-    event = { 'BufReadPost', 'BufNewFile' },
+    event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
       'tpope/vim-fugitive',
     },
@@ -12,7 +12,7 @@ return {
   -- Detect tabstop and shiftwidth automatically
   {
     'tpope/vim-sleuth',
-    event = { 'BufReadPost', 'BufNewFile' },
+    event = { 'BufReadPre', 'BufNewFile' },
     config = function()
       -- Diagnostic keymaps
       vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
@@ -21,4 +21,7 @@ return {
       vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
     end,
   },
+
+  -- Improve the default vim.ui interfaces
+  'stevearc/dressing.nvim',
 }
