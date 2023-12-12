@@ -151,7 +151,6 @@ alias update='
   sudo apt-fast clean &&
   sudo snap refresh &&
   flatpak update &&
-  npm update -g &&
   dpkg --get-selections > ~/package_list.txt &&
   echo "Package list created!"'
 
