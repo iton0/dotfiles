@@ -23,7 +23,7 @@ vim.api.nvim_set_option('foldtext', 'v:lua.MyFoldText()')
 
 function MyFoldText()
   local line = vim.fn.getline(vim.v.foldstart)
-  return '' .. line
+  return '🪭 ' .. line
 end
 
 vim.api.nvim_set_var('MyFoldText', MyFoldText)
