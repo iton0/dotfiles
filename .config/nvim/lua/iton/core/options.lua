@@ -52,7 +52,7 @@ vim.o.completeopt = 'menu,menuone,preview,noselect'
 vim.o.termguicolors = true
 
 -- Set fold options for fold.lua
-vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+vim.o.fillchars = [[eob: ,fold: ,foldopen: ,foldsep: ,foldclose: ]]
 vim.o.foldcolumn = '1'
 vim.o.foldlevel = 99
 vim.o.foldlevelstart = 99
