@@ -1,6 +1,11 @@
 return {
   'David-Kunz/gen.nvim',
-  event = { 'BufReadPre', 'BufNewFile' },
+  keys = {
+    {
+      '<leader>l',
+      desc = 'AI',
+    },
+  },
   opts = {
     display_mode = 'float', -- The display mode. Can be "float" or "split".
     show_prompt = false, -- Shows the Prompt submitted to Ollama.

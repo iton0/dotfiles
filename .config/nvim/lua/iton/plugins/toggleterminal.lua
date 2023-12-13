@@ -4,7 +4,7 @@ return {
   config = true,
   keys = {
     {
-      '<leader>tt',
+      '<leader>t',
       ':ToggleTerm <CR>',
       { noremap = true, silent = true, desc = 'Toggle Terminal' },
     },

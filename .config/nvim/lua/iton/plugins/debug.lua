@@ -24,8 +24,8 @@ return {
     -- Add your own debuggers here
   },
   keys = {
-    { '<leader>b' },
-    { '<leader>B' },
+    { '<leader>b', desc = 'Debugger' },
+    { '<leader>B', desc = 'Breakpoint Condition' },
   },
   config = function()
     local dap = require('dap')

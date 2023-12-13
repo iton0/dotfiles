@@ -4,6 +4,7 @@ return {
     'nvim-lua/plenary.nvim',
   },
   keys = {
+    { '<leader>h', desc = 'Harpoon' },
     {
       '<leader>hm',
       "<cmd>lua require('harpoon.mark').add_file()<cr>",
