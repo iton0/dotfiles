@@ -29,7 +29,7 @@ config.initial_cols = 80
 config.initial_rows = 25
 config.adjust_window_size_when_changing_font_size = false
 
-local dimmer = { brightness = 0.15 }
+local dimmer = { brightness = 0.3 }
 config.background = {
 
   {
