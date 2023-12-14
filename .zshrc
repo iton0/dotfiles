@@ -154,6 +154,15 @@ alias update='
   dpkg --get-selections > ~/package_list.txt &&
   echo "Package list created!"'
 
+# Set an alias 'v' for Neovim if available; otherwise, fallback to Vim
+if command -v nvim &> /dev/null; then
+    alias v='nvim'
+    alias v.='nvim .'
+else
+    alias v='vim'
+    alias v.='vim .'
+fi
+
 # Other example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
