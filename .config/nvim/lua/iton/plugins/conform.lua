@@ -1,8 +1,6 @@
--- Autoformats specifically for
--- JavaScript and TypeScript
---
 -- autoformat.lua should cover
 -- the rest of the file types
+
 return {
   'stevearc/conform.nvim',
   event = { 'BufReadPre', 'BufNewFile' },

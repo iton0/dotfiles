@@ -1,3 +1,6 @@
+-- LLM integration
+-- with Mistral
+
 return {
   'David-Kunz/gen.nvim',
   keys = {

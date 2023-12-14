@@ -11,6 +11,7 @@ return {
       python = { 'pylint' },
       php = { 'phpstan' },
       java = { 'checkstyle' },
+      c = { 'cpplint' },
       cpp = { 'cpplint' },
     }
 
