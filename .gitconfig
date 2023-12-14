@@ -21,3 +21,4 @@
 	dv = difftool -t nvimdiff -y
 	se = !git rev-list --all | xargs git grep -F
 	gl = config --global -l
+        unstage = restore --staged
