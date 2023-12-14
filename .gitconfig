@@ -12,8 +12,8 @@
 [credential]
 	helper = cache
 [alias]
-	p = push
-	pl = pull
+	p = push origin HEAD
+	pl = pull origin HEAD
 	st = status -sb
 	last = log -1 HEAD --stat
 	cm = commit -v
