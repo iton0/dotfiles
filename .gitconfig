@@ -22,3 +22,4 @@
 	se = !git rev-list --all | xargs git grep -F
 	gl = config --global -l
         unstage = restore --staged
+	lg = !git log --pretty=format:\"%C(129)%h%Creset -%C(166)%d%Creset %s %C(42)(%cr) %C(117)[%an]\" --abbrev-commit -30
