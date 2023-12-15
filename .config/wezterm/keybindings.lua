@@ -220,22 +220,22 @@ return {
     action = wezterm.action.AdjustPaneSize({ 'Down', 1 }),
   },
   {
-    key = 'LeftArrow',
+    key = 'H',
     mods = 'CTRL|SHIFT',
     action = wezterm.action.ActivatePaneDirection('Left'),
   },
   {
-    key = 'RightArrow',
+    key = 'L',
     mods = 'CTRL|SHIFT',
     action = wezterm.action.ActivatePaneDirection('Right'),
   },
   {
-    key = 'UpArrow',
+    key = 'K',
     mods = 'CTRL|SHIFT',
     action = wezterm.action.ActivatePaneDirection('Up'),
   },
   {
-    key = 'DownArrow',
+    key = 'J',
     mods = 'CTRL|SHIFT',
     action = wezterm.action.ActivatePaneDirection('Down'),
   },
