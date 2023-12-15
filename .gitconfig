@@ -17,7 +17,7 @@
 	p = push origin HEAD
 	pl = pull origin HEAD
 	st = status -sb
-	last = log -1 HEAD --stat
+	last = log -1 HEAD --stat --pretty=format:\"%C(auto)%h - %C(cyan)%an%Creset, %C(magenta)%ar%Creset : %C(red)%s%Creset%n%n%w(0,4,4)%C(auto)%b%w(25,4,4)%C(auto)%n-----------------------------------------------------------------%n%C(green)Changed Files Summary%C(reset)%n\"
 	cm = commit -v
 	ch = checkout
 	chb = checkout -b
