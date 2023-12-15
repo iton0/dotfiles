@@ -152,7 +152,7 @@ alias update='
   sudo snap refresh &&
   flatpak update &&
   dpkg --get-selections > ~/package_list.txt &&
-  echo "Package list created!"'
+  echo "Package list updated!"'
 
 # Set an alias 'v' for Neovim if available; otherwise, fallback to Vim
 if command -v nvim &> /dev/null; then
