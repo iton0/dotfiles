@@ -163,6 +163,10 @@ else
     alias v.='vim .'
 fi
 
+# Aliases for convenient terminal commands:
+alias c='clear'  # Shortcut to clear the terminal screen.
+alias k='cd ..'  # Shortcut to move up one directory level.
+
 # Other example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
