@@ -19,6 +19,10 @@
 	st = status -sb
 	last = log -1 HEAD --stat
 	cm = commit -v
+	ch = checkout
+	chb = checkout -b
+	del = branch -D
+	br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
 	rl = remote -v
 	dv = difftool -t nvimdiff -y
 	se = !git rev-list --all | xargs git grep -F
