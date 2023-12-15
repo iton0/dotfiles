@@ -9,6 +9,7 @@ return {
       javascript = { 'prettierd' },
       typescript = { 'prettierd' },
       lua = { 'stylua' },
+      java = { 'google-java-format' },
       html = { 'prettierd' },
       css = { 'prettierd' },
       cpp = { 'clang-format' },

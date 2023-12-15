@@ -157,15 +157,15 @@ alias update='
 # Set an alias 'v' for Neovim if available; otherwise, fallback to Vim
 if command -v nvim &> /dev/null; then
     alias v='nvim'
-    alias v.='nvim .'
+    alias vd='nvim .'
 else
     alias v='vim'
-    alias v.='vim .'
+    alias vd='vim .'
 fi
 
 # Aliases for convenient terminal commands:
 alias cl='clear'  # Shortcut to clear the terminal screen.
-alias k='cd ..'  # Shortcut to move up one directory level.
+alias cdu='cd ..'  # Shortcut to move up one directory level.
 alias neo='cd ~/nvim'
 alias wez='cd ~/wezterm'
 
