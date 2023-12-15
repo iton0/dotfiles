@@ -141,7 +141,7 @@ alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 # Using this alias, you can update package information 
 # and upgrade packages in one command.
 # Additional autoremoves any packages no longer in use.
-# Current package managers: apt, npm, and flatpak.
+# Current package managers: apt and flatpak.
 
 alias update='
   sudo apt-fast update &&
@@ -164,12 +164,12 @@ else
 fi
 
 # Aliases for convenient terminal commands:
-alias cl='clear'  # Shortcut to clear the terminal screen.
-alias cdu='cd ..'  # Shortcut to move up one directory level.
+alias cl='clear' 
+alias cdu='cd ..'
 alias neo='cd ~/.config/nvim'
-alias neod='cd ~/.config/nvim && vd'
+alias neod='cd ~/.config/nvim && nvim .'
 alias wez='cd ~/.config/wezterm'
-alias wezd='cd ~/.config/wezterm && vd'
+alias wezd='cd ~/.config/wezterm && nvim .'
 
 # Other example aliases
 # alias zshconfig="mate ~/.zshrc"
