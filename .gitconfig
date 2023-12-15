@@ -28,6 +28,7 @@
 	dv = difftool -t nvimdiff -y
 	se = !git rev-list --all | xargs git grep -F
 	gl = config --global -l ; outputs the .gitconfig file
-        unstage = restore --staged
+        unstage = restore --staged ; removes file from staging area
+	untrack = rm --cached ; untracks a file
 	lg = !git log --pretty=format:\"%C(129)%h%Creset -%C(166)%d%Creset %s %C(42)(%cr) %C(117)[%an]\" --abbrev-commit -30
 	alias = !git config --get-regexp ^alias\\. ; outputs the aliases
