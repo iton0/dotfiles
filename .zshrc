@@ -167,7 +167,9 @@ fi
 alias cl='clear'  # Shortcut to clear the terminal screen.
 alias cdu='cd ..'  # Shortcut to move up one directory level.
 alias neo='cd ~/.config/nvim'
+alias neod='cd ~/.config/nvim && vd'
 alias wez='cd ~/.config/wezterm'
+alias wezd='cd ~/.config/wezterm && vd'
 
 # Other example aliases
 # alias zshconfig="mate ~/.zshrc"
