@@ -34,7 +34,7 @@ config.background = {
 
   {
     source = {
-      File = { path = '/home/iton/.config/wezterm/background/background3.gif' },
+      File = { path = '/home/iton/.config/wezterm/background/3.gif' },
     },
     hsb = dimmer,
     height = 'Cover',
