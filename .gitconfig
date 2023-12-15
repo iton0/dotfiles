@@ -13,7 +13,7 @@
 	helper = cache
 [alias]
 	all = add -A
-	chickensandwich = add -u
+	sync = add -u
 	p = push origin HEAD
 	pl = pull origin HEAD
 	st = status -sb
