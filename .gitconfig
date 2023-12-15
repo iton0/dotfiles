@@ -29,3 +29,4 @@
 	gl = config --global -l
         unstage = restore --staged
 	lg = !git log --pretty=format:\"%C(129)%h%Creset -%C(166)%d%Creset %s %C(42)(%cr) %C(117)[%an]\" --abbrev-commit -30
+	alias = !git config --get-regexp ^alias\\.
