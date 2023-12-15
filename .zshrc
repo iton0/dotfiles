@@ -164,7 +164,6 @@ else
 fi
 
 # Aliases for convenient terminal commands:
-alias cl='clear' 
 alias cdu='cd ..'
 alias neo='cd ~/.config/nvim'
 alias neod='cd ~/.config/nvim && nvim .'
