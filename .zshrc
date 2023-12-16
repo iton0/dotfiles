@@ -167,7 +167,7 @@ fi
 alias update-nvim='confirm_nvim_update'
 
 confirm_nvim_update() {
-  read -r "REPLY?This will update Neovim and delete the current version. Make sure that the new nvim-linux64.tar.gz is in the Downloads folder before running this alias! Continue? (y/n): "
+  read -r "REPLY?Make sure that the new nvim-linux64.tar.gz is in the Downloads folder before running this alias! Continue? (y/n): "
   if [[ "$REPLY" = "y" ]]; then
     cd ~/Downloads &&
     tar xzvf nvim-linux64.tar.gz &&
