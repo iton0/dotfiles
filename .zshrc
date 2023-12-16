@@ -163,6 +163,29 @@ else
     alias vd='vim .'
 fi
 
+# Alias for updating Neovim version
+alias update-nvim='confirm_nvim_update'
+
+confirm_nvim_update() {
+  read -r "REPLY?This will update Neovim and delete the current version. Make sure that the new nvim-linux64.tar.gz is in the Downloads folder before running this alias! Continue? (y/n): "
+  if [[ "$REPLY" = "y" ]]; then
+    cd ~/Downloads &&
+    tar xzvf nvim-linux64.tar.gz &&
+    echo "--------------------------------" &&
+    echo "Old version:" &&
+    nvim --version &&
+    sudo rm -rf /opt/nvim-linux64/ &&
+    echo "--------------------------------" &&
+    echo "Old version deleted" &&
+    sudo mv ~/Downloads/nvim-linux64 /opt &&
+    echo "--------------------------------" &&
+    echo "New version:" &&
+    nvim --version
+  else
+    echo "Update cancelled."
+  fi
+}
+
 # Aliases for convenient terminal commands:
 alias cdu='cd ..'
 alias neo='cd ~/.config/nvim'
