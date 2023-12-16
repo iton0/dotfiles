@@ -3,7 +3,7 @@
 
 return {
   'stevearc/conform.nvim',
-  event = { 'BufReadPre', 'BufNewFile' },
+  event = 'LspAttach',
   opts = {
     formatters_by_ft = {
       javascript = { 'prettierd' },

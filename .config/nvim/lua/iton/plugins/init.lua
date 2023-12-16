@@ -21,7 +21,4 @@ return {
       vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
     end,
   },
-
-  -- Improve the default vim.ui interfaces
-  'stevearc/dressing.nvim',
 }
