@@ -180,7 +180,17 @@ confirm_nvim_update() {
     sudo mv ~/Downloads/nvim-linux64 /opt &&
     echo "--------------------------------" &&
     echo "New version:" &&
-    nvim --version
+    nvim --version &&
+    echo "--------------------------------" &&
+    read -r "REPLY?Would you like to delete the nvim-linux64.tar.gz? (y/n): "
+    if [[ "$REPLY" = "y" ]]; then
+      rm ~/Downloads/nvim-linux64.tar.gz &&
+      cd &&
+      echo "File removed"
+    else
+      cd &&
+      echo "File not removed"
+    fi
   else
     echo "Update cancelled."
   fi
