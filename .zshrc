@@ -164,7 +164,7 @@ else
 fi
 
 # Alias for updating Neovim version
-alias update-nvim='confirm_nvim_update'
+alias nvim-update='confirm_nvim_update'
 
 confirm_nvim_update() {
   read -r "REPLY?Make sure that the new nvim-linux64.tar.gz is in the Downloads folder before running this alias! Continue? (y/n): "
