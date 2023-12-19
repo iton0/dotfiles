@@ -202,6 +202,7 @@ alias neo='cd ~/.config/nvim'
 alias neod='cd ~/.config/nvim && nvim .'
 alias wez='cd ~/.config/wezterm'
 alias wezd='cd ~/.config/wezterm && nvim .'
+alias live='live-server'
 
 # Other example aliases
 # alias zshconfig="mate ~/.zshrc"
