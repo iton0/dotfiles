@@ -11,6 +11,10 @@ return {
       'help',
       'text',
       'markdown',
+      'checkhealth',
+      'lspinfo',
+      'zsh',
+      'gitconfig',
     },
   },
 }
