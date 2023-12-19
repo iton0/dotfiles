@@ -25,7 +25,7 @@ vim.o.wrap = true -- Enable line wrapping
 vim.o.linebreak = true -- Wrap lines at word boundaries
 
 -- Set wrap behavior
-vim.o.breakindent = true -- Indent wrapped lines
+-- vim.o.breakindent = true -- Indent wrapped lines
 vim.o.showbreak = ' ↪ ' -- Symbol to indicate wrapped lines
 
 -- Set text width to 80 characters
