@@ -79,8 +79,17 @@ return {
     -- before setting up the servers.
     require('mason-tool-installer').setup({
       auto_update = true,
+      run_on_start = true,
     })
-    require('mason').setup()
+    require('mason').setup({
+      ui = {
+        icons = {
+          package_installed = '✓',
+          package_pending = '➜',
+          package_uninstalled = '✗',
+        },
+      },
+    })
     require('mason-lspconfig').setup({
       automatic_installation = true,
     })
