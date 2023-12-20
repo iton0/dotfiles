@@ -48,6 +48,9 @@ vim.wo.signcolumn = 'yes'
 vim.o.updatetime = 250
 vim.o.timeoutlen = 500
 
+-- Hide the mode indicator in the command line
+vim.o.showmode = false
+
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menu,menuone,preview,noselect'
 
