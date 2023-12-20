@@ -16,6 +16,11 @@ return {
       c = { 'clang_format' },
       python = { 'black' },
       php = { 'phpcbf' },
+      -- Use the "*" filetype to run formatters on all filetypes.
+      ['*'] = { 'codespell' },
+      -- Use the "_" filetype to run formatters on filetypes that don't
+      -- have other formatters configured.
+      ['_'] = { 'trim_whitespace' },
     },
     format_on_save = { async = false, timeout_ms = 500, lsp_fallback = true },
     formatters = {
