@@ -36,11 +36,6 @@ return {
       "<cmd>lua require('harpoon-core.ui').nav_file(3)<cr>",
       desc = 'Mark 3',
     },
-    {
-      '<leader>4',
-      "<cmd>lua require('harpoon-core.ui').nav_file(4)<cr>",
-      desc = 'Mark 4',
-    },
   },
   config = function()
     require('harpoon-core').setup({
