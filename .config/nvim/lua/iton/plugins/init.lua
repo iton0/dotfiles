@@ -21,4 +21,11 @@ return {
       vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
     end,
   },
+
+  -- "gc" to comment visual regions/lines
+  {
+    'numToStr/Comment.nvim',
+    event = { 'BufReadPost', 'BufNewFile' },
+    config = true,
+  },
 }

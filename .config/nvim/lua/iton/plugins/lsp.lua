@@ -4,9 +4,20 @@ return {
   event = { 'BufReadPre', 'BufNewFile' },
   dependencies = {
     -- Automatically install LSPs to stdpath for neovim
-    { 'williamboman/mason.nvim', config = true },
-    'williamboman/mason-lspconfig.nvim',
-    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    {
+      'williamboman/mason.nvim',
+      opts = {
+        ui = {
+          icons = {
+            package_installed = '✓',
+            package_pending = '➜',
+            package_uninstalled = '✗',
+          },
+        },
+      },
+    },
+    { 'williamboman/mason-lspconfig.nvim', opts = { automatic_installation = true } },
+    { 'WhoIsSethDaniel/mason-tool-installer.nvim', opts = { auto_update = true } },
 
     -- Useful status updates for LSP
     -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
@@ -77,22 +88,8 @@ return {
 
     -- mason-lspconfig requires that these setup functions are called in this order
     -- before setting up the servers.
-    require('mason-tool-installer').setup({
-      auto_update = true,
-      run_on_start = true,
-    })
-    require('mason').setup({
-      ui = {
-        icons = {
-          package_installed = '✓',
-          package_pending = '➜',
-          package_uninstalled = '✗',
-        },
-      },
-    })
-    require('mason-lspconfig').setup({
-      automatic_installation = true,
-    })
+    require('mason').setup({})
+    require('mason-lspconfig').setup({})
 
     -- Enable the following language servers
     --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
