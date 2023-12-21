@@ -11,7 +11,7 @@ if wezterm.config_builder then
 end
 
 -- Color and Appearance
-config.color_scheme = 'Tokyo Night (Gogh)'
+config.color_scheme = 'One Dark (base16)'
 
 config.colors = {
   cursor_bg = '#FFD700',
@@ -29,7 +29,7 @@ config.initial_cols = 80
 config.initial_rows = 25
 config.adjust_window_size_when_changing_font_size = false
 
-local dimmer = { brightness = 0.2 }
+local dimmer = { brightness = 0.25 }
 config.background = {
 
   {
