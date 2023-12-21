@@ -200,6 +200,7 @@ confirm_nvim_update() {
 alias cdu='cd ..'
 alias ho='cd'
 alias cl='clear'
+alias hocl='cd && clear'
 alias vzsh='nvim ~/.zshrc'
 alias vgit='nvim ~/.gitconfig'
 alias neo='cd ~/.config/nvim'
