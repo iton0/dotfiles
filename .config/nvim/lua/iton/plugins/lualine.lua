@@ -20,14 +20,14 @@ return {
           fg = '#abb2bf',
           bg = '#282c34',
           gray1 = '#828997',
-          gray3 = '#3e4452',
         }
 
         return {
           normal = {
             a = { fg = colors.bg, bg = colors.blue, gui = 'bold' },
-            b = { fg = colors.fg, bg = colors.gray3 },
+            b = { fg = '#d8b56d', bg = nil },
             c = { fg = colors.fg, bg = nil },
+            y = { fg = colors.fg, bg = nil },
           },
           command = { a = { fg = colors.bg, bg = colors.yellow, gui = 'bold' } },
           insert = { a = { fg = colors.bg, bg = colors.green, gui = 'bold' } },
