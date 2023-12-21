@@ -88,7 +88,7 @@ config.keys = keybindings
 -- Font
 config.font = wezterm.font('FiraCode Nerd Font')
 
-config.font_size = 16
+config.font_size = 15
 config.cell_width = 1.0
 config.line_height = 1.0
 config.unicode_version = 8
