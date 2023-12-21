@@ -1,4 +1,8 @@
 -- Useful plugin to show you pending keybinds.
+--
+-- Keys currently up for grabs with <leader> key
+-- mapping: (alphabet)
+-- j, n, o, p, u, v, x, y, z
 return {
   'folke/which-key.nvim',
   event = 'VeryLazy',
