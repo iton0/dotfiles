@@ -23,7 +23,7 @@ vim.opt.rtp:prepend(lazypath)
 -- [[ Plugins ]]
 require('lazy').setup({ { import = 'iton.plugins' } }, {
   install = {
-    colorscheme = { 'tokyonight' },
+    colorscheme = { 'onedark' },
   },
   checker = {
     -- automatically check for plugin updates

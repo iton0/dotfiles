@@ -1,13 +1,19 @@
 return {
-  -- Theme inspired by TokyoNight
-  'folke/tokyonight.nvim',
+  'olimorris/onedarkpro.nvim',
   lazy = false,
   priority = 1000,
+  opts = {},
   config = function()
-    vim.cmd([[colorscheme tokyonight-storm]])
+    require('onedarkpro').setup({
+      options = {
+        transparency = true,
+        highlight_inactive_windows = true,
+      },
+    })
+    vim.cmd([[colorscheme onedark_vivid]])
     -- Adjust Neovim visual elements
-    vim.cmd([[highlight CursorLineNr ctermfg=Yellow guifg=#FFD700]])
-    vim.cmd([[highlight LineNr ctermfg=LightGray guifg=LightGray]])
+    vim.cmd([[highlight CursorLineNr guibg=NONE ctermfg=Yellow guifg=#FFD700]])
+    vim.cmd([[highlight LineNr ctermfg=LightGray guibg=NONE guifg=LightGray]])
     vim.cmd([[highlight CursorLine guibg=NONE ctermbg=NONE]])
     vim.cmd([[highlight StatusLine guibg=NONE ctermbg=NONE]])
     vim.cmd([[highlight Normal guibg=NONE ctermbg=NONE]])
