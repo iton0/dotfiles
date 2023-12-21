@@ -9,6 +9,7 @@ return {
     vim.cmd([[highlight CursorLineNr ctermfg=Yellow guifg=#FFD700]])
     vim.cmd([[highlight LineNr ctermfg=LightGray guifg=LightGray]])
     vim.cmd([[highlight CursorLine guibg=NONE ctermbg=NONE]])
+    vim.cmd([[highlight StatusLine guibg=NONE ctermbg=NONE]])
     vim.cmd([[highlight Normal guibg=NONE ctermbg=NONE]])
     vim.cmd([[highlight FoldColumn guibg=NONE ctermbg=NONE]])
     vim.cmd([[highlight Folded guibg=NONE guifg=#666666]])

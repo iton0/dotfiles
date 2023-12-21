@@ -5,7 +5,7 @@ return {
   'David-Kunz/gen.nvim',
   keys = {
     {
-      '<leader>i',
+      '<leader>m',
       desc = 'AI',
     },
   },
@@ -17,10 +17,10 @@ return {
     debug = false, -- Prints errors and the command which is run.
   },
   config = function()
-    vim.keymap.set({ 'n', 'v' }, '<leader>iu', ':Gen<CR>', { noremap = true, silent = true, desc = 'Toggle LLM' })
-    vim.keymap.set('v', '<leader>ir', ':Gen Review_Code<CR>', { noremap = true, silent = true, desc = 'Review Code' })
-    vim.keymap.set('v', '<leader>ie', ':Gen Enhance_Code<CR>', { noremap = true, silent = true, desc = 'Enhance Code' })
-    vim.keymap.set('v', '<leader>is', ':Gen Summarize<CR>', { noremap = true, silent = true, desc = 'Summarize' })
-    vim.keymap.set('v', '<leader>ic', ':Gen Make_Concise<CR>', { noremap = true, silent = true, desc = 'Make Concise' })
+    vim.keymap.set({ 'n', 'v' }, '<leader>mu', ':Gen<CR>', { noremap = true, silent = true, desc = 'Toggle LLM' })
+    vim.keymap.set('v', '<leader>mr', ':Gen Review_Code<CR>', { noremap = true, silent = true, desc = 'Review Code' })
+    vim.keymap.set('v', '<leader>me', ':Gen Enhance_Code<CR>', { noremap = true, silent = true, desc = 'Enhance Code' })
+    vim.keymap.set('v', '<leader>ms', ':Gen Summarize<CR>', { noremap = true, silent = true, desc = 'Summarize' })
+    vim.keymap.set('v', '<leader>mc', ':Gen Make_Concise<CR>', { noremap = true, silent = true, desc = 'Make Concise' })
   end,
 }

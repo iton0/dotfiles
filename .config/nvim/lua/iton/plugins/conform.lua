@@ -22,7 +22,7 @@ return {
       -- have other formatters configured.
       ['_'] = { 'trim_whitespace' },
     },
-    format_on_save = { async = true, timeout_ms = 500, lsp_fallback = true },
+    format_on_save = { async = false, timeout_ms = 500, lsp_fallback = true },
     formatters = {
       shfmt = {
         prepend_args = { '-i', '2' },

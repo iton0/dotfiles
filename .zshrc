@@ -84,8 +84,8 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git 
-  zsh-autosuggestions 
+  git
+  zsh-autosuggestions
   zsh-syntax-highlighting
 )
 
@@ -138,7 +138,7 @@ alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 
 # Useful for managing dotfiles across systems.
 
-# Using this alias, you can update package information 
+# Using this alias, you can update package information
 # and upgrade packages in one command.
 # Additional autoremoves any packages no longer in use.
 # Current package managers: apt and flatpak.
@@ -198,6 +198,9 @@ confirm_nvim_update() {
 
 # Aliases for convenient terminal commands:
 alias cdu='cd ..'
+alias ho='cd'
+alias vzsh='nvim ~/.zshrc'
+alias vgit='nvim ~/.gitconfig'
 alias neo='cd ~/.config/nvim'
 alias neod='cd ~/.config/nvim && nvim .'
 alias wez='cd ~/.config/wezterm'
