@@ -2,7 +2,7 @@ return {
   -- Highlight, edit, and navigate code
   'nvim-treesitter/nvim-treesitter',
   version = false,
-  event = 'LspAttach',
+  event = { 'BufReadPre', 'BufNewFile' },
   init = function(plugin)
     require('lazy.core.loader').add_to_rtp(plugin)
     require('nvim-treesitter.query_predicates')
