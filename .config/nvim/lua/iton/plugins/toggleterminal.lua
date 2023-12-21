@@ -13,7 +13,6 @@ return {
     },
   },
   opts = {
-    start_in_insert = false,
     auto_scroll = false,
   },
   vim.keymap.set('t', '<esc>', [[<C-\><C-n>]]),
