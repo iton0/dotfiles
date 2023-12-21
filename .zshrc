@@ -199,6 +199,7 @@ confirm_nvim_update() {
 # Aliases for convenient terminal commands:
 alias cdu='cd ..'
 alias ho='cd'
+alias cl='clear'
 alias vzsh='nvim ~/.zshrc'
 alias vgit='nvim ~/.gitconfig'
 alias neo='cd ~/.config/nvim'
