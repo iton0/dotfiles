@@ -3,7 +3,7 @@ return {
   -- Git related plugins
   {
     'tpope/vim-rhubarb',
-    event = { 'BufReadPre', 'BufNewFile' },
+    event = { 'BufReadPost', 'BufNewFile' },
     dependencies = {
       'tpope/vim-fugitive',
     },
