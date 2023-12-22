@@ -1,6 +1,9 @@
 return {
   -- Improve the default vim.ui interfaces
   'stevearc/dressing.nvim',
+  keys = {
+    '<leader>',
+  },
   opts = {},
 
   -- To open Lazy.nvim ui

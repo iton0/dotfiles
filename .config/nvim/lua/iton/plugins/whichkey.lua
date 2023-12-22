@@ -5,7 +5,12 @@
 -- j, n, o, p, u, v, x, y, z
 return {
   'folke/which-key.nvim',
-  event = 'VeryLazy',
+  keys = {
+    {
+      '<leader>k',
+      ':WhichKey<CR>',
+    },
+  },
   init = function()
     vim.o.timeout = true
     vim.o.timeout = 500
@@ -19,7 +24,6 @@ return {
       ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
       ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
       ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-      vim.keymap.set('n', '<leader>k', ':WhichKey<CR>', { noremap = true, silent = true }),
     })
   end,
 }
