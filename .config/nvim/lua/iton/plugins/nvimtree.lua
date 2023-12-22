@@ -12,7 +12,6 @@ return {
     vim.g.loaded_netrwPlugin = 1
 
     -- change color for arrows in tree to light blue
-    vim.cmd([[ highlight NvimTreeFolderArrowClosed guifg=#3FC5FF ]])
     vim.cmd([[ highlight NvimTreeNormal guibg=NONE ]])
     vim.cmd([[ highlight NvimTreeNormalFloat guibg=NONE ]])
     vim.cmd([[ highlight NvimTreeNormalNC guibg=NONE ]])
