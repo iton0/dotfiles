@@ -7,7 +7,7 @@ vim.o.hlsearch = false
 vim.wo.number = true
 vim.wo.relativenumber = true
 
--- Tabs and Identation
+-- Tabs and Indentation
 vim.o.tabstop = 2
 vim.o.shiftwidth = 2
 vim.o.expandtab = true
@@ -15,6 +15,10 @@ vim.o.autoindent = true
 
 -- Enable mouse mode
 vim.o.mouse = 'a'
+
+-- Enable cursor blinking
+vim.o.guicursor =
+  'n-v-c:block-Cursor/lCursor,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait100-blinkoff150-blinkon200,sm:block-blinkwait175-blinkoff150-blinkon175'
 
 -- Sync clipboard between OS and Neovim.
 --  See `:help 'clipboard'`

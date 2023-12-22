@@ -197,7 +197,7 @@ confirm_nvim_update() {
 }
 
 # Aliases for convenient terminal commands:
-alias cdu='cd ..'
+alias ud='cd ..'
 alias ho='cd'
 alias cl='clear'
 alias hocl='cd && clear'
