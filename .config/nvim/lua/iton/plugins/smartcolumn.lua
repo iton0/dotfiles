@@ -7,6 +7,7 @@ return {
       'gitcommit',
       'lua',
       'lazy',
+      'html',
       'mason',
       'help',
       'text',
