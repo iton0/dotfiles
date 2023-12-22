@@ -25,9 +25,7 @@ return {
   -- "gc" to comment visual regions/lines
   {
     'numToStr/Comment.nvim',
-    keys = {
-      'g',
-    },
+    event = { 'BufReadPost', 'BufNewFile' },
     config = true,
   },
 }
