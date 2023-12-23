@@ -18,7 +18,7 @@ vim.o.mouse = 'a'
 
 -- Enable cursor blinking
 vim.o.guicursor =
-  'n-v-c:block-Cursor/lCursor,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait100-blinkoff150-blinkon200,sm:block-blinkwait175-blinkoff150-blinkon175'
+  'n-v-c:block-Cursor/lCursor,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait175-blinkoff200-blinkon300,sm:block-blinkwait175-blinkoff150-blinkon175'
 
 -- Sync clipboard between OS and Neovim.
 --  See `:help 'clipboard'`
