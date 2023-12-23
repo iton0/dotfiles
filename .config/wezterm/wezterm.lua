@@ -14,8 +14,7 @@ end
 config.color_scheme = 'One Dark (base16)'
 
 config.colors = {
-  cursor_bg = '#FFD700',
-  cursor_fg = 'black',
+  cursor_bg = 'white',
   cursor_border = '#FFD700',
 }
 
