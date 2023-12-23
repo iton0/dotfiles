@@ -25,9 +25,9 @@ return {
         return {
           normal = {
             a = { fg = colors.bg, bg = colors.blue, gui = 'bold' },
-            b = { fg = '#d8b56d', bg = nil },
-            c = { fg = colors.fg, bg = nil },
-            y = { fg = colors.fg, bg = nil },
+            b = { fg = '#d8b56d', bg = nil, gui = 'italic' },
+            c = { fg = colors.fg, bg = nil, gui = 'bold' },
+            y = { fg = colors.fg, bg = nil, gui = 'bold' },
           },
           command = { a = { fg = colors.bg, bg = colors.yellow, gui = 'bold' } },
           insert = { a = { fg = colors.bg, bg = colors.green, gui = 'bold' } },
@@ -35,9 +35,9 @@ return {
           terminal = { a = { fg = colors.bg, bg = colors.cyan, gui = 'bold' } },
           replace = { a = { fg = colors.bg, bg = colors.red1, gui = 'bold' } },
           inactive = {
-            a = { fg = colors.gray1, bg = colors.bg, gui = 'bold' },
+            a = { fg = colors.gray1, bg = colors.bg },
             b = { fg = colors.gray1, bg = colors.bg },
-            c = { fg = colors.gray1, bg = nil },
+            c = { fg = colors.gray1, bg = colors.bg },
           },
         }
       end,
