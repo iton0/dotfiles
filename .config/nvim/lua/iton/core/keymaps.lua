@@ -33,6 +33,9 @@ vim.keymap.set('n', '<CR>', ':normal! za<CR>', { noremap = true, silent = true, 
 -- Remap Ctrl + S to perform a decrement action
 vim.api.nvim_set_keymap('n', '<C-S>', '<C-X>', { noremap = true, silent = true })
 
+-- Paste without affecting the default register contents
+vim.keymap.set('v', 'p', '"_dP')
+
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
