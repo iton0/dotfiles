@@ -37,7 +37,7 @@ return {
           inactive = {
             a = { fg = colors.gray1, bg = colors.bg },
             b = { fg = colors.gray1, bg = colors.bg },
-            c = { fg = colors.gray1, bg = colors.bg },
+            c = { fg = colors.gray1, bg = nil },
           },
         }
       end,

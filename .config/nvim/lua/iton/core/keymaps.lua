@@ -28,8 +28,6 @@ end
 
 vim.api.nvim_set_var('MyFoldText', MyFoldText)
 
-vim.keymap.set('n', '<CR>', ':normal! za<CR>', { noremap = true, silent = true, desc = 'Toggle Fold' })
-
 -- Remap Ctrl + S to perform a decrement action
 vim.api.nvim_set_keymap('n', '<C-S>', '<C-X>', { noremap = true, silent = true })
 
