@@ -48,7 +48,6 @@ return {
           'html',
           'css',
           'lua',
-          'python',
           'rust',
           'tsx',
           'javascript',

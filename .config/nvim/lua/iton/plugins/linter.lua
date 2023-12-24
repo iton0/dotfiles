@@ -8,7 +8,6 @@ return {
       javascript = { 'eslint_d' },
       typescript = { 'eslint_d' },
       css = { 'stylelint' },
-      python = { 'pylint' },
       php = { 'phpstan' },
       java = { 'checkstyle' },
       c = { 'cpplint' },

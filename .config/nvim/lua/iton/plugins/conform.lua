@@ -14,7 +14,6 @@ return {
       css = { 'prettierd' },
       cpp = { 'clang_format' },
       c = { 'clang_format' },
-      python = { 'black' },
       php = { 'phpcbf' },
       -- Use the "*" filetype to run formatters on all filetypes.
       ['*'] = { 'codespell' },

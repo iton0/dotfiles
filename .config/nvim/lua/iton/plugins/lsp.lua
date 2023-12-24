@@ -104,11 +104,6 @@ return {
     --  define the property 'filetypes' to the map in question.
     local servers = {
       clangd = {},
-      pyright = {
-        python = {
-          analysis = { typCheckingMode = 'strict' },
-        },
-      },
       jdtls = {
         redhat = {
           telemetry = { enabled = false },
