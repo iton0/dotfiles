@@ -55,13 +55,13 @@ return {
       },
       lualine_c = {
         {
-          'filetype',
-          padding = { left = 1, right = 0 },
-          colored = true,
-          icon_only = true,
+          'filename',
         },
         {
-          'filename',
+          'filetype',
+          padding = { left = 0, right = 0 },
+          colored = true,
+          icon_only = true,
         },
       },
       lualine_x = {
