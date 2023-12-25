@@ -11,11 +11,11 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Remap for window movement
-vim.keymap.set('n', '<c-h>', '<c-w>h', { noremap = true, silent = true, desc = 'Go to left window' })
-vim.keymap.set('n', '<c-j>', '<c-w>j', { noremap = true, silent = true, desc = 'Go to down window' })
-vim.keymap.set('n', '<c-k>', '<c-w>k', { noremap = true, silent = true, desc = 'Go to up window' })
-vim.keymap.set('n', '<c-l>', '<c-w>l', { noremap = true, silent = true, desc = 'Go to right window' })
-vim.keymap.set('n', '<c-w>', '<c-w>w', { noremap = true, silent = true, desc = 'Switch windows' })
+vim.keymap.set('n', '<c-h>', '<c-w>h', { noremap = true, silent = true })
+vim.keymap.set('n', '<c-j>', '<c-w>j', { noremap = true, silent = true })
+vim.keymap.set('n', '<c-k>', '<c-w>k', { noremap = true, silent = true })
+vim.keymap.set('n', '<c-l>', '<c-w>l', { noremap = true, silent = true })
+vim.keymap.set('n', '<c-w>', '<c-w>w', { noremap = true, silent = true })
 
 -- To move line up/down
 vim.keymap.set('n', '<S-Up>', ':m .-2<CR>==', { noremap = true, silent = true })
