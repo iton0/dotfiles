@@ -3,6 +3,7 @@
 -- plugin files
 -- The keymaps below are needed at startup
 -- See `:help vim.keymap.set()`
+
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- Remap for dealing with word wrap
@@ -15,6 +16,22 @@ vim.keymap.set('n', '<c-j>', '<c-w>j', { noremap = true, silent = true, desc = '
 vim.keymap.set('n', '<c-k>', '<c-w>k', { noremap = true, silent = true, desc = 'Go to up window' })
 vim.keymap.set('n', '<c-l>', '<c-w>l', { noremap = true, silent = true, desc = 'Go to right window' })
 vim.keymap.set('n', '<c-w>', '<c-w>w', { noremap = true, silent = true, desc = 'Switch windows' })
+
+-- To move line up/down
+vim.keymap.set('n', '<S-Up>', ':m .-2<CR>==', { noremap = true, silent = true })
+vim.keymap.set('n', '<S-Down>', ':m .+1<CR>==', { noremap = true, silent = true })
+vim.keymap.set('v', '<S-Up>', ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
+vim.keymap.set('v', '<S-Down>', ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
+
+-- To shift line left/right
+vim.keymap.set('n', '<', '<<', { noremap = true, silent = true })
+vim.keymap.set('n', '>', '>>', { noremap = true, silent = true })
+vim.keymap.set('v', '<', '<gv', { noremap = true, silent = true })
+vim.keymap.set('v', '>', '>gv', { noremap = true, silent = true })
+
+-- To go to the beginning and the end of line
+vim.keymap.set('n', 'H', '_', { noremap = true, silent = true })
+vim.keymap.set('n', 'L', '$', { noremap = true, silent = true })
 
 -- Folding configuration
 vim.api.nvim_set_option('foldmethod', 'expr')
@@ -32,7 +49,7 @@ vim.api.nvim_set_var('MyFoldText', MyFoldText)
 vim.api.nvim_set_keymap('n', '<C-S>', '<C-X>', { noremap = true, silent = true })
 
 -- Paste without affecting the default register contents
-vim.keymap.set('v', 'p', '"_dP')
+vim.keymap.set('v', 'p', '"_dP', { noremap = true, silent = true })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
