@@ -12,7 +12,7 @@ return {
   -- Detect tabstop and shiftwidth automatically
   {
     'tpope/vim-sleuth',
-    event = { 'BufReadPre', 'BufNewFile' },
+    event = { 'BufReadPost', 'BufNewFile' },
     config = function()
       -- Diagnostic keymaps
       vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
