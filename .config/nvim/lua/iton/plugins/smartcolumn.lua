@@ -6,6 +6,7 @@ return {
       'NvimTree',
       'gitcommit',
       'lua',
+      'json',
       'lazy',
       'html',
       'mason',
