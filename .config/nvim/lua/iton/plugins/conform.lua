@@ -3,7 +3,7 @@
 
 return {
   'stevearc/conform.nvim',
-  event = 'BufWritePost',
+  event = 'BufWritePre',
   opts = {
     formatters_by_ft = {
       javascript = { 'prettierd' },

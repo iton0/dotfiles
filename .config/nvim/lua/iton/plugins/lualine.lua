@@ -2,7 +2,7 @@ return {
   -- Set lualine as statusline
   'nvim-lualine/lualine.nvim',
   -- See `:help lualine.txt`
-  event = 'LspAttach',
+  event = { 'BufReadPre', 'BufNewFile' },
   dependencies = {
     'nvim-tree/nvim-web-devicons',
   },
@@ -27,6 +27,7 @@ return {
             a = { fg = colors.bg, bg = colors.blue, gui = 'bold' },
             b = { fg = '#d8b56d', bg = nil, gui = 'italic' },
             c = { fg = colors.fg, bg = nil, gui = 'bold' },
+            x = { fg = colors.fg, bg = nil, gui = 'italic' },
             y = { fg = colors.fg, bg = nil, gui = 'bold' },
           },
           command = { a = { fg = colors.bg, bg = colors.yellow, gui = 'bold' } },
@@ -41,8 +42,7 @@ return {
           },
         }
       end,
-      component_separators = '',
-      section_separators = '',
+      component_separators = { right = '❮' },
     },
     sections = {
       lualine_a = {
@@ -55,13 +55,20 @@ return {
       },
       lualine_c = {
         {
-          'filename',
-        },
-        {
           'filetype',
-          padding = { left = 0, right = 0 },
+          padding = { left = 1, right = 0 },
           colored = true,
           icon_only = true,
+        },
+        {
+          'filename',
+          newfile_status = true,
+          symbols = {
+            modified = '✳️',
+            readonly = '🔒',
+            unnamed = '⟨No Name⟩',
+            newfile = '✨',
+          },
         },
       },
       lualine_x = {
@@ -69,6 +76,10 @@ return {
           require('lazy.status').updates,
           cond = require('lazy.status').has_updates,
           color = { fg = '#ff9e64' },
+        },
+        {
+          'datetime',
+          style = '%m/%d/%y %I:%M%p',
         },
         'encoding',
         'fileformat',
