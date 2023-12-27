@@ -9,7 +9,7 @@ return {
         highlight_inactive_windows = true,
       },
     })
-    vim.cmd([[colorscheme onedark_vivid]])
+    vim.cmd([[colorscheme onedark]])
     -- Adjust Neovim visual elements
     vim.cmd([[highlight Cursor guibg=White]])
     vim.cmd([[highlight MatchParen gui=bold guifg=#FFA500]])
