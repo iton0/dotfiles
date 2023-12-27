@@ -7,6 +7,7 @@ return {
       'gitcommit',
       'lua',
       'json',
+      'netrw',
       'lazy',
       'html',
       'mason',
