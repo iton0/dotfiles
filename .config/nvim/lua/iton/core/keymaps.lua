@@ -51,6 +51,12 @@ vim.api.nvim_set_keymap('n', '<C-S>', '<C-X>', { noremap = true, silent = true }
 -- Paste without affecting the default register contents
 vim.keymap.set('v', 'p', '"_dP', { noremap = true, silent = true })
 
+-- Toggle upper/lowercase
+-- visual will work respective of
+-- each individual character
+vim.keymap.set('n', '<C-C>', 'g~l', { noremap = true, silent = true })
+vim.keymap.set('v', '<C-C>', 'g~', { noremap = true, silent = true })
+
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
