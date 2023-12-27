@@ -26,9 +26,9 @@ return {
           normal = {
             a = { fg = colors.bg, bg = colors.blue, gui = 'bold' },
             b = { fg = '#d8b56d', bg = nil, gui = 'italic' },
-            c = { fg = colors.fg, bg = nil, gui = 'bold' },
+            c = { fg = colors.fg, bg = nil },
             x = { fg = colors.fg, bg = nil, gui = 'italic' },
-            y = { fg = colors.fg, bg = nil, gui = 'bold' },
+            y = { fg = colors.fg, bg = nil },
           },
           command = { a = { fg = colors.bg, bg = colors.yellow, gui = 'bold' } },
           insert = { a = { fg = colors.bg, bg = colors.green, gui = 'bold' } },

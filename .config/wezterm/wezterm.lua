@@ -14,8 +14,7 @@ end
 config.color_scheme = 'One Dark (base16)'
 
 config.colors = {
-  cursor_bg = 'white',
-  cursor_border = '#FFD700',
+  cursor_border = 'white',
 }
 
 config.anti_alias_custom_block_glyphs = true

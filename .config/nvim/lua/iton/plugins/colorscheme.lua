@@ -11,7 +11,6 @@ return {
     })
     vim.cmd([[colorscheme onedark]])
     -- Adjust Neovim visual elements
-    vim.cmd([[highlight Cursor guibg=White]])
     vim.cmd([[highlight MatchParen gui=bold guifg=#FFA500]])
     vim.cmd([[highlight CursorLineNr guibg=NONE ctermfg=Yellow guifg=#FFD700]])
     vim.cmd([[highlight Visual guibg=#5C6370]])
