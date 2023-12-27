@@ -79,7 +79,7 @@ return {
         },
         {
           'datetime',
-          style = '%m/%d/%y %I:%M%p',
+          style = '%I:%M%p',
         },
         'encoding',
         'fileformat',
