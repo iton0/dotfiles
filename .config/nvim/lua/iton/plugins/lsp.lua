@@ -6,9 +6,6 @@ return {
     -- Automatically install LSPs to stdpath for neovim
     {
       'williamboman/mason.nvim',
-      dependencies = {
-        { 'WhoIsSethDaniel/mason-tool-installer.nvim', opts = { auto_update = true } },
-      },
       opts = {
         ui = {
           border = 'rounded',
@@ -18,6 +15,15 @@ return {
             package_uninstalled = '✗',
           },
         },
+      },
+    },
+    {
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
+      opts = {
+        auto_update = true,
+        run_on_start = true,
+        start_delay = 1000,
+        debounce_hours = 1,
       },
     },
     { 'williamboman/mason-lspconfig.nvim', opts = { automatic_installation = true } },
@@ -32,9 +38,16 @@ return {
           poll_rate = 5,
           suppress_on_insert = true,
           ignore_done_already = true,
+          ignore_empty_message = true,
           display = {
             render_limit = 2,
             done_ttl = 2,
+          },
+        },
+        notification = {
+          window = {
+            normal_hl = 'Normal',
+            winblend = 0,
           },
         },
       },
@@ -110,9 +123,10 @@ return {
         },
       },
       tsserver = {},
-      html = {},
       lua_ls = {
         Lua = {
+          codeLens = { enable = true },
+          completion = { callSnippet = 'Replace' },
           workspace = { checkThirdParty = false },
           telemetry = { enable = false },
           diagnostics = { disable = { 'missing-fields' } },
@@ -121,11 +135,7 @@ return {
     }
 
     -- Setup neovim lua configuration
-    require('neodev').setup({
-      library = {
-        types = true,
-      },
-    })
+    require('neodev').setup({})
 
     -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
     local capabilities = vim.lsp.protocol.make_client_capabilities()
