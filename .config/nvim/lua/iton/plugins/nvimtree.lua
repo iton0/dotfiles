@@ -18,6 +18,7 @@ return {
     vim.cmd([[ highlight NvimTreeWinSeparator guibg=NONE ]])
     vim.cmd([[ highlight NvimTreeEndOfBuffer guibg=NONE ]])
     vim.cmd([[ highlight NvimTreeFolderArrowOpen guifg=#3FC5FF ]])
+    vim.cmd([[ highlight NvimTreeFolderArrowClosed guifg=#3FC5FF ]])
 
     -- configure nvim-tree
     nvimtree.setup({
