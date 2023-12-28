@@ -15,7 +15,7 @@ return {
     vim.cmd([[ highlight NvimTreeNormal guibg=NONE ]])
     vim.cmd([[ highlight NvimTreeNormalFloat guibg=NONE ]])
     vim.cmd([[ highlight NvimTreeNormalNC guibg=NONE ]])
-    vim.cmd([[ highlight NvimTreeWinSeparator guibg=NONE ]])
+    vim.cmd([[ highlight NvimTreeWinSeparator gui=bold guibg=NONE ]])
     vim.cmd([[ highlight NvimTreeEndOfBuffer guibg=NONE ]])
     vim.cmd([[ highlight NvimTreeFolderArrowOpen guifg=#3FC5FF ]])
     vim.cmd([[ highlight NvimTreeFolderArrowClosed guifg=#3FC5FF ]])
