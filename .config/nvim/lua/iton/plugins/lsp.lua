@@ -21,9 +21,7 @@ return {
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       opts = {
         auto_update = true,
-        run_on_start = true,
         start_delay = 1000,
-        debounce_hours = 1,
       },
     },
     { 'williamboman/mason-lspconfig.nvim', opts = { automatic_installation = true } },
