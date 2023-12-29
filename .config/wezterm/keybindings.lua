@@ -172,7 +172,10 @@ return {
   {
     key = 'U',
     mods = 'CTRL|SHIFT',
-    action = wezterm.action.CharSelect({ copy_on_select = true, copy_to = 'ClipboardAndPrimarySelection' }),
+    action = wezterm.action.CharSelect({
+      copy_on_select = true,
+      copy_to = 'ClipboardAndPrimarySelection',
+    }),
   },
   {
     key = 'F',
