@@ -32,7 +32,13 @@ require('lazy').setup({ { import = 'iton.plugins' } }, {
     notify = false,
     frequency = 86400, -- Check for updates every 24 hours
   },
-  ui = { border = 'rounded' },
+  ui = {
+    border = 'rounded',
+    icons = {
+      loaded = '💃',
+      not_loaded = '🦥',
+    },
+  },
   change_detection = {
     notify = false,
   },

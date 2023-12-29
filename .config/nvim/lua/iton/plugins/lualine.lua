@@ -77,7 +77,12 @@ return {
           'datetime',
           style = '%I:%M%p',
         },
-        'encoding',
+        {
+          'encoding',
+          fmt = function(str)
+            return string.upper(str)
+          end,
+        },
         { 'fileformat', padding = { left = 1, right = 2 } },
         {
           require('lazy.status').updates,
