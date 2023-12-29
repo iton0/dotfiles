@@ -42,7 +42,8 @@ return {
           },
         }
       end,
-      component_separators = { right = '❮' },
+      -- component_separators = { right = '❮' },
+      component_separators = { right = '' },
     },
     sections = {
       lualine_a = {
@@ -73,16 +74,16 @@ return {
       },
       lualine_x = {
         {
-          require('lazy.status').updates,
-          cond = require('lazy.status').has_updates,
-          color = { fg = '#ff9e64' },
-        },
-        {
           'datetime',
           style = '%I:%M%p',
         },
         'encoding',
-        'fileformat',
+        { 'fileformat', padding = { left = 1, right = 2 } },
+        {
+          require('lazy.status').updates,
+          cond = require('lazy.status').has_updates,
+          color = { fg = '#ff9e64' },
+        },
       },
     },
   },
