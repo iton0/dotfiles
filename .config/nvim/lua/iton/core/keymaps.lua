@@ -7,8 +7,18 @@
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+vim.keymap.set(
+  'n',
+  'k',
+  "v:count == 0 ? 'gk' : 'k'",
+  { expr = true, silent = true }
+)
+vim.keymap.set(
+  'n',
+  'j',
+  "v:count == 0 ? 'gj' : 'j'",
+  { expr = true, silent = true }
+)
 
 -- Remap for window movement
 vim.keymap.set('n', '<c-h>', '<c-w>h', { noremap = true, silent = true })
@@ -19,9 +29,24 @@ vim.keymap.set('n', '<c-w>', '<c-w>w', { noremap = true, silent = true })
 
 -- To move line up/down
 vim.keymap.set('n', '<S-Up>', ':m .-2<CR>==', { noremap = true, silent = true })
-vim.keymap.set('n', '<S-Down>', ':m .+1<CR>==', { noremap = true, silent = true })
-vim.keymap.set('v', '<S-Up>', ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
-vim.keymap.set('v', '<S-Down>', ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
+vim.keymap.set(
+  'n',
+  '<S-Down>',
+  ':m .+1<CR>==',
+  { noremap = true, silent = true }
+)
+vim.keymap.set(
+  'v',
+  '<S-Up>',
+  ":m '<-2<CR>gv=gv",
+  { noremap = true, silent = true }
+)
+vim.keymap.set(
+  'v',
+  '<S-Down>',
+  ":m '>+1<CR>gv=gv",
+  { noremap = true, silent = true }
+)
 
 -- To shift line left/right
 vim.keymap.set('n', '<', '<<', { noremap = true, silent = true })
@@ -46,7 +71,12 @@ end
 vim.api.nvim_set_var('MyFoldText', MyFoldText)
 
 -- Remap Ctrl + S to perform a decrement action
-vim.api.nvim_set_keymap('n', '<C-S>', '<C-X>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap(
+  'n',
+  '<C-S>',
+  '<C-X>',
+  { noremap = true, silent = true }
+)
 
 -- Paste without affecting the default register contents
 vim.keymap.set('v', 'p', '"_dP', { noremap = true, silent = true })
@@ -59,7 +89,8 @@ vim.keymap.set('v', '<C-C>', 'g~', { noremap = true, silent = true })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
-local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+local highlight_group =
+  vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
     vim.highlight.on_yank()
