@@ -8,7 +8,7 @@ return {
     -- before the keymapping
     {
       '<leader>t',
-      ':ToggleTerm <CR>',
+      '<cmd>ToggleTerm <CR>',
       desc = 'Toggle Terminal',
     },
   },

@@ -3,7 +3,7 @@ return {
   keys = {
     {
       '<leader>i',
-      "<cmd> lua require('nvim-toggler').toggle()<cr>",
+      "<cmd>require('nvim-toggler').toggle()<cr>",
       desc = 'Invert',
     },
   },

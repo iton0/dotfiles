@@ -35,25 +35,25 @@ return {
       'n',
       '<leader>cc',
       ':RunCode<CR>',
-      { noremap = true, silent = false, desc = 'Run Code' }
+      { noremap = true, silent = true, desc = 'Run Code' }
     )
     vim.keymap.set(
       'n',
       '<leader>cf',
       ':RunFile<CR>',
-      { noremap = true, silent = false, desc = 'Run File' }
+      { noremap = true, silent = true, desc = 'Run File' }
     )
     vim.keymap.set(
       'n',
       '<leader>cp',
       ':RunProject<CR>',
-      { noremap = true, silent = false, desc = 'Run Project' }
+      { noremap = true, silent = true, desc = 'Run Project' }
     )
     vim.keymap.set(
       'n',
       '<leader>cl',
       ':RunClose<CR>',
-      { noremap = true, silent = false, desc = 'Close Code Runner' }
+      { noremap = true, silent = true, desc = 'Close Code Runner' }
     )
   end,
 }
