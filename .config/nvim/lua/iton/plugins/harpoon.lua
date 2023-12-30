@@ -5,23 +5,23 @@ return {
     'nvim-lua/plenary.nvim',
   },
   keys = {
-    { '<leader>h', '', desc = 'Harpoon' },
+    { '<leader>h', 'Harpoon' },
     {
       '<leader>hm',
       "<cmd>lua require('harpoon-core.mark').add_file()<cr><cmd>lua require('notify')('Mark added', 'info')<cr>",
+      desc = 'Add mark',
       {
         noremap = true,
         silent = true,
-        desc = 'Add mark',
       },
     },
     {
       '<leader>hr',
       "<cmd>lua require('harpoon-core.mark').rm_file()<cr><cmd>lua require('notify')('Mark removed', 'info')<cr>",
+      desc = 'Remove mark',
       {
         noremap = true,
         silent = true,
-        desc = 'Remove mark',
       },
     },
     {

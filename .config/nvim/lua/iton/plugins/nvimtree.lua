@@ -2,7 +2,7 @@ return {
   'nvim-tree/nvim-tree.lua',
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   keys = {
-    { '<leader>f', desc = 'File Explorer' },
+    { '<leader>f', 'File Explorer' },
   },
   config = function()
     local nvimtree = require('nvim-tree')
