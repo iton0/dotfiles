@@ -26,7 +26,7 @@ return {
     },
     {
       '<leader>hu',
-      "<cmd>:lua require('harpoon-core.ui').toggle_quick_menu()<cr>",
+      "<cmd>lua require('harpoon-core.ui').toggle_quick_menu()<cr>",
       desc = 'View marks',
     },
     {

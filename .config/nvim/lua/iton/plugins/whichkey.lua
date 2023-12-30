@@ -8,7 +8,8 @@ return {
   keys = {
     {
       '<leader>k',
-      ':WhichKey<CR>',
+      '<cmd>WhichKey<CR>',
+      { noremap = true, silent = true },
     },
   },
   init = function()
