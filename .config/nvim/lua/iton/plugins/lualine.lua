@@ -75,7 +75,7 @@ return {
       lualine_x = {
         {
           'datetime',
-          style = '%I:%M%p',
+          style = '%I:%M%P',
         },
         {
           'encoding',
