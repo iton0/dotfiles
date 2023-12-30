@@ -5,16 +5,24 @@ return {
     'nvim-lua/plenary.nvim',
   },
   keys = {
-    { '<leader>h', desc = 'Harpoon' },
+    { '<leader>h', '', desc = 'Harpoon' },
     {
       '<leader>hm',
-      "<cmd>lua require('harpoon-core.mark').add_file()<cr>",
-      desc = 'Add mark',
+      "<cmd>lua require('harpoon-core.mark').add_file()<cr><cmd>lua require('notify')('Mark added', 'info')<cr>",
+      {
+        noremap = true,
+        silent = true,
+        desc = 'Add mark',
+      },
     },
     {
       '<leader>hr',
-      "<cmd>lua require('harpoon-core.mark').rm_file()<cr>",
-      desc = 'Remove mark',
+      "<cmd>lua require('harpoon-core.mark').rm_file()<cr><cmd>lua require('notify')('Mark removed', 'info')<cr>",
+      {
+        noremap = true,
+        silent = true,
+        desc = 'Remove mark',
+      },
     },
     {
       '<leader>hu',
@@ -45,7 +53,7 @@ return {
       -- Example: 'vs' will open in new vertical split, 'tabnew' will open in new tab
       default_action = nil,
       -- Set marks specific to each git branch inside git repository
-      mark_branch = false,
+      mark_branch = true,
       -- Use the previous cursor position of marked files when opened
       use_cursor = true,
       -- Settings for popup window

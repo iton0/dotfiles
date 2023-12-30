@@ -10,7 +10,7 @@ return {
   opts = {
     create_keymaps = false,
     create_commands = false,
-    print_tag = '🐞',
+    print_tag = ' ',
   },
   version = '*',
   vim.keymap.set('n', '<Leader>bs', function()
