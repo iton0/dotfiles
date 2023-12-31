@@ -21,6 +21,7 @@ vim.o.statusline = ''
 
 -- Set the status line
 vim.o.statusline = [[%f %y%m%r %-14.(%l:%c%V%)]]
+
 -- Enable cursor blinking
 -- vim.o.guicursor =
 --   'n-v-c:block-Cursor/lCursor,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait175-blinkoff200-blinkon300,sm:block-blinkwait175-blinkoff150-blinkon175'
