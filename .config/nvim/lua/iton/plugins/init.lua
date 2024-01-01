@@ -3,7 +3,7 @@ return {
   -- Git related plugins
   {
     'tpope/vim-rhubarb',
-    event = { 'BufReadPost', 'BufNewFile' },
+    event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
       'tpope/vim-fugitive',
     },
@@ -12,7 +12,7 @@ return {
   -- Detect tabstop and shiftwidth automatically
   {
     'tpope/vim-sleuth',
-    event = { 'BufReadPost', 'BufNewFile' },
+    event = { 'BufReadPre', 'BufNewFile' },
     config = function()
       -- Diagnostic keymaps
       vim.keymap.set(
