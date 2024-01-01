@@ -70,6 +70,9 @@ end
 
 vim.api.nvim_set_var('MyFoldText', MyFoldText)
 
+-- Toggle folds with Enter key
+vim.keymap.set('n', '<CR>', 'za', { noremap = true, silent = true })
+
 -- Remap Ctrl + S to perform a decrement action
 vim.api.nvim_set_keymap(
   'n',
