@@ -9,6 +9,10 @@
 	defaultBranch = main
 [color]
 	ui = true
+	branch = true
+	diff = true
+	status = true
+	interactive = true
 [credential]
 	helper = cache
 [alias]
