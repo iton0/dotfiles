@@ -58,7 +58,8 @@ return {
           'query',
         },
 
-        auto_install = true,
+        sync_install = false,
+        auto_install = false,
         highlight = { enable = true },
         indent = { enable = true },
         incremental_selection = {

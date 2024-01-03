@@ -12,7 +12,7 @@ return {
       ['TRUE'] = 'FALSE',
       ['Yes'] = 'No',
       ['YES'] = 'NO',
-      ['open'] = 'closed',
+      ['Pre'] = 'Post',
       ['start'] = 'stop',
       ['1'] = '0',
       ['<'] = '>',
