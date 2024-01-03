@@ -15,6 +15,7 @@ config.color_scheme = 'One Dark (base16)'
 
 config.colors = {
   cursor_border = 'white',
+  cursor_bg = '#E5E9F0',
 }
 
 config.anti_alias_custom_block_glyphs = true
