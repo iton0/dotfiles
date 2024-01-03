@@ -59,10 +59,6 @@ vim.keymap.set('n', 'H', '_', { noremap = true, silent = true })
 vim.keymap.set('n', 'L', '$', { noremap = true, silent = true })
 
 -- Folding configuration
-vim.api.nvim_set_option('foldmethod', 'expr')
-vim.api.nvim_set_option('foldexpr', 'nvim_treesitter#foldexpr()')
-vim.api.nvim_set_option('foldtext', 'v:lua.MyFoldText()')
-
 function MyFoldText()
   local line = vim.fn.getline(vim.v.foldstart)
   return '🪭 ' .. line
