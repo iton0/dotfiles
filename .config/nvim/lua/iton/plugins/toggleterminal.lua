@@ -15,7 +15,6 @@ return {
   opts = {
     auto_scroll = false,
     autochdir = true, -- when neovim changes it current directory the terminal will change it's own when next it's opened
-    persist_mode = false,
   },
   vim.keymap.set('t', '<esc>', [[<C-\><C-n>]]),
   vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]]),
