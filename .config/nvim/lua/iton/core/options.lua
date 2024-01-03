@@ -16,9 +16,6 @@ vim.o.autoindent = true
 -- Enable mouse mode
 vim.o.mouse = 'a'
 
--- Set the status line to nothing
-vim.o.statusline = ''
-
 -- Set the status line
 vim.o.statusline = [[%f %y%m%r %-14.(%l:%c%V%)]]
 
