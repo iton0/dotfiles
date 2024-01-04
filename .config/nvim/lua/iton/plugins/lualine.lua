@@ -42,7 +42,6 @@ return {
           },
         }
       end,
-      -- component_separators = { right = '❮' },
       component_separators = { right = '' },
     },
     sections = {
@@ -74,20 +73,43 @@ return {
       },
       lualine_x = {
         {
-          'datetime',
-          style = '%I:%M%P',
+          'encoding',
+          fmt = string.upper,
         },
         {
-          'encoding',
-          fmt = function(str)
-            return string.upper(str)
-          end,
+          'fileformat',
+          color = { fg = '#CCCCCC' },
         },
-        { 'fileformat', padding = { left = 1, right = 2 } },
+        {
+          function()
+            local msg = 'No LSP'
+            local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
+            local clients = vim.lsp.get_active_clients()
+            if next(clients) == nil then
+              return msg
+            end
+            for _, client in ipairs(clients) do
+              local filetypes = client.config.filetypes
+              if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+                return client.name
+              end
+            end
+            return msg
+          end,
+          icon = '',
+          color = { fg = '#9CDC7C' },
+        },
         {
           require('lazy.status').updates,
           cond = require('lazy.status').has_updates,
           color = { fg = '#ff9e64' },
+        },
+      },
+      lualine_y = {
+        {
+          'datetime',
+          style = '%I:%M%p',
+          color = { fg = '#CCCCCC', bg = '#191970', gui = 'bold' },
         },
       },
     },
