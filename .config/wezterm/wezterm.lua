@@ -75,14 +75,11 @@ config.enable_wayland = false
 config.scrollback_lines = 5000
 config.alternate_buffer_wheel_scroll_speed = 5
 
-config.default_cursor_style = 'SteadyBlock'
-
 config.use_dead_keys = false
 config.disable_default_key_bindings = true
 
 -- Key Bindings
-local keybindings = require('keybindings')
-config.keys = keybindings
+config.keys = require('keybindings')
 
 -- Font
 config.font = wezterm.font('FiraCode Nerd Font')
