@@ -3,7 +3,8 @@
 
 return {
   'stevearc/conform.nvim',
-  event = { 'LspAttach', 'BufWritePre' },
+  event = 'BufWritePre',
+  cmd = 'ConformInfo',
   opts = {
     formatters_by_ft = {
       lua = { 'stylua' },
@@ -22,7 +23,7 @@ return {
       php = { 'phpcbf' },
       sql = { 'sqlfluff' },
     },
-    format_on_save = { async = false, timeout_ms = 500, lsp_fallback = true },
+    format_on_save = { timeout_ms = 500, lsp_fallback = true },
     formatters = {
       shfmt = {
         prepend_args = { '-i', '2' },
