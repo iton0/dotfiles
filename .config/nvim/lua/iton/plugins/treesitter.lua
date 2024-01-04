@@ -45,6 +45,7 @@ return {
         ensure_installed = {
           'lua',
           'regex',
+          'bash',
           'markdown',
           'markdown_inline',
           'vimdoc',
