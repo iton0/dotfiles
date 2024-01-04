@@ -109,7 +109,7 @@ return {
         {
           'datetime',
           style = '%I:%M%p',
-          color = { fg = '#CCCCCC', bg = '#191970', gui = 'bold' },
+          color = { fg = '#CCCCCC', gui = 'bold' },
         },
       },
     },
