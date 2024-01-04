@@ -6,20 +6,21 @@ return {
   event = { 'LspAttach', 'BufWritePre' },
   opts = {
     formatters_by_ft = {
-      javascript = { 'prettierd' },
-      typescript = { 'prettierd' },
       lua = { 'stylua' },
-      java = { 'google-java-format' },
+      javascript = { 'prettierd' },
       html = { 'prettierd' },
       css = { 'prettierd' },
-      cpp = { 'clang_format' },
+      typescript = { 'prettierd' },
       c = { 'clang_format' },
-      php = { 'phpcbf' },
+      cpp = { 'clang_format' },
+      java = { 'google-java-format' },
       -- Use the "*" filetype to run formatters on all filetypes.
       ['*'] = { 'codespell' },
       -- Use the "_" filetype to run formatters on filetypes that don't
       -- have other formatters configured.
       ['_'] = { 'trim_whitespace' },
+      php = { 'phpcbf' },
+      sql = { 'sqlfluff' },
     },
     format_on_save = { async = false, timeout_ms = 500, lsp_fallback = true },
     formatters = {

@@ -8,10 +8,11 @@ return {
       javascript = { 'eslint_d' },
       typescript = { 'eslint_d' },
       css = { 'stylelint' },
-      php = { 'phpstan' },
-      java = { 'checkstyle' },
       c = { 'cpplint' },
       cpp = { 'cpplint' },
+      java = { 'checkstyle' },
+      php = { 'phpstan' },
+      sql = { 'sqlfluff' },
     }
 
     local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
