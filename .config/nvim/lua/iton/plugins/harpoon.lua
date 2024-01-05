@@ -44,6 +44,10 @@ return {
       "<cmd>lua require('harpoon-core.ui').nav_file(3)<cr>",
       desc = 'Mark 3',
     },
+    {
+      '<C-H>',
+      "<cmd>lua require('harpoon-core.ui').nav_next()<cr>",
+    },
   },
   config = function()
     require('harpoon-core').setup({
