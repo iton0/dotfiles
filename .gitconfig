@@ -16,7 +16,7 @@
 [credential]
 	helper = cache
 [alias]
-	all = !git add . && git commit -v; add all files in current working directory
+	all = !git add -A; add all files in current working directory
 	sync = !git add -u && git commit -v; add all tracked files
 	p = push origin HEAD
 	pl = pull origin HEAD
