@@ -6,6 +6,7 @@ return {
     -- Automatically install LSPs to stdpath for neovim
     {
       'williamboman/mason.nvim',
+      cmd = 'Mason',
       opts = {
         ui = {
           border = 'rounded',
