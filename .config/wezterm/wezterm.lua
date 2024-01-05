@@ -14,14 +14,13 @@ end
 config.color_scheme = 'One Dark (base16)'
 
 config.colors = {
-  cursor_border = 'white',
+  cursor_border = '#E5E9F0',
   cursor_bg = '#E5E9F0',
 }
 
 config.anti_alias_custom_block_glyphs = true
 config.custom_block_glyphs = true
 config.allow_square_glyphs_to_overflow_width = 'WhenFollowedBySpace'
-config.bold_brightens_ansi_colors = 'BrightOnly'
 
 -- Window Setting
 config.initial_cols = 80
@@ -30,7 +29,6 @@ config.adjust_window_size_when_changing_font_size = false
 
 local dimmer = { brightness = 0.25 }
 config.background = {
-
   {
     source = {
       File = { path = '/home/iton/.config/wezterm/background/4.gif' },
@@ -43,6 +41,7 @@ config.background = {
     repeat_y = 'Mirror',
   },
 }
+
 config.window_padding = {
   left = '0.5cell',
   right = '0.5cell',
@@ -74,11 +73,10 @@ config.enable_wayland = false
 -- Mouse, Cursor, & Keyboard
 config.scrollback_lines = 5000
 config.alternate_buffer_wheel_scroll_speed = 5
-
 config.use_dead_keys = false
-config.disable_default_key_bindings = true
 
 -- Key Bindings
+config.disable_default_key_bindings = true
 config.keys = require('keybindings')
 
 -- Font
