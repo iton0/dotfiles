@@ -4,6 +4,20 @@
 return {
   'stevearc/conform.nvim',
   event = 'BufWritePre',
+  keys = {
+    {
+      '<leader>f',
+      function()
+        require('conform').format({
+          lsp_fallback = true,
+          asyc = false,
+          timeout_ms = 500,
+        })
+      end,
+      { 'n', 'v' },
+      desc = 'Format file or visual range',
+    },
+  },
   cmd = 'ConformInfo',
   opts = {
     formatters_by_ft = {
@@ -23,7 +37,7 @@ return {
       php = { 'phpcbf' },
       sql = { 'sqlfluff' },
     },
-    format_on_save = { timeout_ms = 500, lsp_fallback = true },
+    format_on_save = { async = false, timeout_ms = 500, lsp_fallback = true },
     formatters = {
       shfmt = {
         prepend_args = { '-i', '2' },
