@@ -42,7 +42,7 @@ return {
           },
         }
       end,
-      component_separators = { right = '' },
+      component_separators = { right = ' ' },
     },
     sections = {
       lualine_a = {
@@ -75,10 +75,12 @@ return {
         {
           'encoding',
           fmt = string.upper,
+          padding = { left = 0, right = 0 },
         },
         {
           'fileformat',
           color = { fg = '#CCCCCC' },
+          padding = { left = 0, right = 1 },
         },
         {
           function()
