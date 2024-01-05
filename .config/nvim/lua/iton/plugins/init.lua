@@ -33,22 +33,19 @@ return {
         vim.diagnostic.open_float,
         { desc = 'Open floating diagnostic message' }
       )
-      vim.keymap.set(
+      --[[ vim.keymap.set(
         'n',
         '<leader>q',
         vim.diagnostic.setloclist,
         { desc = 'Open diagnostics list' }
-      )
+      ) ]]
     end,
   },
 
   -- "gc" to comment visual regions/lines
   {
     'numToStr/Comment.nvim',
-    keys = {
-      { 'gc' },
-      { 'gb' },
-    },
+    event = { 'BufReadPost', 'InsertLeave' },
     config = true,
   },
 }
