@@ -16,8 +16,8 @@
 [credential]
 	helper = cache
 [alias]
-	all = !git add -A; add all files in current working directory
-	sync = !git add -u && git commit -v; add all tracked files
+	all = add .; add all files in current working directory
+	sync = !git add -u && git commit -v; add all tracked files & commit with diff in core editor
 	p = push origin HEAD
 	pl = pull origin HEAD
 	st = status -sb ; provides more concise output
