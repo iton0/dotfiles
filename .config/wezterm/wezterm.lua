@@ -31,7 +31,7 @@ local dimmer = { brightness = 0.25 }
 config.background = {
   {
     source = {
-      File = { path = '/home/iton/.config/wezterm/background/4.gif' },
+      File = { path = '/home/iton/.config/wezterm/background/3.gif' },
     },
     hsb = dimmer,
     height = 'Cover',
@@ -82,7 +82,7 @@ config.keys = require('keybindings')
 -- Font
 config.font = wezterm.font('FiraCode Nerd Font')
 
-config.font_size = 15
+config.font_size = 14
 config.cell_width = 1.0
 config.line_height = 1.0
 config.unicode_version = 8
