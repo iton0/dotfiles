@@ -2,7 +2,7 @@
 --
 -- Keys currently up for grabs with <leader> key
 -- mapping: (alphabet)
--- j, n, o, p, u, v, x, y, z
+-- j, n, o, p, u, v, x, y
 return {
   'folke/which-key.nvim',
   keys = {

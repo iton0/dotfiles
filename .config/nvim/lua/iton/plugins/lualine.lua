@@ -3,9 +3,9 @@ return {
   'nvim-lualine/lualine.nvim',
   -- See `:help lualine.txt`
   event = { 'BufReadPost', 'BufNewFile' },
-  dependencies = {
-    'nvim-tree/nvim-web-devicons',
-  },
+  -- dependencies = {
+  --   'nvim-tree/nvim-web-devicons',
+  -- },
   opts = {
     options = {
       theme = function()
@@ -54,12 +54,12 @@ return {
         },
       },
       lualine_c = {
-        {
-          'filetype',
-          padding = { left = 1, right = 0 },
-          colored = true,
-          icon_only = true,
-        },
+        -- {
+        --   'filetype',
+        --   padding = { left = 1, right = 0 },
+        --   colored = true,
+        --   icon_only = true,
+        -- },
         {
           'filename',
           newfile_status = true,

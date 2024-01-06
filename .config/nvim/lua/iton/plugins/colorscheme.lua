@@ -1,7 +1,7 @@
 return {
   'olimorris/onedarkpro.nvim',
+  lazy = false,
   priority = 1000,
-  opts = {},
   config = function()
     require('onedarkpro').setup({
       options = {
@@ -11,7 +11,7 @@ return {
     })
     vim.cmd([[colorscheme onedark]])
     -- Adjust Neovim visual elements
-    vim.cmd([[highlight MatchParen gui=standout guibg=#1d2028 guifg=#ff9e64]])
+    vim.cmd([[highlight MatchParen gui=bold guifg=#ff9e64]])
     vim.cmd([[highlight CursorLineNr gui=bold guibg=NONE guifg=#ff9e64]])
     vim.cmd([[highlight TelescopeSelection gui=bold guibg=NONE ctermbg=NONE]])
     vim.cmd([[highlight Visual guibg=#5C6370]])

@@ -21,7 +21,10 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- [[ Plugins ]]
-require('lazy').setup({ { import = 'iton.plugins' } }, {
+require('lazy').setup('iton.plugins', {
+  defaults = {
+    lazy = true,
+  },
   install = {
     colorscheme = { 'onedark' },
   },
@@ -41,7 +44,12 @@ require('lazy').setup({ { import = 'iton.plugins' } }, {
   performance = {
     rtp = {
       disabled_plugins = {
+        'gzip',
+        'rplugin',
+        'tarPlugin',
+        'tohtml',
         'tutor',
+        'zipPlugin',
       },
     },
   },

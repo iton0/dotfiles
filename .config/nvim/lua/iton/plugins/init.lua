@@ -4,9 +4,9 @@ return {
   {
     'tpope/vim-rhubarb',
     event = { 'BufReadPost', 'BufNewFile' },
-    dependencies = {
-      'tpope/vim-fugitive',
-    },
+    -- dependencies = {
+    --   'tpope/vim-fugitive',
+    -- },
   },
 
   -- Detect tabstop and shiftwidth automatically

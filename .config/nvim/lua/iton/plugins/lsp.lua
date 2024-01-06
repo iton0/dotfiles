@@ -21,37 +21,34 @@ return {
     {
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       opts = {
+        ensure_installed = {
+          'checkstyle',
+          'clang-format',
+          'clangd',
+          'codespell',
+          'cpplint',
+          'css-lsp',
+          'eslint_d',
+          'google-java-format',
+          'html-lsp',
+          'intelephense',
+          'jdtls',
+          'lua-language-server',
+          'phpcbf',
+          'phpstan',
+          'prettierd',
+          'sqlfluff',
+          'sqlls',
+          'stylelint',
+          'stylua',
+          'typescript-language-server',
+        },
         auto_update = true,
-        start_delay = 1000,
       },
     },
     {
       'williamboman/mason-lspconfig.nvim',
       opts = { automatic_installation = true },
-    },
-
-    -- Useful status updates for LSP
-    -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-    {
-      'j-hui/fidget.nvim',
-      opts = {
-        progress = {
-          poll_rate = 5,
-          suppress_on_insert = true,
-          ignore_done_already = true,
-          ignore_empty_message = true,
-          display = {
-            render_limit = 2,
-            done_ttl = 2,
-          },
-        },
-        notification = {
-          window = {
-            normal_hl = 'Normal',
-            winblend = 0,
-          },
-        },
-      },
     },
 
     -- Additional lua configuration, makes nvim stuff amazing!
@@ -141,6 +138,7 @@ return {
     -- before setting up the servers.
     require('mason').setup({})
     require('mason-lspconfig').setup({})
+    require('mason-tool-installer').setup({})
     -- Enable the following language servers
     --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
     --

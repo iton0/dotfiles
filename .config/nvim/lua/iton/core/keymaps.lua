@@ -27,6 +27,14 @@ vim.keymap.set('n', '<c-k>', '<c-w>k', { noremap = true, silent = true })
 vim.keymap.set('n', '<c-l>', '<c-w>l', { noremap = true, silent = true })
 vim.keymap.set('n', '<c-w>', '<c-w>w', { noremap = true, silent = true })
 
+-- Remap for opening netrw
+vim.keymap.set(
+  'n',
+  '<Space>x',
+  ':Ex %:p:h<cr>',
+  { noremap = true, silent = true, desc = 'NetRW' }
+)
+
 -- To move line up/down
 vim.keymap.set('n', '<S-Up>', ':m .-2<CR>==', { noremap = true, silent = true })
 vim.keymap.set(
