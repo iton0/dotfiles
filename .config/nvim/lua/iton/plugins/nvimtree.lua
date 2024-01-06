@@ -5,7 +5,7 @@ return {
     {
       '<leader>n',
       '<cmd>NvimTreeFindFileToggle<CR>',
-      desc = 'Toggle file explorer',
+      desc = 'Nvim Tree',
     },
   },
   config = function()

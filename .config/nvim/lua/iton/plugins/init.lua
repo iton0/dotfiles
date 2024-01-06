@@ -19,19 +19,19 @@ return {
         'n',
         '[d',
         vim.diagnostic.goto_prev,
-        { desc = 'Go to previous diagnostic message' }
+        { desc = 'Previous diagnostic' }
       )
       vim.keymap.set(
         'n',
         ']d',
         vim.diagnostic.goto_next,
-        { desc = 'Go to next diagnostic message' }
+        { desc = 'Next diagnostic' }
       )
       vim.keymap.set(
         'n',
         '<leader>e',
         vim.diagnostic.open_float,
-        { desc = 'Open floating diagnostic message' }
+        { desc = 'Floating diagnostic' }
       )
       --[[ vim.keymap.set(
         'n',

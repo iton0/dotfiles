@@ -4,7 +4,6 @@ return {
     {
       '<leader>b',
       '',
-      desc = 'Debugger',
     },
   },
   opts = {

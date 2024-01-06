@@ -15,7 +15,7 @@ return {
         })
       end,
       { 'n', 'v' },
-      desc = 'Format file or visual range',
+      desc = 'Format',
     },
   },
   cmd = 'ConformInfo',

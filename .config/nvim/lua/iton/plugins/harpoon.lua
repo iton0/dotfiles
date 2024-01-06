@@ -5,7 +5,6 @@ return {
     'nvim-lua/plenary.nvim',
   },
   keys = {
-    { '<leader>h', '', desc = 'Harpoon' },
     {
       '<leader>hm',
       "<cmd>lua require('harpoon-core.mark').add_file()<cr><cmd>lua require('notify')('Mark added', 'info')<cr>",
@@ -47,6 +46,7 @@ return {
     {
       '<C-H>',
       "<cmd>lua require('harpoon-core.ui').nav_next()<cr>",
+      'Cycle through marks',
     },
   },
   config = function()

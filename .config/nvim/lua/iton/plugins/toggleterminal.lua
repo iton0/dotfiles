@@ -9,7 +9,7 @@ return {
     {
       '<leader>t',
       '<cmd>ToggleTerm<CR>',
-      desc = 'Toggle Terminal',
+      desc = 'Terminal',
     },
   },
   opts = {

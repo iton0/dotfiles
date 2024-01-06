@@ -4,7 +4,7 @@ return {
     {
       '<leader>q',
       '<cmd>TroubleToggle<cr>',
-      desc = 'Open diagnostics list',
+      desc = 'Diagnostics list',
     },
   },
   dependencies = { 'nvim-tree/nvim-web-devicons' },

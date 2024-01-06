@@ -34,7 +34,6 @@ return {
     -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
     {
       'j-hui/fidget.nvim',
-      event = 'LspAttach',
       opts = {
         progress = {
           poll_rate = 5,
