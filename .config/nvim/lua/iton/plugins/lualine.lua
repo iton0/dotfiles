@@ -2,7 +2,7 @@ return {
   -- Set lualine as statusline
   'nvim-lualine/lualine.nvim',
   -- See `:help lualine.txt`
-  event = { 'BufReadPost', 'BufNewFile' },
+  event = 'BufReadPost',
   config = function()
     local custom_fname = require('lualine.components.filename'):extend()
     local highlight = require('lualine.highlight')

@@ -3,7 +3,7 @@ return {
   -- Git related plugins
   -- {
   --   'tpope/vim-rhubarb',
-  --   event = { 'BufReadPost', 'BufNewFile' },
+  --   event = 'BufReadPost',
   --   dependencies = {
   --     'tpope/vim-fugitive',
   --   },
@@ -12,7 +12,7 @@ return {
   -- Detect tabstop and shiftwidth automatically
   {
     'tpope/vim-sleuth',
-    event = { 'BufReadPost', 'BufNewFile' },
+    event = 'BufReadPost',
   },
 
   -- "gc" to comment visual regions/lines
