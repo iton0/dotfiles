@@ -29,15 +29,16 @@ return {
       c = { 'clang_format' },
       cpp = { 'clang_format' },
       java = { 'google-java-format' },
+      -- TODO: decide if i keep this setting of not for all the files
       -- Use the "*" filetype to run formatters on all filetypes.
-      ['*'] = { 'codespell' },
+      -- ['*'] = { 'codespell' },
       -- Use the "_" filetype to run formatters on filetypes that don't
       -- have other formatters configured.
       ['_'] = { 'trim_whitespace' },
       php = { 'phpcbf' },
       sql = { 'sqlfluff' },
     },
-    format_on_save = { async = false, timeout_ms = 500, lsp_fallback = true },
+    format_on_save = { timeout_ms = 500, lsp_fallback = true },
     formatters = {
       shfmt = {
         prepend_args = { '-i', '2' },

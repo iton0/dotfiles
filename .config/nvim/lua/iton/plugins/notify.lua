@@ -9,13 +9,4 @@ return {
     stages = 'static',
     timeout = 3000,
   },
-  -- To open Lazy.nvim ui
-  -- not related to the
-  -- dressing.nvim plugin
-  vim.keymap.set(
-    'n',
-    '<leader>l',
-    ':Lazy<cr>',
-    { noremap = true, silent = true, desc = 'Lazy.nvim' }
-  ),
 }

@@ -4,67 +4,57 @@
 -- The keymaps below are needed at startup
 -- See `:help vim.keymap.set()`
 
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+local remap = vim.keymap.set
+local opts = { noremap = true, silent = true }
+
+remap({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- Remap for dealing with word wrap
-vim.keymap.set(
-  'n',
-  'k',
-  "v:count == 0 ? 'gk' : 'k'",
-  { expr = true, silent = true }
-)
-vim.keymap.set(
-  'n',
-  'j',
-  "v:count == 0 ? 'gj' : 'j'",
-  { expr = true, silent = true }
-)
+remap('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+remap('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Remap for window movement
-vim.keymap.set('n', '<c-h>', '<c-w>h', { noremap = true, silent = true })
-vim.keymap.set('n', '<c-j>', '<c-w>j', { noremap = true, silent = true })
-vim.keymap.set('n', '<c-k>', '<c-w>k', { noremap = true, silent = true })
-vim.keymap.set('n', '<c-l>', '<c-w>l', { noremap = true, silent = true })
-vim.keymap.set('n', '<c-w>', '<c-w>w', { noremap = true, silent = true })
+remap('n', '<c-h>', '<c-w>h', opts)
+remap('n', '<c-j>', '<c-w>j', opts)
+remap('n', '<c-k>', '<c-w>k', opts)
+remap('n', '<c-l>', '<c-w>l', opts)
+remap('n', '<c-w>', '<c-w>w', opts)
+
+-- Remap for quicker <esc> in insert mode
+remap('i', 'jk', '<esc>', opts)
+remap('i', 'kj', '<esc>', opts)
+
+-- Remap for search and replace
+remap('n', '<c-f>', ':%s/', { noremap = true, desc = 'Search and Replace' })
+
+-- Remap for better scrolling
+remap('n', '<c-u>', '<c-u>zz', opts)
+remap('n', '<c-d>', '<c-d>zz', opts)
 
 -- Remap for opening netrw
-vim.keymap.set(
+remap(
   'n',
-  '<Space>x',
-  ':Ex %:p:h<cr>',
+  '<c-x>',
+  ':vertical 25Vex<cr>',
   { noremap = true, silent = true, desc = 'NetRW' }
 )
+remap('n', '<c-c>', ':q<cr>', opts)
 
 -- To move line up/down
-vim.keymap.set('n', '<S-Up>', ':m .-2<CR>==', { noremap = true, silent = true })
-vim.keymap.set(
-  'n',
-  '<S-Down>',
-  ':m .+1<CR>==',
-  { noremap = true, silent = true }
-)
-vim.keymap.set(
-  'v',
-  '<S-Up>',
-  ":m '<-2<CR>gv=gv",
-  { noremap = true, silent = true }
-)
-vim.keymap.set(
-  'v',
-  '<S-Down>',
-  ":m '>+1<CR>gv=gv",
-  { noremap = true, silent = true }
-)
+remap('n', '<S-Up>', ':m .-2<CR>==', opts)
+remap('n', '<S-Down>', ':m .+1<CR>==', opts)
+remap('v', '<S-Up>', ":m '<-2<CR>gv=gv", opts)
+remap('v', '<S-Down>', ":m '>+1<CR>gv=gv", opts)
 
 -- To shift line left/right
-vim.keymap.set('n', '<', '<<', { noremap = true, silent = true })
-vim.keymap.set('n', '>', '>>', { noremap = true, silent = true })
-vim.keymap.set('v', '<', '<gv', { noremap = true, silent = true })
-vim.keymap.set('v', '>', '>gv', { noremap = true, silent = true })
+remap('n', '<', '<<', opts)
+remap('n', '>', '>>', opts)
+remap('v', '<', '<gv', opts)
+remap('v', '>', '>gv', opts)
 
 -- To go to the beginning and the end of line
-vim.keymap.set('n', 'H', '_', { noremap = true, silent = true })
-vim.keymap.set('n', 'L', '$', { noremap = true, silent = true })
+remap('n', 'H', '_', opts)
+remap('n', 'L', '$', opts)
 
 -- Folding configuration
 function MyFoldText()
@@ -75,24 +65,33 @@ end
 vim.api.nvim_set_var('MyFoldText', MyFoldText)
 
 -- Toggle folds with Enter key
-vim.keymap.set('n', '<CR>', 'za', { noremap = true, silent = true })
+remap('n', '<CR>', 'za', opts)
 
 -- Remap Ctrl + S to perform a decrement action
-vim.api.nvim_set_keymap(
+vim.api.nvim_set_keymap('n', '<C-S>', '<C-X>', opts)
+
+-- Opens Lazy.nvim Home
+remap(
   'n',
-  '<C-S>',
-  '<C-X>',
-  { noremap = true, silent = true }
+  '<Space>l',
+  ':Lazy<cr>',
+  { noremap = true, silent = true, desc = 'Lazy.nvim' }
 )
 
--- Paste without affecting the default register contents
-vim.keymap.set('v', 'p', '"_dP', { noremap = true, silent = true })
+-- Remap for terminal navigation
+vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
+vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
+vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
+vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
+vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)
 
--- Toggle upper/lowercase
--- visual will work respective of
--- each individual character
-vim.keymap.set('n', '<C-C>', 'g~l', { noremap = true, silent = true })
-vim.keymap.set('v', '<C-C>', 'g~', { noremap = true, silent = true })
+-- Paste without affecting the default register contents
+remap('v', 'p', '"_dP', opts)
+
+-- Remap for toggling wordcase
+remap('n', 'gu', 'g~', opts)
+remap('v', 'gu', 'g~', opts)
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`

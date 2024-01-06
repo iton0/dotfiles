@@ -3,6 +3,9 @@
 -- Set highlight on search
 vim.o.hlsearch = false
 
+-- Set the minimum number of screen lines to keep above and below the cursor
+vim.o.scrolloff = 8
+
 -- Make relative line numbers default
 vim.wo.number = true
 vim.wo.relativenumber = true
