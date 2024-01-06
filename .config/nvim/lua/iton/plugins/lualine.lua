@@ -62,6 +62,7 @@ return {
         -- },
         {
           'filename',
+          path = 4,
           newfile_status = true,
           symbols = {
             modified = '✳️ ',
