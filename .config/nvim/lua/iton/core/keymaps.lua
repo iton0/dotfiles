@@ -79,12 +79,12 @@ remap(
 )
 
 -- Remap for terminal navigation
-vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
-vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
-vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
-vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
-vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
-vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)
+remap('t', '<esc>', [[<C-\><C-n>]], opts)
+remap('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
+remap('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
+remap('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
+remap('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
+remap('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)
 
 -- Paste without affecting the default register contents
 remap('v', 'p', '"_dP', opts)
@@ -92,6 +92,22 @@ remap('v', 'p', '"_dP', opts)
 -- Remap for toggling wordcase
 remap('n', 'gu', 'g~', opts)
 remap('v', 'gu', 'g~', opts)
+
+-- Diagnostic Keymaps
+remap('n', '[d', vim.diagnostic.goto_prev, { desc = 'Previous diagnostic' })
+remap('n', ']d', vim.diagnostic.goto_next, { desc = 'Next diagnostic' })
+remap(
+  'n',
+  '<space>e',
+  vim.diagnostic.open_float,
+  { desc = 'Floating diagnostic' }
+)
+-- remap(
+--   'n',
+--   '<space>q',
+--   vim.diagnostic.setloclist,
+--   { desc = 'Open diagnostics list' }
+-- )
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
