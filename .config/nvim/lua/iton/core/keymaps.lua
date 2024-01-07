@@ -57,15 +57,15 @@ remap('n', 'H', '_', opts)
 remap('n', 'L', '$', opts)
 
 -- Folding configuration
-function MyFoldText()
-  local line = vim.fn.getline(vim.v.foldstart)
-  return '🪭 ' .. line
-end
-
-vim.api.nvim_set_var('MyFoldText', MyFoldText)
+-- function MyFoldText()
+--   local line = vim.fn.getline(vim.v.foldstart)
+--   return '🪭 ' .. line
+-- end
+--
+-- vim.api.nvim_set_var('MyFoldText', MyFoldText)
 
 -- Toggle folds with Enter key
-remap('n', '<CR>', 'za', opts)
+-- remap('n', '<CR>', 'za', opts)
 
 -- Remap Ctrl + S to perform a decrement action
 vim.api.nvim_set_keymap('n', '<C-S>', '<C-X>', opts)
