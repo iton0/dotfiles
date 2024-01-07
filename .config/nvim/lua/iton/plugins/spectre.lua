@@ -17,7 +17,7 @@ return {
     '<leader>o',
     '<cmd> lua require("spectre").toggle()<CR>',
     {
-      desc = 'Toggle Spectre',
+      desc = 'Spectre',
     }
   ),
 }
