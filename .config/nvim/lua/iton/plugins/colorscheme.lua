@@ -1,6 +1,7 @@
 return {
   'olimorris/onedarkpro.nvim',
-  lazy = false,
+  -- lazy = false,
+  event = { 'VeryLazy', 'BufReadPre', 'BufNewFile' },
   priority = 1000,
   config = function()
     require('onedarkpro').setup({
