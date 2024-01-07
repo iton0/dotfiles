@@ -8,7 +8,10 @@ return {
     auto_close = true,
     icons = false,
   },
-  vim.keymap.set('n', '<leader>q', function()
-    return require('trouble').toggle()
-  end, { desc = 'Diagnostics list' }),
+  vim.keymap.set(
+    'n',
+    '<leader>q',
+    "<cmd>lua require('trouble').toggle()<cr>",
+    { desc = 'Diagnostics list' }
+  ),
 }

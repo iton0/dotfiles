@@ -17,7 +17,10 @@ return {
       ["'"] = '"',
     },
   },
-  vim.keymap.set('n', '<leader>i', function()
-    return require('nvim-toggler').toggle()
-  end, { desc = 'Invert' }),
+  vim.keymap.set(
+    'n',
+    '<leader>i',
+    "<cmd>lua require('nvim-toggler').toggle()<cr>",
+    { desc = 'Invert' }
+  ),
 }

@@ -22,7 +22,10 @@ return {
       ['<leader>b'] = { name = 'De[B]ugger', _ = 'which_key_ignore' },
     })
   end,
-  vim.keymap.set('n', '<leader>k', function()
-    return require('which-key').show()
-  end, { noremap = true, silent = true, desc = 'Whichkey' }),
+  vim.keymap.set(
+    'n',
+    '<leader>k',
+    "<cmd>lua require('which-key').show()<cr>",
+    { noremap = true, silent = true, desc = 'Whichkey' }
+  ),
 }

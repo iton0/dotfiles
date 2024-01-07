@@ -9,7 +9,10 @@ return {
   },
   -- To open more terminals insert a number
   -- before the keymapping
-  vim.keymap.set('n', '<leader>t', function()
-    return require('toggleterm').toggle()
-  end, { desc = 'Terminal' }),
+  vim.keymap.set(
+    'n',
+    '<leader>t',
+    "<cmd>lua require('toggleterm').toggle()<cr>",
+    { desc = 'Terminal' }
+  ),
 }
