@@ -12,13 +12,13 @@ return {
   -- Detect tabstop and shiftwidth automatically
   {
     'tpope/vim-sleuth',
-    event = 'BufReadPost',
+    event = { 'BufReadPost', 'BufNewFile' },
   },
 
   -- "gc" to comment visual regions/lines
   {
     'numToStr/Comment.nvim',
-    event = 'BufReadPost',
+    event = { 'BufReadPost', 'BufNewFile' },
     config = true,
   },
 }

@@ -1,55 +1,13 @@
 return {
   -- LSP Configuration & Plugins
   'neovim/nvim-lspconfig',
-  event = 'BufReadPost',
+  event = { 'BufReadPost', 'BufNewFile' },
+  cmd = { 'LspInfo', 'LspInstall', 'LspUninstall', 'Mason' },
   dependencies = {
     -- Automatically install LSPs to stdpath for neovim
-    {
-      'williamboman/mason.nvim',
-      cmd = 'Mason',
-      opts = {
-        ui = {
-          border = 'rounded',
-          icons = {
-            package_installed = '✓',
-            package_pending = '➜',
-            package_uninstalled = '✗',
-          },
-        },
-      },
-    },
-    {
-      'WhoIsSethDaniel/mason-tool-installer.nvim',
-      opts = {
-        ensure_installed = {
-          'checkstyle',
-          'clang-format',
-          'clangd',
-          'codespell',
-          'cpplint',
-          'css-lsp',
-          'eslint_d',
-          'google-java-format',
-          'html-lsp',
-          'intelephense',
-          'jdtls',
-          'lua-language-server',
-          'phpcbf',
-          'phpstan',
-          'prettierd',
-          'sqlfluff',
-          'sqlls',
-          'stylelint',
-          'stylua',
-          'typescript-language-server',
-        },
-        auto_update = true,
-      },
-    },
-    {
-      'williamboman/mason-lspconfig.nvim',
-      opts = { automatic_installation = true },
-    },
+    'williamboman/mason.nvim',
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    'williamboman/mason-lspconfig.nvim',
 
     -- Additional lua configuration, makes nvim stuff amazing!
     'folke/neodev.nvim',
@@ -138,7 +96,6 @@ return {
     -- before setting up the servers.
     require('mason').setup({})
     require('mason-lspconfig').setup({})
-    require('mason-tool-installer').setup({})
     -- Enable the following language servers
     --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
     --
@@ -148,6 +105,8 @@ return {
     --  If you want to override the default filetypes that your language server will attach to you can
     --  define the property 'filetypes' to the map in question.
     local servers = {
+      tsserver = {},
+      clangd = {},
       lua_ls = {
         Lua = {
           codeLens = { enable = true },
@@ -159,6 +118,9 @@ return {
       },
     }
 
+    -- Setup mason tool installer configuration
+    require('mason-tool-installer').setup({})
+
     -- Setup neovim lua configuration
     require('neodev').setup({})
 
@@ -168,9 +130,23 @@ return {
 
     -- Ensure the servers above are installed
     local mason_lspconfig = require('mason-lspconfig')
+    local mason = require('mason')
+    local mason_tool = require('mason-tool-installer')
+
+    mason.setup({
+      ui = {
+        border = 'rounded',
+        icons = {
+          package_installed = '✓',
+          package_pending = '',
+          package_uninstalled = '✗',
+        },
+      },
+    })
 
     mason_lspconfig.setup({
       ensure_installed = vim.tbl_keys(servers),
+      automatic_installation = true,
     })
 
     mason_lspconfig.setup_handlers({
@@ -182,6 +158,21 @@ return {
           filetypes = (servers[server_name] or {}).filetypes,
         })
       end,
+    })
+
+    mason_tool.setup({
+      ensure_installed = {
+        'clang-format',
+        'clangd',
+        'cpplint',
+        'eslint_d',
+        'lua-language-server',
+        'prettierd',
+        'stylelint',
+        'stylua',
+        'typescript-language-server',
+      },
+      auto_update = true,
     })
   end,
 }

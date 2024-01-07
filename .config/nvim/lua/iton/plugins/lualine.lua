@@ -2,7 +2,7 @@ return {
   -- Set lualine as statusline
   'nvim-lualine/lualine.nvim',
   -- See `:help lualine.txt`
-  event = 'BufReadPost',
+  event = { 'BufReadPost', 'BufNewFile' },
   config = function()
     local custom_fname = require('lualine.components.filename'):extend()
     local highlight = require('lualine.highlight')
@@ -49,7 +49,7 @@ return {
           return {
             normal = {
               a = { fg = colors.bg, bg = colors.blue, gui = 'bold' },
-              b = { fg = '#d8b56d', bg = nil, gui = 'italic' },
+              b = { fg = '#d8b56d', bg = nil },
               c = { fg = colors.fg, bg = nil },
               x = { fg = colors.fg, bg = nil },
               y = { fg = colors.fg, bg = colors.bg, gui = 'bold' },

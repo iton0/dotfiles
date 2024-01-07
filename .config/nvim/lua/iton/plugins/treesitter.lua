@@ -2,7 +2,7 @@ return {
   -- Highlight, edit, and navigate code
   'nvim-treesitter/nvim-treesitter',
   version = false,
-  event = 'BufReadPost',
+  event = { 'BufReadPost', 'BufNewFile' },
   init = function(plugin)
     require('lazy.core.loader').add_to_rtp(plugin)
     require('nvim-treesitter.query_predicates')
@@ -52,8 +52,6 @@ return {
           'vim',
           'query',
         },
-
-        sync_install = false,
 
         highlight = { enable = true },
         indent = { enable = true },
