@@ -113,8 +113,6 @@ return {
     --  If you want to override the default filetypes that your language server will attach to you can
     --  define the property 'filetypes' to the map in question.
     local servers = {
-      tsserver = {},
-      clangd = {},
       lua_ls = {
         Lua = {
           codeLens = { enable = true },
@@ -170,12 +168,22 @@ return {
 
     mason_tool.setup({
       ensure_installed = {
+        'checkstyle',
         'clang-format',
         'clangd',
         'cpplint',
+        'css-lsp',
         'eslint_d',
+        'google-java-format',
+        'html-lsp',
+        'intelephense',
+        'jdtls',
         'lua-language-server',
+        'phpcbf',
+        'phpstan',
         'prettierd',
+        'sqlfluff',
+        'sqlls',
         'stylelint',
         'stylua',
         'typescript-language-server',
