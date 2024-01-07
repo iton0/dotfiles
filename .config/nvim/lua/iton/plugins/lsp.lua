@@ -57,7 +57,7 @@ return {
         '[G]oto [I]mplementation'
       )
       nmap(
-        '<leader>D',
+        '<leader>dd',
         require('telescope.builtin').lsp_type_definitions,
         'Type [D]efinition'
       )
