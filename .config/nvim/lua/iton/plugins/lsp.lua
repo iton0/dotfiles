@@ -14,7 +14,8 @@ return {
   dependencies = {
     -- Automatically install LSPs to stdpath for neovim
     'williamboman/mason.nvim',
-    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    --TODO: Figure out how to make this work
+    -- 'WhoIsSethDaniel/mason-tool-installer.nvim',
     'williamboman/mason-lspconfig.nvim',
 
     -- Additional lua configuration, makes nvim stuff amazing!
@@ -102,7 +103,16 @@ return {
 
     -- mason-lspconfig requires that these setup functions are called in this order
     -- before setting up the servers.
-    require('mason').setup({})
+    require('mason').setup({
+      ui = {
+        border = 'rounded',
+        icons = {
+          package_installed = '✓',
+          package_pending = '',
+          package_uninstalled = '✗',
+        },
+      },
+    })
     require('mason-lspconfig').setup({})
     -- Enable the following language servers
     --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -124,9 +134,6 @@ return {
       },
     }
 
-    -- Setup mason tool installer configuration
-    require('mason-tool-installer').setup({})
-
     -- Setup neovim lua configuration
     require('neodev').setup({})
 
@@ -136,19 +143,6 @@ return {
 
     -- Ensure the servers above are installed
     local mason_lspconfig = require('mason-lspconfig')
-    local mason = require('mason')
-    local mason_tool = require('mason-tool-installer')
-
-    mason.setup({
-      ui = {
-        border = 'rounded',
-        icons = {
-          package_installed = '✓',
-          package_pending = '',
-          package_uninstalled = '✗',
-        },
-      },
-    })
 
     mason_lspconfig.setup({
       ensure_installed = vim.tbl_keys(servers),
@@ -164,31 +158,6 @@ return {
           filetypes = (servers[server_name] or {}).filetypes,
         })
       end,
-    })
-
-    mason_tool.setup({
-      ensure_installed = {
-        'checkstyle',
-        'clang-format',
-        'clangd',
-        'cpplint',
-        'css-lsp',
-        'eslint_d',
-        'google-java-format',
-        'html-lsp',
-        'intelephense',
-        'jdtls',
-        'lua-language-server',
-        'phpcbf',
-        'phpstan',
-        'prettierd',
-        'sqlfluff',
-        'sqlls',
-        'stylelint',
-        'stylua',
-        'typescript-language-server',
-      },
-      auto_update = true,
     })
   end,
 }
