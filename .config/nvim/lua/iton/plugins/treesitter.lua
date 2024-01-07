@@ -52,6 +52,23 @@ return {
           'vim',
           'query',
         },
+        ignore_install = {
+          'json',
+          'json5',
+          'jsonc',
+          'jsonnet',
+          'hjson',
+          'toml',
+          'xml',
+          'yaml',
+          'git_config',
+          'git_rebase',
+          'gitattributes',
+          'gitcommit',
+          'gitignore',
+        },
+
+        auto_install = true,
 
         highlight = { enable = true },
         indent = { enable = true },

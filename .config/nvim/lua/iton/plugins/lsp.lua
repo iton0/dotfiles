@@ -1,6 +1,14 @@
 return {
   -- LSP Configuration & Plugins
   'neovim/nvim-lspconfig',
+  keys = {
+    {
+      -- M is the Alt key
+      '<M-l>',
+      ':LspInstall<cr>',
+      desc = 'Install LSP',
+    },
+  },
   event = { 'BufReadPost', 'BufNewFile' },
   cmd = { 'LspInfo', 'LspInstall', 'LspUninstall', 'Mason' },
   dependencies = {
