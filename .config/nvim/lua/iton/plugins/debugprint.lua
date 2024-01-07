@@ -1,11 +1,5 @@
 return {
   'andrewferrier/debugprint.nvim',
-  keys = {
-    {
-      '<leader>b',
-      '',
-    },
-  },
   opts = {
     create_keymaps = false,
     create_commands = false,

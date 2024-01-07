@@ -1,12 +1,5 @@
 return {
   'folke/trouble.nvim',
-  keys = {
-    {
-      '<leader>q',
-      '<cmd>TroubleToggle<cr>',
-      desc = 'Diagnostics list',
-    },
-  },
   -- dependencies = { 'nvim-tree/nvim-web-devicons' },
   opts = {
     -- your configuration comes here
@@ -15,4 +8,7 @@ return {
     auto_close = true,
     icons = false,
   },
+  vim.keymap.set('n', '<leader>q', function()
+    return require('trouble').toggle()
+  end, { desc = 'Diagnostics list' }),
 }

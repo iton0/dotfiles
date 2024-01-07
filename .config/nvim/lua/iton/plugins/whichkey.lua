@@ -5,13 +5,6 @@
 -- j, n, o, p, u, v, x, y
 return {
   'folke/which-key.nvim',
-  keys = {
-    {
-      '<leader>k',
-      '<cmd>WhichKey<CR>',
-      { noremap = true, silent = true },
-    },
-  },
   init = function()
     vim.o.timeout = true
     vim.o.timeout = 500
@@ -29,4 +22,7 @@ return {
       ['<leader>b'] = { name = 'De[B]ugger', _ = 'which_key_ignore' },
     })
   end,
+  vim.keymap.set('n', '<leader>k', function()
+    return require('which-key').show()
+  end, { noremap = true, silent = true, desc = 'Whichkey' }),
 }

@@ -1,12 +1,5 @@
 return {
   'nguyenvukhang/nvim-toggler',
-  keys = {
-    {
-      '<leader>i',
-      "<cmd>require('nvim-toggler').toggle()<cr>",
-      desc = 'Invert',
-    },
-  },
   opts = {
     inverses = {
       ['TRUE'] = 'FALSE',
@@ -24,4 +17,7 @@ return {
       ["'"] = '"',
     },
   },
+  vim.keymap.set('n', '<leader>i', function()
+    return require('nvim-toggler').toggle()
+  end, { desc = 'Invert' }),
 }
