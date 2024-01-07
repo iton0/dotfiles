@@ -22,7 +22,7 @@ return {
       -- have other formatters configured.
       ['_'] = { 'trim_whitespace' },
       php = { 'phpcbf' },
-      sql = { 'sqlfluff' },
+      sql = { 'sqlfmt' },
     },
     format_on_save = { timeout_ms = 500, lsp_fallback = true },
     formatters = {
