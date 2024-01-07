@@ -52,6 +52,9 @@ return {
           'vim',
           'query',
         },
+
+        auto_install = true,
+
         ignore_install = {
           'json',
           'json5',
@@ -67,8 +70,6 @@ return {
           'gitcommit',
           'gitignore',
         },
-
-        auto_install = true,
 
         highlight = { enable = true },
         indent = { enable = true },

@@ -47,22 +47,22 @@ config.window_padding = {
   right = '0cell',
 }
 
--- config.window_frame = {
---   inactive_titlebar_bg = '#1a1b26',
---   active_titlebar_bg = '#1f2335',
---   inactive_titlebar_fg = '#6b7280',
---   active_titlebar_fg = '#ffffff',
---   inactive_titlebar_border_bottom = '#1f2335',
---   active_titlebar_border_bottom = '#1f2335',
---   button_fg = '#6b7280',
---   button_bg = '#1f2335',
---   button_hover_fg = '#ffffff',
---   button_hover_bg = '#292d47',
---   border_left_color = 'black',
---   border_right_color = 'black',
---   border_bottom_color = 'black',
---   border_top_color = 'black',
--- }
+config.window_frame = {
+  inactive_titlebar_bg = '#1a1b26',
+  active_titlebar_bg = '#1f2335',
+  inactive_titlebar_fg = '#6b7280',
+  active_titlebar_fg = '#ffffff',
+  inactive_titlebar_border_bottom = '#1f2335',
+  active_titlebar_border_bottom = '#1f2335',
+  button_fg = '#6b7280',
+  button_bg = '#1f2335',
+  button_hover_fg = '#ffffff',
+  button_hover_bg = '#292d47',
+  border_left_color = 'black',
+  border_right_color = 'black',
+  border_bottom_color = 'black',
+  border_top_color = 'black',
+}
 
 config.enable_tab_bar = false
 config.hide_mouse_cursor_when_typing = true
