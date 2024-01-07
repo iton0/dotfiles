@@ -11,15 +11,15 @@ if wezterm.config_builder then
 end
 
 -- Color and Appearance
-config.color_scheme = 'One Dark (base16)'
+-- config.color_scheme = 'One Dark (base16)'
 
-config.colors = {
-  cursor_border = '#E5E9F0',
-  cursor_bg = '#E5E9F0',
-}
+-- config.colors = {
+--   cursor_border = '#E5E9F0',
+--   cursor_bg = '#E5E9F0',
+-- }
 
-config.anti_alias_custom_block_glyphs = true
-config.custom_block_glyphs = true
+-- config.anti_alias_custom_block_glyphs = true
+-- config.custom_block_glyphs = true
 config.allow_square_glyphs_to_overflow_width = 'WhenFollowedBySpace'
 
 -- Window Setting
@@ -43,32 +43,32 @@ config.background = {
 }
 
 config.window_padding = {
-  left = '0.5cell',
-  right = '0.5cell',
+  left = '0cell',
+  right = '0cell',
 }
 
-config.window_frame = {
-  inactive_titlebar_bg = '#1a1b26',
-  active_titlebar_bg = '#1f2335',
-  inactive_titlebar_fg = '#6b7280',
-  active_titlebar_fg = '#ffffff',
-  inactive_titlebar_border_bottom = '#1f2335',
-  active_titlebar_border_bottom = '#1f2335',
-  button_fg = '#6b7280',
-  button_bg = '#1f2335',
-  button_hover_fg = '#ffffff',
-  button_hover_bg = '#292d47',
-  border_left_color = 'black',
-  border_right_color = 'black',
-  border_bottom_color = 'black',
-  border_top_color = 'black',
-}
+-- config.window_frame = {
+--   inactive_titlebar_bg = '#1a1b26',
+--   active_titlebar_bg = '#1f2335',
+--   inactive_titlebar_fg = '#6b7280',
+--   active_titlebar_fg = '#ffffff',
+--   inactive_titlebar_border_bottom = '#1f2335',
+--   active_titlebar_border_bottom = '#1f2335',
+--   button_fg = '#6b7280',
+--   button_bg = '#1f2335',
+--   button_hover_fg = '#ffffff',
+--   button_hover_bg = '#292d47',
+--   border_left_color = 'black',
+--   border_right_color = 'black',
+--   border_bottom_color = 'black',
+--   border_top_color = 'black',
+-- }
 
 config.enable_tab_bar = false
 config.hide_mouse_cursor_when_typing = true
 config.warn_about_missing_glyphs = false
 
-config.enable_wayland = false
+-- config.enable_wayland = false
 
 -- Mouse, Cursor, & Keyboard
 config.scrollback_lines = 5000
@@ -80,14 +80,14 @@ config.disable_default_key_bindings = true
 config.keys = require('keybindings')
 
 -- Font
-config.font = wezterm.font('FiraCode Nerd Font')
+-- config.font = wezterm.font('FiraCode Nerd Font')
 
-config.font_size = 14
+config.font_size = 17
 config.cell_width = 1.0
 config.line_height = 1.0
 config.unicode_version = 8
-config.font_shaper = 'Harfbuzz'
-config.freetype_load_target = 'Normal'
+-- config.font_shaper = 'Harfbuzz'
+-- config.freetype_load_target = 'Normal'
 
 -- and finally, return the configuration to wezterm
 return config
