@@ -31,18 +31,20 @@ return {
     "<cmd>lua require('harpoon-core.ui').toggle_quick_menu()<cr>",
     { noremap = true, silent = true, desc = 'Toggle Harpoon' }
   ),
-  vim.keymap.set(
-    'n',
-    '<leader>hm',
-    "<cmd>lua require('harpoon-core.mark').add_file()<cr><cmd>lua require('notify')('Mark added', 'info')<cr>",
-    { noremap = true, silent = true, desc = 'Add Mark' }
-  ),
-  vim.keymap.set(
-    'n',
-    '<leader>hr',
-    "<cmd>lua require('harpoon-core.mark').rm_file()<cr><cmd>lua require('notify')('Mark removed', 'info')<cr>",
-    { noremap = true, silent = true, desc = 'Remove Mark' }
-  ),
+  vim.keymap.set('n', '<leader>hm', function()
+    require('harpoon-core.mark').add_file()
+    print('[HARPOON] MARK ADDED')
+    vim.defer_fn(function()
+      vim.cmd('echo ""')
+    end, 1500)
+  end, { noremap = true, silent = true, desc = 'Add Mark' }),
+  vim.keymap.set('n', '<leader>hr', function()
+    require('harpoon-core.mark').rm_file()
+    print('[HARPOON] MARK REMOVED')
+    vim.defer_fn(function()
+      vim.cmd('echo ""')
+    end, 1500)
+  end, { noremap = true, silent = true, desc = 'Remove Mark' }),
   vim.keymap.set(
     'n',
     '<c-h>',
