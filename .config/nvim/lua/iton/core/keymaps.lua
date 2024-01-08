@@ -109,6 +109,24 @@ remap(
 --   { desc = 'Open diagnostics list' }
 -- )
 
+-- Remap for easier LSP setup
+-- TODO: figure out how to combine these
+-- 3 functions into one via sequential/async
+-- execution
+remap('n', '<M-l>', function()
+  if vim.lsp.buf.server_ready() then
+    print('Already Installed')
+  else
+    vim.cmd('LspInstall')
+  end
+end, opts)
+remap('n', '<M-m>', function()
+  vim.cmd('MasonToolsInstall')
+end, opts)
+remap('n', '<M-s>', function()
+  vim.cmd('LspStart')
+end, opts)
+
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group =

@@ -1,27 +1,43 @@
 return {
   -- LSP Configuration & Plugins
   'neovim/nvim-lspconfig',
-  keys = {
-    {
-      -- M is the Alt key
-      '<M-l>',
-      ':LspInstall<cr>',
-      desc = 'Install LSP',
-    },
-  },
   event = { 'BufReadPost', 'BufNewFile' },
   cmd = { 'LspInfo', 'LspInstall', 'LspUninstall', 'Mason' },
   dependencies = {
     -- Automatically install LSPs to stdpath for neovim
     'williamboman/mason.nvim',
-    --TODO: Figure out how to make this work
-    -- 'WhoIsSethDaniel/mason-tool-installer.nvim',
+    {
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
+      opts = {
+        ensure_installed = {
+          'checkstyle',
+          'clang-format',
+          'clangd',
+          'cpplint',
+          'css-lsp',
+          'eslint_d',
+          'google-java-format',
+          'html-lsp',
+          'intelephense',
+          'jdtls',
+          { 'lua-language-server', auto_update = true },
+          'phpcbf',
+          'phpstan',
+          'prettierd',
+          'sqlfluff',
+          'sqlls',
+          'stylelint',
+          { 'stylua', auto_update = true },
+          'typescript-language-server',
+        },
+      },
+    },
     'williamboman/mason-lspconfig.nvim',
 
     -- Additional lua configuration, makes nvim stuff amazing!
     'folke/neodev.nvim',
   },
-  build = ':MasonUpdate',
+  build = ':MasonToolsUpdate',
   config = function()
     -- [[ Configure LSP ]]
     --  This function gets run when an LSP connects to a particular buffer.
