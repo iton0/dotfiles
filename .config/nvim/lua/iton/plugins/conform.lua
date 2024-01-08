@@ -3,7 +3,7 @@
 
 return {
   'stevearc/conform.nvim',
-  event = 'BufWritePost',
+  event = 'BufWritePre',
   cmd = 'ConformInfo',
   opts = {
     formatters_by_ft = {
