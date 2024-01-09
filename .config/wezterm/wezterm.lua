@@ -10,14 +10,6 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
--- Color and Appearance
--- config.color_scheme = 'One Dark (base16)'
-
--- config.colors = {
---   cursor_border = '#E5E9F0',
---   cursor_bg = '#E5E9F0',
--- }
-
 -- config.anti_alias_custom_block_glyphs = true
 -- config.custom_block_glyphs = true
 config.allow_square_glyphs_to_overflow_width = 'WhenFollowedBySpace'
@@ -68,8 +60,6 @@ config.enable_tab_bar = false
 config.hide_mouse_cursor_when_typing = true
 config.warn_about_missing_glyphs = false
 
--- config.enable_wayland = false
-
 -- Mouse, Cursor, & Keyboard
 config.scrollback_lines = 5000
 config.alternate_buffer_wheel_scroll_speed = 5
@@ -78,9 +68,6 @@ config.use_dead_keys = false
 -- Key Bindings
 config.disable_default_key_bindings = true
 config.keys = require('keybindings')
-
--- Font
--- config.font = wezterm.font('FiraCode Nerd Font')
 
 config.font_size = 17
 config.cell_width = 1.0
