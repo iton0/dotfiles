@@ -63,17 +63,6 @@ vim.o.completeopt = 'menu,menuone,preview,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
--- Set fold options for fold.lua
--- vim.o.foldmethod = 'expr'
--- vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
--- vim.o.fillchars = [[eob: ,fold: ,foldopen: ,foldsep: ,foldclose: ]]
--- vim.o.foldtext = 'v:lua.MyFoldText()'
--- vim.o.foldcolumn = '1'
--- vim.o.foldlevel = 99
--- vim.o.foldlevelstart = 99
--- vim.o.foldenable = true
--- vim.o.nofoldenable = true
-
 -- Disabling Vim language providers for Python 3, Perl, Ruby, and Node.js
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_perl_provider = 0

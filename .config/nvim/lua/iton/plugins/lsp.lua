@@ -6,8 +6,8 @@ return {
   dependencies = {
     -- Automatically install LSPs to stdpath for neovim
     'williamboman/mason.nvim',
-    'WhoIsSethDaniel/mason-tool-installer.nvim',
     'williamboman/mason-lspconfig.nvim',
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
 
     -- Additional lua configuration, makes nvim stuff amazing!
     'folke/neodev.nvim',
@@ -172,7 +172,30 @@ return {
         },
       },
     })
-    require('mason-lspconfig').setup({})
+    require('mason-lspconfig').setup({ automatic_installation = true })
+    require('mason-tool-installer').setup({
+      ensure_installed = {
+        'checkstyle',
+        'clang-format',
+        'clangd',
+        'cpplint',
+        'css-lsp',
+        'eslint_d',
+        'google-java-format',
+        'html-lsp',
+        'intelephense',
+        'jdtls',
+        'lua-language-server',
+        'phpcbf',
+        'phpstan',
+        'prettierd',
+        'sqlfluff',
+        'sqlls',
+        'stylelint',
+        'stylua',
+        'typescript-language-server',
+      },
+    })
     -- Enable the following language servers
     --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
     --
@@ -203,10 +226,12 @@ return {
     -- Ensure the servers above are installed
     local mason_lspconfig = require('mason-lspconfig')
 
-    mason_lspconfig.setup({
-      ensure_installed = vim.tbl_keys(servers),
-      automatic_installation = true,
-    })
+    -- TODO: next time I reconfig need to see if i keep
+    -- this commented out or delete it entirely
+    --
+    -- mason_lspconfig.setup({
+    --   ensure_installed = vim.tbl_keys(servers),
+    -- })
 
     mason_lspconfig.setup_handlers({
       function(server_name)
