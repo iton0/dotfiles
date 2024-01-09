@@ -2,7 +2,7 @@ return {
   -- LSP Configuration & Plugins
   'neovim/nvim-lspconfig',
   event = { 'BufReadPost', 'BufNewFile' },
-  cmd = { 'LspInfo', 'LspInstall', 'LspUninstall', 'Mason' },
+  cmd = { 'LspInstall', 'LspUninstall', 'Mason' },
   dependencies = {
     -- Automatically install LSPs to stdpath for neovim
     'williamboman/mason.nvim',
@@ -172,7 +172,7 @@ return {
         },
       },
     })
-    require('mason-lspconfig').setup({ automatic_installation = true })
+    require('mason-lspconfig').setup({})
     require('mason-tool-installer').setup({
       ensure_installed = {
         'checkstyle',
@@ -226,12 +226,10 @@ return {
     -- Ensure the servers above are installed
     local mason_lspconfig = require('mason-lspconfig')
 
-    -- TODO: next time I reconfig need to see if i keep
-    -- this commented out or delete it entirely
-    --
-    -- mason_lspconfig.setup({
-    --   ensure_installed = vim.tbl_keys(servers),
-    -- })
+    mason_lspconfig.setup({
+      ensure_installed = vim.tbl_keys(servers),
+      automatic_installation = true,
+    })
 
     mason_lspconfig.setup_handlers({
       function(server_name)
