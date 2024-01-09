@@ -81,6 +81,5 @@ vim.g.loaded_ruby_provider = 0
 vim.g.loaded_node_provider = 0
 
 -- Netrw
-vim.g.netrw_liststyle = 3 -- Set netrw_liststyle to tree list view
 vim.g.netrw_banner = 0 -- Remove the directory banner
 vim.o.laststatus = 0 -- Remove status line
