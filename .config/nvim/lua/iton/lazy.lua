@@ -21,7 +21,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- [[ Plugins ]]
-require('lazy').setup('iton.plugins', {
+require('lazy').setup({ { import = 'iton.plugins' } }, {
   defaults = {
     lazy = true,
   },
