@@ -31,7 +31,7 @@ local dimmer = { brightness = 0.25 }
 config.background = {
   {
     source = {
-      File = { path = '/home/iton/.config/wezterm/background/3.gif' },
+      File = { path = '/home/iton/.config/wezterm/background/1.gif' },
     },
     hsb = dimmer,
     height = 'Cover',
