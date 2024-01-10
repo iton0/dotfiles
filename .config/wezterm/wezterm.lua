@@ -10,8 +10,6 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
--- config.anti_alias_custom_block_glyphs = true
--- config.custom_block_glyphs = true
 config.allow_square_glyphs_to_overflow_width = 'WhenFollowedBySpace'
 
 -- Window Setting
@@ -35,7 +33,7 @@ config.background = {
 }
 
 config.window_padding = {
-  left = '0cell',
+  left = '0.25cell',
   right = '0cell',
 }
 
@@ -73,8 +71,6 @@ config.font_size = 17
 config.cell_width = 1.0
 config.line_height = 1.0
 config.unicode_version = 8
--- config.font_shaper = 'Harfbuzz'
--- config.freetype_load_target = 'Normal'
 
 -- and finally, return the configuration to wezterm
 return config
