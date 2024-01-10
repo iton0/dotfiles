@@ -27,9 +27,6 @@ remap('i', 'kj', '<esc>', opts)
 -- Remap for search and replace
 remap('n', '<c-f>', ':%s/', { noremap = true, desc = 'Search and Replace' })
 
--- Remap for quicker saving and exiting
--- remap('c', 'qw', 'wq', { noremap = true })
-
 -- Remap for better scrolling
 remap('n', '<c-u>', '<c-u>zz', opts)
 remap('n', '<c-d>', '<c-d>zz', opts)

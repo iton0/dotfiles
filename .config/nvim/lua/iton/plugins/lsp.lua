@@ -1,8 +1,8 @@
 return {
   -- LSP Configuration & Plugins
   'neovim/nvim-lspconfig',
-  event = { 'BufReadPost', 'BufNewFile' },
-  cmd = { 'LspInstall', 'LspUninstall', 'Mason' },
+  -- event = { 'BufReadPost', 'BufNewFile' },
+  cmd = { 'LspStart', 'LspInstall', 'LspUninstall', 'Mason' },
   dependencies = {
     -- Automatically install LSPs to stdpath for neovim
     'williamboman/mason.nvim',
@@ -11,26 +11,17 @@ return {
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       opts = {
         ensure_installed = {
-          'checkstyle',
-          'clang-format',
+          'lua-language-server', -- For Neovim (DO NOT DELETE)
+          'stylua',
+          'clang-format', -- C/C++
           'clangd',
           'cpplint',
-          'css-lsp',
-          'eslint_d',
-          'google-java-format',
-          'html-lsp',
-          'intelephense',
-          'jdtls',
-          'lua-language-server',
-          'phpcbf',
-          'phpstan',
-          'prettierd',
-          'sqlfluff',
-          'sqlfmt',
-          'sqlls',
-          'stylelint',
-          'stylua',
+          'css-lsp', -- Web Dev
           'typescript-language-server',
+          'html-lsp',
+          'eslint_d',
+          'stylelint',
+          'prettierd',
         },
         auto_update = true,
         run_on_start = false,
@@ -103,7 +94,7 @@ return {
 
       -- Loop through diagnostic types and set custom sign definitions
       for type, icon in pairs(signs) do
-        local hl = 'DiagnosticSign' .. type                              -- Create highlight group name
+        local hl = 'DiagnosticSign' .. type -- Create highlight group name
         vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl }) -- Define sign with custom icon and highlight
       end
 
@@ -200,10 +191,6 @@ return {
       end, { desc = 'Format current buffer with LSP' })
     end
 
-    -- TODO:  If there is a user event that
-    -- shows that LspInstall finishes this
-    -- will make easier to do.
-    --
     -- Autocommand that executes after
     -- MasonToolInstall finishes. Makes
     -- it easier for LSP setup
@@ -222,7 +209,7 @@ return {
               vim.cmd('LspInstall')
               vim.defer_fn(function()
                 vim.cmd('LspStart')
-              end, 7000)
+              end, 6500)
             end
           end, 500)
         end)
@@ -284,12 +271,8 @@ return {
     })
   end,
 
-  -- TODO: figure out how to combine these
-  -- 2 functions into one via sequential/async
-  -- execution (look at first TODO)
-  --
   -- Remap for easier LSP setup
-  vim.keymap.set('n', '<M-l>', function()
+  vim.keymap.set('n', '<M-m>', function()
     if vim.lsp.buf.server_ready() then
       print(' LSP Already Installed')
       vim.defer_fn(function()
@@ -299,7 +282,7 @@ return {
       vim.cmd('MasonToolsInstall')
     end
   end, { noremap = true, silent = true }),
-  vim.keymap.set('n', '<M-s>', function()
+  vim.keymap.set('n', '<M-l>', function()
     vim.cmd('LspStart')
     vim.cmd('echo ""')
   end, { noremap = true, silent = true }),
