@@ -93,6 +93,20 @@ return {
         '[W]orkspace [S]ymbols'
       )
 
+      -- Define custom signs for different diagnostic types (Error, Warn, Hint, Info)
+      local signs = {
+        Error = '󰅚 ', -- Custom sign for Errors
+        Warn = '󰀪 ', -- Custom sign for Warnings
+        Hint = '󰌶 ', -- Custom sign for Hints
+        Info = ' ', -- Custom sign for Information messages
+      }
+
+      -- Loop through diagnostic types and set custom sign definitions
+      for type, icon in pairs(signs) do
+        local hl = 'DiagnosticSign' .. type                              -- Create highlight group name
+        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl }) -- Define sign with custom icon and highlight
+      end
+
       -- Switch for controlling whether you want autoformatting.
       --  Use :KickstartFormatToggle to toggle autoformatting on or off
       local format_is_enabled = true
