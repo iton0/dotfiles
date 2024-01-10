@@ -7,7 +7,35 @@ return {
     -- Automatically install LSPs to stdpath for neovim
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
-    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    {
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
+      opts = {
+        ensure_installed = {
+          'checkstyle',
+          'clang-format',
+          'clangd',
+          'cpplint',
+          'css-lsp',
+          'eslint_d',
+          'google-java-format',
+          'html-lsp',
+          'intelephense',
+          'jdtls',
+          'lua-language-server',
+          'phpcbf',
+          'phpstan',
+          'prettierd',
+          'sqlfluff',
+          'sqlfmt',
+          'sqlls',
+          'stylelint',
+          'stylua',
+          'typescript-language-server',
+        },
+        auto_update = true,
+        run_on_start = false,
+      },
+    },
 
     -- Additional lua configuration, makes nvim stuff amazing!
     'folke/neodev.nvim',
@@ -158,7 +186,34 @@ return {
       end, { desc = 'Format current buffer with LSP' })
     end
 
-    require('lspconfig.ui.windows').default_options.border = 'rounded'
+    -- TODO:  If there is a user event that
+    -- shows that LspInstall finishes this
+    -- will make easier to do.
+    --
+    -- Autocommand that executes after
+    -- MasonToolInstall finishes. Makes
+    -- it easier for LSP setup
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'MasonToolsUpdateCompleted',
+      callback = function(e)
+        vim.schedule(function()
+          vim.cmd('LspStart')
+          vim.defer_fn(function()
+            if vim.lsp.buf.server_ready() then
+              print(' ', vim.inspect(e.data), 'Installed')
+              vim.defer_fn(function()
+                vim.cmd('echo ""')
+              end, 2500)
+            else
+              vim.cmd('LspInstall')
+              vim.defer_fn(function()
+                vim.cmd('LspStart')
+              end, 7000)
+            end
+          end, 500)
+        end)
+      end,
+    })
 
     -- mason-lspconfig requires that these setup functions are called in this order
     -- before setting up the servers.
@@ -173,29 +228,6 @@ return {
       },
     })
     require('mason-lspconfig').setup({})
-    require('mason-tool-installer').setup({
-      ensure_installed = {
-        'checkstyle',
-        'clang-format',
-        'clangd',
-        'cpplint',
-        'css-lsp',
-        'eslint_d',
-        'google-java-format',
-        'html-lsp',
-        'intelephense',
-        'jdtls',
-        'lua-language-server',
-        'phpcbf',
-        'phpstan',
-        'prettierd',
-        'sqlfluff',
-        'sqlls',
-        'stylelint',
-        'stylua',
-        'typescript-language-server',
-      },
-    })
     -- Enable the following language servers
     --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
     --
@@ -226,11 +258,6 @@ return {
     -- Ensure the servers above are installed
     local mason_lspconfig = require('mason-lspconfig')
 
-    mason_lspconfig.setup({
-      ensure_installed = vim.tbl_keys(servers),
-      automatic_installation = true,
-    })
-
     mason_lspconfig.setup_handlers({
       function(server_name)
         require('lspconfig')[server_name].setup({
@@ -242,4 +269,24 @@ return {
       end,
     })
   end,
+
+  -- TODO: figure out how to combine these
+  -- 2 functions into one via sequential/async
+  -- execution (look at first TODO)
+  --
+  -- Remap for easier LSP setup
+  vim.keymap.set('n', '<M-l>', function()
+    if vim.lsp.buf.server_ready() then
+      print(' LSP Already Installed')
+      vim.defer_fn(function()
+        vim.cmd('echo ""')
+      end, 1000)
+    else
+      vim.cmd('MasonToolsInstall')
+    end
+  end, { noremap = true, silent = true }),
+  vim.keymap.set('n', '<M-s>', function()
+    vim.cmd('LspStart')
+    vim.cmd('echo ""')
+  end, { noremap = true, silent = true }),
 }

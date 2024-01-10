@@ -1,7 +1,7 @@
 -- See `:help vim.o`
 
 -- Set highlight on search
-vim.o.hlsearch = false
+vim.o.hlsearch = true
 
 -- Set the minimum number of screen lines to keep above and below the cursor
 vim.o.scrolloff = 8
@@ -27,7 +27,7 @@ vim.o.statusline = ''
 vim.o.clipboard = 'unnamedplus'
 
 -- Set wrap options
-vim.o.wrap = true -- Enable line wrapping
+vim.o.wrap = true      -- Enable line wrapping
 vim.o.linebreak = true -- Wrap lines at word boundaries
 
 -- Set wrap behavior
@@ -71,4 +71,4 @@ vim.g.loaded_node_provider = 0
 
 -- Netrw
 vim.g.netrw_banner = 0 -- Remove the directory banner
-vim.o.laststatus = 0 -- Remove status line
+vim.o.laststatus = 0   -- Remove status line

@@ -21,4 +21,15 @@ return {
     event = { 'BufReadPost', 'BufNewFile' },
     config = true,
   },
+  {
+    'jiaoshijie/undotree',
+    dependencies = 'nvim-lua/plenary.nvim',
+    config = true,
+    vim.keymap.set(
+      'n',
+      '<leader>u',
+      "<cmd>lua require('undotree').toggle()<cr>",
+      { noremap = true, silent = true, desc = 'Undotree' }
+    ),
+  },
 }

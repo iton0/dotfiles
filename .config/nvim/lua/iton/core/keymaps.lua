@@ -27,6 +27,9 @@ remap('i', 'kj', '<esc>', opts)
 -- Remap for search and replace
 remap('n', '<c-f>', ':%s/', { noremap = true, desc = 'Search and Replace' })
 
+-- Remap for quicker saving and exiting
+-- remap('c', 'qw', 'wq', { noremap = true })
+
 -- Remap for better scrolling
 remap('n', '<c-u>', '<c-u>zz', opts)
 remap('n', '<c-d>', '<c-d>zz', opts)
@@ -56,27 +59,11 @@ remap('v', '>', '>gv', opts)
 remap('n', 'H', '_', opts)
 remap('n', 'L', '$', opts)
 
--- Folding configuration
--- function MyFoldText()
---   local line = vim.fn.getline(vim.v.foldstart)
---   return '🪭 ' .. line
--- end
---
--- vim.api.nvim_set_var('MyFoldText', MyFoldText)
-
--- Toggle folds with Enter key
--- remap('n', '<CR>', 'za', opts)
-
 -- Remap Ctrl + S to perform a decrement action
 vim.api.nvim_set_keymap('n', '<C-S>', '<C-X>', opts)
 
--- Opens Lazy.nvim Home
-remap(
-  'n',
-  '<Space>l',
-  ':Lazy<cr>',
-  { noremap = true, silent = true, desc = 'Lazy.nvim' }
-)
+-- Remap to clear highlighted search results
+remap('n', '<esc>', '<cmd>nohlsearch<cr>', opts)
 
 -- Remap for terminal navigation
 remap('t', '<esc>', [[<C-\><C-n>]], opts)
@@ -102,31 +89,14 @@ remap(
   vim.diagnostic.open_float,
   { desc = 'Floating diagnostic' }
 )
+
+--NOTE: Keeping in case trouble.nvim is trouble lol
 -- remap(
 --   'n',
 --   '<space>q',
 --   vim.diagnostic.setloclist,
 --   { desc = 'Open diagnostics list' }
 -- )
-
--- TODO: figure out how to combine these
--- 3 functions into one via sequential/async
--- execution
---
--- Remap for easier LSP setup
-remap('n', '<M-l>', function()
-  if vim.lsp.buf.server_ready() then
-    print('Already Installed')
-  else
-    vim.cmd('LspInstall')
-  end
-end, opts)
-remap('n', '<M-m>', function()
-  vim.cmd('MasonToolsInstall')
-end, opts)
-remap('n', '<M-s>', function()
-  vim.cmd('LspStart')
-end, opts)
 
 --Remap to clear command line output
 remap('n', '<M-c>', '<cmd>:echo ""<cr>', opts)
