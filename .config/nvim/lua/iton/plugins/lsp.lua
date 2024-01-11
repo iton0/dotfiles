@@ -201,15 +201,12 @@ return {
     -- it easier for LSP setup
     vim.api.nvim_create_autocmd('User', {
       pattern = 'MasonToolsUpdateCompleted',
-      callback = function(e)
+      callback = function()
         vim.schedule(function()
           vim.cmd('LspStart')
           vim.defer_fn(function()
             if vim.lsp.buf.server_ready() then
-              print(' ', vim.inspect(e.data), 'Installed')
-              vim.defer_fn(function()
-                vim.cmd('echo ""')
-              end, 2500)
+              return
             else
               vim.cmd('LspInstall')
               vim.defer_fn(function()

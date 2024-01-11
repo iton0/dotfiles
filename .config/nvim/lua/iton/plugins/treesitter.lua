@@ -55,6 +55,7 @@ return {
         auto_install = true,
 
         ignore_install = {
+          'php',
           'json',
           'json5',
           'jsonc',

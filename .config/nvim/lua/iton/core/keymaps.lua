@@ -125,6 +125,7 @@ vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
         -- Can either add the filetype or file extensions
         -- ex. 'text' or 'txt'
         local filetypes = {
+          'php',
           'gitcommit',
           'TelescopePrompt',
           'gitconfig',
