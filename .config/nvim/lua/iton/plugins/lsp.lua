@@ -1,8 +1,13 @@
 return {
   -- LSP Configuration & Plugins
   'neovim/nvim-lspconfig',
-  -- event = { 'BufReadPost', 'BufNewFile' },
-  cmd = { 'LspStart', 'LspInstall', 'LspUninstall', 'Mason' },
+  cmd = {
+    'LspStart',
+    'LspInstall',
+    'LspUninstall',
+    'Mason',
+    'MasonToolsInstall',
+  },
   dependencies = {
     -- Automatically install LSPs to stdpath for neovim
     'williamboman/mason.nvim',
@@ -209,9 +214,9 @@ return {
               vim.cmd('LspInstall')
               vim.defer_fn(function()
                 vim.cmd('LspStart')
-              end, 6500)
+              end, 5000)
             end
-          end, 500)
+          end, 250)
         end)
       end,
     })
@@ -270,20 +275,4 @@ return {
       end,
     })
   end,
-
-  -- Remap for easier LSP setup
-  vim.keymap.set('n', '<M-m>', function()
-    if vim.lsp.buf.server_ready() then
-      print(' LSP Already Installed')
-      vim.defer_fn(function()
-        vim.cmd('echo ""')
-      end, 1000)
-    else
-      vim.cmd('MasonToolsInstall')
-    end
-  end, { noremap = true, silent = true }),
-  vim.keymap.set('n', '<M-l>', function()
-    vim.cmd('LspStart')
-    vim.cmd('echo ""')
-  end, { noremap = true, silent = true }),
 }
