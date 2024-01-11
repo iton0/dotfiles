@@ -118,7 +118,7 @@ vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
       local excluded_fts = function()
         local current_buf = vim.api.nvim_get_current_buf()
         local filename = vim.fn.fnamemodify(vim.fn.bufname(current_buf), ':t')
-        local curr_filetype =
+        local current_filetype =
           vim.api.nvim_buf_get_option(current_buf, 'filetype')
 
         -- Excluded filetype
@@ -135,7 +135,6 @@ vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
           'gitignore',
           'netrw',
           'text',
-          'txt',
           'sh',
           'md',
           'rst',
@@ -156,7 +155,7 @@ vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
         }
 
         for _, filetype in ipairs(filetypes) do -- Checks filetype
-          if curr_filetype == filetype then
+          if current_filetype == filetype then
             return true -- Skip for excluded filetypes
           end
         end
@@ -202,7 +201,7 @@ vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
 })
 
 -- Remap for easier LSP setup
-vim.keymap.set('n', '<M-m>', function()
+remap('n', '<M-m>', function()
   if vim.lsp.buf.server_ready() then
     print(' LSP Already Installed')
     vim.defer_fn(function()
@@ -211,8 +210,8 @@ vim.keymap.set('n', '<M-m>', function()
   else
     vim.cmd('MasonToolsInstall')
   end
-end, { noremap = true, silent = true })
-vim.keymap.set('n', '<M-l>', function()
+end, opts)
+remap('n', '<M-l>', function()
   vim.cmd('LspStart')
   vim.cmd('echo ""')
-end, { noremap = true, silent = true })
+end, opts)
