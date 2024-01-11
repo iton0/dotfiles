@@ -127,6 +127,7 @@ vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
         local filetypes = {
           'php',
           'gitcommit',
+          'lazy',
           'TelescopePrompt',
           'gitconfig',
           'json',
