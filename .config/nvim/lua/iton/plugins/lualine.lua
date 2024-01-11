@@ -31,6 +31,7 @@ return {
       ) .. data
       return data
     end
+
     require('lualine').setup({
       options = {
         theme = function()
@@ -113,7 +114,7 @@ return {
           },
           {
             'fileformat',
-            padding = { left = 0, right = 0 },
+            padding = { left = 0, right = 1 },
             icons_enabled = true,
             symbols = {
               unix = 'LF',
@@ -123,7 +124,7 @@ return {
           },
           {
             function()
-              local msg = 'No LSP'
+              local msg = ''
               local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
               local clients = vim.lsp.get_active_clients()
               if next(clients) == nil then
@@ -132,14 +133,13 @@ return {
               for _, client in ipairs(clients) do
                 local filetypes = client.config.filetypes
                 if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-                  return client.name
+                  return ' ' .. client.name
                 end
               end
               return msg
             end,
-            icon = '',
             color = { fg = '#9CDC7C' },
-            padding = { right = 1, left = 1 },
+            padding = { right = 1, left = 0 },
           },
           {
             require('lazy.status').updates,

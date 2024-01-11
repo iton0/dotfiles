@@ -126,6 +126,7 @@ vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
         -- ex. 'text' or 'txt'
         local filetypes = {
           'gitcommit',
+          'TelescopePrompt',
           'gitconfig',
           'json',
           'zsh',
