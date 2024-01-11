@@ -101,7 +101,7 @@ remap('n', '<M-c>', '<cmd>:echo ""<cr>', opts)
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group =
-    vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+  vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
     vim.highlight.on_yank()
@@ -119,7 +119,7 @@ vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
         local current_buf = vim.api.nvim_get_current_buf()
         local filename = vim.fn.fnamemodify(vim.fn.bufname(current_buf), ':t')
         local curr_filetype =
-            vim.api.nvim_buf_get_option(current_buf, 'filetype')
+          vim.api.nvim_buf_get_option(current_buf, 'filetype')
 
         -- Excluded filetype
         -- Can either add the filetype or file extensions
@@ -155,7 +155,7 @@ vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
 
         for _, filetype in ipairs(filetypes) do -- Checks filetype
           if curr_filetype == filetype then
-            return true                         -- Skip for excluded filetypes
+            return true -- Skip for excluded filetypes
           end
         end
 
@@ -183,8 +183,9 @@ vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
         vim.cmd('Lazy load nvim-treesitter')
         vim.defer_fn(function()
           if vim.lsp.buf.server_ready() then
-            return
+            vim.cmd('echo ""')
           else
+            vim.cmd('echo ""')
             vim.cmd('LspStart')
             vim.defer_fn(function()
               if not vim.lsp.buf.server_ready() then
