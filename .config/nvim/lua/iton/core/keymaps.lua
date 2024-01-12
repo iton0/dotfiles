@@ -110,9 +110,12 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+-- TODO: figure out why it is not excluded Telescope and lazy
+--       it seems when i do the commands really fast it does not register
+--
 -- Set up an autocmd to handle LSP setup after reading or creating a buffer
 vim.api.nvim_create_autocmd({
-  'BufReadPre',
+  'BufReadPost',
   'BufNewFile',
 }, {
   pattern = '*',
@@ -123,7 +126,6 @@ vim.api.nvim_create_autocmd({
         local filename = vim.fn.fnamemodify(vim.fn.bufname(current_buf), ':t')
         local current_filetype =
           vim.api.nvim_buf_get_option(current_buf, 'filetype')
-
         -- Excluded filetype
         -- Can either add the filetype or file extensions
         -- ex. 'text' or 'txt'
@@ -209,7 +211,7 @@ vim.api.nvim_create_autocmd({
           end
         end, 250)
       end
-    end, 250)
+    end, 100)
   end,
 })
 
