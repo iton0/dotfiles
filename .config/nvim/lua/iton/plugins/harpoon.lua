@@ -49,7 +49,7 @@ return {
     'n',
     '<c-h>',
     "<cmd>lua require('harpoon-core.ui').nav_next()<cr>",
-    { noremap = true, silent = true, desc = 'Toggle Harpoon' }
+    { noremap = true, silent = true, desc = 'Cycle Harpoon' }
   ),
   vim.keymap.set(
     'n',
