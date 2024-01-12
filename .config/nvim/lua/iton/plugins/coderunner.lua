@@ -47,7 +47,7 @@ return {
     vim.keymap.set(
       'n',
       '<leader>cl',
-      'RunClose<CR>',
+      ':RunClose<CR>',
       { noremap = true, silent = true, desc = 'Close Code Runner' }
     )
   end,
