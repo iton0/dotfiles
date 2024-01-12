@@ -1,6 +1,7 @@
 return {
   'olimorris/onedarkpro.nvim',
-  event = 'VeryLazy',
+  lazy = false,
+  priority = 1000,
   config = function()
     require('onedarkpro').setup({
       options = {

@@ -112,8 +112,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- Set up an autocmd to handle LSP setup after reading or creating a buffer
 vim.api.nvim_create_autocmd({
-  'BufReadPost',
-  'BufRead',
+  'BufReadPre',
   'BufNewFile',
 }, {
   pattern = '*',
@@ -210,7 +209,7 @@ vim.api.nvim_create_autocmd({
           end
         end, 250)
       end
-    end, 500)
+    end, 250)
   end,
 })
 
@@ -220,7 +219,7 @@ remap('n', '<M-m>', function()
     print(' LSP Already Installed')
     vim.defer_fn(function()
       vim.cmd('echo ""')
-    end, 1000)
+    end, 750)
   else
     vim.cmd('MasonToolsInstall')
   end

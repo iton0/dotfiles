@@ -36,14 +36,14 @@ return {
     print('[HARPOON] MARK ADDED')
     vim.defer_fn(function()
       vim.cmd('echo ""')
-    end, 1500)
+    end, 1000)
   end, { noremap = true, silent = true, desc = 'Add Mark' }),
   vim.keymap.set('n', '<leader>hr', function()
     require('harpoon-core.mark').rm_file()
     print('[HARPOON] MARK REMOVED')
     vim.defer_fn(function()
       vim.cmd('echo ""')
-    end, 1500)
+    end, 1000)
   end, { noremap = true, silent = true, desc = 'Remove Mark' }),
   vim.keymap.set(
     'n',
