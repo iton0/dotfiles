@@ -62,6 +62,10 @@ config.warn_about_missing_glyphs = false
 config.scrollback_lines = 5000
 config.alternate_buffer_wheel_scroll_speed = 5
 config.use_dead_keys = false
+config.default_cursor_style = 'BlinkingBlock'
+config.animation_fps = 1
+config.cursor_blink_ease_in = 'Constant'
+config.cursor_blink_ease_out = 'Constant'
 
 -- Key Bindings
 config.disable_default_key_bindings = true

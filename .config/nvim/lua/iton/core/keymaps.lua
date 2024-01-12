@@ -111,7 +111,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Set up an autocmd to handle LSP setup after reading or creating a buffer
-vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
+vim.api.nvim_create_autocmd({ 'WinEnter', 'BufReadPost', 'BufNewFile' }, {
   pattern = '*',
   callback = function()
     vim.defer_fn(function()
@@ -128,9 +128,13 @@ vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
           'php',
           'gitcommit',
           'lazy',
+          'undotree',
           'TelescopePrompt',
           'gitconfig',
           'json',
+          'toggleterm',
+          '', -- For Harpoon
+          'trouble',
           'zsh',
           'gitignore',
           'netrw',
@@ -176,10 +180,7 @@ vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
         return is_not_desired_filetype
       end
       if excluded_fts() then
-        print(' No LSP: Excluded Filetype')
-        vim.defer_fn(function()
-          vim.cmd('echo ""')
-        end, 2000)
+        return
       else
         vim.cmd('Lazy load nvim-treesitter')
         vim.defer_fn(function()
