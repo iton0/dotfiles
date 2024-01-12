@@ -113,6 +113,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- Set up an autocmd to handle LSP setup after reading or creating a buffer
 vim.api.nvim_create_autocmd({
   'BufReadPost',
+  'BufRead',
   'BufNewFile',
 }, {
   pattern = '*',
@@ -138,7 +139,7 @@ vim.api.nvim_create_autocmd({
           'gitconfig',
           'json',
           'toggleterm',
-          'trouble',
+          'Trouble',
           'zsh',
           'gitignore',
           'netrw',
@@ -192,7 +193,7 @@ vim.api.nvim_create_autocmd({
         return is_not_desired_filetype
       end
       if excluded_fts() then
-        return
+        vim.cmd('echo ""')
       else
         vim.cmd('Lazy load nvim-treesitter')
         vim.defer_fn(function()
