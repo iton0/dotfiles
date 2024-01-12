@@ -27,7 +27,7 @@ vim.keymap.set(
   ':Lazy<cr>',
   { noremap = true, silent = true, desc = 'Lazy.nvim' }
 )
-
+-- TODO: add an AI plugin
 -- [[ Plugins ]]
 require('lazy').setup({ { import = 'iton.plugins' } }, {
   defaults = {
