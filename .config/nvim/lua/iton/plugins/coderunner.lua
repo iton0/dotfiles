@@ -1,4 +1,5 @@
 return {
+  -- TODO: find a better code runner plugin
   'CRAG666/code_runner.nvim',
   keys = {
     { '<leader>c' },
@@ -6,11 +7,6 @@ return {
   config = function()
     require('code_runner').setup({
       filetype = {
-        java = {
-          'cd $dir &&',
-          'javac $fileName &&',
-          'java $fileNameWithoutExt',
-        },
         typescript = 'deno run',
         rust = {
           'cd $dir &&',
@@ -18,7 +14,6 @@ return {
           '$dir/$fileNameWithoutExt',
         },
         javascript = 'node',
-        php = 'php',
         c = {
           'cd $dir &&',
           'gcc $fileName -o $fileNameWithoutExt &&',
@@ -52,7 +47,7 @@ return {
     vim.keymap.set(
       'n',
       '<leader>cl',
-      ':RunClose<CR>',
+      'RunClose<CR>',
       { noremap = true, silent = true, desc = 'Close Code Runner' }
     )
   end,
