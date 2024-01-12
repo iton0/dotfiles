@@ -14,7 +14,6 @@ return {
       typescript = { 'prettierd' },
       c = { 'clang_format' },
       cpp = { 'clang_format' },
-      java = { 'google-java-format' },
       -- TODO: decide if i keep this setting of not for all the files
       -- Use the "*" filetype to run formatters on all filetypes.
       ['*'] = { 'codespell' },
