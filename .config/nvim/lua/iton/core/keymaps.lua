@@ -111,99 +111,107 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Set up an autocmd to handle LSP setup after reading or creating a buffer
-vim.api.nvim_create_autocmd(
-  { 'FileType', 'WinNew', 'WinEnter', 'BufReadPost', 'BufNewFile' },
-  {
-    pattern = '*',
-    callback = function()
-      vim.defer_fn(function()
-        local excluded_fts = function()
-          local current_buf = vim.api.nvim_get_current_buf()
-          local filename = vim.fn.fnamemodify(vim.fn.bufname(current_buf), ':t')
-          local current_filetype =
-            vim.api.nvim_buf_get_option(current_buf, 'filetype')
+vim.api.nvim_create_autocmd({
+  'BufReadPost',
+  'BufNewFile',
+}, {
+  pattern = '*',
+  callback = function()
+    vim.defer_fn(function()
+      local excluded_fts = function()
+        local current_buf = vim.api.nvim_get_current_buf()
+        local filename = vim.fn.fnamemodify(vim.fn.bufname(current_buf), ':t')
+        local current_filetype =
+          vim.api.nvim_buf_get_option(current_buf, 'filetype')
 
-          -- Excluded filetype
-          -- Can either add the filetype or file extensions
-          -- ex. 'text' or 'txt'
-          local filetypes = {
-            'php',
-            'gitcommit',
-            'lazy',
-            'spectre',
-            'undotree',
-            'TelescopePrompt',
-            'gitconfig',
-            'json',
-            'toggleterm',
-            '', -- For Harpoon
-            'trouble',
-            'zsh',
-            'gitignore',
-            'netrw',
-            'text',
-            'sh',
-            'md',
-            'rst',
-            'tex',
-            'pdf',
-            'yaml',
-            'toml',
-            'cfg',
-            'csv',
-            'xml',
-            'log',
-            'out',
-            'bak',
-            'swp',
-            'bin',
-            'exe',
-            'dll',
-          }
+        -- Excluded filetype
+        -- Can either add the filetype or file extensions
+        -- ex. 'text' or 'txt'
+        local filetypes = {
+          'php',
+          'gitcommit',
+          'lazy',
+          'help',
+          'spectre',
+          'undotree',
+          'TelescopePrompt',
+          'gitconfig',
+          'json',
+          'toggleterm',
+          'trouble',
+          'zsh',
+          'gitignore',
+          'netrw',
+          'text',
+          'sh',
+          'md',
+          'rst',
+          'tex',
+          'pdf',
+          'yaml',
+          'toml',
+          'cfg',
+          'csv',
+          'xml',
+          'log',
+          'out',
+          'bak',
+          'swp',
+          'bin',
+          'exe',
+          'dll',
+        }
 
-          for _, filetype in ipairs(filetypes) do -- Checks filetype
-            if current_filetype == filetype then
-              return true -- Skip for excluded filetypes
-            end
+        for _, filetype in ipairs(filetypes) do -- Checks filetype
+          if
+            current_filetype == filetype
+            or current_filetype == ''
+            or current_filetype == nil
+          then
+            return true -- Skip for excluded filetypes
           end
-
-          local patterns = {}
-          for _, ext in ipairs(filetypes) do
-            table.insert(patterns, string.format('.*%s$', ext))
-          end
-
-          local is_not_desired_filetype = false
-          for _, pattern in ipairs(patterns) do -- Checks file extension
-            if string.match(filename, pattern) then
-              is_not_desired_filetype = true
-              break
-            end
-          end
-
-          return is_not_desired_filetype
         end
-        if excluded_fts() then
-          return
-        else
-          vim.cmd('Lazy load nvim-treesitter')
-          vim.defer_fn(function()
-            if vim.lsp.buf.server_ready() then
-              vim.cmd('echo ""')
-            else
-              vim.cmd('echo ""')
-              vim.cmd('LspStart')
-              vim.defer_fn(function()
-                if not vim.lsp.buf.server_ready() then
-                  vim.cmd('MasonToolsInstall')
-                end
-              end, 250)
-            end
-          end, 250)
+
+        local patterns = {}
+        for _, ext in ipairs(filetypes) do
+          table.insert(patterns, string.format('.*%s$', ext))
         end
-      end, 500)
-    end,
-  }
-)
+
+        local is_not_desired_filetype = false
+        for _, pattern in ipairs(patterns) do -- Checks file extension
+          if
+            string.match(filename, pattern)
+            or filename == ''
+            or filename == nil
+          then
+            is_not_desired_filetype = true
+            break
+          end
+        end
+
+        return is_not_desired_filetype
+      end
+      if excluded_fts() then
+        return
+      else
+        vim.cmd('Lazy load nvim-treesitter')
+        vim.defer_fn(function()
+          if vim.lsp.buf.server_ready() then
+            vim.cmd('echo ""')
+          else
+            vim.cmd('echo ""')
+            vim.cmd('LspStart')
+            vim.defer_fn(function()
+              if not vim.lsp.buf.server_ready() then
+                vim.cmd('MasonToolsInstall')
+              end
+            end, 250)
+          end
+        end, 250)
+      end
+    end, 500)
+  end,
+})
 
 -- Remap for easier LSP setup
 remap('n', '<M-m>', function()

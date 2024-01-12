@@ -18,6 +18,7 @@ return {
         ensure_installed = {
           'lua-language-server', -- For Neovim (DO NOT DELETE)
           'stylua',
+          'codespell', -- Check code for common misspellings
           'clang-format', -- C/C++
           'clangd',
           'cpplint',
