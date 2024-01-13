@@ -101,7 +101,7 @@ remap('n', '<M-c>', '<cmd>:echo ""<cr>', opts)
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group =
-    vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+  vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
     vim.highlight.on_yank()
@@ -125,7 +125,7 @@ vim.api.nvim_create_autocmd({
         local current_buf = vim.api.nvim_get_current_buf()
         local filename = vim.fn.fnamemodify(vim.fn.bufname(current_buf), ':t')
         local current_filetype =
-            vim.api.nvim_buf_get_option(current_buf, 'filetype')
+          vim.api.nvim_buf_get_option(current_buf, 'filetype')
         -- Excluded filetype
         -- Can either add the filetype or file extensions
         -- ex. 'text' or 'txt'
@@ -167,9 +167,9 @@ vim.api.nvim_create_autocmd({
 
         for _, filetype in ipairs(filetypes) do -- Checks filetype
           if
-              current_filetype == filetype
-              or current_filetype == ''
-              or current_filetype == nil
+            current_filetype == filetype
+            or current_filetype == ''
+            or current_filetype == nil
           then
             return true -- Skip for excluded filetypes
           end
@@ -183,9 +183,9 @@ vim.api.nvim_create_autocmd({
         local is_not_desired_filetype = false
         for _, pattern in ipairs(patterns) do -- Checks file extension
           if
-              string.match(filename, pattern)
-              or filename == ''
-              or filename == nil
+            string.match(filename, pattern)
+            or filename == ''
+            or filename == nil
           then
             is_not_desired_filetype = true
             break
