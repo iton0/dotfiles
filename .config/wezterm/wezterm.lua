@@ -16,6 +16,9 @@ config.initial_rows = 25
 config.adjust_window_size_when_changing_font_size = false
 
 config.color_scheme = 'Gruvbox dark, pale (base16)'
+config.colors = {
+  cursor_fg = 'none',
+}
 
 local dimmer = { brightness = 0.3 }
 config.background = {
