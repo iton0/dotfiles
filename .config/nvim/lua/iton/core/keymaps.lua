@@ -120,7 +120,7 @@ vim.api.nvim_create_autocmd({
 }, {
   pattern = '*',
   callback = function()
-    vim.defer_fn(function()
+    vim.schedule(function()
       local excluded_fts = function()
         local current_buf = vim.api.nvim_get_current_buf()
         local filename = vim.fn.fnamemodify(vim.fn.bufname(current_buf), ':t')
@@ -197,21 +197,21 @@ vim.api.nvim_create_autocmd({
       if excluded_fts() or vim.lsp.buf.server_ready() then
         vim.cmd('echo ""')
       else
-        vim.cmd('LspStart')
-        vim.cmd('Lazy load nvim-treesitter')
-        vim.cmd('Lazy load Comment.nvim')
-        vim.defer_fn(function()
-          if vim.lsp.buf.server_ready() then
-            vim.cmd('echo ""')
-          else
-            vim.cmd('echo ""')
-            if not vim.lsp.buf.server_ready() then
+        vim.schedule(function()
+          vim.cmd('LspStart')
+          vim.cmd('Lazy load nvim-treesitter')
+          vim.cmd('Lazy load Comment.nvim')
+          vim.schedule(function()
+            if vim.lsp.buf.server_ready() then
+              vim.cmd('echo ""')
+            else
+              vim.cmd('echo ""')
               vim.cmd('MasonToolsInstall')
             end
-          end
-        end, 350)
+          end)
+        end)
       end
-    end, 350)
+    end)
   end,
 })
 

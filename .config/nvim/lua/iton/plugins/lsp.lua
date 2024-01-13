@@ -209,14 +209,14 @@ return {
           vim.cmd('LspStart')
           vim.defer_fn(function()
             if vim.lsp.buf.server_ready() then
-              return
+              vim.cmd('echo ""')
             else
               vim.cmd('LspInstall')
               vim.defer_fn(function()
                 vim.cmd('LspStart')
               end, 5000)
             end
-          end, 350)
+          end, 1000)
         end)
       end,
     })

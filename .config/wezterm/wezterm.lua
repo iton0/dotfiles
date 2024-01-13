@@ -15,7 +15,7 @@ config.initial_cols = 80
 config.initial_rows = 25
 config.adjust_window_size_when_changing_font_size = false
 
-config.allow_square_glyphs_to_overflow_width = 'WhenFollowedBySpace'
+config.color_scheme = 'Gruvbox dark, pale (base16)'
 
 local dimmer = { brightness = 0.3 }
 config.background = {
@@ -72,6 +72,7 @@ config.disable_default_key_bindings = true
 config.keys = require('keybindings')
 
 -- Font settings
+config.allow_square_glyphs_to_overflow_width = 'WhenFollowedBySpace'
 config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' } -- Turns off ligatures
 config.font_size = 19
 config.cell_width = 1.0
