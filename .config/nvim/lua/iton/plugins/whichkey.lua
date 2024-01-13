@@ -20,7 +20,7 @@ return {
       ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
       ['<leader>h'] = { name = '[H]arpoon', _ = 'which_key_ignore' },
       ['<leader>b'] = { name = 'De[B]ugger', _ = 'which_key_ignore' },
-      ['<leader>a'] = { name = '[P]arameter', _ = 'which_key_ignore' },
+      ['<leader>p'] = { name = '[P]arameter', _ = 'which_key_ignore' },
     })
   end,
   vim.keymap.set(
