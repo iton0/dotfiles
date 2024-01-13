@@ -197,18 +197,17 @@ vim.api.nvim_create_autocmd({
       if excluded_fts() then
         vim.cmd('echo ""')
       else
+        vim.cmd('LspStart')
         vim.cmd('Lazy load nvim-treesitter')
+        vim.cmd('Lazy load Comment.nvim')
         vim.defer_fn(function()
           if vim.lsp.buf.server_ready() then
             vim.cmd('echo ""')
           else
             vim.cmd('echo ""')
-            vim.cmd('LspStart')
-            vim.defer_fn(function()
-              if not vim.lsp.buf.server_ready() then
-                vim.cmd('MasonToolsInstall')
-              end
-            end, 350)
+            if not vim.lsp.buf.server_ready() then
+              vim.cmd('MasonToolsInstall')
+            end
           end
         end, 350)
       end

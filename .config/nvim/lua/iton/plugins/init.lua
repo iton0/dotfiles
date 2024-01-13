@@ -18,9 +18,10 @@ return {
   -- "gc" to comment visual regions/lines
   {
     'numToStr/Comment.nvim',
-    event = { 'BufReadPost', 'BufNewFile' },
     config = true,
   },
+
+  -- Neovim Undotree
   {
     'jiaoshijie/undotree',
     dependencies = 'nvim-lua/plenary.nvim',
