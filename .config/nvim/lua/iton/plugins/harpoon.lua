@@ -55,18 +55,18 @@ return {
     'n',
     '<leader>3',
     "<cmd>lua require('harpoon-core.ui').nav_file(3)<cr>",
-    { noremap = true, silent = true, desc = 'Mark 3' }
+    { noremap = true, silent = true, desc = 'Harpoon 3' }
   ),
   vim.keymap.set(
     'n',
     '<leader>2',
     "<cmd>lua require('harpoon-core.ui').nav_file(2)<cr>",
-    { noremap = true, silent = true, desc = 'Mark 2' }
+    { noremap = true, silent = true, desc = 'Harpoon 2' }
   ),
   vim.keymap.set(
     'n',
     '<leader>1',
     "<cmd>lua require('harpoon-core.ui').nav_file(1)<cr>",
-    { noremap = true, silent = true, desc = 'Mark 1' }
+    { noremap = true, silent = true, desc = 'Harpoon 1' }
   ),
 }
