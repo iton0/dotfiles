@@ -10,14 +10,14 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
-config.allow_square_glyphs_to_overflow_width = 'WhenFollowedBySpace'
-
 -- Window Setting
 config.initial_cols = 80
 config.initial_rows = 25
 config.adjust_window_size_when_changing_font_size = false
 
-local dimmer = { brightness = 0.25 }
+config.allow_square_glyphs_to_overflow_width = 'WhenFollowedBySpace'
+
+local dimmer = { brightness = 0.3 }
 config.background = {
   {
     source = {
@@ -71,13 +71,12 @@ config.cursor_blink_ease_out = 'Constant'
 config.disable_default_key_bindings = true
 config.keys = require('keybindings')
 
-config.font_size = 17
+-- Font settings
+config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' } -- Turns off ligatures
+config.font_size = 19
 config.cell_width = 1.0
 config.line_height = 1.0
 config.unicode_version = 8
-
--- Font settings
-config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' } -- Turns off ligatures
 
 -- and finally, return the configuration to wezterm
 return config

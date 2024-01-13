@@ -25,7 +25,7 @@ remap('i', 'jk', '<esc>', opts)
 remap('i', 'kj', '<esc>', opts)
 
 -- Remap for search and replace
-remap('n', '<c-f>', ':%s/', { noremap = true, desc = 'Search and Replace' })
+remap('n', '<m-f>', ':%s/', { noremap = true, desc = 'Search and Replace' })
 
 -- Remap for better scrolling
 remap('n', '<c-u>', '<c-u>zz', opts)
@@ -138,6 +138,7 @@ vim.api.nvim_create_autocmd({
           'undotree',
           'TelescopePrompt',
           'gitconfig',
+          'conf',
           'json',
           'toggleterm',
           'Trouble',
