@@ -20,6 +20,7 @@ return {
     vim.cmd([[highlight TelescopePromptCounter guifg=DarkGray ctermbg=NONE]])
     vim.cmd([[highlight TelescopeResultsTitle guifg=DarkGray ctermbg=NONE]])
     vim.cmd([[highlight LspInfoBorder guifg=DarkGray ctermbg=NONE]])
+    vim.cmd([[highlight WhichKeyFloat guibg=#282c34]])
     vim.cmd([[highlight Visual guibg=#5C6370]])
     vim.cmd([[highlight LineNr ctermfg=DarkGray guibg=NONE guifg=DarkGray]])
     vim.cmd([[highlight CursorLine guibg=NONE ctermbg=NONE]])
