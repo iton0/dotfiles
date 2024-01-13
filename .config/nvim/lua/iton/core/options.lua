@@ -71,8 +71,8 @@ vim.g.loaded_node_provider = 0
 
 -- Set the 'guicursor' option to control the cursor appearance in different modes
 vim.o.guicursor = table.concat({
-  'n-v-c:block-Cursor/lCursor-blinkwait1000-blinkon100-blinkoff100', -- Normal mode
-  'i-ci:ver25-Cursor/lCursor-blinkwait1000-blinkon100-blinkoff100', -- Insert mode
+  'n-v-c:block-Cursor/lCursor-blinkwait500-blinkon100-blinkoff100', -- Normal mode
+  'i-ci:ver25-Cursor/lCursor-blinkwait500-blinkon100-blinkoff100', -- Insert mode
   'r:hor50-Cursor/lCursor-blinkwait100-blinkon100-blinkoff100', -- Replace mode
 }, ',')
 
