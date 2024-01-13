@@ -1,15 +1,32 @@
 return {
-  'olimorris/onedarkpro.nvim',
+  -- TODO: next time optimizing decide if
+  -- to delete solarized or onedarkpro
+  --
+  'Tsuzat/NeoSolarized.nvim',
+  -- 'olimorris/onedarkpro.nvim',
   lazy = false,
   priority = 1000,
   config = function()
-    require('onedarkpro').setup({
-      options = {
-        transparency = true,
-        highlight_inactive_windows = true,
+    -- require('onedarkpro').setup({
+    require('NeoSolarized').setup({
+      -- options = {
+      -- transparency = true,
+      -- highlight_inactive_windows = true,
+      -- },
+      enable_italics = false, -- Italics for different hightlight groups (eg. Statement, Condition, Comment, Include, etc.)
+      styles = {
+        -- Style to be applied to different syntax groups
+        comments = { italic = false },
+        keywords = { italic = false },
+        functions = { bold = false },
+        variables = {},
+        string = { italic = false },
+        underline = true, -- true/false; for global underline
+        undercurl = true, -- true/false; for global undercurl
       },
     })
-    vim.cmd([[colorscheme onedark]])
+    vim.cmd([[colorscheme NeoSolarized]])
+    -- vim.cmd([[colorscheme onedark]])
     -- Adjust Neovim visual elements
     vim.cmd([[highlight MatchParen gui=underline]])
     vim.cmd([[highlight CursorLineNr gui=bold guibg=NONE guifg=#ff9e64]])

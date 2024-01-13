@@ -194,7 +194,7 @@ vim.api.nvim_create_autocmd({
 
         return is_not_desired_filetype
       end
-      if excluded_fts() then
+      if excluded_fts() or vim.lsp.buf.server_ready() then
         vim.cmd('echo ""')
       else
         vim.cmd('LspStart')
