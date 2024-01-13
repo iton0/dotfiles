@@ -112,6 +112,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- TODO: figure out why it is not excluded Telescope and lazy
 --       it seems when i do the commands really fast it does not register
+--       migh also need to check the logic of the autocmd because happens in
+--       FolderForge repo when I switch really fast to html or css file
 --
 -- Set up an autocmd to handle LSP setup after reading or creating a buffer
 vim.api.nvim_create_autocmd({
