@@ -18,8 +18,8 @@ return {
         ensure_installed = {
           'lua-language-server', -- For Neovim (DO NOT DELETE)
           'stylua',
-          'codespell', -- Check code for common misspellings
-          'clang-format', -- C/C++
+          'codespell',           -- Check code for common misspellings
+          'clang-format',        -- C/C++
           'clangd',
           'cpplint',
           'css-lsp', -- Web Dev
@@ -100,7 +100,7 @@ return {
 
       -- Loop through diagnostic types and set custom sign definitions
       for type, icon in pairs(signs) do
-        local hl = 'DiagnosticSign' .. type -- Create highlight group name
+        local hl = 'DiagnosticSign' .. type                              -- Create highlight group name
         vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl }) -- Define sign with custom icon and highlight
       end
 
@@ -196,6 +196,8 @@ return {
         vim.lsp.buf.format()
       end, { desc = 'Format current buffer with LSP' })
     end
+
+    require('lspconfig.ui.windows').default_options.border = 'rounded'
 
     -- Autocommand that executes after
     -- MasonToolInstall finishes. Makes
