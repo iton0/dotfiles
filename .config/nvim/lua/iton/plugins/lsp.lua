@@ -199,28 +199,6 @@ return {
 
     require('lspconfig.ui.windows').default_options.border = 'rounded'
 
-    -- Autocommand that executes after
-    -- MasonToolInstall finishes. Makes
-    -- it easier for LSP setup
-    vim.api.nvim_create_autocmd('User', {
-      pattern = 'MasonToolsUpdateCompleted',
-      callback = function()
-        vim.schedule(function()
-          vim.cmd('LspStart')
-          vim.defer_fn(function()
-            if vim.lsp.buf.server_ready() then
-              vim.cmd('echo ""')
-            else
-              vim.cmd('LspInstall')
-              vim.defer_fn(function()
-                vim.cmd('LspStart')
-              end, 5000)
-            end
-          end, 1000)
-        end)
-      end,
-    })
-
     -- mason-lspconfig requires that these setup functions are called in this order
     -- before setting up the servers.
     require('mason').setup({

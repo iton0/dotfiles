@@ -168,11 +168,7 @@ vim.api.nvim_create_autocmd({
         }
 
         for _, filetype in ipairs(filetypes) do -- Checks filetype
-          if
-            current_filetype == filetype
-            or current_filetype == ''
-            or current_filetype == nil
-          then
+          if current_filetype == filetype then
             return true -- Skip for excluded filetypes
           end
         end
@@ -184,11 +180,7 @@ vim.api.nvim_create_autocmd({
 
         local is_not_desired_filetype = false
         for _, pattern in ipairs(patterns) do -- Checks file extension
-          if
-            string.match(filename, pattern)
-            or filename == ''
-            or filename == nil
-          then
+          if string.match(filename, pattern) then
             is_not_desired_filetype = true
             break
           end
@@ -196,23 +188,43 @@ vim.api.nvim_create_autocmd({
 
         return is_not_desired_filetype
       end
-      if excluded_fts() or vim.lsp.buf.server_ready() then
+      if excluded_fts() then
         vim.cmd('echo ""')
       else
-        vim.schedule(function()
-          vim.cmd('LspStart')
-          vim.cmd('Lazy load nvim-treesitter')
-          vim.cmd('Lazy load Comment.nvim')
-          vim.schedule(function()
-            if vim.lsp.buf.server_ready() then
-              vim.cmd('echo ""')
-            else
-              vim.cmd('echo ""')
-              vim.cmd('MasonToolsInstall')
-            end
-          end)
-        end)
+        vim.cmd('LspStart')
+        vim.cmd('Lazy load nvim-treesitter')
+        vim.cmd('Lazy load Comment.nvim')
+        vim.defer_fn(function()
+          if vim.lsp.buf.server_ready() then
+            vim.cmd('echo ""')
+          else
+            vim.cmd('echo ""')
+            vim.cmd('MasonToolsInstall')
+          end
+        end, 500)
       end
+    end)
+  end,
+})
+
+-- Autocommand that executes after
+-- MasonToolInstall finishes. Makes
+-- it easier for LSP setup
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'MasonToolsUpdateCompleted',
+  callback = function()
+    vim.schedule(function()
+      vim.cmd('LspStart')
+      vim.defer_fn(function()
+        if vim.lsp.buf.server_ready() then
+          vim.cmd('echo ""')
+        else
+          vim.cmd('LspInstall')
+          vim.defer_fn(function()
+            vim.cmd('LspStart')
+          end, 5000)
+        end
+      end, 500)
     end)
   end,
 })
