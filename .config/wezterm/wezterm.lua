@@ -36,8 +36,10 @@ config.background = {
 }
 
 config.window_padding = {
-  left = '0.25cell',
-  right = '0cell',
+  left = '1.0cell',
+  right = '0.25cell',
+  top = '0.5cell',
+  bottom = '0.4cell',
 }
 
 config.window_frame = {
