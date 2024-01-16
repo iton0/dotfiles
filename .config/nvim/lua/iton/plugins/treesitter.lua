@@ -55,6 +55,7 @@ return {
         auto_install = true,
 
         ignore_install = {
+          'python',
           'php',
           'json',
           'json5',

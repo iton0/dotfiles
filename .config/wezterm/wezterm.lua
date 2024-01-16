@@ -20,7 +20,7 @@ config.colors = {
   cursor_fg = 'none',
 }
 
-local dimmer = { brightness = 0.3 }
+local dimmer = { brightness = 0.4 }
 config.background = {
   {
     source = {
@@ -79,7 +79,7 @@ config.keys = require('keybindings')
 -- Font settings
 config.allow_square_glyphs_to_overflow_width = 'WhenFollowedBySpace'
 config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' } -- Turns off ligatures
-config.font_size = 19
+config.font_size = 15
 config.cell_width = 1.0
 config.line_height = 1.0
 config.unicode_version = 8

@@ -13,6 +13,7 @@ return {
     formatters_by_ft = {
       lua = { 'stylua' },
       javascript = { 'prettierd' },
+      vue = { 'prettierd' },
       html = { 'prettierd' },
       css = { 'prettierd' },
       typescript = { 'prettierd' },
@@ -30,8 +31,7 @@ return {
   },
   vim.keymap.set({ 'n', 'v' }, '<leader>f', function()
     require('conform').format({
-      lsp_fallback = false,
-      async = false,
+      lsp_fallback = true,
       timeout_ms = 500,
     })
   end, { desc = 'Format' }),
