@@ -1,6 +1,7 @@
 return {
   -- Highlight, edit, and navigate code
   'nvim-treesitter/nvim-treesitter',
+  event = { 'BufReadPost', 'BufNewFile' },
   version = false,
   init = function(plugin)
     require('lazy.core.loader').add_to_rtp(plugin)
@@ -50,6 +51,8 @@ return {
           'vimdoc',
           'vim',
           'query',
+          'gitcommit',
+          'git_rebase',
         },
 
         auto_install = true,

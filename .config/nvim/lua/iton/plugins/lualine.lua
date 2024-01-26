@@ -27,7 +27,7 @@ return {
       local data = custom_fname.super.update_status(self)
       data = highlight.component_format_highlight(
         vim.bo.modified and self.status_styles.modified
-        or self.status_styles.saved
+          or self.status_styles.saved
       ) .. data
       return data
     end

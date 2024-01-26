@@ -110,102 +110,23 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
--- TODO: figure out why it is not excluded Telescope and lazy
---       it seems when i do the commands really fast it does not register
---       migh also need to check the logic of the autocmd because happens in
---       FolderForge repo when I switch really fast to html or css file
---
--- Set up an autocmd to handle LSP setup after reading or creating a buffer
-vim.api.nvim_create_autocmd({
-  'BufReadPost',
-  'BufNewFile',
-}, {
-  pattern = '*',
-  callback = function()
-    vim.schedule(function()
-      local excluded_fts = function()
-        local current_buf = vim.api.nvim_get_current_buf()
-        local filename = vim.fn.fnamemodify(vim.fn.bufname(current_buf), ':t')
-        local current_filetype =
-          vim.api.nvim_buf_get_option(current_buf, 'filetype')
-        -- Excluded filetype
-        -- Can either add the filetype or file extensions
-        -- ex. 'text' or 'txt'
-        local filetypes = {
-          'php',
-          'gitcommit',
-          'lazy',
-          'help',
-          'spectre',
-          'undotree',
-          'TelescopePrompt',
-          'gitconfig',
-          'conf',
-          'json',
-          'toggleterm',
-          'Trouble',
-          'zsh',
-          'gitignore',
-          'netrw',
-          'text',
-          'sh',
-          'md',
-          'rst',
-          'tex',
-          'pdf',
-          'yaml',
-          'toml',
-          'cfg',
-          'csv',
-          'xml',
-          'log',
-          'out',
-          'bak',
-          'swp',
-          'bin',
-          'exe',
-          'dll',
-        }
-
-        for _, filetype in ipairs(filetypes) do -- Checks filetype
-          if current_filetype == filetype then
-            return true -- Skip for excluded filetypes
-          end
-        end
-
-        local patterns = {}
-        for _, ext in ipairs(filetypes) do
-          table.insert(patterns, string.format('.*%s$', ext))
-        end
-
-        local is_not_desired_filetype = false
-        for _, pattern in ipairs(patterns) do -- Checks file extension
-          if string.match(filename, pattern) then
-            is_not_desired_filetype = true
-            break
-          end
-        end
-
-        return is_not_desired_filetype
-      end
-      if excluded_fts() then
+remap('n', '<M-l>', function()
+  if vim.lsp.buf.server_ready() then
+    print(' LSP Already Installed')
+    vim.defer_fn(function()
+      vim.cmd('echo ""')
+    end, 1000)
+  else
+    vim.cmd('LspStart')
+    vim.defer_fn(function()
+      if vim.lsp.buf.server_ready() then
         vim.cmd('echo ""')
       else
-        vim.cmd('LspStart')
-        vim.cmd('Lazy load nvim-treesitter')
-        vim.cmd('Lazy load Comment.nvim')
-        vim.defer_fn(function()
-          if vim.lsp.buf.server_ready() then
-            vim.cmd('echo ""')
-          else
-            vim.cmd('echo ""')
-            vim.cmd('MasonToolsInstall')
-          end
-        end, 500)
+        vim.cmd('MasonToolsInstall')
       end
-    end)
-  end,
-})
+    end, 500)
+  end
+end, { noremap = true, silent = true, desc = 'LSP Install' })
 
 -- Autocommand that executes after
 -- MasonToolInstall finishes. Makes
@@ -217,30 +138,14 @@ vim.api.nvim_create_autocmd('User', {
       vim.cmd('LspStart')
       vim.defer_fn(function()
         if vim.lsp.buf.server_ready() then
-          vim.cmd('echo ""')
+          vim.cmd('echo " LSP Installed"')
+          vim.defer_fn(function()
+            vim.cmd('echo ""')
+          end, 1000)
         else
           vim.cmd('LspInstall')
-          vim.defer_fn(function()
-            vim.cmd('LspStart')
-          end, 5000)
         end
       end, 500)
     end)
   end,
 })
-
--- Remap for easier LSP setup
-remap('n', '<M-m>', function()
-  if vim.lsp.buf.server_ready() then
-    print(' LSP Already Installed')
-    vim.defer_fn(function()
-      vim.cmd('echo ""')
-    end, 750)
-  else
-    vim.cmd('MasonToolsInstall')
-  end
-end, opts)
-remap('n', '<M-l>', function()
-  vim.cmd('LspStart')
-  vim.cmd('echo ""')
-end, opts)

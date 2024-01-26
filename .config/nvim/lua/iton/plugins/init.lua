@@ -1,14 +1,5 @@
 -- Plugins that do not need any extra configuration
 return {
-  -- Git related plugins
-  -- {
-  --   'tpope/vim-rhubarb',
-  --   event = 'BufReadPost',
-  --   dependencies = {
-  --     'tpope/vim-fugitive',
-  --   },
-  -- },
-
   -- Detect tabstop and shiftwidth automatically
   {
     'tpope/vim-sleuth',
@@ -19,6 +10,10 @@ return {
   {
     'numToStr/Comment.nvim',
     config = true,
+    keys = {
+      { 'gc', mode = { 'n', 'v' } },
+      { 'gb', mode = { 'n', 'v' } },
+    },
   },
 
   -- Neovim Undotree

@@ -33,9 +33,6 @@ require('lazy').setup({ { import = 'iton.plugins' } }, {
   defaults = {
     lazy = true,
   },
-  install = {
-    colorscheme = { 'onedark' },
-  },
   checker = {
     -- automatically check for plugin updates
     enabled = true,
