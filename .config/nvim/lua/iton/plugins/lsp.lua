@@ -2,10 +2,7 @@ return {
   -- LSP Configuration & Plugins
   'neovim/nvim-lspconfig',
   event = { 'BufReadPost', 'BufNewFile' },
-  cmd = {
-    'Mason',
-    'MasonToolsInstall',
-  },
+  cmd = { 'Mason' },
   dependencies = {
     -- Automatically install LSPs to stdpath for neovim
     'williamboman/mason.nvim',
@@ -54,7 +51,11 @@ return {
       end
 
       nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-      nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+      nmap('<leader>ca', function()
+        vim.lsp.buf.code_action({
+          context = { only = { 'quickfix', 'refactor', 'source' } },
+        })
+      end, '[C]ode [A]ction')
 
       nmap(
         'gd',
@@ -87,19 +88,21 @@ return {
         '[W]orkspace [S]ymbols'
       )
 
-      -- Define custom signs for different diagnostic types (Error, Warn, Hint, Info)
-      local signs = {
-        Error = '󰅚 ', -- Custom sign for Errors
-        Warn = '󰀪 ', -- Custom sign for Warnings
-        Hint = '󰌶 ', -- Custom sign for Hints
-        Info = ' ', -- Custom sign for Information messages
-      }
-
-      -- Loop through diagnostic types and set custom sign definitions
-      for type, icon in pairs(signs) do
-        local hl = 'DiagnosticSign' .. type -- Create highlight group name
-        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl }) -- Define sign with custom icon and highlight
-      end
+      -- TODO: either uncomment or delete when updating again
+      --
+      -- -- Define custom signs for different diagnostic types (Error, Warn, Hint, Info)
+      -- local signs = {
+      --   Error = '󰅚 ', -- Custom sign for Errors
+      --   Warn = '󰀪 ', -- Custom sign for Warnings
+      --   Hint = '󰌶 ', -- Custom sign for Hints
+      --   Info = ' ', -- Custom sign for Information messages
+      -- }
+      --
+      -- -- Loop through diagnostic types and set custom sign definitions
+      -- for type, icon in pairs(signs) do
+      --   local hl = 'DiagnosticSign' .. type -- Create highlight group name
+      --   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl }) -- Define sign with custom icon and highlight
+      -- end
 
       -- See `:help K` for why this keymap
       nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
@@ -153,6 +156,7 @@ return {
     local servers = {
       lua_ls = {
         Lua = {
+          runtime = { version = 'LuaJIT' },
           codeLens = { enable = true },
           completion = { callSnippet = 'Replace' },
           workspace = { checkThirdParty = false },

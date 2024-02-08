@@ -1,5 +1,4 @@
 return {
-  -- TODO: find a better code runner plugin
   'CRAG666/code_runner.nvim',
   keys = {
     { '<leader>c' },
@@ -8,11 +7,6 @@ return {
     require('code_runner').setup({
       filetype = {
         typescript = 'deno run',
-        rust = {
-          'cd $dir &&',
-          'rustc $fileName &&',
-          '$dir/$fileNameWithoutExt',
-        },
         javascript = 'node',
         c = {
           'cd $dir &&',

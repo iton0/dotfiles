@@ -32,7 +32,7 @@ vim.o.linebreak = true -- Wrap lines at word boundaries
 
 -- Set wrap behavior
 vim.o.breakindent = true -- Indent wrapped lines
-vim.o.showbreak = ' ↪ ' -- Symbol to indicate wrapped lines
+vim.o.showbreak = '↪ ' -- Symbol to indicate wrapped lines
 
 -- Set text width to 80 characters
 vim.o.textwidth = 80
@@ -58,7 +58,7 @@ vim.o.timeoutlen = 500
 vim.o.showmode = false
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menu,menuone,preview,noselect'
+vim.o.completeopt = 'menu,menuone,preview'
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
@@ -77,5 +77,5 @@ vim.o.guicursor = table.concat({
 }, ',')
 
 -- Netrw
-vim.g.netrw_banner = 0 -- Remove the directory banner
-vim.o.laststatus = 0 -- Remove status line
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1

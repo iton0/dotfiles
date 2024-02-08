@@ -10,6 +10,12 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
+-- To install/update use link below:
+-- https://wezfurlong.org/wezterm/install/linux.html#installing-on-ubuntu-and-debian-based-systems
+--
+-- Does not check for stable updates
+config.check_for_updates = false
+
 -- Window Setting
 config.initial_cols = 80
 config.initial_rows = 25
@@ -36,7 +42,7 @@ config.window_padding = {
   left = '1.0cell',
   right = '0.25cell',
   top = '0.5cell',
-  bottom = '0.4cell',
+  bottom = '0.25cell',
 }
 
 config.window_frame = {
@@ -56,7 +62,9 @@ config.window_frame = {
   border_top_color = 'black',
 }
 
-config.enable_tab_bar = false
+config.window_decorations = 'INTEGRATED_BUTTONS|RESIZE'
+config.integrated_title_button_style = 'Gnome'
+config.enable_tab_bar = true
 config.hide_mouse_cursor_when_typing = true
 config.warn_about_missing_glyphs = false
 

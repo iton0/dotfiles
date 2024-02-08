@@ -27,14 +27,13 @@ vim.keymap.set(
   ':Lazy<cr>',
   { noremap = true, silent = true, desc = 'Lazy.nvim' }
 )
--- TODO: add an AI plugin
+
 -- [[ Plugins ]]
 require('lazy').setup({ { import = 'iton.plugins' } }, {
   defaults = {
     lazy = true,
   },
   checker = {
-    -- automatically check for plugin updates
     enabled = true,
     concurrency = 4,
     notify = false,

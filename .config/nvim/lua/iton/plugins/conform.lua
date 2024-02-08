@@ -28,10 +28,10 @@ return {
     },
     notify_on_error = false,
   },
-  vim.keymap.set({ 'n', 'v' }, '<leader>f', function()
-    require('conform').format({
-      lsp_fallback = true,
-      timeout_ms = 500,
-    })
-  end, { desc = 'Format' }),
+  vim.keymap.set(
+    { 'n', 'v' },
+    '<leader>f',
+    '<cmd>lua require("conform").format({ lsp_fallback = true, timeout_ms = 500 })<cr>',
+    { desc = 'Format' }
+  ),
 }

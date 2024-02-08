@@ -28,4 +28,19 @@ return {
       { noremap = true, silent = true, desc = 'Undotree' }
     ),
   },
+
+  -- Lua-based substitute function as an alternative to
+  -- vim's :substitute, using Lua patterns instead of Vim regex.
+  {
+    'chrisgrieser/nvim-alt-substitute',
+    config = true,
+    keys = {
+      {
+        '<m-f>',
+        mode = { 'n', 'x' },
+        ':S /',
+        { desc = 'AltSubstitute' },
+      },
+    },
+  },
 }

@@ -53,7 +53,7 @@ return {
               b = { fg = '#d8b56d', bg = nil },
               c = { fg = colors.fg, bg = nil },
               x = { fg = colors.fg, bg = nil },
-              y = { fg = colors.fg, bg = colors.bg, gui = 'bold' },
+              y = { fg = colors.fg, bg = nil },
             },
             command = {
               a = { fg = colors.bg, bg = colors.yellow, gui = 'bold' },
@@ -82,7 +82,8 @@ return {
             },
           }
         end,
-        component_separators = { left = '', right = ' ' },
+        component_separators = { left = '', right = '' },
+        section_separators = { left = '', right = '' },
       },
       sections = {
         lualine_a = {
@@ -108,13 +109,17 @@ return {
         },
         lualine_x = {
           {
+            'location',
+            padding = { left = 0, right = 2 },
+          },
+          {
             'encoding',
             fmt = string.upper,
-            padding = { left = 0, right = 0 },
+            padding = { left = 0, right = 1 },
           },
           {
             'fileformat',
-            padding = { left = 0, right = 1 },
+            padding = { left = 0, right = 2 },
             icons_enabled = true,
             symbols = {
               unix = 'LF',
@@ -138,8 +143,7 @@ return {
               end
               return msg
             end,
-            color = { fg = '#9CDC7C' },
-            padding = { right = 1, left = 0 },
+            padding = { left = 0, right = 2 },
           },
           {
             require('lazy.status').updates,
@@ -148,11 +152,11 @@ return {
             padding = { left = 0, right = 1 },
           },
         },
-        lualine_y = {
+        lualine_y = {},
+        lualine_z = {
           {
             'datetime',
             style = '%I:%M%p',
-            color = { fg = '#CCCCCC' },
           },
         },
       },
