@@ -156,7 +156,6 @@ return {
     local servers = {
       lua_ls = {
         Lua = {
-          runtime = { version = 'LuaJIT' },
           codeLens = { enable = true },
           completion = { callSnippet = 'Replace' },
           workspace = { checkThirdParty = false },

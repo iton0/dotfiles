@@ -11,7 +11,7 @@ if wezterm.config_builder then
 end
 
 -- To install/update use link below:
--- https://wezfurlong.org/wezterm/install/linux.html#installing-on-ubuntu-and-debian-based-systems
+-- https://wezfurlong.org/wezterm/install/linux.html#pre-built-deb-packages
 --
 -- Does not check for stable updates
 config.check_for_updates = false
