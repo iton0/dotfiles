@@ -29,6 +29,16 @@ return {
     ),
   },
 
+  -- Smooth Scrolling
+  {
+    'karb94/neoscroll.nvim',
+    keys = {
+      { '<c-u>' },
+      { '<c-d>' },
+    },
+    config = true,
+  },
+
   -- Lua-based substitute function as an alternative to
   -- vim's :substitute, using Lua patterns instead of Vim regex.
   {
@@ -42,5 +52,19 @@ return {
         { desc = 'AltSubstitute' },
       },
     },
+  },
+
+  -- Highlight, list and search todo comments in your projects
+  {
+    'folke/todo-comments.nvim',
+    cmd = 'TodoTelescope',
+    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim' },
+    opts = {},
+    vim.keymap.set(
+      'n',
+      '<leader>sc',
+      '<cmd>TodoTelescope<cr>',
+      { desc = '[S]earch [C]omments' }
+    ),
   },
 }
