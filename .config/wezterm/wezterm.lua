@@ -27,7 +27,7 @@ local dimmer = { brightness = 0.4 }
 config.background = {
   {
     source = {
-      File = { path = '/home/iton/.config/wezterm/background/1.gif' },
+      File = { path = '/home/iton/.config/wezterm/background/2.gif' },
     },
     hsb = dimmer,
     height = 'Cover',
@@ -62,7 +62,7 @@ config.window_frame = {
   border_top_color = 'black',
 }
 
-config.window_decorations = 'INTEGRATED_BUTTONS|RESIZE'
+config.window_decorations = 'INTEGRATED_BUTTONS'
 config.integrated_title_button_style = 'Gnome'
 config.enable_tab_bar = true
 config.hide_mouse_cursor_when_typing = true

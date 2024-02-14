@@ -22,6 +22,8 @@ return {
     vim.cmd([[highlight CursorLineNr gui=bold guibg=NONE guifg=#ff9e64]])
     vim.cmd([[highlight Cursor ctermbg=NONE guibg=#ff9e64]])
     vim.cmd([[highlight TelescopeSelection guibg=NONE ctermbg=NONE]])
+    vim.cmd([[highlight TelescopePreviewMatch guibg=#d79921 ctermbg=NONE]])
+    vim.cmd([[highlight TelescopePreviewLine guibg=#d79921 ctermbg=NONE]])
     vim.cmd([[highlight TelescopePreviewTitle guifg=DarkGray ctermbg=NONE]])
     vim.cmd([[highlight TelescopePromptTitle guifg=DarkGray ctermbg=NONE]])
     vim.cmd([[highlight TelescopePromptCounter guifg=DarkGray ctermbg=NONE]])

@@ -8,7 +8,7 @@ return {
   },
   vim.keymap.set(
     'n',
-    '<leader>t',
+    '<C-T>',
     "<cmd>lua require('toggleterm').toggle()<cr>",
     { desc = 'Terminal' }
   ),

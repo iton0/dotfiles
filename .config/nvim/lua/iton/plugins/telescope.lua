@@ -37,6 +37,9 @@ return {
     -- Enable telescope fzf native, if installed
     pcall(require('telescope').load_extension, 'fzf')
 
+    -- Enable Git worktree telescope extension
+    require('telescope').load_extension('git_worktree')
+
     -- See `:help telescope.builtin`
     vim.keymap.set(
       'n',

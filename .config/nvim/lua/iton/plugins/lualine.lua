@@ -112,21 +112,23 @@ return {
             'location',
             padding = { left = 0, right = 2 },
           },
-          {
-            'encoding',
-            fmt = string.upper,
-            padding = { left = 0, right = 1 },
-          },
-          {
-            'fileformat',
-            padding = { left = 0, right = 2 },
-            icons_enabled = true,
-            symbols = {
-              unix = 'LF',
-              dos = 'CRLF',
-              mac = 'CR',
-            },
-          },
+          -- TODO: uncomment or delete depending on usefulness
+          --
+          -- {
+          --   'encoding',
+          --   fmt = string.upper,
+          --   padding = { left = 0, right = 1 },
+          -- },
+          -- {
+          --   'fileformat',
+          --   padding = { left = 0, right = 2 },
+          --   icons_enabled = true,
+          --   symbols = {
+          --     unix = 'LF',
+          --     dos = 'CRLF',
+          --     mac = 'CR',
+          --   },
+          -- },
           {
             function()
               local msg = ''
