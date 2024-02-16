@@ -23,7 +23,7 @@ config.adjust_window_size_when_changing_font_size = false
 
 config.color_scheme = 'Gruvbox dark, pale (base16)'
 
-local dimmer = { brightness = 0.5 }
+local dimmer = { brightness = 0.4 }
 config.background = {
   {
     source = {
