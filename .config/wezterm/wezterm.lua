@@ -10,6 +10,8 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
+-- TODO: either keep comment below or delete on next system
+--
 -- To install/update use link below:
 -- https://wezfurlong.org/wezterm/install/linux.html#pre-built-deb-packages
 --

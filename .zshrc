@@ -12,9 +12,6 @@ fi
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-PATH="$PATH":"$HOME/.local/scripts/"
-bindkey -s ^f "tmux-sessionizer\n"
-
 # Set up NVM (Node Version Manager)
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -87,7 +84,6 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git
   zsh-autosuggestions
   zsh-syntax-highlighting
 )
@@ -105,7 +101,7 @@ source /usr/share/doc/fzf/examples/completion.zsh
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
  if [[ -n $SSH_CONNECTION ]]; then
@@ -170,9 +166,10 @@ fi
 alias nvim-update='confirm_nvim_update'
 
 confirm_nvim_update() {
-  read -r "REPLY?Make sure that the new nvim-linux64.tar.gz is in the Downloads folder before running this alias! Continue? (y/n): "
+  read -r "REPLY?Continue? (y/n): "
   if [[ "$REPLY" = "y" ]]; then
-    cd ~/Downloads &&
+    cd &&
+    curl -LO "https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz" &&
     tar xzvf nvim-linux64.tar.gz &&
     echo "--------------------------------" &&
     echo "Old version:" &&
@@ -180,23 +177,15 @@ confirm_nvim_update() {
     sudo rm -rf /opt/nvim-linux64/ &&
     echo "--------------------------------" &&
     echo "Old version deleted" &&
-    sudo mv ~/Downloads/nvim-linux64 /opt &&
+    sudo mv ~/nvim-linux64 /opt &&
     echo "--------------------------------" &&
-    echo "New version:" &&
+    echo "Current version:" &&
     nvim --version &&
-    echo "--------------------------------" &&
-    read -r "REPLY?Would you like to delete the nvim-linux64.tar.gz? (y/n): "
-    if [[ "$REPLY" = "y" ]]; then
-      rm ~/Downloads/nvim-linux64.tar.gz &&
-      cd &&
-      echo "File removed"
-    else
-      cd &&
-      echo "File not removed"
-    fi
-  else
-    echo "Update cancelled."
-  fi
+    rm ~/nvim-linux64.tar.gz &&
+    echo "--------------------------------"
+else
+    echo "Neovim installation skipped."
+fi
 }
 
 # Aliases for convenient terminal commands:
@@ -206,6 +195,8 @@ alias cl='clear'
 alias hocl='cd && clear'
 alias vtmx='v ~/.config/tmux/tmux.conf'
 alias tmx='cd ~/.config/tmux'
+alias script='cd ~/.local/scripts'
+alias vscript='v ~/.local/scripts'
 alias vzsh='v ~/.zshrc'
 alias vgit='v ~/.gitconfig'
 alias neo='cd ~/.config/nvim'
