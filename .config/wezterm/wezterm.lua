@@ -62,7 +62,7 @@ config.window_frame = {
   border_top_color = 'black',
 }
 
-config.window_decorations = 'TITLE'
+config.window_decorations = 'NONE'
 config.enable_tab_bar = false
 config.hide_mouse_cursor_when_typing = true
 config.warn_about_missing_glyphs = false
