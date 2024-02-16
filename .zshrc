@@ -12,6 +12,9 @@ fi
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
+PATH="$PATH":"$HOME/.local/scripts/"
+bindkey -s ^f "tmux-sessionizer\n"
+
 # Set up NVM (Node Version Manager)
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -201,7 +204,8 @@ alias ud='cd ..'
 alias ho='cd'
 alias cl='clear'
 alias hocl='cd && clear'
-alias vtmux='v ~/.config/tmux/tmux.conf'
+alias vtmx='v ~/.config/tmux/tmux.conf'
+alias tmx='cd ~/.config/tmux'
 alias vzsh='v ~/.zshrc'
 alias vgit='v ~/.gitconfig'
 alias neo='cd ~/.config/nvim'

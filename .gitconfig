@@ -16,7 +16,7 @@
 [credential]
 	helper = cache
 [alias]
-	bare-clone = "!f() { ~/git-bare-clone.sh \"$@\"; }; f"
+	bare-clone = "!f() { ~/.local/scripts/git-bare-clone \"$@\"; }; f"
 	wta = worktree add
 	wtd = worktree remove
 	all = add .; add all files in current working directory
