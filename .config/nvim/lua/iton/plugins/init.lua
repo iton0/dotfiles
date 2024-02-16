@@ -54,9 +54,33 @@ return {
     },
   },
 
+  -- Search panel for Neovim (can go across files)
+  {
+    'nvim-pack/nvim-spectre',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    opts = {},
+    vim.keymap.set(
+      'v',
+      '<leader>o',
+      '<esc><cmd>lua require("spectre").open_visual()<CR>',
+      {
+        desc = 'Search current word',
+      }
+    ),
+    vim.keymap.set(
+      'n',
+      '<leader>o',
+      '<cmd> lua require("spectre").toggle()<CR>',
+      {
+        desc = 'Spectre',
+      }
+    ),
+  },
+
   -- Highlight, list and search todo comments in your projects
   {
     'folke/todo-comments.nvim',
+    event = 'BufReadPost',
     cmd = 'TodoTelescope',
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim' },
     opts = {},
@@ -65,6 +89,21 @@ return {
       '<leader>sc',
       '<cmd>TodoTelescope<cr>',
       { desc = '[S]earch [C]omments' }
+    ),
+  },
+
+  -- Markdown previewer
+  {
+    'iamcco/markdown-preview.nvim',
+    ft = { 'markdown' },
+    build = function()
+      vim.fn['mkdp#util#install']()
+    end,
+    vim.keymap.set(
+      'n',
+      '<leader>m',
+      '<cmd>MarkdownPreviewToggle<cr>',
+      { noremap = true, silent = true, desc = 'Markdown Previewer' }
     ),
   },
 }

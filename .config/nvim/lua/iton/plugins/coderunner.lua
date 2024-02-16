@@ -5,6 +5,7 @@ return {
   },
   config = function()
     require('code_runner').setup({
+      term = { position = 'vertical', size = 50 },
       filetype = {
         typescript = 'deno run',
         javascript = 'node',

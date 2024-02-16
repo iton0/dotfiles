@@ -1,8 +1,4 @@
 -- Useful plugin to show you pending keybinds.
---
--- Keys currently up for grabs with <leader> key
--- mapping: (alphabet)
--- j, n, o, p, u, v, x, y
 return {
   'folke/which-key.nvim',
   init = function()
@@ -22,7 +18,6 @@ return {
       ['<leader>h'] = { name = '[H]arpoon', _ = 'which_key_ignore' },
       ['<leader>b'] = { name = 'De[B]ugger', _ = 'which_key_ignore' },
       ['<leader>p'] = { name = '[P]arameter', _ = 'which_key_ignore' },
-      ['<leader>t'] = { name = 'Work[T]ree', _ = 'which_key_ignore' },
     })
   end,
   vim.keymap.set(

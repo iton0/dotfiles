@@ -156,11 +156,11 @@ alias update='
 
 # Set an alias 'v' for Neovim if available; otherwise, fallback to Vim
 if command -v nvim &> /dev/null; then
-    alias v='nvim'
-    alias vd='nvim .'
+    alias v='/opt/nvim-linux64/bin/nvim'
+    alias vd='v .'
 else
-    alias v='vim'
-    alias vd='vim .'
+    alias v='/usr/bin/vim'
+    alias vd='v .'
 fi
 
 # Alias for updating Neovim version
@@ -201,12 +201,12 @@ alias ud='cd ..'
 alias ho='cd'
 alias cl='clear'
 alias hocl='cd && clear'
-alias vzsh='nvim ~/.zshrc'
-alias vgit='nvim ~/.gitconfig'
+alias vzsh='v ~/.zshrc'
+alias vgit='v ~/.gitconfig'
 alias neo='cd ~/.config/nvim'
-alias neod='cd ~/.config/nvim && nvim .'
+alias neod='cd ~/.config/nvim && vd'
 alias wez='cd ~/.config/wezterm'
-alias wezd='cd ~/.config/wezterm && nvim .'
+alias wezd='cd ~/.config/wezterm && vd'
 alias live='live-server'
 
 # Other example aliases

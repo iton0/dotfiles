@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+  # link to video i got this from https://www.youtube.com/watch?v=VMJ1eAj5HgI&pp=ygUNZ2l0IHdvcmt0cmVlcw%3D%3D
+
 set -Eeuo pipefail
 trap cleanup SIGINT SIGTERM ERR EXIT
 
@@ -68,13 +70,13 @@ parse_params() {
   return 0
 }
 
-create_worktrees() {
-  local branches=($(git branch -r | awk -F/ '/origin/ && !/HEAD/ {print $NF}'))
-  for branch in "${branches[@]}"; do
-    msg "${YELLOW}Creating worktree for branch $branch...${NOFORMAT}"
-    git worktree add "$branch" "$branch"
-  done
-}
+# create_worktrees() {
+#   local branches=($(git branch -r | awk -F/ '/origin/ && !/HEAD/ {print $NF}'))
+#   for branch in "${branches[@]}"; do
+#     msg "${YELLOW}Creating worktree for branch $branch...${NOFORMAT}"
+#     git worktree add "$branch" "$branch"
+#   done
+# }
 
 parse_params "$@"
 setup_colors
@@ -88,5 +90,5 @@ popd > /dev/null
 msg "${YELLOW}Setting .git file contents...${NOFORMAT}"
 echo "gitdir: ./$location" > .git
 git fetch --all
-create_worktrees
+# create_worktrees
 msg "${GREEN}Success.${NOFORMAT}"

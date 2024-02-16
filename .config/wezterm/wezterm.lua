@@ -62,9 +62,8 @@ config.window_frame = {
   border_top_color = 'black',
 }
 
-config.window_decorations = 'INTEGRATED_BUTTONS'
-config.integrated_title_button_style = 'Gnome'
-config.enable_tab_bar = true
+config.window_decorations = 'TITLE'
+config.enable_tab_bar = false
 config.hide_mouse_cursor_when_typing = true
 config.warn_about_missing_glyphs = false
 
