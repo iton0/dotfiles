@@ -88,22 +88,6 @@ return {
         '[W]orkspace [S]ymbols'
       )
 
-      -- TODO: either uncomment or delete when updating again
-      --
-      -- -- Define custom signs for different diagnostic types (Error, Warn, Hint, Info)
-      -- local signs = {
-      --   Error = '󰅚 ', -- Custom sign for Errors
-      --   Warn = '󰀪 ', -- Custom sign for Warnings
-      --   Hint = '󰌶 ', -- Custom sign for Hints
-      --   Info = ' ', -- Custom sign for Information messages
-      -- }
-      --
-      -- -- Loop through diagnostic types and set custom sign definitions
-      -- for type, icon in pairs(signs) do
-      --   local hl = 'DiagnosticSign' .. type -- Create highlight group name
-      --   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl }) -- Define sign with custom icon and highlight
-      -- end
-
       -- See `:help K` for why this keymap
       nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
       nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
