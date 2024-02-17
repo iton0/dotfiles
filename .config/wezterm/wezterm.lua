@@ -10,7 +10,9 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
--- TODO: either keep comment below or delete on next system
+-- NOTE: delete wezterm folder on next system
+--       have seperate branch on github with it
+--
 --
 -- To install/update use link below:
 -- https://wezfurlong.org/wezterm/install/linux.html#pre-built-deb-packages

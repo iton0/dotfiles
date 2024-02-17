@@ -15,7 +15,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# Set Zsh as the default shell
+# Set Zsh as the default shell and start Zsh
 chsh -s $(which zsh)
 zsh
 
@@ -37,9 +37,6 @@ echo "--------------------------------"
 echo "Installing Neovim"
 curl -LO "https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz"
 tar xzvf nvim-linux64.tar.gz
-echo "--------------------------------"
-echo "Old version:"
-nvim --version
 sudo rm -rf /opt/nvim-linux64/
 echo "--------------------------------"
 echo "Old version deleted"
@@ -47,18 +44,4 @@ sudo mv ~/nvim-linux64 /opt
 echo "--------------------------------"
 echo "Current Neovim version:"
 nvim --version
-echo "--------------------------------"
 rm nvim-linux64.tar.gz
-
-# TODO: either keep in or delete and use default terminal
-#
-# Add WezTerm repository
-echo "Installing Wezterm"
-curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
-echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
-
-# Update package list again to include WezTerm repository
-sudo apt update
-sudo apt install wezterm
-echo "Current Wezterm version:"
-wezterm --version
