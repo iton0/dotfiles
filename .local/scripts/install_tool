@@ -7,18 +7,19 @@ cd
 sudo apt update
 
 # Install Git, Vim, Tmux, Zsh
-sudo apt install -y git vim tmux zsh
+sudo apt install -y vim tmux zsh
 
 # Check if installations were successful
 if [ $? -ne 0 ]; then
-    echo "Error: Installation of Git, Vim, Tmux, Zsh failed."
+    echo "Error: Installation of Vim, Tmux, Zsh failed."
     exit 1
 fi
 
 # Set Zsh as the default shell
 chsh -s $(which zsh)
+zsh
 
-echo "Tools (Git, Vim, Tmux, Zsh) installed successfully."
+echo "Tools (Vim, Tmux, Zsh) installed successfully."
 echo "--------------------------------"
 
 # Install lazygit
@@ -44,7 +45,7 @@ echo "--------------------------------"
 echo "Old version deleted"
 sudo mv ~/nvim-linux64 /opt
 echo "--------------------------------"
-echo "Current version:"
+echo "Current Neovim version:"
 nvim --version
 echo "--------------------------------"
 rm nvim-linux64.tar.gz
@@ -59,3 +60,5 @@ echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/w
 # Update package list again to include WezTerm repository
 sudo apt update
 sudo apt install wezterm
+echo "Current Wezterm version:"
+wezterm --version
