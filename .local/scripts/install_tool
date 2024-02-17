@@ -62,3 +62,6 @@ sudo apt update
 sudo apt install wezterm
 echo "Current Wezterm version:"
 wezterm --version
+
+# Makes everything faster for dotfiles git
+config maintenance start

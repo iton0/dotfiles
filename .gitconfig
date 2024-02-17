@@ -19,9 +19,11 @@
 	bare-clone = "!f() { ~/.local/scripts/git-bare-clone \"$@\"; }; f"
 	wta = worktree add
 	wtd = worktree remove
+	maintenance = maintenance start; makes everything faster in git repo
 	all = add .; add all files in current working directory
 	sync = !git add -u && git commit -v; add all tracked files & commit with diff in core editor
 	p = push origin HEAD
+	pf = push --force-with-lease; a safe force push
 	pl = pull origin HEAD
 	st = status -sb ; provides more concise output
 	last = log -1 HEAD --stat --pretty=format:\"%C(auto)%h - %C(cyan)%an%Creset, %C(magenta)%ar%Creset : %C(red)%s%Creset%n%n%w(0,4,4)%C(auto)%b%w(25,4,4)%C(auto)%n-----------------------------------------------------------------%n%C(green)Changed Files Summary%C(reset)%n\"
@@ -32,10 +34,16 @@
 	del = branch -D
 	br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
 	rl = remote -v
-	dv = difftool -t nvimdiff -y
+	df = diff --word-diff
 	se = !git rev-list --all | xargs git grep -F
 	gl = config --global -l ; outputs the .gitconfig file
         unstage = restore --staged ; removes file from staging area
 	untrack = rm --cached ; untracks a file
 	lg = !git log --pretty=format:\"%C(129)%h%Creset -%C(166)%d%Creset %s %C(42)(%cr) %C(117)[%an]\" --abbrev-commit -30
 	alias = !git config --get-regexp ^alias\\. ; outputs the aliases
+[rerere]
+	enabled = true
+[column]
+	ui = auto
+[branch]
+	sort = committerdate
