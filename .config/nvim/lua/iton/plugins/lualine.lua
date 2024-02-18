@@ -110,12 +110,7 @@ return {
           },
         },
         lualine_y = {},
-        lualine_z = {
-          {
-            'datetime',
-            style = '%I:%M%p',
-          },
-        },
+        lualine_z = {},
       },
     })
   end,
