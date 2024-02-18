@@ -4,48 +4,20 @@ return {
   -- See `:help lualine.txt`
   event = { 'BufReadPost', 'BufNewFile' },
   config = function()
-    local custom_fname = require('lualine.components.filename'):extend()
-    local highlight = require('lualine.highlight')
-
-    function custom_fname:init(options)
-      custom_fname.super.init(self, options)
-      self.status_styles = {
-        saved = highlight.create_component_highlight_group(
-          { gui = nil }, -- Set style for saved
-          'filename_status_saved',
-          self.options
-        ),
-        modified = highlight.create_component_highlight_group(
-          { gui = 'bold' }, -- Set style for modified
-          'filename_status_modified',
-          self.options
-        ),
-      }
-    end
-
-    function custom_fname:update_status()
-      local data = custom_fname.super.update_status(self)
-      data = highlight.component_format_highlight(
-        vim.bo.modified and self.status_styles.modified
-          or self.status_styles.saved
-      ) .. data
-      return data
-    end
-
     require('lualine').setup({
       options = {
         theme = function()
           local colors = {
-            blue = '#61afef',
-            green = '#98c379',
-            purple = '#c678dd',
-            cyan = '#56b6c2',
-            red1 = '#e06c75',
-            red2 = '#be5046',
-            yellow = '#e5c07b',
-            fg = '#abb2bf',
-            bg = '#282c34',
-            gray1 = '#828997',
+            blue = '#268bd2',
+            green = '#859900',
+            purple = '#6c71c4',
+            cyan = '#2aa198',
+            red1 = '#dc322f',
+            red2 = '#cb4b16',
+            yellow = '#b58900',
+            fg = '#93a1a1',
+            bg = '#002b36',
+            gray1 = '#657b83',
           }
           return {
             normal = {
@@ -96,7 +68,7 @@ return {
         },
         lualine_c = {
           {
-            custom_fname,
+            'filename',
             path = 4,
             newfile_status = true,
             symbols = {
