@@ -48,8 +48,6 @@ require('lazy').setup({ { import = 'iton.plugins' } }, {
   performance = {
     rtp = {
       disabled_plugins = {
-        'gzip',
-        'rplugin',
         'tarPlugin',
         'tohtml',
         'tutor',

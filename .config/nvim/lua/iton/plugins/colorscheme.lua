@@ -10,10 +10,7 @@ return {
         comments = { italic = false },
         keywords = { italic = false },
         functions = { bold = false },
-        variables = {},
         string = { italic = false },
-        underline = true, -- true/false; for global underline
-        undercurl = true, -- true/false; for global undercurl
       },
     })
     vim.cmd([[colorscheme NeoSolarized]])
