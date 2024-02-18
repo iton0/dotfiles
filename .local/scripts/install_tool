@@ -6,21 +6,23 @@ cd
 # Update package list
 sudo apt update
 
-# Install Git, Vim, Tmux, Zsh
-sudo apt install -y vim tmux zsh
-
-# Check if installations were successful
-if [ $? -ne 0 ]; then
-    echo "Error: Installation of Vim, Tmux, Zsh failed."
+# Install Git, Vim, Tmux, Zsh, and other tools
+sudo apt install -y vim tmux zsh fzf sed curl tar gzip ripgrep unzip wget zip xclip || {
+    echo "Error: Installation of Vim, Tmux, Zsh, fzf, sed, curl, tar, gzip, ripgrep, unzip, wget, zip, xclip failed."
     exit 1
-fi
+}
 
 # Set Zsh as the default shell and start Zsh
-chsh -s $(which zsh)
+chsh -s "$(which zsh)"
 zsh
 
-echo "Tools (Vim, Tmux, Zsh) installed successfully."
+# Output success message
+echo "Tools (Vim, Tmux, Zsh, fzf, sed, curl, tar, gzip, ripgrep, unzip, wget, zip, xclip) installed successfully."
+
+# Upgrade packages
+sudo apt upgrade -y
 echo "--------------------------------"
+echo ""
 
 # Install lazygit
 echo "Installing LazyGit"
@@ -32,16 +34,13 @@ echo "Current LazyGit version:"
 lazygit --version
 rm lazygit.tar.gz
 echo "--------------------------------"
+echo ""
 
 # Prompt to continue for Neovim installation
 echo "Installing Neovim"
 curl -LO "https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz"
-tar xzvf nvim-linux64.tar.gz
-sudo rm -rf /opt/nvim-linux64/
-echo "--------------------------------"
-echo "Old version deleted"
-sudo mv ~/nvim-linux64 /opt
+tar xzvf nvim-linux64.tar.gz -C /opt/
 echo "--------------------------------"
 echo "Current Neovim version:"
-nvim --version
+/opt/nvim-linux64/bin/nvim --version
 rm nvim-linux64.tar.gz
