@@ -44,3 +44,5 @@ echo "--------------------------------"
 echo "Current Neovim version:"
 /opt/nvim-linux64/bin/nvim --version
 rm nvim-linux64.tar.gz
+echo "--------------------------------"
+echo ""

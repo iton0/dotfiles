@@ -169,20 +169,15 @@ confirm_nvim_update() {
   read -r "REPLY?Continue? (y/n): "
   if [[ "$REPLY" = "y" ]]; then
     cd &&
+    echo "Installing Neovim" &&
     curl -LO "https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz" &&
-    tar xzvf nvim-linux64.tar.gz &&
+    tar xzvf nvim-linux64.tar.gz -C /opt/ &&
     echo "--------------------------------" &&
-    echo "Old version:" &&
-    nvim --version &&
-    sudo rm -rf /opt/nvim-linux64/ &&
+    echo "New Neovim version:" &&
+    /opt/nvim-linux64/bin/nvim --version &&
+    rm nvim-linux64.tar.gz &&
     echo "--------------------------------" &&
-    echo "Old version deleted" &&
-    sudo mv ~/nvim-linux64 /opt &&
-    echo "--------------------------------" &&
-    echo "Current version:" &&
-    nvim --version &&
-    rm ~/nvim-linux64.tar.gz &&
-    echo "--------------------------------"
+    echo ""
 else
     echo "Neovim installation skipped."
 fi
