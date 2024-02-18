@@ -1,31 +1,54 @@
 #!/usr/bin/env bash
 
-# Make sure in the home directory
+# Ensure in the home directory
 cd
 
 # Update package list
 sudo apt update
 
-# Install Git, Vim, Tmux, Zsh, and other tools
-sudo apt install -y vim tmux zsh fzf sed curl tar gzip ripgrep unzip wget zip xclip || {
-    echo "Error: Installation of Vim, Tmux, Zsh, fzf, sed, curl, tar, gzip, ripgrep, unzip, wget, zip, xclip failed."
+# Install essential dependencies
+sudo apt install -y cat curl tar gzip unzip wget zip || {
+    echo "Error: Failed to install essential dependencies."
     exit 1
 }
 
-# Set Zsh as the default shell and start Zsh
-chsh -s "$(which zsh)"
-zsh
+# Install Git, Vim, Tmux, Zsh, and other tools
+sudo apt install -y vim tmux zsh fzf sed ripgrep xclip || {
+    echo "Error: Installation of Vim, Tmux, Zsh, fzf, sed, ripgrep, xclip failed."
+    exit 1
+}
 
 # Output success message
-echo "Tools (Vim, Tmux, Zsh, fzf, sed, curl, tar, gzip, ripgrep, unzip, wget, zip, xclip) installed successfully."
+echo "Tools (Vim, Tmux, Zsh, fzf, sed, ripgrep, xclip) installed successfully..."
+
+# Install oh-my-zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+
+# Validate zsh config
+cat ~/.zshrc
+echo "Is this the correct zsh config? (y/n)"
+read -r response
+
+if [[ "$response" =~ ^[Yy]$ ]]; then
+    echo "Continuing Install..."
+else
+    echo "Copying contents of .zshrc.pre-oh-my-zsh to .zshrc..."
+    mv ~/.zshrc ~/.zshrc-from-install
+    mv ~/.zshrc.pre-oh-my-zsh ~/.zshrc
+    echo "Finished."
+fi
 
 # Upgrade packages
 sudo apt upgrade -y
+
+# Make zsh default shell and run zsh
+chsh -s "$(which zsh)"
+zsh
 echo "--------------------------------"
 echo ""
 
 # Install lazygit
-echo "Installing LazyGit"
+echo "Installing LazyGit..."
 LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
 curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
 tar xf lazygit.tar.gz lazygit
@@ -36,8 +59,8 @@ rm lazygit.tar.gz
 echo "--------------------------------"
 echo ""
 
-# Prompt to continue for Neovim installation
-echo "Installing Neovim"
+# Install Neovim
+echo "Installing Neovim..."
 curl -LO "https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz"
 tar xzvf nvim-linux64.tar.gz -C /opt/
 echo "--------------------------------"
