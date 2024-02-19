@@ -143,12 +143,12 @@ alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 # Current package managers: apt and flatpak.
 
 alias update='
-  sudo apt update &&
-  sudo apt upgrade &&
-  sudo apt autoremove &&
-  sudo apt autoclean &&
-  sudo apt clean &&
-  flatpak update &&
+  sudo apt update && \
+  sudo apt upgrade && \
+  sudo apt autoremove && \
+  sudo apt autoclean && \
+  sudo apt clean && \
+  flatpak update
   '
 
 # Set an alias 'v' for Neovim if available; otherwise, fallback to Vim
