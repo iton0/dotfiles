@@ -81,7 +81,9 @@ return {
         },
         lualine_x = {
           {
-            'location',
+            require('lazy.status').updates,
+            cond = require('lazy.status').has_updates,
+            color = { fg = '#ff9e64' },
             padding = { left = 0, right = 2 },
           },
           {
@@ -103,10 +105,8 @@ return {
             padding = { left = 0, right = 2 },
           },
           {
-            require('lazy.status').updates,
-            cond = require('lazy.status').has_updates,
-            color = { fg = '#ff9e64' },
-            padding = { left = 0, right = 1 },
+            'location',
+            padding = { left = 0, right = 2 },
           },
         },
         lualine_y = {},
