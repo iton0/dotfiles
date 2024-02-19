@@ -18,7 +18,7 @@ git config --global user.email "iton442@gmail.com" && \
 git clone --bare git@github.com:iton0/dotfiles.git $HOME/dotfiles && \
 alias config="/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME" && \
 config remote add origin git@github.com:iton0/dotfiles.git && \
-config checkout && \
+config checkout --force && \
 [ $? -eq 0 ] || { echo "Error during 'config checkout'. Backup existing dotfiles and try again."; exit 1; } && \
 ssh -T git@github.com && \
 config config --local status.showUntrackedFiles no && \
