@@ -41,9 +41,10 @@ fi
 # Upgrade packages
 sudo apt upgrade -y
 
-# Make zsh default shell and run zsh
+# Make zsh default shell and run zsh and configure theme
 chsh -s "$(which zsh)"
 zsh
+p10k configure
 echo "--------------------------------"
 echo ""
 
