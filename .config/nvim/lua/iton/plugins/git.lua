@@ -59,6 +59,12 @@ return {
     opts = {},
     vim.keymap.set(
       'n',
+      '<leader>st',
+      "<cmd>lua require('telescope').extensions.git_worktree.git_worktrees()<cr>",
+      { desc = '[S]earch Work[T]ree', noremap = true, silent = true }
+    ),
+    vim.keymap.set(
+      'n',
       '<leader>gw',
       "<cmd>lua require('telescope').extensions.git_worktree.create_git_worktree()<cr>",
       { desc = '[G]it [W]orktree Create', noremap = true, silent = true }
