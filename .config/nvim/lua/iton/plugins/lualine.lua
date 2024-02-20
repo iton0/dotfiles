@@ -102,14 +102,10 @@ return {
               end
               return msg
             end,
-            padding = { left = 0, right = 2 },
-          },
-          {
-            'location',
-            padding = { left = 0, right = 2 },
+            padding = { left = 0, right = 1 },
           },
         },
-        lualine_y = {},
+        lualine_y = { 'location' },
         lualine_z = {},
       },
     })
