@@ -58,7 +58,7 @@ return {
     },
     config = function()
       local Worktree = require('git-worktree')
-      Worktree.setup({ update_on_change = false })
+      Worktree.setup({})
       -- NOTE:
       -- op = Operations.Switch, Operations.Create, Operations.Delete
       -- metadata = table of useful values (structure dependent on op)
@@ -115,29 +115,31 @@ return {
           end
         end
       end)
-      Worktree.on_tree_change(function(op, metadata)
-        if op == Worktree.Operations.Switch then
-          local tmuxStartingDirectory = metadata.path
-          local tmuxWindowName = vim.fn.fnamemodify(metadata.path, ':t')
-
-          -- Check if a Tmux window with the same name already exists
-          local existingWindow = os.execute(
-            'tmux list-windows -F "#W" | grep -wq ' .. tmuxWindowName
-          )
-
-          if existingWindow ~= 0 then
-            -- Tmux window with the same name does not exist, create a new one
-            local tmuxCommand = 'tmux new-window -n '
-              .. tmuxWindowName
-              .. ' -c '
-              .. tmuxStartingDirectory
-            os.execute(tmuxCommand)
-          else
-            -- Tmux window with the same name already exists, switch to it
-            os.execute('tmux select-window -t ' .. tmuxWindowName)
-          end
-        end
-      end)
+      -- TODO: either delete or uncomment and fix
+      --
+      -- Worktree.on_tree_change(function(op, metadata)
+      --   if op == Worktree.Operations.Switch then
+      --     local tmuxStartingDirectory = metadata.path
+      --     local tmuxWindowName = vim.fn.fnamemodify(metadata.path, ':t')
+      --
+      --     -- Check if a Tmux window with the same name already exists
+      --     local existingWindow = os.execute(
+      --       'tmux list-windows -F "#W" | grep -wq ' .. tmuxWindowName
+      --     )
+      --
+      --     if existingWindow ~= 0 then
+      --       -- Tmux window with the same name does not exist, create a new one
+      --       local tmuxCommand = 'tmux new-window -n '
+      --         .. tmuxWindowName
+      --         .. ' -c '
+      --         .. tmuxStartingDirectory
+      --       os.execute(tmuxCommand)
+      --     else
+      --       -- Tmux window with the same name already exists, switch to it
+      --       os.execute('tmux select-window -t ' .. tmuxWindowName)
+      --     end
+      --   end
+      -- end)
     end,
     vim.keymap.set(
       'n',
