@@ -54,36 +54,13 @@ return {
     },
   },
 
-  -- Search panel for Neovim (can go across files)
-  {
-    'nvim-pack/nvim-spectre',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    opts = {},
-    vim.keymap.set(
-      'v',
-      '<leader>o',
-      '<esc><cmd>lua require("spectre").open_visual()<CR>',
-      {
-        desc = 'Search current word',
-      }
-    ),
-    vim.keymap.set(
-      'n',
-      '<leader>o',
-      '<cmd> lua require("spectre").toggle()<CR>',
-      {
-        desc = 'Spectre',
-      }
-    ),
-  },
-
   -- Highlight, list and search todo comments in your projects
   {
     'folke/todo-comments.nvim',
     event = 'BufReadPost',
     cmd = 'TodoTelescope',
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim' },
-    opts = {},
+    config = true,
     vim.keymap.set(
       'n',
       '<leader>sc',

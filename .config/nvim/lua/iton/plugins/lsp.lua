@@ -16,8 +16,7 @@ return {
           'clang-format', -- C/C++
           'clangd',
           'cpplint',
-          'css-lsp', -- Web Dev
-          'typescript-language-server',
+          'typescript-language-server', -- Web Dev
           'html-lsp',
           'eslint_d',
           'stylelint',
