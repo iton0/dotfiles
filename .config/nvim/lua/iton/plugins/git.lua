@@ -58,9 +58,7 @@ return {
     },
     config = function()
       local Worktree = require('git-worktree')
-      Worktree.setup({
-        update_on_change = false,
-      })
+      Worktree.setup({})
       -- NOTE:
       -- op = Operations.Switch, Operations.Create, Operations.Delete
       -- metadata = table of useful values (structure dependent on op)
