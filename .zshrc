@@ -194,8 +194,6 @@ alias vzsh='v ~/.zshrc'
 alias vgit='v ~/.gitconfig'
 alias neo='cd ~/.config/nvim'
 alias neod='cd ~/.config/nvim && vd'
-alias wez='cd ~/.config/wezterm'
-alias wezd='cd ~/.config/wezterm && vd'
 alias live='live-server'
 
 # Other example aliases
