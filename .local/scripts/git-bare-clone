@@ -70,14 +70,6 @@ parse_params() {
   return 0
 }
 
-# create_worktrees() {
-#   local branches=($(git branch -r | awk -F/ '/origin/ && !/HEAD/ {print $NF}'))
-#   for branch in "${branches[@]}"; do
-#     msg "${YELLOW}Creating worktree for branch $branch...${NOFORMAT}"
-#     git worktree add "$branch" "$branch"
-#   done
-# }
-
 parse_params "$@"
 setup_colors
 
@@ -90,5 +82,4 @@ popd > /dev/null
 msg "${YELLOW}Setting .git file contents...${NOFORMAT}"
 echo "gitdir: ./$location" > .git
 git fetch --all
-# create_worktrees
 msg "${GREEN}Success.${NOFORMAT}"
