@@ -192,8 +192,8 @@ alias script='cd ~/.local/scripts'
 alias vscript='v ~/.local/scripts'
 alias vzsh='v ~/.zshrc'
 alias vgit='v ~/.gitconfig'
-alias neo='cd ~/.config/nvim'
-alias neod='cd ~/.config/nvim && vd'
+alias neo='cd ~/.config/nvim/lua/iton/'
+alias neod='cd ~/.config/nvim/lua/iton/ && vd'
 alias live='live-server'
 
 # Other example aliases
