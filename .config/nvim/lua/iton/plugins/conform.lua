@@ -1,6 +1,3 @@
--- autoformat.lua should cover
--- the rest of the file types
-
 return {
   'stevearc/conform.nvim',
   event = 'BufWritePre',
@@ -10,6 +7,8 @@ return {
     vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
   end,
   opts = {
+    format_on_save = { timeout_ms = 500, lsp_fallback = true },
+    notify_on_error = false,
     formatters_by_ft = {
       lua = { 'stylua' },
       javascript = { 'prettierd' },
@@ -20,17 +19,10 @@ return {
       cpp = { 'clang_format' },
       ['_'] = { 'trim_whitespace' },
     },
-    format_on_save = { timeout_ms = 500, lsp_fallback = true },
-    formatters = {
-      shfmt = {
-        prepend_args = { '-i', '2' },
-      },
-    },
-    notify_on_error = false,
   },
   vim.keymap.set(
     { 'n', 'v' },
-    '<leader>f',
+    '<leader>t',
     '<cmd>lua require("conform").format({ lsp_fallback = true, timeout_ms = 500 })<cr>',
     { desc = 'Format' }
   ),

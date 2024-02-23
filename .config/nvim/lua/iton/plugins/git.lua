@@ -13,39 +13,6 @@ return {
         changedelete = { text = '~' },
         untracked = { text = '┆' },
       },
-      on_attach = function(bufnr)
-        vim.keymap.set(
-          'n',
-          '<leader>gh',
-          require('gitsigns').preview_hunk,
-          { buffer = bufnr, desc = 'Preview [G]it [H]unk' }
-        )
-
-        -- don't override the built-in and fugitive keymaps
-        local gs = package.loaded.gitsigns
-        vim.keymap.set({ 'n', 'v' }, ']c', function()
-          if vim.wo.diff then
-            return ']c'
-          end
-          vim.schedule(function()
-            gs.next_hunk()
-          end)
-          return '<Ignore>'
-        end, { expr = true, buffer = bufnr, desc = 'Jump to next hunk' })
-        vim.keymap.set({ 'n', 'v' }, '[c', function()
-          if vim.wo.diff then
-            return '[c'
-          end
-          vim.schedule(function()
-            gs.prev_hunk()
-          end)
-          return '<Ignore>'
-        end, {
-          expr = true,
-          buffer = bufnr,
-          desc = 'Jump to previous hunk',
-        })
-      end,
     },
   },
 
@@ -59,18 +26,6 @@ return {
     config = function()
       local Worktree = require('git-worktree')
       Worktree.setup({})
-      -- NOTE:
-      -- op = Operations.Switch, Operations.Create, Operations.Delete
-      -- metadata = table of useful values (structure dependent on op)
-      --      Switch
-      --          path = path you switched to
-      --          prev_path = previous worktree path
-      --      Create
-      --          path = path where worktree created
-      --          branch = branch name
-      --          upstream = upstream remote name
-      --      Delete
-      --          path = path where worktree deleted
 
       local getFirstWorktreePath = function()
         -- Run git worktree list to get a list of worktrees
@@ -89,7 +44,6 @@ return {
           return nil
         end
 
-        -- Extract the first worktree path
         local firstPath = result:match('(%S+)')
 
         return firstPath
@@ -100,11 +54,9 @@ return {
           local tmuxWindowName = metadata.branch
           local firstPath = getFirstWorktreePath()
           if firstPath then
-            -- Replace the last component with metadata.branch
             local tmuxStartingDirectory =
               firstPath:gsub('/[^/]+$', '/' .. metadata.branch)
 
-            -- Create and switch to a new Tmux window
             local tmuxCommand = 'tmux new-window -n '
               .. tmuxWindowName
               .. ' -c '
@@ -115,37 +67,12 @@ return {
           end
         end
       end)
-      -- TODO: either delete or uncomment and fix
-      --
-      -- Worktree.on_tree_change(function(op, metadata)
-      --   if op == Worktree.Operations.Switch then
-      --     local tmuxStartingDirectory = metadata.path
-      --     local tmuxWindowName = vim.fn.fnamemodify(metadata.path, ':t')
-      --
-      --     -- Check if a Tmux window with the same name already exists
-      --     local existingWindow = os.execute(
-      --       'tmux list-windows -F "#W" | grep -wq ' .. tmuxWindowName
-      --     )
-      --
-      --     if existingWindow ~= 0 then
-      --       -- Tmux window with the same name does not exist, create a new one
-      --       local tmuxCommand = 'tmux new-window -n '
-      --         .. tmuxWindowName
-      --         .. ' -c '
-      --         .. tmuxStartingDirectory
-      --       os.execute(tmuxCommand)
-      --     else
-      --       -- Tmux window with the same name already exists, switch to it
-      --       os.execute('tmux select-window -t ' .. tmuxWindowName)
-      --     end
-      --   end
-      -- end)
     end,
     vim.keymap.set(
       'n',
       '<leader>st',
       "<cmd>lua require('telescope').extensions.git_worktree.git_worktrees()<cr>",
-      { desc = '[S]earch Work[T]ree', noremap = true, silent = true }
+      { desc = '[S]earch Work[T]rees', noremap = true, silent = true }
     ),
     vim.keymap.set(
       'n',
@@ -164,9 +91,9 @@ return {
     },
     vim.api.nvim_set_keymap(
       'n',
-      '<C-g>',
+      '<leader>gu',
       '<cmd>LazyGit<cr>',
-      { noremap = true, silent = true, desc = 'LazyGit' }
+      { noremap = true, silent = true, desc = 'Lazy[G]it [U]I' }
     ),
   },
 }

@@ -4,7 +4,7 @@ return {
   version = '*',
   opts = {
     auto_scroll = false,
-    autochdir = true, -- when neovim changes it current directory the terminal will change it's own when next it's opened
+    autochdir = true,
   },
   vim.keymap.set(
     'n',

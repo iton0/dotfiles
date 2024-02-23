@@ -29,16 +29,6 @@ return {
     ),
   },
 
-  -- Smooth Scrolling
-  {
-    'karb94/neoscroll.nvim',
-    keys = {
-      { '<c-u>' },
-      { '<c-d>' },
-    },
-    config = true,
-  },
-
   -- Lua-based substitute function as an alternative to
   -- vim's :substitute, using Lua patterns instead of Vim regex.
   {
@@ -49,7 +39,7 @@ return {
         '<m-f>',
         mode = { 'n', 'x' },
         ':S /',
-        { desc = 'AltSubstitute' },
+        desc = 'AltSubstitute',
       },
     },
   },
@@ -60,27 +50,12 @@ return {
     event = 'BufReadPost',
     cmd = 'TodoTelescope',
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim' },
-    config = true,
+    opts = { signs = false },
     vim.keymap.set(
       'n',
-      '<leader>sc',
+      '<leader>sd',
       '<cmd>TodoTelescope<cr>',
-      { desc = '[S]earch [C]omments' }
-    ),
-  },
-
-  -- Markdown previewer
-  {
-    'iamcco/markdown-preview.nvim',
-    ft = { 'markdown' },
-    build = function()
-      vim.fn['mkdp#util#install']()
-    end,
-    vim.keymap.set(
-      'n',
-      '<leader>m',
-      '<cmd>MarkdownPreviewToggle<cr>',
-      { noremap = true, silent = true, desc = 'Markdown Previewer' }
+      { desc = '[S]earch To[D]o' }
     ),
   },
 }

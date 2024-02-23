@@ -6,8 +6,10 @@ return {
   config = function()
     require('lualine').setup({
       options = {
-        theme = 'codedark',
-        component_separators = { left = '│', right = '' },
+        theme = 'onedark',
+        always_divide_middle = false,
+        globalstatus = true,
+        component_separators = { left = '', right = '' },
         section_separators = { left = '', right = '' },
       },
       sections = {
@@ -21,14 +23,19 @@ return {
         },
         lualine_c = {
           {
+            'filetype',
+            icon_only = true,
+            padding = { left = 1, right = 0 },
+          },
+          {
             'filename',
-            path = 4,
+            path = 3,
             newfile_status = true,
             symbols = {
-              modified = '◉ ',
-              readonly = '🔒 ',
-              unnamed = '⟨No Name⟩ ',
-              newfile = '✨ ',
+              modified = '✎',
+              readonly = '🔒',
+              unnamed = '⟨No Name⟩',
+              newfile = '✨',
             },
           },
         },
@@ -37,29 +44,9 @@ return {
             require('lazy.status').updates,
             cond = require('lazy.status').has_updates,
             color = { fg = '#ff9e64' },
-            padding = { left = 0, right = 2 },
-          },
-          {
-            function()
-              local msg = ''
-              local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
-              local clients = vim.lsp.get_active_clients()
-              if next(clients) == nil then
-                return msg
-              end
-              for _, client in ipairs(clients) do
-                local filetypes = client.config.filetypes
-                if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-                  return ' ' .. client.name
-                end
-              end
-              return msg
-            end,
             padding = { left = 0, right = 1 },
           },
         },
-        lualine_y = { 'location' },
-        lualine_z = {},
       },
     })
   end,

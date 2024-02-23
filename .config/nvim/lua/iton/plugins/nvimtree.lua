@@ -2,6 +2,7 @@ return {
   'nvim-tree/nvim-tree.lua',
   version = '*',
   lazy = false,
+  dependencies = { 'nvim-tree/nvim-web-devicons' },
   config = function()
     require('nvim-tree').setup({
       renderer = { add_trailing = true },
@@ -17,13 +18,13 @@ return {
   end,
   vim.keymap.set(
     'n',
-    '<leader>xf',
+    '<leader>ff',
     ':NvimTreeFindFile<cr>',
     { noremap = true, silent = true, desc = 'Find File' }
   ),
   vim.keymap.set(
     'n',
-    '<leader>xx',
+    '<leader>fu',
     ':NvimTreeToggle<cr>',
     { noremap = true, silent = true, desc = 'Toggle Tree' }
   ),
