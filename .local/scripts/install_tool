@@ -7,13 +7,13 @@ cd
 sudo apt update
 
 # Install essential dependencies
-sudo apt install -y cat curl tar gzip unzip wget zip || {
+sudo apt install -y cat curl tar gzip unzip wget make zip || {
     echo "Error: Failed to install essential dependencies."
     exit 1
 }
 
 # Install Git, Vim, Tmux, Zsh, and other tools
-sudo apt install -y vim tmux zsh fzf sed ripgrep xclip cloc || {
+sudo apt install -y vim tmux zsh fzf sed ripgrep xclip || {
     echo "Error: Installation of Vim, Tmux, Zsh, fzf, sed, ripgrep, xclip failed."
     exit 1
 }
