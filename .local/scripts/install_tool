@@ -13,7 +13,7 @@ sudo apt install -y cat curl tar gzip unzip wget zip || {
 }
 
 # Install Git, Vim, Tmux, Zsh, and other tools
-sudo apt install -y vim tmux zsh fzf sed ripgrep xclip || {
+sudo apt install -y vim tmux zsh fzf sed ripgrep xclip cloc || {
     echo "Error: Installation of Vim, Tmux, Zsh, fzf, sed, ripgrep, xclip failed."
     exit 1
 }
@@ -33,6 +33,7 @@ if [[ "$response" =~ ^[Yy]$ ]]; then
     echo "Continuing Install..."
 else
     echo "Copying contents of .zshrc.pre-oh-my-zsh to .zshrc..."
+    echo "Contents of previous .zshrc in .zshrc-from-install"
     mv ~/.zshrc ~/.zshrc-from-install
     mv ~/.zshrc.pre-oh-my-zsh ~/.zshrc
     echo "Finished."
