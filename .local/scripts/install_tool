@@ -13,7 +13,7 @@ sudo apt install -y cat curl tar gzip unzip wget make zip || {
 }
 
 # Install Git, Vim, Tmux, Zsh, and other tools
-sudo apt install -y vim tmux zsh fzf sed ripgrep xclip || {
+sudo apt install -y vim tmux zsh fzf sed ripgrep xclip gcc npm || {
     echo "Error: Installation of Vim, Tmux, Zsh, fzf, sed, ripgrep, xclip failed."
     exit 1
 }
