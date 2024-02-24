@@ -32,7 +32,7 @@ return {
             path = 3,
             newfile_status = true,
             symbols = {
-              modified = '✎',
+              modified = '✎ ',
               readonly = '🔒',
               unnamed = '⟨No Name⟩',
               newfile = '✨',
