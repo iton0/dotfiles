@@ -19,7 +19,7 @@ vim.o.statusline = ''
 -- Sets how Neovim will display certain whitespace in the editor.
 -- See `:help 'list'` and `:help 'listchars'`
 vim.opt.list = true
-vim.opt.listchars =  {tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- Preview substitutions live
 vim.o.inccommand = 'split'
