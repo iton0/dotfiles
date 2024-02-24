@@ -16,21 +16,27 @@ vim.o.mouse = 'a'
 -- Set the status line
 vim.o.statusline = ''
 
--- Sets how neovim will display certain whitespace in the editor.
---  See :help 'list'
---  and :help 'listchars'
+-- Sets how Neovim will display certain whitespace in the editor.
+-- See `:help 'list'` and `:help 'listchars'`
 vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.listchars =  {tab = '» ', trail = '·', nbsp = '␣' }
 
 -- Preview substitutions live
-vim.opt.inccommand = 'split'
+vim.o.inccommand = 'split'
 
 -- Sync clipboard between OS and Neovim.
---  See `:help 'clipboard'`
+-- See `:help 'clipboard'`
 vim.o.clipboard = 'unnamedplus'
 
 -- Set wrap behavior
 vim.o.breakindent = true -- Indent wrapped lines
+
+-- Enable line wrapping without breaking words
+vim.o.wrap = true
+vim.o.linebreak = true
+
+-- Set wrap margin to 0 to ensure lines wrap exactly at the text width
+vim.o.wrapmargin = 0
 
 -- Set text width to 80 characters
 vim.o.textwidth = 80
@@ -42,7 +48,7 @@ vim.o.undofile = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
--- Allows current line number to be highlighted in transparent mode
+-- Allows the current line number to be highlighted in transparent mode
 vim.wo.cursorline = true
 
 -- Keep signcolumn on by default
