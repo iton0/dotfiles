@@ -13,9 +13,6 @@ vim.wo.relativenumber = true
 -- Enable mouse mode
 vim.o.mouse = 'a'
 
--- Set the status line
-vim.o.statusline = ''
-
 -- Sets how Neovim will display certain whitespace in the editor.
 -- See `:help 'list'` and `:help 'listchars'`
 vim.opt.list = true
@@ -61,19 +58,9 @@ vim.o.timeoutlen = 500
 -- Hide the mode indicator in the command line
 vim.o.showmode = false
 
--- Disabling Vim language providers for Python 3, Perl, Ruby, and Node.js
-vim.g.loaded_python3_provider = 0
-vim.g.loaded_perl_provider = 0
-vim.g.loaded_ruby_provider = 0
-vim.g.loaded_node_provider = 0
-
 -- Set the 'guicursor' option to control the cursor appearance in different modes
 vim.o.guicursor = table.concat({
   'n-v-c:block-Cursor/lCursor-blinkwait500-blinkon100-blinkoff100', -- Normal mode
   'i-ci:ver25-Cursor/lCursor-blinkwait500-blinkon100-blinkoff100', -- Insert mode
   'r:hor50-Cursor/lCursor-blinkwait100-blinkon100-blinkoff100', -- Replace mode
 }, ',')
-
--- Netrw
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
