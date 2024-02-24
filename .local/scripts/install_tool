@@ -10,7 +10,7 @@ sudo apt update || {
 }
 
 # Install essential dependencies
-sudo apt install -y cat curl tar gzip unzip wget make zip || {
+sudo apt install -y cat curl tar gzip unzip wget cmake python3 make zip || {
     echo "Error: Failed to install essential dependencies."
     exit 1
 }
