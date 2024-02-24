@@ -137,7 +137,6 @@ return {
 
         -- Show the signature of the function you're currently completing.
         map('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
-
       end,
     })
 
