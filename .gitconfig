@@ -21,7 +21,7 @@
 	wtd = worktree remove
 	wtl = worktree list
 	mtn = maintenance start; makes everything faster in git repo
-	all = add .; add all files in current working directory
+	curd = add .; add all files in current working directory
 	sync = !git add -u && git commit -v; add all tracked files & commit with diff in core editor
 	p = push origin HEAD
 	pf = push --force-with-lease; a safe force push
