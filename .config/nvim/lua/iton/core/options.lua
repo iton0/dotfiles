@@ -53,7 +53,11 @@ vim.wo.signcolumn = 'yes'
 
 -- Decrease update time
 vim.o.updatetime = 250
-vim.o.timeoutlen = 500
+vim.o.timeoutlen = 300
+
+-- Configure how new splits should be opened
+vim.opt.splitright = true
+vim.opt.splitbelow = true
 
 -- Hide the mode indicator in the command line
 vim.o.showmode = false

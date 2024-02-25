@@ -76,6 +76,14 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Toggle a Terminal
+map('n', '<C-T>', function()
+  vim.cmd('vsplit term://zsh')
+  vim.cmd('vertical resize 40')
+  vim.cmd('wincmd l') -- Move to the terminal window
+  vim.cmd('startinsert')
+end, { noremap = true, silent = true, desc = 'Toggle Terminal' })
+
 map('n', '<M-l>', function()
   if vim.lsp.buf.server_ready() then
     print(' LSP Already Installed')

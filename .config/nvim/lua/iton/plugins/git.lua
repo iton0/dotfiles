@@ -89,7 +89,7 @@ return {
     dependencies = {
       'nvim-lua/plenary.nvim',
     },
-    vim.api.nvim_set_keymap(
+    vim.keymap.set(
       'n',
       '<leader>gu',
       '<cmd>LazyGit<cr>',

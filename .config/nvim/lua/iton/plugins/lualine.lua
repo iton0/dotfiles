@@ -41,10 +41,28 @@ return {
         },
         lualine_x = {
           {
+            function()
+              local total_marks = require('harpoon.mark').get_length()
+
+              if total_marks == 0 then
+                return ''
+              end
+
+              local current_mark = '—'
+
+              local mark_idx = require('harpoon.mark').get_current_index()
+              if mark_idx ~= nil then
+                current_mark = tostring(mark_idx)
+              end
+
+              return string.format('󱡅 %s/%d', current_mark, total_marks)
+            end,
+          },
+          {
             require('lazy.status').updates,
             cond = require('lazy.status').has_updates,
             color = { fg = '#ff9e64' },
-            padding = { left = 0, right = 1 },
+            padding = { left = 1, right = 1 },
           },
         },
       },
