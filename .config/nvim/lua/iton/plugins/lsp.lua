@@ -195,21 +195,6 @@ return {
       },
     }
 
-    -- You can add other tools here that you want Mason to install
-    -- for you, so that they are available from within Neovim.
-    local ensure_installed = vim.tbl_keys(servers or {})
-    vim.list_extend(ensure_installed, {
-      'stylua', -- For Neovim WARN: Do not delete
-      'clang-format', -- C/C++
-      'clangd',
-      'cpplint',
-      'typescript-language-server', -- Web Dev
-      'html-lsp',
-      'eslint_d',
-      'stylelint',
-      'prettierd',
-    })
-
     -- Ensure the servers above are installed
     --  To check the current status of installed tools and/or manually install
     --  other tools, you can run
@@ -225,6 +210,20 @@ return {
           package_uninstalled = '✗',
         },
       },
+    })
+    -- You can add other tools here that you want Mason to install
+    -- for you, so that they are available from within Neovim.
+    local ensure_installed = vim.tbl_keys(servers or {})
+    vim.list_extend(ensure_installed, {
+      'stylua', -- For Neovim WARN: Do not delete
+      'clang-format', -- C/C++
+      'clangd',
+      'cpplint',
+      'typescript-language-server', -- Web Dev
+      'html-lsp',
+      'eslint_d',
+      'stylelint',
+      'prettierd',
     })
     require('mason-tool-installer').setup({
       ensure_installed = ensure_installed,
