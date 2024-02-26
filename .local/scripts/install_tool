@@ -50,11 +50,12 @@ chsh -s "$(which zsh)" || {
     echo "Error: Failed to set zsh as the default shell."
     exit 1
 }
+# Install latest version of starship shell prompt
+curl -sS https://starship.rs/install.sh | sh
 zsh || {
     echo "Error: Failed to start zsh."
     exit 1
 }
-p10k configure
 echo "Zsh configured successfully."
 echo ""
 echo "Running 'update' alias..."
