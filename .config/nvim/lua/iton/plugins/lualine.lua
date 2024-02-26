@@ -22,6 +22,7 @@ return {
           },
         },
         lualine_c = {
+          '%=',
           {
             'filetype',
             icon_only = true,
