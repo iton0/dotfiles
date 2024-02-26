@@ -14,7 +14,7 @@ return {
     })
     vim.cmd.colorscheme('NeoSolarized')
     -- Adjust Neovim visual elements
-    vim.cmd.highlight('MatchParen gui=underline guifg=WHITE')
+    vim.cmd.highlight('MatchParen gui=standout guifg=WHITE')
     vim.cmd.highlight('WhichKeyFloat guibg=#282c34')
     -- Better highlight for Visual
     vim.cmd.highlight('Visual guibg=#0d4d5a')

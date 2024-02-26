@@ -63,7 +63,6 @@ vim.o.timeoutlen = 300
 
 -- Configure how new splits should be opened
 vim.opt.splitright = true
-vim.opt.splitbelow = true
 
 -- Hide the mode indicator in the command line
 vim.o.showmode = false
