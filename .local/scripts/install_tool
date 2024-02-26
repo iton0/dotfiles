@@ -29,7 +29,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 # Validate zsh config
 cat ~/.zshrc
-echo "Is this the correct zsh config? (y/n)"
+echo "Is this the correct zsh config? (y/n) "
 read -r response
 
 if [[ "$response" =~ ^[Yy]$ ]]; then
@@ -56,6 +56,12 @@ zsh || {
 }
 p10k configure
 echo "Zsh configured successfully."
+echo ""
+echo "Running 'update' alias..."
+update || {
+    echo "Error: Failed to run update alias."
+        exit 1
+    }
 echo "--------------------------------"
 echo ""
 
@@ -84,7 +90,7 @@ echo "--------------------------------"
 echo ""
 
 # Ask user about tmux start
-echo "Start tmux? (y/n)"
+echo "Start tmux? (y/n) "
 read -r response
 
 if [[ "$response" =~ ^[Yy]$ ]]; then

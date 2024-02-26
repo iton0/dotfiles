@@ -22,7 +22,7 @@ config checkout --force && \
 [ $? -eq 0 ] || { echo "Error during 'config checkout'. Backup existing dotfiles and try again."; exit 1; } && \
 ssh -T git@github.com && \
 config config --local status.showUntrackedFiles no && \
-echo "Dotfiles successfully configured and installed!" && \
+echo "Dotfiles successfully added!" && \
 echo "Now running install_tool script" && \
 $HOME/.local/scripts/install_tool
 ```
