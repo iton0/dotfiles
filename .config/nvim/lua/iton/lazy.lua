@@ -27,6 +27,9 @@ require('lazy').setup({ { import = 'iton.plugins' } }, {
   defaults = {
     lazy = true,
   },
+  install = {
+    colorscheme = { 'NeoSolarized' },
+  },
   checker = {
     enabled = true,
     concurrency = 4,
