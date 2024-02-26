@@ -5,15 +5,12 @@ return {
     -- Snippet Engine & its associated nvim-cmp source
     {
       'L3MON4D3/LuaSnip',
-      build = (function()
-        -- Build Step is needed for regex support in snippets
-        -- This step is not supported in many windows environments
-        -- Remove the below condition to re-enable on windows
-        if vim.fn.has('win32') == 1 or vim.fn.executable('make') == 0 then
-          return
-        end
-        return 'make install_jsregexp'
-      end)(),
+      -- Build Step is needed for regex support in snippets
+      -- This step is not supported in many windows environments
+      -- Remove the below condition to re-enable on windows
+      build = vim.fn.has('win32') ~= 0
+        or vim.fn.executable('make') ~= 1 and 'make install_jsregexp'
+        or nil,
     },
     'saadparwaiz1/cmp_luasnip',
 
@@ -28,6 +25,8 @@ return {
     -- See `:help cmp`
     local cmp = require('cmp')
     local luasnip = require('luasnip')
+    -- Needed for friendly-snippets to work
+    require('luasnip.loaders.from_vscode').lazy_load()
     luasnip.config.setup({})
 
     cmp.setup({
@@ -52,6 +51,8 @@ return {
         ['<tab>'] = cmp.mapping.select_next_item(),
         -- Select the [p]revious item
         ['<C-p>'] = cmp.mapping.select_prev_item(),
+        ['<C-f>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-d>'] = cmp.mapping.scroll_docs(4),
         -- Accept ([y]es) the completion.
         --  This will auto-import if your LSP supports it.
         --  This will expand snippets if the LSP sent a snippet.

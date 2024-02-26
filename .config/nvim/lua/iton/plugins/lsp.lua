@@ -178,6 +178,7 @@ return {
         settings = {
           Lua = {
             runtime = { version = 'LuaJIT' },
+            completion = { callSnippet = 'Replace' },
             workspace = {
               checkThirdParty = false,
               -- Tells lua_ls where to find all the Lua files that you have loaded
