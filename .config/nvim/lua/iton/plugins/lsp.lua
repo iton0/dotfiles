@@ -159,7 +159,6 @@ return {
     local servers = {
       -- clangd = {},
       -- gopls = {},
-      -- pyright = {},
       -- rust_analyzer = {},
       -- html = { filetypes = { 'html', 'twig', 'hbs'} },
       -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -171,6 +170,13 @@ return {
       -- If you only have simple needs for typescript, then you can probably just use tsserver
       -- tsserver = {},
 
+      pyright = {
+        settings = {
+          python = {
+            analysis = { typeCheckingMode = 'strict' },
+          },
+        },
+      },
       lua_ls = {
         -- cmd = {...},
         -- filetypes { ...},

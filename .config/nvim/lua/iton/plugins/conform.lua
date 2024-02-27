@@ -11,6 +11,7 @@ return {
     notify_on_error = false,
     formatters_by_ft = {
       lua = { 'stylua' },
+      python = { 'black' },
       javascript = { 'prettierd' },
       html = { 'prettierd' },
       css = { 'prettierd' },
