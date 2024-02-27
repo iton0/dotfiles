@@ -170,6 +170,11 @@ return {
       -- If you only have simple needs for typescript, then you can probably just use tsserver
       -- tsserver = {},
 
+      jdtls = {
+        settings = {
+          redhat = { telemetry = { enabled = false } },
+        },
+      },
       pyright = {
         settings = {
           python = {
