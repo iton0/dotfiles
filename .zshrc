@@ -100,6 +100,9 @@ else
     alias vd='v .'
 fi
 
+# Alias for updating Starship prompt
+alias star-update='curl -sS https://starship.rs/install.sh | sh'
+
 # Alias for updating Neovim version
 alias nvim-update='confirm_nvim_update'
 
