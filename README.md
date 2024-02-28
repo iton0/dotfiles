@@ -16,12 +16,12 @@ ssh-add -l | grep -q "256" || ssh-add ~/.ssh/id_ed25519 && \
 git config --global user.name "iton0" && \
 git config --global user.email "iton442@gmail.com" && \
 git clone --bare git@github.com:iton0/dotfiles.git $HOME/dotfiles && \
-alias config="/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME" && \
-config remote add origin git@github.com:iton0/dotfiles.git && \
-config checkout --force && \
+alias dof="/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME" && \
+dof remote add origin git@github.com:iton0/dotfiles.git && \
+dof checkout --force && \
 [ $? -eq 0 ] || { echo "Error during 'config checkout'. Backup existing dotfiles and try again."; exit 1; } && \
 ssh -T git@github.com && \
-config config --local status.showUntrackedFiles no && \
+dof config --local status.showUntrackedFiles no && \
 echo "Dotfiles successfully added!" && \
 echo "Now running install_tool script" && \
 $HOME/.local/scripts/install_tool

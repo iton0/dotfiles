@@ -42,7 +42,7 @@ fi
 # Upgrade packages
 sudo apt upgrade -y
 
-# Make zsh default shell and run zsh and configure theme
+# Make zsh default shell and run zsh
 chsh -s "$(which zsh)" || {
     echo "Error: Failed to set zsh as the default shell."
     exit 1
