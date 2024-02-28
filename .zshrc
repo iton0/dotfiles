@@ -18,9 +18,6 @@ export NVM_DIR="$HOME/.nvm"
 # Uncomment the following line to enable command auto-correction.
  ENABLE_CORRECTION="true"
 
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
@@ -83,13 +80,19 @@ alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 # Current package managers: apt and flatpak.
 
 alias update='
-  sudo apt update && \
-  sudo apt upgrade && \
-  sudo apt autoremove && \
-  sudo apt autoclean && \
-  sudo apt clean && \
-  flatpak update
+  sudo apt update -y && \
+  sudo apt upgrade -y && \
+  sudo apt autoremove -y && \
+  sudo apt autoclean -y && \
+  sudo apt clean -y && \
+  flatpak update -y
   '
+
+# Alias for updating Starship prompt
+alias star-update='curl -sS https://starship.rs/install.sh | sh'
+
+# Alias for updating Neovim version
+alias nvim-update='confirm_nvim_update'
 
 # Set an alias 'v' for Neovim if available; otherwise, fallback to Vim
 if command -v nvim &> /dev/null; then
@@ -100,16 +103,8 @@ else
     alias vd='v .'
 fi
 
-# Alias for updating Starship prompt
-alias star-update='curl -sS https://starship.rs/install.sh | sh'
-
-# Alias for updating Neovim version
-alias nvim-update='confirm_nvim_update'
 
 confirm_nvim_update() {
-  read -r "REPLY?Continue? (y/n): "
-  if [[ "$REPLY" = "y" ]]; then
-    cd &&
     echo "Installing Neovim" &&
     curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz &&
     sudo rm -rf /opt/nvim &&
@@ -120,9 +115,6 @@ confirm_nvim_update() {
     rm nvim-linux64.tar.gz &&
     echo "--------------------------------" &&
     echo ""
-else
-    echo "Neovim installation skipped."
-fi
 }
 
 # Aliases for convenient terminal commands:

@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
 
-# Ensure in the home directory
-cd || exit
-
 # Update package list
-sudo apt update || {
+sudo apt update -y || {
     echo "Error: Failed to update package list."
     exit 1
 }
@@ -16,7 +13,7 @@ sudo apt install -y cat curl tar gzip unzip wget cmake python3 make zip || {
 }
 
 # Install Git, Vim, Tmux, Zsh, and other tools
-sudo apt install -y vim tmux zsh fzf sed ripgrep xclip gcc npm || {
+sudo apt install -y vim tmux zsh fzf sed ripgrep xclip gcc || {
     echo "Error: Installation of Vim, Tmux, Zsh, fzf, sed, ripgrep, xclip failed."
     exit 1
 }
@@ -90,19 +87,11 @@ rm nvim-linux64.tar.gz
 echo "--------------------------------"
 echo ""
 
-# Ask user about tmux start
-echo "Start tmux? (y/n) "
-read -r response
-
-if [[ "$response" =~ ^[Yy]$ ]]; then
+# Start tmux
 tmux || {
         echo "Error: Failed to start tmux."
         exit 1
     }
     echo "Tmux started successfully."
     echo "Main Installation Finished!"
-    echo "May need to install further dependencies!"
-else
-    echo "Main Installation Finished."
-    echo "May need to install further dependencies."
-fi
+    echo "May need to install further dependencies and/or reboot."
