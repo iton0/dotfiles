@@ -17,6 +17,7 @@ return {
     vim.cmd.highlight('MatchParen gui=underline,bold guifg=WHITE')
     vim.cmd.highlight('WhichKeyFloat guibg=#282c34')
     vim.cmd.highlight('Cursor gui=reverse')
+    vim.cmd.highlight('TermCursor guifg=#282C34 guibg=#56B6C2')
     -- Better highlight for Visual
     vim.cmd.highlight('Visual guibg=#0d4d5a')
     -- Better completion menu colors
