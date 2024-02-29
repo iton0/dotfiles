@@ -56,21 +56,21 @@ source /usr/share/doc/fzf/examples/completion.zsh
 # For a full list of active aliases, run `alias`.
 
 
-# The 'dof' alias simplifies Git commands by using a custom
+# The 'dot' alias simplifies Git commands by using a custom
 # repository location and working directory. It's used to manage
 # configuration files and dotfiles centrally.
 
-alias dof='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+alias dot='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 
 # Alias Explanation:
 #   - '--git-dir=$HOME/dotfiles/': Custom Git repository path.
 #   - '--work-tree=$HOME': Working directory set to home.
 
 # Example Usage:
-#   - 'dof status': Check repo status.
-#   - 'dof add file.txt': Stage changes.
-#   - 'dof commit -m "Update"': Commit changes.
-#   - 'dof push origin main': Push changes.
+#   - 'dot status': Check repo status.
+#   - 'dot add file.txt': Stage changes.
+#   - 'dot commit -m "Update"': Commit changes.
+#   - 'dot push origin main': Push changes.
 
 # Useful for managing dotfiles across systems.
 
