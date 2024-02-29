@@ -9,7 +9,7 @@ return {
   -- "gc" to comment visual regions/lines
   {
     'numToStr/Comment.nvim',
-    config = true,
+    opts = {},
     keys = {
       { 'gc', mode = { 'n', 'v' } },
       { 'gb', mode = { 'n', 'v' } },
@@ -19,7 +19,7 @@ return {
   -- Neovim Undotree
   {
     'jiaoshijie/undotree',
-    config = true,
+    opts = {},
     vim.keymap.set(
       'n',
       '<leader>u',
@@ -32,7 +32,7 @@ return {
   -- vim's :substitute, using Lua patterns instead of Vim regex.
   {
     'chrisgrieser/nvim-alt-substitute',
-    config = true,
+    opts = {},
     keys = {
       {
         '<m-f>',
