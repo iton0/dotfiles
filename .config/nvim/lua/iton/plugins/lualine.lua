@@ -30,7 +30,7 @@ return {
           },
           {
             'filename',
-            path = 4,
+            path = 3,
             newfile_status = true,
             symbols = {
               modified = '✎ ',
