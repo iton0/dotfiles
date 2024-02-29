@@ -93,24 +93,17 @@ alias star-update='curl -sS https://starship.rs/install.sh | sh'
 
 # Alias for updating Neovim version
 alias nvim-update='confirm_nvim_update'
-
-# Set an alias 'v' for Neovim if available; otherwise, fallback to Vim
-if command -v nvim &> /dev/null; then
-    alias v='/opt/nvim-linux64/bin/nvim'
-    alias vd='v .'
-else
-    alias v='/usr/bin/vim'
-    alias vd='v .'
-fi
-
-
 confirm_nvim_update() {
     echo "Installing Neovim" &&
+    echo "Old version:" &&
+    /opt/nvim-linux64/bin/nvim --version &&
+    echo "--------------------------------" &&
+    echo ""
     curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz &&
     sudo rm -rf /opt/nvim &&
     sudo tar -C /opt -xzf nvim-linux64.tar.gz &&
     echo "--------------------------------" &&
-    echo "New Neovim version:" &&
+    echo "New version:" &&
     /opt/nvim-linux64/bin/nvim --version &&
     rm nvim-linux64.tar.gz &&
     echo "--------------------------------" &&
@@ -130,6 +123,15 @@ alias vstar='v ~/.config/starship.toml'
 alias neo='cd ~/.config/nvim/lua/iton/'
 alias neod='cd ~/.config/nvim/lua/iton/ && vd'
 alias live='live-server'
+
+# Set an alias 'v' for Neovim if available; otherwise, fallback to Vim
+if command -v nvim &> /dev/null; then
+    alias v='/opt/nvim-linux64/bin/nvim'
+    alias vd='v .'
+else
+    alias v='/usr/bin/vim'
+    alias vd='v .'
+fi
 
 # Other example aliases
 # alias zshconfig="mate ~/.zshrc"

@@ -56,10 +56,6 @@ zsh || {
 echo "Zsh configured successfully."
 echo ""
 echo "Running 'update' alias..."
-update || {
-    echo "Error: Failed to run update alias."
-        exit 1
-    }
 echo "--------------------------------"
 echo ""
 
