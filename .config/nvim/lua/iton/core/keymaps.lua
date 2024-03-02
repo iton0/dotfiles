@@ -45,7 +45,7 @@ map('n', 'H', '_', opts)
 map('n', 'L', '$', opts)
 
 -- Remap Ctrl + S to perform a decrement action
-vim.api.nvim_set_keymap('n', '<C-S>', '<C-X>', opts)
+map('n', '<C-S>', '<C-X>', opts)
 
 -- Remap to clear highlighted search results
 map('n', '<esc>', '<cmd>nohlsearch<cr>', opts)
@@ -84,6 +84,15 @@ map('n', '<C-T>', function()
   vim.cmd('startinsert')
 end, { noremap = true, silent = true, desc = 'Toggle Terminal' })
 
+-- Opens Lazy.nvim Home
+map(
+  'n',
+  '<Space>l',
+  ':Lazy<cr>',
+  { noremap = true, silent = true, desc = 'Lazy.nvim' }
+)
+
+-- Check if LSP server is ready. If not, starts LSP or installs LSP.
 map('n', '<M-l>', function()
   if vim.lsp.buf.server_ready() then
     print(' LSP Already Installed')

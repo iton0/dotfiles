@@ -14,14 +14,6 @@ if not vim.loop.fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
--- Opens Lazy.nvim Home
-vim.keymap.set(
-  'n',
-  '<Space>l',
-  ':Lazy<cr>',
-  { noremap = true, silent = true, desc = 'Lazy.nvim' }
-)
-
 -- [[ Plugins ]]
 require('lazy').setup({ { import = 'iton.plugins' } }, {
   defaults = {
