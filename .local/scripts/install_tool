@@ -22,7 +22,8 @@ sudo apt install -y vim tmux zsh fzf sed ripgrep xclip gcc || {
 echo "Tools (Vim, Tmux, Zsh, fzf, sed, ripgrep, xclip) installed successfully..."
 
 # Install oh-my-zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
+# NOTE: if the above works delete the zsh config validation below
 
 # Validate zsh config
 cat ~/.zshrc
@@ -42,11 +43,6 @@ fi
 # Upgrade packages
 sudo apt upgrade -y
 
-# Make zsh default shell and run zsh
-chsh -s "$(which zsh)" || {
-    echo "Error: Failed to set zsh as the default shell."
-    exit 1
-}
 # Install latest version of starship shell prompt
 curl -sS https://starship.rs/install.sh | sh
 zsh || {
@@ -54,8 +50,6 @@ zsh || {
     exit 1
 }
 echo "Zsh configured successfully."
-echo ""
-echo "Running 'update' alias..."
 echo "--------------------------------"
 echo ""
 
