@@ -1,4 +1,4 @@
-# Dotfiles [test]
+# Dotfiles
 ## Installing on new system
 ##### This assumes that you are on a fresh new computer without an already existing dotfile folder
 
