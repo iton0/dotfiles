@@ -3,6 +3,7 @@
 
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
+local autocm = vim.api.nvim_create_autocmd
 
 map({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
@@ -66,7 +67,7 @@ map('n', '<M-c>', '<cmd>:echo ""<cr>', opts)
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
-vim.api.nvim_create_autocmd('TextYankPost', {
+autocm('TextYankPost', {
   group = vim.api.nvim_create_augroup(
     'kickstart-highlight-yank',
     { clear = true }
@@ -114,7 +115,7 @@ end, { noremap = true, silent = true, desc = 'LSP Install' })
 -- Autocommand that executes after
 -- MasonToolInstall finishes. Makes
 -- it easier for LSP setup
-vim.api.nvim_create_autocmd('User', {
+autocm('User', {
   pattern = 'MasonToolsUpdateCompleted',
   callback = function()
     vim.schedule(function()
