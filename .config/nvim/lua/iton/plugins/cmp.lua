@@ -48,15 +48,15 @@ return {
       -- chosen, you will need to read `:help ins-completion`
       mapping = cmp.mapping.preset.insert({
         -- Select the [n]ext item
-        ['<tab>'] = cmp.mapping.select_next_item(),
+        ['<C-n>'] = cmp.mapping.select_next_item(),
         -- Select the [p]revious item
         ['<C-p>'] = cmp.mapping.select_prev_item(),
-        ['<C-f>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-d>'] = cmp.mapping.scroll_docs(4),
+        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
         -- Accept ([y]es) the completion.
         --  This will auto-import if your LSP supports it.
         --  This will expand snippets if the LSP sent a snippet.
-        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        ['<C-y>'] = cmp.mapping.confirm({ select = true }),
         -- Manually trigger a completion from nvim-cmp
         ['<C-Space>'] = cmp.mapping.complete({}),
         -- Think of <c-l> as moving to the right of your snippet expansion.
