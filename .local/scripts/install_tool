@@ -53,18 +53,6 @@ echo "Zsh configured successfully."
 echo "--------------------------------"
 echo ""
 
-# Install lazygit
-echo "Installing LazyGit..."
-LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
-curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
-tar xf lazygit.tar.gz lazygit
-sudo install lazygit /usr/local/bin
-echo "Current LazyGit version:"
-lazygit --version
-rm lazygit.tar.gz
-echo "--------------------------------"
-echo ""
-
 # Install Neovim
 echo "Installing Neovim..."
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz

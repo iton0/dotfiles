@@ -137,5 +137,5 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Initialize Starship prompt NOTE: needs to stay at bottom
+# Initialize Starship prompt
 eval "$(starship init zsh)"
