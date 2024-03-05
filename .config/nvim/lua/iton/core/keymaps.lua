@@ -22,6 +22,26 @@ map('n', '<c-w>', '<c-w>w', opts)
 map('i', 'jk', '<esc>', opts)
 map('i', 'kj', '<esc>', opts)
 
+-- Diagnostic keymaps
+map(
+  'n',
+  '[d',
+  vim.diagnostic.goto_prev,
+  { desc = 'Go to previous [D]iagnostic message' }
+)
+map(
+  'n',
+  ']d',
+  vim.diagnostic.goto_next,
+  { desc = 'Go to next [D]iagnostic message' }
+)
+map(
+  'n',
+  '<leader>q',
+  vim.diagnostic.setloclist,
+  { desc = 'Open diagnostic [Q]uickfix list' }
+)
+
 -- Remap for better scrolling
 map('n', '<c-u>', '<c-u>zz', opts)
 map('n', '<c-d>', '<c-d>zz', opts)

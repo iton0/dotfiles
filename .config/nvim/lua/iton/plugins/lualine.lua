@@ -24,11 +24,6 @@ return {
         lualine_c = {
           '%=',
           {
-            'filetype',
-            icon_only = true,
-            padding = { left = 1, right = 0 },
-          },
-          {
             'filename',
             path = 3,
             newfile_status = true,

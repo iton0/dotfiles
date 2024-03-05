@@ -28,21 +28,6 @@ return {
     ),
   },
 
-  -- Lua-based substitute function as an alternative to
-  -- vim's :substitute, using Lua patterns instead of Vim regex.
-  {
-    'chrisgrieser/nvim-alt-substitute',
-    opts = {},
-    keys = {
-      {
-        '<m-f>',
-        mode = { 'n', 'x' },
-        ':S /',
-        desc = 'AltSubstitute',
-      },
-    },
-  },
-
   -- Highlight, list and search todo comments in your projects
   {
     'folke/todo-comments.nvim',
