@@ -13,17 +13,14 @@ return {
       },
     })
     vim.cmd.colorscheme('NeoSolarized')
-    -- Adjust Neovim visual elements
     vim.cmd.highlight('MatchParen gui=underline,bold guifg=WHITE')
     vim.cmd.highlight('WhichKeyFloat guibg=#282c34')
     vim.cmd.highlight('Cursor gui=reverse')
     vim.cmd.highlight('TermCursor guifg=#282C34 guibg=#56B6C2')
-    -- Better highlight for Visual
     vim.cmd.highlight('Visual guibg=#0d4d5a')
+    vim.cmd.highlight('WinSeparator guifg=#f2f2f2')
     -- Better completion menu colors
     vim.cmd.highlight('PmenuSel guibg=#282C34 guifg=NONE')
     vim.cmd.highlight('Pmenu guifg=#C5CDD9 guibg=#22252A')
-    -- Better window seperators for transparent mode
-    vim.cmd.highlight('WinSeparator guifg=#f2f2f2')
   end,
 }

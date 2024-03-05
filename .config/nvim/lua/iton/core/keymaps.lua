@@ -1,89 +1,92 @@
--- The keymaps below are needed at startup
--- See `:help vim.keymap.set()`
-
-local map = vim.keymap.set
-local opts = { noremap = true, silent = true }
+local map = function(mode, keys, func, desc)
+  vim.keymap.set(
+    mode,
+    keys,
+    func,
+    { noremap = true, silent = true, desc = desc }
+  )
+end
 local autocmd = vim.api.nvim_create_autocmd
 
-map({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 -- Remap for dealing with word wrap
-map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+vim.keymap.set(
+  'n',
+  'k',
+  "v:count == 0 ? 'gk' : 'k'",
+  { expr = true, silent = true }
+)
+vim.keymap.set(
+  'n',
+  'j',
+  "v:count == 0 ? 'gj' : 'j'",
+  { expr = true, silent = true }
+)
 
 -- Remap for window movement
-map('n', '<c-h>', '<c-w>h', opts)
-map('n', '<c-j>', '<c-w>j', opts)
-map('n', '<c-k>', '<c-w>k', opts)
-map('n', '<c-l>', '<c-w>l', opts)
-map('n', '<c-w>', '<c-w>w', opts)
+map('n', '<c-h>', '<c-w>h')
+map('n', '<c-j>', '<c-w>j')
+map('n', '<c-k>', '<c-w>k')
+map('n', '<c-l>', '<c-w>l')
+map('n', '<c-w>', '<c-w>w')
 
 -- Remap for quicker <esc> in insert mode
-map('i', 'jk', '<esc>', opts)
-map('i', 'kj', '<esc>', opts)
+map('i', 'jk', '<esc>')
+map('i', 'kj', '<esc>')
 
 -- Diagnostic keymaps
-map(
-  'n',
-  '[d',
-  vim.diagnostic.goto_prev,
-  { desc = 'Go to previous [D]iagnostic message' }
-)
-map(
-  'n',
-  ']d',
-  vim.diagnostic.goto_next,
-  { desc = 'Go to next [D]iagnostic message' }
-)
+map('n', '[d', vim.diagnostic.goto_prev, 'Go to previous [D]iagnostic message')
+map('n', ']d', vim.diagnostic.goto_next, 'Go to next [D]iagnostic message')
 map(
   'n',
   '<leader>q',
   vim.diagnostic.setloclist,
-  { desc = 'Open diagnostic [Q]uickfix list' }
+  'Open diagnostic [Q]uickfix list'
 )
 
 -- Remap for better scrolling
-map('n', '<c-u>', '<c-u>zz', opts)
-map('n', '<c-d>', '<c-d>zz', opts)
+map('n', '<c-u>', '<c-u>zz')
+map('n', '<c-d>', '<c-d>zz')
 
 -- Remap for closing buffers
-map('n', '<c-c>', ':q<cr>', opts)
+map('n', '<c-c>', ':q<cr>')
 
 -- To move line up/down
-map('n', '<S-Up>', ':m .-2<CR>==', opts)
-map('n', '<S-Down>', ':m .+1<CR>==', opts)
-map('v', '<S-Up>', ":m '<-2<CR>gv=gv", opts)
-map('v', '<S-Down>', ":m '>+1<CR>gv=gv", opts)
+map('n', '<S-Up>', ':m .-2<CR>==')
+map('n', '<S-Down>', ':m .+1<CR>==')
+map('v', '<S-Up>', ":m '<-2<CR>gv=gv")
+map('v', '<S-Down>', ":m '>+1<CR>gv=gv")
 
 -- To shift line left/right
-map('n', '<', '<<', opts)
-map('n', '>', '>>', opts)
-map('v', '<', '<gv', opts)
-map('v', '>', '>gv', opts)
+map('n', '<', '<<')
+map('n', '>', '>>')
+map('v', '<', '<gv')
+map('v', '>', '>gv')
 
 -- To go to the beginning and the end of line
-map('n', 'H', '_', opts)
-map('n', 'L', '$', opts)
+map('n', 'H', '_')
+map('n', 'L', '$')
 
 -- Remap Ctrl + S to perform a decrement action
-map('n', '<C-S>', '<C-X>', opts)
+map('n', '<C-S>', '<C-X>')
 
 -- Remap to clear highlighted search results
-map('n', '<esc>', '<cmd>nohlsearch<cr>', opts)
+map('n', '<esc>', '<cmd>nohlsearch<cr>')
 
 -- Remap for terminal navigation
-map('t', '<esc><esc>', [[<C-\><C-n>]], opts)
-map('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
-map('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
-map('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
-map('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
-map('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)
+map('t', '<esc><esc>', [[<C-\><C-n>]])
+map('t', '<C-h>', [[<Cmd>wincmd h<CR>]])
+map('t', '<C-j>', [[<Cmd>wincmd j<CR>]])
+map('t', '<C-k>', [[<Cmd>wincmd k<CR>]])
+map('t', '<C-l>', [[<Cmd>wincmd l<CR>]])
+map('t', '<C-w>', [[<C-\><C-n><C-w>]])
 
 -- Remap for toggling wordcase
-map({ 'n', 'v' }, 'gu', 'g~', opts)
+map({ 'n', 'v' }, 'gu', 'g~')
 
 --Remap to clear command line output
-map('n', '<M-c>', '<cmd>:echo ""<cr>', opts)
+map('n', '<M-c>', '<cmd>:echo ""<cr>')
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -103,15 +106,10 @@ map('n', '<C-T>', function()
   vim.cmd('vertical resize 40')
   vim.cmd('wincmd l') -- Move to the terminal window
   vim.cmd('startinsert')
-end, { noremap = true, silent = true, desc = 'Toggle Terminal' })
+end, 'Toggle Terminal')
 
 -- Opens Lazy.nvim Home
-map(
-  'n',
-  '<Space>l',
-  ':Lazy<cr>',
-  { noremap = true, silent = true, desc = 'Lazy.nvim' }
-)
+map('n', '<Space>l', ':Lazy<cr>', 'Lazy.nvim')
 
 -- Check if LSP server is ready. If not, starts LSP or installs LSP.
 map('n', '<M-l>', function()
@@ -130,7 +128,7 @@ map('n', '<M-l>', function()
       end
     end, 500)
   end
-end, { noremap = true, silent = true, desc = 'LSP Install' })
+end, 'LSP Install')
 
 -- Autocommand that executes after
 -- MasonToolInstall finishes. Makes

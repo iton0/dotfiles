@@ -2,12 +2,8 @@ return {
   'hrsh7th/nvim-cmp',
   event = 'InsertEnter',
   dependencies = {
-    -- Snippet Engine & its associated nvim-cmp source
     {
       'L3MON4D3/LuaSnip',
-      -- Build Step is needed for regex support in snippets
-      -- This step is not supported in many windows environments
-      -- Remove the below condition to re-enable on windows
       build = vim.fn.has('win32') ~= 0
         or vim.fn.executable('make') ~= 1 and 'make install_jsregexp'
         or nil,
@@ -22,7 +18,6 @@ return {
     'rafamadriz/friendly-snippets',
   },
   config = function()
-    -- See `:help cmp`
     local cmp = require('cmp')
     local luasnip = require('luasnip')
     -- Needed for friendly-snippets to work
@@ -39,13 +34,10 @@ return {
         completeopt = 'menu,menuone,noinsert',
       },
 
-      -- Adds border to the documentation
       window = {
         documentation = cmp.config.window.bordered(),
       },
 
-      -- For an understanding of why these mappings were
-      -- chosen, you will need to read `:help ins-completion`
       mapping = cmp.mapping.preset.insert({
         -- Select the [n]ext item
         ['<C-n>'] = cmp.mapping.select_next_item(),

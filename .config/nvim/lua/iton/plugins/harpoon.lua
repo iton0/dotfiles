@@ -1,4 +1,3 @@
--- Neovim harpoon like plugin, but only the core bits
 return {
   'ThePrimeagen/harpoon',
   dependencies = {

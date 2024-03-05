@@ -4,54 +4,36 @@ return {
   event = { 'BufReadPost', 'BufNewFile' },
   cmd = 'Mason',
   dependencies = {
-    -- Automatically install LSPs to stdpath for neovim
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
-
-    -- Additional lua configuration, makes nvim stuff amazing!
     'folke/neodev.nvim',
   },
   build = ':MasonToolsUpdate',
   config = function()
-    -- [[ Configure LSP ]]
-
-    -- Setup neovim lua configuration
     require('neodev').setup({})
 
-    -- Better ui for LSP realated popups with transparent colorscheme
     require('lspconfig.ui.windows').default_options.border = 'rounded'
 
     vim.lsp.handlers['textDocument/hover'] =
       vim.lsp.with(vim.lsp.handlers.hover, {
-        -- Use a sharp border with `FloatBorder` highlights
         border = 'rounded',
-        -- add the title in hover float window
         title = 'Hover Docs',
       })
 
     vim.lsp.handlers['textDocument/signatureHelp'] =
       vim.lsp.with(vim.lsp.handlers.signature_help, {
-        -- Use a sharp border with `FloatBorder` highlights
         border = 'rounded',
         title = 'Signature Docs',
       })
 
     --  This function gets run when an LSP connects to a particular buffer.
-    --  This function gets run when an LSP connects to a particular buffer.
-    --    That is to say, every time a new file is opened that is associated with
-    --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
-    --    function will be executed to configure the current buffer
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup(
         'kickstart-lsp-attach',
         { clear = true }
       ),
       callback = function(event)
-        -- NOTE: Remember that lua is a real programming language, and as such it is possible
-        -- to define small helper and utility functions so you don't have to repeat yourself
-        -- many times.
-        --
         -- In this case, we create a function that lets us more easily define mappings specific
         -- for LSP related items. It sets the mode, buffer and description for us each time.
         local map = function(keys, func, desc)
@@ -63,10 +45,6 @@ return {
           )
         end
 
-        -- Important LSP Navigation keybinds
-        --
-        -- Jump to the definition of the word under your cursor.
-        --  To jump back, press <C-T>.
         map(
           'gd',
           require('telescope.builtin').lsp_definitions,
@@ -98,8 +76,6 @@ return {
           '[W]orkspace [S]ymbols'
         )
 
-        -- WARN: This is not Goto Definition, this is Goto Declaration.
-        --  For example, in C this would take you to the header
         map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
         -- Rename the variable under your cursor
@@ -189,11 +165,6 @@ return {
     }
 
     -- Ensure the servers above are installed
-    --  To check the current status of installed tools and/or manually install
-    --  other tools, you can run
-    --    :Mason
-    --
-    --  You can press `g?` for help in this menu
     require('mason').setup({
       ui = {
         border = 'rounded',

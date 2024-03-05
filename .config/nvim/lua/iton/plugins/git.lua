@@ -3,7 +3,6 @@ return {
   'lewis6991/gitsigns.nvim',
   event = 'BufReadPost',
   opts = {
-    -- See `:help gitsigns.txt`
     signs = {
       add = { text = '+' },
       change = { text = '|' },
