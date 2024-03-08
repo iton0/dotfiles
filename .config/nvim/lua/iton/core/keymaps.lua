@@ -8,7 +8,7 @@ local map = function(mode, keys, func, desc)
 end
 local autocmd = vim.api.nvim_create_autocmd
 
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+map({ 'n', 'v' }, '<Space>', '<Nop>')
 
 -- Remap for dealing with word wrap
 vim.keymap.set(
