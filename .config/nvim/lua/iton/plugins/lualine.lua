@@ -25,7 +25,7 @@ return {
           {
             'filetype',
             icon_only = true,
-            padding = { left = 1, right = 0 },
+            padding = { left = 0, right = 0 },
           },
           {
             'filename',
@@ -37,6 +37,7 @@ return {
               unnamed = '⟨No Name⟩',
               newfile = '✨',
             },
+            padding = { left = 0, right = 0 },
           },
         },
         lualine_x = {
