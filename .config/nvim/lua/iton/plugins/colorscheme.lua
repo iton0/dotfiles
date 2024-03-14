@@ -20,7 +20,7 @@ return {
     vim.cmd.highlight('Visual guibg=#0d4d5a')
     vim.cmd.highlight('WinSeparator guifg=#f2f2f2')
     -- Better completion menu colors
-    vim.cmd.highlight('PmenuSel guibg=#282C34 guifg=NONE')
-    vim.cmd.highlight('Pmenu guifg=#C5CDD9 guibg=#22252A')
+    vim.cmd.highlight('PmenuSel guibg=#2C323C guifg=NONE')
+    vim.cmd.highlight('Pmenu guibg=#22252A')
   end,
 }
