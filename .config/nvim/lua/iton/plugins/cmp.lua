@@ -14,9 +14,6 @@ return {
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-path',
 
-    -- Addes commandline completion capabilities
-    'hrsh7th/cmp-cmdline',
-
     -- Adds a number of user-friendly snippets
     'rafamadriz/friendly-snippets',
   },
@@ -78,16 +75,6 @@ return {
         { name = 'luasnip' },
         { name = 'path' },
       },
-    })
-
-    -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-    cmp.setup.cmdline(':', {
-      mapping = cmp.mapping.preset.cmdline(),
-      sources = cmp.config.sources({
-        { name = 'path' },
-      }, {
-        { name = 'cmdline' },
-      }),
     })
   end,
 }
