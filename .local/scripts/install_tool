@@ -7,19 +7,26 @@ sudo apt update -y || {
 }
 
 # Install essential dependencies
-sudo apt install -y cat curl tar gzip unzip wget cmake python3 make zip || {
+sudo apt install -y cat curl tar unzip make || {
     echo "Error: Failed to install essential dependencies."
     exit 1
 }
 
-# Install Git, Vim, Tmux, Zsh, and other tools
-sudo apt install -y vim tmux zsh fzf sed ripgrep xclip gcc || {
+# Install Vim, Tmux, Zsh, and other tools
+sudo apt install -y vim tmux zsh fzf ripgrep xclip gcc || {
     echo "Error: Installation of Vim, Tmux, Zsh, fzf, sed, ripgrep, xclip failed."
     exit 1
 }
 
 # Output success message
 echo "Tools (Vim, Tmux, Zsh, fzf, sed, ripgrep, xclip) installed successfully..."
+
+# Start tmux
+tmux || {
+        echo "Error: Failed to start tmux."
+        exit 1
+    }
+    echo "Tmux started successfully."
 
 # Install oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
@@ -65,11 +72,5 @@ rm nvim-linux64.tar.gz
 echo "--------------------------------"
 echo ""
 
-# Start tmux
-tmux || {
-        echo "Error: Failed to start tmux."
-        exit 1
-    }
-    echo "Tmux started successfully."
-    echo "Main Installation Finished!"
-    echo "May need to install further dependencies and/or reboot."
+echo "Main Installation Finished!"
+echo "May need to install further dependencies, Nerd Font, and/or reboot."

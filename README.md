@@ -5,6 +5,7 @@
 1. **\*\*\*IMPORTANT\*\*\***  Make sure to have SSH keys on new computer before running bash command below
     1. Copy or move .ssh folder in $HOME directory from old computer
 to new computer and run the bash command below:
+
 ```bash
 cd && sudo apt update && \
 sudo apt install -y git && \
