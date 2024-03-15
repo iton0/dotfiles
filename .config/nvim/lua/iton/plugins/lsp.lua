@@ -158,7 +158,7 @@ return {
       },
       lua_ls = {
         -- cmd = {...},
-        -- filetypes { ...},
+        -- filetypes {...},
         -- capabilities = {},
         settings = {
           Lua = {
