@@ -1,7 +1,6 @@
 return {
   'nvim-lualine/lualine.nvim',
   event = { 'BufReadPost', 'BufNewFile' },
-  dependencies = { 'nvim-tree/nvim-web-devicons' },
   config = function()
     require('lualine').setup({
       options = {
@@ -22,11 +21,6 @@ return {
         },
         lualine_c = {
           '%=',
-          {
-            'filetype',
-            icon_only = true,
-            padding = { left = 0, right = 0 },
-          },
           {
             'filename',
             path = 4,

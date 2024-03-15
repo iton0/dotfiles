@@ -15,13 +15,16 @@ return {
     'hrsh7th/cmp-path',
 
     -- Adds a number of user-friendly snippets
-    'rafamadriz/friendly-snippets',
+    {
+      'rafamadriz/friendly-snippets',
+      config = function()
+        require('luasnip.loaders.from_vscode').lazy_load()
+      end,
+    },
   },
   config = function()
     local cmp = require('cmp')
     local luasnip = require('luasnip')
-    -- Needed for friendly-snippets to work
-    require('luasnip.loaders.from_vscode').lazy_load()
     luasnip.config.setup({})
 
     cmp.setup({

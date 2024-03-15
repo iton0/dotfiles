@@ -8,23 +8,6 @@ return {
     'williamboman/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     'folke/neodev.nvim',
-    {
-      'j-hui/fidget.nvim',
-      opts = {
-        progress = {
-          suppress_on_insert = true,
-          ignore_done_already = true,
-          ignore_empty_message = true,
-        },
-        notification = {
-          window = {
-            normal_hl = 'Normal',
-            winblend = 0,
-            x_padding = 0,
-          },
-        },
-      },
-    },
   },
   build = ':MasonToolsUpdate',
   config = function()
