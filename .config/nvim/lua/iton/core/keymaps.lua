@@ -85,6 +85,9 @@ map('t', '<C-w>', [[<C-\><C-n><C-w>]])
 -- Remap for toggling wordcase
 map({ 'n', 'v' }, 'gu', 'g~')
 
+-- Remap to open Netrw to the left with a width of 25 columns
+map('n', '<leader>e', ':25Lexplore<CR>', 'Netrw')
+
 --Remap to clear command line output
 map('n', '<M-c>', '<cmd>:echo ""<cr>')
 
