@@ -1,10 +1,7 @@
-# Dotfiles
-
 ## Installing on new system
 
 > [!NOTE]
-> This assumes that you are on a fresh new computer without an already existing dotfile folder
-
+> This assumes that you are on a fresh new computer without an already existing dotfile folder.
 > Make sure to have SSH keys on the new computer before running the bash command below
 
 1. Copy or move .ssh folder in $HOME directory to new computer
