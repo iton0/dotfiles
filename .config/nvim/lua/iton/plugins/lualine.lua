@@ -4,7 +4,6 @@ return {
   config = function()
     require('lualine').setup({
       options = {
-        theme = 'onedark',
         always_divide_middle = false,
         globalstatus = true,
         component_separators = { left = '', right = '' },
@@ -25,13 +24,6 @@ return {
             'filename',
             path = 4,
             newfile_status = true,
-            symbols = {
-              modified = '✎ ',
-              readonly = '🔒',
-              unnamed = '⟨No Name⟩',
-              newfile = '✨',
-            },
-            padding = { left = 0, right = 0 },
           },
         },
         lualine_x = {
