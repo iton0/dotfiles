@@ -1,29 +1,14 @@
 # Dotfiles
+
 ## Installing on new system
-##### This assumes that you are on a fresh new computer without an already existing dotfile folder
 
-1. **\*\*\*IMPORTANT\*\*\***  Make sure to have SSH keys on new computer before running bash command below
-    1. Copy or move .ssh folder in $HOME directory from old computer
-to new computer and run the bash command below:
+> [!NOTE]
+> This assumes that you are on a fresh new computer without an already existing dotfile folder
+> Make sure to have SSH keys on new computer before running bash command below
 
-```bash
-cd && sudo apt update && \
-sudo apt install -y git && \
-chmod 700 ~/.ssh && \
-chmod 600 ~/.ssh/id_ed25519 && \
-chmod 644 ~/.ssh/id_ed25519.pub && \
-eval "$(ssh-agent -s)" && \
-ssh-add -l | grep -q "256" || ssh-add ~/.ssh/id_ed25519 && \
-git config --global user.name "iton0" && \
-git config --global user.email "iton442@gmail.com" && \
-git clone --bare git@github.com:iton0/dotfiles.git $HOME/dotfiles && \
-alias dot="/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME" && \
-dot remote add origin git@github.com:iton0/dotfiles.git && \
-dot checkout --force && \
-[ $? -eq 0 ] || { echo "Error during 'config checkout'. Backup existing dotfiles and try again."; exit 1; } && \
-ssh -T git@github.com && \
-dot config --local status.showUntrackedFiles no && \
-echo "Dotfiles successfully added!" && \
-echo "Now running install_tool script" && \
-$HOME/.local/scripts/install_tool
+1. Copy or move .ssh folder in $HOME directory to new computer
+2. Paste the command below and run in terminal:
+
+````bash
+curl -fsSL https://gist.githubusercontent.com/iton0/e5a6ab3a99c51bbf8cabc4dac9f7dff1/raw/setup_dotfiles.sh | bash
 ```
