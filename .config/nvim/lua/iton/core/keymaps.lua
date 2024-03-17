@@ -68,6 +68,9 @@ map('v', '>', '>gv')
 map('n', 'H', '_')
 map('n', 'L', '$')
 
+-- Define the keymap for entering find and replace mode
+map('n', '<M-f>', [[:%s/]], 'Find and Replace')
+
 -- Remap Ctrl + S to perform a decrement action
 map('n', '<C-S>', '<C-X>')
 
