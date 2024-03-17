@@ -24,6 +24,14 @@ vim.keymap.set(
   { expr = true, silent = true }
 )
 
+-- Define the keymap for entering find and replace mode
+vim.keymap.set(
+  'n',
+  '<M-f>',
+  [[:%s/]],
+  { noremap = true, silent = false, desc = 'Find and Replace' }
+)
+
 -- Remap for window movement
 map('n', '<c-h>', '<c-w>h')
 map('n', '<c-j>', '<c-w>j')
@@ -67,9 +75,6 @@ map('v', '>', '>gv')
 -- To go to the beginning and the end of line
 map('n', 'H', '_')
 map('n', 'L', '$')
-
--- Define the keymap for entering find and replace mode
-map('n', '<M-f>', [[:%s/]], 'Find and Replace')
 
 -- Remap Ctrl + S to perform a decrement action
 map('n', '<C-S>', '<C-X>')
