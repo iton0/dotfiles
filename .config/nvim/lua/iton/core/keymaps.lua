@@ -25,12 +25,7 @@ vim.keymap.set(
 )
 
 -- Define the keymap for entering find and replace mode
-vim.keymap.set(
-  'n',
-  '<M-f>',
-  [[:%s/]],
-  { noremap = true, silent = false, desc = 'Find and Replace' }
-)
+map('n', '<M-f>', [[:%s/]], 'Find and Replace')
 
 -- Remap for window movement
 map('n', '<c-h>', '<c-w>h')
@@ -43,15 +38,8 @@ map('n', '<c-w>', '<c-w>w')
 map('i', 'jk', '<esc>')
 map('i', 'kj', '<esc>')
 
--- Diagnostic keymaps
-map('n', '[d', vim.diagnostic.goto_prev, 'Go to previous [D]iagnostic message')
-map('n', ']d', vim.diagnostic.goto_next, 'Go to next [D]iagnostic message')
-map(
-  'n',
-  '<leader>q',
-  vim.diagnostic.setloclist,
-  'Open diagnostic [Q]uickfix list'
-)
+-- Diagnostic keymap
+map('n', '<leader>q', vim.diagnostic.setloclist, 'Diagnostic Quickfix List')
 
 -- Remap for better scrolling
 map('n', '<c-u>', '<c-u>zz')
@@ -61,10 +49,10 @@ map('n', '<c-d>', '<c-d>zz')
 map('n', '<c-c>', ':q<cr>')
 
 -- To move line up/down
-map('n', '<S-Up>', ':m .-2<CR>==')
-map('n', '<S-Down>', ':m .+1<CR>==')
-map('v', '<S-Up>', ":m '<-2<CR>gv=gv")
-map('v', '<S-Down>', ":m '>+1<CR>gv=gv")
+map('n', '<S-Up>', ':m .-2<CR>==', 'Move line up')
+map('n', '<S-Down>', ':m .+1<CR>==', 'Move line down')
+map('v', '<S-Up>', ":m '<-2<CR>gv=gv", 'Move visual select up')
+map('v', '<S-Down>', ":m '>+1<CR>gv=gv", 'Move visual select down')
 
 -- To shift line left/right
 map('n', '<', '<<')
@@ -97,7 +85,7 @@ map({ 'n', 'v' }, 'gu', 'g~')
 map('n', '<leader>e', ':25Lexplore<CR>', 'Netrw')
 
 --Remap to clear command line output
-map('n', '<M-c>', '<cmd>:echo ""<cr>')
+map('n', '<M-c>', '<cmd>:echo ""<cr>', 'Clear Command line')
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
