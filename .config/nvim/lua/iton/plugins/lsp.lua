@@ -189,6 +189,7 @@ return {
       'eslint_d',
       'stylelint',
       'prettierd',
+      'google-java-format', -- Java
     })
     require('mason-tool-installer').setup({
       ensure_installed = ensure_installed,

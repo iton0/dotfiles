@@ -10,6 +10,7 @@ return {
       python = { 'black' },
       javascript = { 'prettierd' },
       html = { 'prettierd' },
+      java = { 'google-java-format' },
       css = { 'prettierd' },
       typescript = { 'prettierd' },
       c = { 'clang_format' },
