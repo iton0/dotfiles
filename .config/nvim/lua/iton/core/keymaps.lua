@@ -28,10 +28,6 @@ vim.keymap.set(
 map('n', '<M-f>', [[:%s/]], 'Find and Replace')
 
 -- Remap for window movement
-map('n', '<c-h>', '<c-w>h')
-map('n', '<c-j>', '<c-w>j')
-map('n', '<c-k>', '<c-w>k')
-map('n', '<c-l>', '<c-w>l')
 map('n', '<c-w>', '<c-w>w')
 
 -- Remap for quicker <esc> in insert mode
