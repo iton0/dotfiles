@@ -30,7 +30,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 # NOTE: if the above works delete the zsh config validation below
 
 # Validate zsh config
-cat ~/.zshrc
+tail -1 ~/.zshrc
 echo "Is this the correct zsh config? (y/n) "
 read -r response
 

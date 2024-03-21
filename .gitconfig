@@ -50,3 +50,4 @@
 	sort = committerdate
 [maintenance]
 	repo = /home/iton
+	repo = /home/iton/Documents/projects/headcount/.bare
