@@ -1,3 +1,8 @@
+[directory]
+read_only = " 󰌾"
+truncate_to_repo = false
+truncation_length = 2
+
 [aws]
 symbol = "  "
 
@@ -15,9 +20,6 @@ symbol = " "
 
 [dart]
 symbol = " "
-
-[directory]
-read_only = " 󰌾"
 
 [docker_context]
 symbol = " "
