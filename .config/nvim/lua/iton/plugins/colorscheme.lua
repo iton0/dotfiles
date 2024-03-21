@@ -4,6 +4,7 @@ return {
   priority = 1000,
   init = function()
     require('NeoSolarized').setup({
+      enable_italics = false,
       styles = {
         keywords = { italic = false },
         functions = { bold = false },
