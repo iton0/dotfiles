@@ -81,5 +81,5 @@ git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
 popd > /dev/null
 msg "${YELLOW}Setting .git file contents...${NOFORMAT}"
 echo "gitdir: ./$location" > .git
-git fetch --all
+git fetch
 msg "${GREEN}Success.${NOFORMAT}"
