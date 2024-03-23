@@ -8,11 +8,7 @@
 [init]
 	defaultBranch = main
 [color]
-	ui = true
-	branch = true
-	diff = true
-	status = true
-	interactive = true
+	ui = always
 [credential]
 	helper = cache
 [alias]
@@ -21,6 +17,7 @@
 	wtd = worktree remove
 	wtl = worktree list
 	mtn = maintenance start; makes everything faster in git repo
+	cat = cat-file -p; inspect files within the git's data store
 	cud = add .; add all files in current working directory
 	syc = !git add -u && git commit -v; add all tracked files & commit with diff in core editor
 	p = push origin HEAD
@@ -42,8 +39,6 @@
 	untrack = rm --cached ; untracks a file
 	lg = !git log --pretty=format:\"%C(129)%h%Creset -%C(166)%d%Creset %s %C(42)(%cr) %C(117)[%an]\" --abbrev-commit -30
 	alias = !git config --get-regexp ^alias\\. ; outputs the aliases
-[rerere]
-	enabled = true
 [column]
 	ui = auto
 [branch]
