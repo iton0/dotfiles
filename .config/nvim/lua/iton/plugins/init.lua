@@ -27,19 +27,4 @@ return {
       { noremap = true, silent = true, desc = 'Undotree' }
     ),
   },
-
-  -- Highlight, list and search todo comments in your projects
-  {
-    'folke/todo-comments.nvim',
-    event = 'BufReadPost',
-    cmd = 'TodoTelescope',
-    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim' },
-    opts = { signs = false },
-    vim.keymap.set(
-      'n',
-      '<leader>sd',
-      '<cmd>TodoTelescope<cr>',
-      { desc = '[S]earch To[D]o' }
-    ),
-  },
 }
