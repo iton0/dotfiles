@@ -69,3 +69,12 @@ vim.o.guicursor = table.concat({
   'i-ci:ver25-Cursor/lCursor-blinkwait500-blinkon100-blinkoff100', -- Insert mode
   'r:hor50-Cursor/lCursor-blinkwait100-blinkon100-blinkoff100', -- Replace mode
 }, ',')
+
+-- Hide the banner (if you want). To show it temporarily you can use I inside Netrw.
+vim.g.netrw_banner = 0
+
+-- Change the copy command. Mostly to enable recursive copy of directories.
+vim.g.netrw_localcopydircmd = 'cp -r'
+
+-- Change the behavior to not keep the directory when switching buffers
+vim.g.netrw_keepdir = 0
