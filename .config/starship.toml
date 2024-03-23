@@ -3,6 +3,10 @@ read_only = " 󰌾"
 truncate_to_repo = false
 truncation_length = 2
 
+[git_branch]
+symbol = " "
+format = '[$symbol$branch(:$remote_branch)]($style) '
+
 [aws]
 symbol = "  "
 
@@ -34,9 +38,6 @@ symbol = " "
 symbol = " "
 
 [fossil_branch]
-symbol = " "
-
-[git_branch]
 symbol = " "
 
 [golang]
