@@ -3,19 +3,6 @@ return {
   {
     'lewis6991/gitsigns.nvim',
     event = 'BufReadPost',
-    cond = function()
-      local handle = io.popen(
-        'git -C "'
-          .. vim.fn.expand('%:p')
-          .. '" rev-parse --is-inside-work-tree 2>/dev/null'
-      )
-      if handle then
-        local result = handle:read('*a')
-        handle:close()
-        return result and result:match('true')
-      end
-      return false
-    end,
     opts = {
       signs = {
         add = { text = '+' },
