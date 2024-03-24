@@ -20,6 +20,7 @@
 	wta = worktree add
 	wtd = worktree remove
 	wtl = worktree list
+	cp = cherry-pick
 	mtn = maintenance; makes everything faster in git repo
 	cat = cat-file -p; inspect files within the git's data store
 	cud = add .; add all files in current working directory
