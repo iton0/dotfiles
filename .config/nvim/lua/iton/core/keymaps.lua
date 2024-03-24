@@ -78,7 +78,7 @@ map('t', '<C-w>', [[<C-\><C-n><C-w>]])
 map({ 'n', 'v' }, 'gu', 'g~')
 
 -- Remap to open Netrw to the left with a width of 25 columns
-map('n', '<leader>e', ':25Lexplore<CR>', 'Netrw')
+map('n', '<leader>e', ':lcd %:p:h | :25Lexplore | lcd -<CR>', 'Netrw')
 
 --Remap to clear command line output
 map('n', '<M-c>', '<cmd>:echo ""<cr>', 'Clear Command line')
