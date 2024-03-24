@@ -7,8 +7,6 @@
 	whitespace = space-before-tab
 [init]
 	defaultBranch = main
-[color]
-	ui = always
 [credential]
 	helper = cache
 [column]
@@ -17,7 +15,6 @@
 	sort = committerdate
 [maintenance]
 	repo = /home/iton
-	repo = /home/iton/Documents/projects/headcount/.bare
 [alias]
 	bare-clone = "!f() { ~/.local/scripts/git-bare-clone \"$@\"; }; f"
 	wta = worktree add
