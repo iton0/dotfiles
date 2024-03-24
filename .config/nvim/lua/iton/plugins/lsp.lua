@@ -7,12 +7,9 @@ return {
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
-    'folke/neodev.nvim',
   },
   build = ':MasonToolsUpdate',
   config = function()
-    require('neodev').setup({})
-
     require('lspconfig.ui.windows').default_options.border = 'rounded'
 
     vim.lsp.handlers['textDocument/hover'] =
