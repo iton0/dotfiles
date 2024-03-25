@@ -16,9 +16,10 @@ return {
     },
   },
 
-  -- Neovim Undotree
+  -- Undotree
   {
     'jiaoshijie/undotree',
+    dependencies = 'nvim-lua/plenary.nvim',
     opts = {},
     vim.keymap.set(
       'n',
