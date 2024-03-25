@@ -1,24 +1,19 @@
 #!/usr/bin/env bash
 
-# Install essential dependencies
 sudo apt install -y unzip make || {
     echo "Error: Failed to install essential dependencies."
     exit 1
 }
 
-# Install Vim, Tmux, Zsh, and other tools
 sudo apt install -y vim tmux zsh fzf sed ripgrep xclip gcc || {
     echo "Error: Installation of Vim, Tmux, Zsh, fzf, sed, ripgrep, xclip failed."
     exit 1
 }
 
-# Output success message
 echo "Tools (Vim, Tmux, Zsh, fzf, sed, ripgrep, xclip) installed successfully..."
 
-# Upgrade packages
 sudo apt upgrade -y
 
-# Start tmux
 tmux || {
         echo "Error: Failed to start tmux."
         exit 1
@@ -54,7 +49,6 @@ echo "Zsh configured successfully."
 echo "--------------------------------"
 echo ""
 
-# Install Neovim
 echo "Installing Neovim..."
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
 sudo rm -rf /opt/nvim

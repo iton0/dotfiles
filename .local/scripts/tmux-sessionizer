@@ -3,8 +3,7 @@
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    # NOTE: Add more paths to project folders if necessary
-    selected=$(find ~/Documents/projects -mindepth 1 -maxdepth 1 -type d | fzf)
+    selected=$(find ~/ ~/work/ ~/personal/ -mindepth 1 -maxdepth 1 -type d | fzf)
 fi
 
 if [[ -z $selected ]]; then
