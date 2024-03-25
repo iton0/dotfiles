@@ -25,7 +25,18 @@ vim.keymap.set(
 )
 
 -- Define the keymap for entering find and replace mode
-map('n', '<M-f>', [[:%s/]], 'Find and Replace')
+vim.keymap.set(
+  'n',
+  '<C-f>',
+  [[:%s/]],
+  { noremap = true, silent = false, desc = 'Find and Replace' }
+)
+vim.keymap.set(
+  'n',
+  '<M-f>',
+  [[:cdo s/]],
+  { noremap = true, silent = false, desc = 'Quickfix Find and Replace' }
+)
 
 -- Remap for window movement
 map('n', '<c-w>', '<c-w>w')
