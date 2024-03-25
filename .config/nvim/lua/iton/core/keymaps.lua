@@ -38,6 +38,9 @@ vim.keymap.set(
   { noremap = true, silent = false, desc = 'Quickfix Find and Replace' }
 )
 
+-- No effect to not conflict with tmux
+map('n', '<c-b>', '<Nop>')
+
 -- Remap for window movement
 map('n', '<c-w>', '<c-w>w')
 
