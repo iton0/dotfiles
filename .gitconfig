@@ -39,5 +39,6 @@
 	se = !git rev-list --all | xargs git grep -F
 	gl = config --global -l ; outputs the .gitconfig file
 	alias = !git config --get-regexp ^alias\\. ; outputs the aliases
-	last = !git log -1 HEAD --stat --patch --pretty=format:'%h - %C(cyan)%an%Creset, %C(magenta)%ar%Creset : %C(red)%s%Creset%n%n%b%n%C(green)Changed Files Summary%C(reset)'
-	lg = !git log --pretty=format:'%C(129)%h%Creset -%C(166)%d%Creset %s %C(42)(%cr) %C(117)[%an]' --abbrev-commit -30
+	last = !git log -1 HEAD --stat --patch --format='%C(70)%h%Creset - %C(115)%an%Creset, %C(166)%ar%Creset : %C(33)%s%Creset%n%n%b%n%C(75)Changed Files Summary%C(reset)'
+	lg = !git log --format='%C(131)%h%Creset -%C(auto)%d%Creset %s %C(34)(%cr) %C(69)[%an]' --abbrev-commit -30
+	rlg = reflog --format='%C(70)%h%Creset %C(auto)%d%Creset %C(166)%gd%Creset %C(33)%cr%Creset %C(auto)%gs%Creset'
