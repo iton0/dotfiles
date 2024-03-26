@@ -170,12 +170,8 @@ return {
       'stylua', -- For Neovim
       'clang-format', -- C/C++
       'clangd',
-      'cpplint',
       'black', -- Python
       'typescript-language-server', -- Web Dev
-      'html-lsp',
-      'eslint_d',
-      'stylelint',
       'prettierd',
       'google-java-format', -- Java
     })
