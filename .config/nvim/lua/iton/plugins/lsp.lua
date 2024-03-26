@@ -18,7 +18,6 @@ return {
         border = 'rounded',
         title = 'Hover Docs',
       })
-
     vim.lsp.handlers['textDocument/signatureHelp'] =
       vim.lsp.with(vim.lsp.handlers.signature_help, {
         border = 'rounded',
@@ -130,13 +129,6 @@ return {
           redhat = { telemetry = { enabled = false } },
         },
       },
-      pyright = {
-        settings = {
-          python = {
-            analysis = { typeCheckingMode = 'strict' },
-          },
-        },
-      },
       lua_ls = {
         -- cmd = {...},
         -- filetypes = { ...},
@@ -171,6 +163,7 @@ return {
       'clang-format', -- C/C++
       'clangd',
       'black', -- Python
+      'pyright',
       'typescript-language-server', -- Web Dev
       'prettierd',
       'google-java-format', -- Java
