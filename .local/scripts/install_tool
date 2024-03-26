@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
 
-sudo apt install -y unzip make || {
-    echo "Error: Failed to install essential dependencies."
-    exit 1
-}
-
-sudo apt install -y vim tmux zsh fzf sed ripgrep xclip gcc || {
+sudo apt install -y unzip make vim tmux zsh fzf sed ripgrep xclip gcc || {
     echo "Error: Installation of Vim, Tmux, Zsh, fzf, sed, ripgrep, xclip failed."
     exit 1
 }
@@ -57,6 +52,7 @@ echo "--------------------------------"
 echo "Current Neovim version:"
 /opt/nvim-linux64/bin/nvim --version
 rm nvim-linux64.tar.gz
+nvim --headless "+Lazy! sync" +qa # Runs neovim in headless and makes sure plugins updated
 echo "--------------------------------"
 echo ""
 
