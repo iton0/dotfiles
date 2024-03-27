@@ -13,6 +13,7 @@ return {
       'vim',
       'vimdoc',
     },
+    sync_install = true,
     auto_install = true,
     highlight = {
       enable = true,
