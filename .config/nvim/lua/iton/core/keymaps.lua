@@ -145,18 +145,20 @@ end, 'LSP Install')
 autocmd('User', {
   pattern = 'MasonToolsUpdateCompleted',
   callback = function()
-    vim.schedule(function()
-      vim.cmd('LspStart')
-      vim.defer_fn(function()
-        if vim.lsp.buf.server_ready() then
-          vim.cmd('echo " LSP Installed"')
-          vim.defer_fn(function()
-            vim.cmd('echo ""')
-          end, 1000)
-        else
-          vim.cmd('LspInstall')
-        end
-      end, 500)
-    end)
+    if vim.bo.filetype ~= 'lazy' then
+      vim.schedule(function()
+        vim.cmd('LspStart')
+        vim.defer_fn(function()
+          if vim.lsp.buf.server_ready() then
+            vim.cmd('echo " LSP Installed"')
+            vim.defer_fn(function()
+              vim.cmd('echo ""')
+            end, 1000)
+          else
+            vim.cmd('LspInstall')
+          end
+        end, 500)
+      end)
+    end
   end,
 })
