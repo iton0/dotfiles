@@ -2,8 +2,9 @@
 return {
   -- Detect tabstop and shiftwidth automatically
   {
-    'tpope/vim-sleuth',
+    'nmac427/guess-indent.nvim',
     event = { 'BufReadPost', 'BufNewFile' },
+    opts = {},
   },
 
   -- "gc" to comment visual regions/lines
