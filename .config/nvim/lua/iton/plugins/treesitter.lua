@@ -22,7 +22,7 @@ return {
       --  If you are experiencing weird indenting issues, add the language to
       --  the list of additional_vim_regex_highlighting and disabled languages for indent.
       additional_vim_regex_highlighting = { 'ruby' },
-      disable = { 'tmux', 'gitcommit' },
+      disable = { 'tmux', 'gitcommit', 'markdown' },
     },
     indent = { enable = true, disable = { 'ruby' } },
   },
