@@ -24,7 +24,6 @@ return {
     vim.cmd.highlight('TelescopeResultsBorder guibg=NONE')
     vim.cmd.highlight('TelescopePreviewBorder guibg=NONE')
     vim.cmd.highlight('TermCursor guifg=#2E3440 guibg=#81A1C1')
-    vim.cmd.highlight('PmenuSel guibg=#434C5E guifg=NONE')
-    vim.cmd.highlight('Pmenu guibg=#3B4252')
+    vim.cmd.highlight('Pmenu guibg=#2E3440')
   end,
 }
