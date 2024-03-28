@@ -123,12 +123,6 @@ return {
       --
       -- If you only have simple needs for typescript, then you can probably just use tsserver
       -- tsserver = {},
-
-      jdtls = {
-        settings = {
-          redhat = { telemetry = { enabled = false } },
-        },
-      },
       lua_ls = {
         -- cmd = {...},
         -- filetypes = { ...},
@@ -160,6 +154,7 @@ return {
     local ensure_installed = vim.tbl_keys(servers or {})
     vim.list_extend(ensure_installed, {
       'stylua', -- For Neovim
+      'lua_ls',
       'clang-format', -- C/C++
       'clangd',
       'black', -- Python
@@ -167,6 +162,7 @@ return {
       'typescript-language-server', -- Web Dev
       'prettierd',
       'google-java-format', -- Java
+      'jdtls',
     })
     require('mason-tool-installer').setup({
       ensure_installed = ensure_installed,
