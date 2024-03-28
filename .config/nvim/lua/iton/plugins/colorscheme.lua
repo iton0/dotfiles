@@ -1,25 +1,30 @@
 return {
-  'Tsuzat/NeoSolarized.nvim',
+  'rmehri01/onenord.nvim',
   lazy = false,
   priority = 1000,
   init = function()
-    require('NeoSolarized').setup({
-      enable_italics = false,
+    require('onenord').setup({
+      fade_nc = true, -- Fade non-current windows, making them more distinguishable
+      -- Style that is applied to various groups: see `highlight-args` for options
       styles = {
-        keywords = { italic = false },
-        functions = { bold = false },
-        string = { italic = false },
+        comments = 'italic',
+      },
+      disable = {
+        background = true,
+        float_background = true,
+        cursorline = true,
       },
     })
-    vim.cmd.colorscheme('NeoSolarized')
-    vim.cmd.highlight('MatchParen gui=underline,bold guifg=WHITE')
-    vim.cmd.highlight('WhichKeyFloat guibg=#282c34')
+    vim.cmd.colorscheme('onenord')
+    vim.cmd.highlight('MatchParen gui=underline,bold guifg=#D8DEE9')
+    vim.cmd.highlight('WhichKeyFloat guibg=#2E3440')
     vim.cmd.highlight('Cursor gui=reverse')
-    vim.cmd.highlight('TermCursor guifg=#282C34 guibg=#56B6C2')
-    vim.cmd.highlight('Visual guibg=#0d4d5a')
-    vim.cmd.highlight('WinSeparator guifg=#f2f2f2')
-    -- Better completion menu colors
-    vim.cmd.highlight('PmenuSel guibg=#2C323C guifg=NONE')
-    vim.cmd.highlight('Pmenu guibg=#22252A')
+    vim.cmd.highlight('TelescopeBorder guibg=NONE')
+    vim.cmd.highlight('TelescopePromptBorder guibg=NONE')
+    vim.cmd.highlight('TelescopeResultsBorder guibg=NONE')
+    vim.cmd.highlight('TelescopePreviewBorder guibg=NONE')
+    vim.cmd.highlight('TermCursor guifg=#2E3440 guibg=#81A1C1')
+    vim.cmd.highlight('PmenuSel guibg=#434C5E guifg=NONE')
+    vim.cmd.highlight('Pmenu guibg=#3B4252')
   end,
 }
