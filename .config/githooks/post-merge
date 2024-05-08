@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# Runs when pulling from remote
+# Restore neovim to lockfile and cleans any uninstalled plugins
+nvim --headless "+Lazy! restore" "+Lazy! clean" +qa
