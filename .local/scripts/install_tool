@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+set -e
+
+# Check for existing installations
+packages=("unzip" "wmctrl" "code" "make" "vim" "tmux" "zsh" "fzf" "sed" "ripgrep" "xclip" "gcc" "python3.10-venv")
+missing_packages=()
+for package in "${packages[@]}"; do
+    if ! dpkg -l | grep -q "^ii.*$package"; then
+        missing_packages+=("$package")
+    fi
+done
+
+# Install missing packages
+if [ ${#missing_packages[@]} -gt 0 ]; then
+    sudo apt update
+    sudo apt install -y "${missing_packages[@]}"
+fi
+
+echo "Tools installed successfully..."
+
+# Upgrade packages
+sudo apt upgrade -y
+
+# Install oh-my-zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
+
+# Clone zsh plugins
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+# Install nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+# Install starship prompt
+curl -sS https://starship.rs/install.sh | sh
+echo "Zsh configured successfully."
+
+# Install Neovim
+echo "Installing Neovim..."
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+sudo rm -rf /opt/nvim
+sudo tar -C /opt -xzf nvim-linux64.tar.gz
+# Make it available in /usr/local/bin, distro installs to /usr/bin
+sudo ln -sf /opt/nvim-linux64/bin/nvim /usr/local/bin/
+echo "Neovim installed successfully."
+/opt/nvim-linux64/bin/nvim --version
+rm nvim-linux64.tar.gz
+nvim --headless "+Lazy! sync" "+TSUpdateSync" "+MasonToolsInstallSync" +qa
+
+# Create directories
+mkdir -p "$HOME/personal"
+mkdir -p "$HOME/work"
+mkdir -p "$HOME/sandbox"
+
+# Make zsh default shell
+sudo chsh -s $(which zsh)
+
+echo ""
+echo "---------------------------"
+echo "Main installation finished!"
+echo ""
+echo "Reboot system and then check README.md"
+echo "in home directory for Important Notes"
