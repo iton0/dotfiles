@@ -1,0 +1,22 @@
+# WARN: DO NOT DELETE
+# For Dotfiles
+
+# Ignore everything
+*
+
+# Files
+!.gitignore
+!.gitconfig
+!.zshrc
+
+# Allow specific directories
+!.local/
+!.local/scripts
+!.config/
+!.config/nvim/
+!.config/githooks/
+
+# Allow all files within those directories
+!.local/scripts/**
+!.config/nvim/**
+!.config/githooks/**
