@@ -1,19 +1,17 @@
 #!/bin/bash
 
-# delay for six seconds just to make sure
-sleep 6
+# delay for five seconds just to make sure
+sleep 5
 
-# Launch Firefox and move it to workspace 1
+# Launch Firefox and move it to workspace 2
 firefox --new-window &
-sleep 2 # wait for Firefox to open
-wmctrl -r "Mozilla Firefox" -t 0
+sleep 2 # NOTE: this must be >= 2
+wmctrl -r "Mozilla Firefox" -t 1
 
-# Launch Terminal and move it to workspace 2
-gnome-terminal --full-screen &
-sleep 2 # wait for Terminal to open
-wmctrl -r "Terminal" -t 1
-
-# Launch Firefox in private mode and move it to workspace 3
+# Launch Firefox (private mode) and move it to workspace 3
 firefox --private-window --new-window &
-sleep 2 # wait for Firefox to open
+sleep 2 # NOTE: this must be >= 2
 wmctrl -r "Mozilla Firefox Private Browsing" -t 2
+
+# Launch Wezterm (stays in workspace 1)
+wezterm # INFO: run this last due to weird behavior with wmctrl

@@ -1,43 +1,38 @@
--- Set <space> as the leader key
--- NOTE: needs to be done first
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
-require('iton.autocmds')
-require('iton.options')
-require('iton.keymaps')
-
 -- [[ Install `lazy.nvim` plugin manager ]]
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
-  local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
     'git',
     'clone',
     '--filter=blob:none',
-    '--branch=stable',
-    lazyrepo,
+    'https://github.com/folke/lazy.nvim.git',
+    '--branch=stable', -- latest stable release
     lazypath,
   })
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Opens Lazy.nvim Home
-vim.keymap.set(
-  'n',
-  '<leader>l',
-  ':Lazy<cr>',
-  { noremap = true, silent = true, desc = 'Lazy.nvim' }
-)
+-- Set <space> as the leader key
+-- NOTE: needs to be done first
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>')
+vim.keymap.set('n', '<leader>la', ':Lazy load all<cr>')
+vim.keymap.set('n', '<leader>ll', ':Lazy<cr>', { silent = true })
+vim.keymap.set('n', '<leader>lp', ':Lazy profile<cr>', { silent = true })
+vim.keymap.set('n', '<leader>ls', ':Lazy sync<cr>', { silent = true })
+
+require('iton.autocmds')
+require('iton.keymaps')
+require('iton.options')
 
 -- [[ Plugins ]]
-require('lazy').setup({
-  spec = 'iton.plugins',
+require('lazy').setup({ import = 'iton.plugins' }, {
   defaults = {
     lazy = true,
   },
   install = {
-    colorscheme = { 'onenord' },
+    colorscheme = { 'everforest' },
   },
   checker = {
     enabled = true,
@@ -54,10 +49,14 @@ require('lazy').setup({
   performance = {
     rtp = {
       disabled_plugins = {
+        'tutor',
+        'man',
+        'matchit',
+        'editorconfig',
+        'spellfile',
+        'tohtml',
         'gzip',
         'tarPlugin',
-        'tohtml',
-        'tutor',
         'zipPlugin',
       },
     },

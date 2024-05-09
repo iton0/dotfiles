@@ -1,32 +1,16 @@
 local M = {}
 
----
---Function for faster keymap setup replaces vim.keymap.set
---
----@param mode (string|table)
----@param keys string
----@param func (string|function)
----@param noremap (boolean|nil)
----@param silent (boolean|nil)
----@param desc (string|nil)
---
-M.map = function(mode, keys, func, noremap, silent, desc)
-  vim.keymap.set(
-    mode,
-    keys,
-    func,
-    { noremap = noremap, silent = silent, desc = desc }
-  )
+M.map = vim.keymap.set
+M.silent = { silent = true }
+M.noremap_silent = { noremap = true, silent = true }
+M.noremap_silent_desc = function(desc)
+  return { noremap = true, silent = true, desc = desc }
 end
 
 M.prenew = { 'BufReadPre', 'BufNewFile' }
 M.postnew = { 'BufReadPost', 'BufNewFile' }
 
-M.active_statusline = { fg = '#a0aac2', bg = '#1c1e26' }
-M.inactive_statusline = { fg = '#6e6e6e', bg = '#1c1e26' }
-
--- Define `M.lsp_excluded_filetypes` as a set-like table
-M.lsp_excluded_filetypes = {
+local lsp_excluded_filetypes = {
   [''] = true,
   [' '] = true,
   ['lazy'] = true,
@@ -57,6 +41,7 @@ M.lsp_excluded_filetypes = {
   ['log'] = true,
   ['css'] = true,
   ['vim'] = true,
+  ['qf'] = true,
   ['json'] = true,
   ['toml'] = true,
   ['markdown'] = true,
@@ -68,5 +53,10 @@ M.lsp_excluded_filetypes = {
   ['netrw'] = true,
   ['TelescopePrompt'] = true,
 }
+-- Check if the current filetype is in the LSP excluded list
+M.is_lsp_excluded_filetype = function()
+  local current_filetype = vim.bo.filetype
+  return lsp_excluded_filetypes[current_filetype] or false
+end
 
 return M
