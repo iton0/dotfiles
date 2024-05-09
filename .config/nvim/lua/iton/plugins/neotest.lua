@@ -1,7 +1,6 @@
-local M = require('iton.constants')
+local M = require('iton.globals')
 local map = M.map
 
--- TODO: add language specific adapters and configure
 return {
   'nvim-neotest/neotest',
   dependencies = {
@@ -10,10 +9,27 @@ return {
     'antoinemadec/FixCursorHold.nvim',
     'nvim-treesitter/nvim-treesitter',
     -- Add your own adapters here
+    -- 'rcasia/neotest-java',
+    -- 'nvim-neotest/neotest-python',
   },
   config = function()
     require('neotest').setup({
-      adapters = {},
+      adapters = {
+        -- ['neotest-java'] = {},
+        -- require('neotest-python'),
+      },
     })
   end,
+  map('n', '<leader>tt', function()
+    require('neotest').run.run()
+  end),
+  map('n', '<leader>tf', function()
+    require('neotest').run.run(vim.fn.expand('%'))
+  end),
+  map('n', '<leader>ta', function()
+    require('neotest').run.attach()
+  end),
+  map('n', '<leader>td', function()
+    require('neotest').run.run({ strategy = 'dap' })
+  end),
 }

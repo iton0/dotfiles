@@ -10,13 +10,15 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
- zstyle ':omz:update' mode auto      # update automatically without asking
+zstyle ':omz:update' mode auto      # update automatically without asking
 
 # Uncomment the following line to change how often to auto-update (in days).
- zstyle ':omz:update' frequency 7
+zstyle ':omz:update' frequency 7
 
 # Uncomment the following line to enable command auto-correction.
- ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
+
+ZSH_THEME=robbyrussell
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
@@ -24,12 +26,10 @@ export NVM_DIR="$HOME/.nvm"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  zsh-autosuggestions
-  zsh-syntax-highlighting
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    gh
 )
-
-# Make autosuggestion highlight better
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=3'
 
 source $ZSH/oh-my-zsh.sh
 
@@ -44,11 +44,11 @@ source /usr/share/doc/fzf/examples/completion.zsh
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # Preferred editor for local and remote sessions
- if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='nvim'
- else
-   export EDITOR='vim'
- fi
+if [[ -n $SSH_CONNECTION ]]; then
+    export EDITOR='nvim'
+else
+    export EDITOR='vim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -82,17 +82,21 @@ alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 # Additional autoremoves any packages no longer in use.
 # Current package managers: apt and flatpak.
 
-alias update='
-  sudo apt update -y && \
-  sudo apt upgrade -y && \
-  sudo apt autoremove -y && \
-  sudo apt autoclean -y && \
-  sudo apt clean -y && \
-  flatpak update -y
-  '
+alias update=' \
+    sudo apt update && \
+    sudo apt upgrade -y && \
+    sudo apt autoremove -y && \
+    sudo apt autoclean -y && \
+    sudo apt clean -y && \
+    flatpak update -y \
+    '
 
-# Alias for updating Starship prompt
-alias star-update='curl -sS https://starship.rs/install.sh | sh'
+# Alias for biannual laptop maintainence
+alias fullupdate=' \
+    update && \
+    nvim-update && \
+    omz update \
+    '
 
 # Alias for updating Neovim version
 alias nvim-update='confirm_nvim_update'
@@ -101,16 +105,20 @@ confirm_nvim_update() {
     echo "Old version:" &&
     /opt/nvim-linux64/bin/nvim --version &&
     echo "--------------------------------" &&
-    echo ""
+    echo "" &&
     curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz &&
-    sudo rm -rf /opt/nvim &&
+    sudo rm -rf /opt/nvim-linux64 &&
+    sudo mkdir -p /opt/nvim-linux64 &&
+    sudo chmod a+rX /opt/nvim-linux64 &&
     sudo tar -C /opt -xzf nvim-linux64.tar.gz &&
+    # make it available in /usr/local/bin, distro installs to /usr/bin
+    sudo ln -sf /opt/nvim-linux64/bin/nvim /usr/local/bin/ &&
     echo "--------------------------------" &&
     echo "New version:" &&
     /opt/nvim-linux64/bin/nvim --version &&
     rm nvim-linux64.tar.gz &&
     echo "--------------------------------" &&
-    echo ""
+    echo "" &&
     nvim --headless "+Lazy! sync" "+TSUpdateSync" "+MasonToolsUpdateSync" +qa # Syncs neovim plugins in headless mode
 }
 
@@ -123,9 +131,9 @@ alias scpt='cd ~/.local/scripts'
 alias vscpt='cd ~/.local/scripts && vd'
 alias vzsh='v ~/.zshrc'
 alias vgit='v ~/.gitconfig'
-alias vstar='v ~/.config/starship.toml'
-alias neo='cd ~/.config/nvim/lua/iton/'
-alias neod='cd ~/.config/nvim/lua/iton/ && vd'
+alias vterm='v ~/.config/wezterm/wezterm.lua'
+alias neo='cd ~/.config/nvim/lua/iton'
+alias neod='neo && vd'
 alias fixaudio='systemctl --user restart wireplumber pipewire pipewire-pulse && rm -r ~/.config/pulse && sudo apt install --reinstall alsa-base alsa-utils linux-sound-base libasound2 && sudo apt reinstall libpipewire-0.3-0 libpipewire-0.3-common libpipewire-0.3-modules pipewire pipewire-audio-client-libraries pipewire-bin pipewire-pulse && sudo alsa force-reload && systemctl --user status pipewire && sudo apt update && sudo apt upgrade'
 
 # Set an alias 'v' for Neovim if available; otherwise, fallback to Vim
@@ -146,6 +154,3 @@ if [[ -z "$TMUX" ]]; then
     tmux new-session -As home '/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME pull && nvim --headless "+Lazy! sync" "+TSUpdateSync" "+MasonToolsUpdateSync" +qa; $SHELL'
     clear
 fi
-
-# Initialize Starship prompt
-eval "$(starship init zsh)"

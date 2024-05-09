@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
 tmux list-sessions -F '#S' \
-  | grep -v "$(tmux display-message -p '#S')" \
-  | awk 'BEGIN {ORS=" "} {print $1, NR, "\"switch-client -t", $1 "\""}' \
-  | xargs tmux display-menu -T "Switch-session"
+    | grep -v "$(tmux display-message -p '#S')" \
+    | awk 'BEGIN {ORS=" "} {print $1, NR, "\"switch-client -t", $1 "\""}' \
+    | xargs tmux display-menu -T "Switch-session"

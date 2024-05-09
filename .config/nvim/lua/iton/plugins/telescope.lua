@@ -1,4 +1,4 @@
-local M = require('iton.constants')
+local M = require('iton.globals')
 local map = M.map
 
 return {
@@ -36,41 +36,34 @@ return {
     require('telescope').load_extension('git_worktree')
 
     local builtin = require('telescope.builtin')
-    map('n', '<leader>sh', builtin.help_tags, true, true, '[S]earch [H]elp')
-    map('n', '<leader>sk', builtin.keymaps, true, true, '[S]earch [K]eymaps')
-    map('n', '<leader>sf', builtin.find_files, true, true, '[S]earch [F]iles')
+    map('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
+    map('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
+    map('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+    map('n', '<leader>sq', builtin.quickfix, { desc = '[S]earch [Q]uickfix' })
     map(
       'n',
       '<leader>sd',
       builtin.diagnostics,
-      true,
-      true,
-      '[S]earch [D]iagnostics'
+      { desc = '[S]earch [D]iagnostics' }
     )
     map(
       'n',
       '<leader>ss',
       builtin.builtin,
-      true,
-      true,
-      '[S]earch [S]elect Telescope'
+      { desc = '[S]earch [S]elect Telescope' }
     )
     map(
       'n',
       '<leader>sw',
       builtin.grep_string,
-      true,
-      true,
-      '[S]earch current [W]ord'
+      { desc = '[S]earch current [W]ord' }
     )
-    map('n', '<leader>sg', builtin.live_grep, true, true, '[S]earch by [G]rep')
+    map('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
     map(
       'n',
       '<leader><leader>',
-      builtin.buffers,
-      true,
-      true,
-      '[ ] Find existing buffers'
+      builtin.resume,
+      { desc = 'Opens the previous picker' }
     )
 
     -- Slightly advanced example of overriding default behavior and theme
@@ -82,13 +75,20 @@ return {
           previewer = false,
         })
       )
-    end, true, true, '[S]earch Current [B]uffer')
-    -- Shortcut for searching your neovim configuration files
-    map('n', '<leader>sn', function()
+    end, { desc = '[S]earch Current [B]uffer' })
+    map('n', '<leader>s.', function()
       builtin.find_files({
-        cwd = vim.fn.stdpath('config'),
-        prompt_title = 'Neovim Config Files',
+        cwd = os.getenv('HOME'),
+        prompt_title = 'Dotfiles',
+        find_command = {
+          'git',
+          '--git-dir=' .. os.getenv('HOME') .. '/.dotfiles',
+          'ls-tree',
+          '-r',
+          'HEAD',
+          '--name-only',
+        },
       })
-    end, true, true, '[S]earch [N]eovim files')
+    end, { desc = '[S]earch [.]Dotfiles' })
   end,
 }

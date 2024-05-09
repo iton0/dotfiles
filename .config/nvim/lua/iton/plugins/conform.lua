@@ -1,33 +1,24 @@
-local M = require('iton.constants')
-local map = M.map
-
 return {
   'stevearc/conform.nvim',
   event = 'BufWritePre',
   cmd = 'ConformInfo',
   opts = {
     formatters_by_ft = {
+      zsh = { 'beautysh' },
+      sh = { 'beautysh' },
       lua = { 'stylua' },
       python = { 'black' },
       javascript = { 'prettierd' },
       html = { 'prettierd' },
-      java = { 'google-java-format' },
       css = { 'prettierd' },
+      java = { 'google-java-format' },
+      xml = { 'xmlformat' },
       typescript = { 'prettierd' },
       c = { 'clang-format' },
       cpp = { 'clang-format' },
-      xml = { 'xmlformat' },
       ['_'] = { 'trim_whitespace' },
     },
-    format_on_save = { timeout_ms = 500, lsp_fallback = true },
+    format_on_save = { timeout_ms = 500, lsp_format = 'fallback' },
     notify_on_error = false,
   },
-  map(
-    'n',
-    '<leader>f',
-    '<cmd>lua require("conform").format({ async = true, lsp_fallback = true })<cr>',
-    true,
-    true,
-    'Format buffer'
-  ),
 }

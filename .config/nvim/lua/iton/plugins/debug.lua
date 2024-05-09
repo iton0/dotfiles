@@ -1,7 +1,6 @@
-local M = require('iton.constants')
+local M = require('iton.globals')
 local map = M.map
 
--- TODO: add language specific debuggers and configure
 return {
   -- NOTE: Yes, you can install new plugins here!
   'mfussenegger/nvim-dap',
@@ -30,11 +29,12 @@ return {
   config = function()
     local dap = require('dap')
     local dapui = require('dapui')
+    require('nvim-dap-virtual-text').setup({})
 
     require('mason-nvim-dap').setup({
       -- Makes a best effort to setup the various debuggers with
       -- reasonable debug configurations
-      automatic_setup = true,
+      automatic_installation = true,
 
       -- You can provide additional configuration to the handlers,
       -- see mason-nvim-dap README for more information
@@ -46,25 +46,24 @@ return {
         -- Update this to ensure that you have the debuggers for the langs you want
       },
     })
-
     -- Basic debugging keymaps, feel free to change to your liking!
-    map('n', '<leader>bs', dap.continue, true, true, 'Debug: Start/Continue')
-    map('n', '<leader>bi', dap.step_into, true, true, 'Debug: Step Into')
-    map('n', '<leader>bv', dap.step_over, true, true, 'Debug: Step Over')
-    map('n', '<leader>bo', dap.step_out, true, true, 'Debug: Step Out')
+    map('n', '<leader>bs', function()
+      dap.continue()
+      vim.cmd('NoNeckPain')
+    end, { desc = 'Debug: Start/Continue' })
+    map('n', '<leader>bi', dap.step_into, { desc = 'Debug: Step Into' })
+    map('n', '<leader>bv', dap.step_over, { desc = 'Debug: Step Over' })
+    map('n', '<leader>bo', dap.step_out, { desc = 'Debug: Step Out' })
     map(
       'n',
-      '<leader>bb',
+      '<leader>bt',
       dap.toggle_breakpoint,
-      true,
-      true,
-      'Debug: Toggle Breakpoint'
+      { desc = 'Debug: Toggle Breakpoint' }
     )
     map('n', '<leader>bc', function()
       dap.set_breakpoint(vim.fn.input('Breakpoint condition: '))
-    end, true, true, 'Debug: Set Breakpoint')
+    end, { desc = 'Debug: Set Breakpoint' })
 
-    -- TODO: see if the symbols are really that helpful
     vim.fn.sign_define(
       'DapBreakpoint',
       { text = '', texthl = 'ErrorMsg', linehl = '', numhl = '' }
@@ -89,10 +88,10 @@ return {
     )
 
     -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
-    map('n', '<leader>bt', function()
+    map('n', '<leader>bu', function()
       dapui.toggle()
       vim.cmd('NoNeckPain')
-    end, true, true, 'Debug: Toggle UI')
+    end, { desc = 'Debug: Toggle UI' })
 
     dap.listeners.after.event_initialized['dapui_config'] = dapui.open
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close

@@ -1,17 +1,13 @@
-local M = require('iton.constants')
+local M = require('iton.globals')
 local map = M.map
 
---TODO: figure out how to dynamically
---disable when entering filetypes below:
--- dbee, and sql
 return {
   'shortcuts/no-neck-pain.nvim',
   event = M.prenew,
   opts = {
-    width = 84,
+    width = 80,
     autocmds = {
       enableOnVimEnter = true,
-      reloadOnColorSchemeChange = true,
     },
     buffers = {
       wo = {
@@ -19,5 +15,5 @@ return {
       },
     },
   },
-  map('n', '<leader>n', '<cmd>NoNeckPain<cr>', true, true, 'NoNeckPain.nvim'),
+  map('n', '<leader>n', '<cmd>NoNeckPain<cr>', { desc = 'NoNeckPain.nvim' }),
 }

@@ -1,36 +1,50 @@
-local M = require('iton.constants')
+local M = require('iton.globals')
 local map = M.map
 
 return {
   'ThePrimeagen/harpoon',
   branch = 'harpoon2',
-  dependencies = 'nvim-lua/plenary.nvim',
-  opts = {
-    settings = {
-      save_on_toggle = true,
-    },
+  keys = {
+    { '<leader>h' },
+    { '<leader>1' },
+    { '<leader>2' },
+    { '<leader>3' },
+    { '<leader>4' },
+    { '<leader>5' },
+    { '<leader>6' },
   },
-  map('n', '<C-m>', function()
-    require('harpoon'):list():add()
-  end, true, true, 'Harpoon Add'),
+  dependencies = 'nvim-lua/plenary.nvim',
+  config = function()
+    local harpoon = require('harpoon')
+    harpoon:setup({
+      settings = {
+        save_on_toggle = true,
+      },
+    })
+    map('n', '<leader>ha', function()
+      require('harpoon'):list():add()
+      print('Harpoon: Added')
+      vim.defer_fn(function()
+        vim.cmd('echo ""')
+      end, 750)
+    end, { desc = 'Harpoon Add' })
 
-  map('n', '<C-n>', function()
-    require('harpoon'):list():remove()
-  end, true, true, 'Harpoon Remove'),
+    map('n', '<leader>hr', function()
+      require('harpoon'):list():remove()
+      print('Harpoon: Removed')
+      vim.defer_fn(function()
+        vim.cmd('echo ""')
+      end, 750)
+    end, { desc = 'Harpoon Remove' })
 
-  map('n', '<leader>h', function()
-    require('harpoon').ui:toggle_quick_menu(require('harpoon'):list())
-  end, true, true, 'Harpoon Menu'),
+    map('n', '<leader>hl', function()
+      require('harpoon').ui:toggle_quick_menu(require('harpoon'):list())
+    end, { desc = 'Harpoon Menu' })
 
-  map('n', '<C-q>', function()
-    require('harpoon'):list():select(1)
-  end, true, true, 'Harpoon 1'),
-
-  map('n', '<C-w>', function()
-    require('harpoon'):list():select(2)
-  end, true, true, 'Harpoon 2'),
-
-  map('n', '<C-e>', function()
-    require('harpoon'):list():select(3)
-  end, true, true, 'Harpoon 3'),
+    for _, idx in ipairs({ 1, 2, 3, 4, 5, 6 }) do
+      map('n', string.format('<space>%d', idx), function()
+        require('harpoon'):list():select(idx)
+      end)
+    end
+  end,
 }

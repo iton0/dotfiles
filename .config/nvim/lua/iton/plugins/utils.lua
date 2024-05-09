@@ -1,4 +1,4 @@
-local M = require('iton.constants')
+local M = require('iton.globals')
 local map = M.map
 
 -- Plugins that do not need any extra configuration
@@ -6,17 +6,8 @@ return {
   -- Detect tabstop and shiftwidth automatically
   {
     'nmac427/guess-indent.nvim',
-    event = M.postnew,
+    event = M.prenew,
     opts = {},
-  },
-
-  -- "gc" to comment visual regions/lines
-  {
-    'echasnovski/mini.comment',
-    opts = {},
-    keys = {
-      { 'gc', mode = { 'n', 'v' } },
-    },
   },
 
   -- Surrounding delimiter manipulation
@@ -39,9 +30,14 @@ return {
       'n',
       '<leader>u',
       "<cmd>lua require('undotree').toggle()<cr>",
-      true,
-      true,
-      'Undotree'
+      { desc = 'Undotree' }
     ),
+  },
+
+  -- Adds git related signs to the gutter, as well as utilities for managing changes
+  {
+    'lewis6991/gitsigns.nvim',
+    event = 'BufReadPost',
+    opts = {},
   },
 }
