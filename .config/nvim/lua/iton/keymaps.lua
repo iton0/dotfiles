@@ -1,61 +1,42 @@
-local M = require('iton.constants')
-local map = M.map
-
 -- This file holds all core keymaps
 -- Plugin-specific keymaps will be in
--- there respective files
+-- their respective files
 
-map({ 'n', 'v' }, '<Space>', '<Nop>')
+local M = require('iton.constants')
+local map = M.map
+local noremap_silent = M.noremap_silent
+local silent = M.silent
 
 -- Remap for dealing with word wrap
-vim.keymap.set(
-  'n',
-  'k',
-  "v:count == 0 ? 'gk' : 'k'",
-  { expr = true, silent = true }
-)
-vim.keymap.set(
-  'n',
-  'j',
-  "v:count == 0 ? 'gj' : 'j'",
-  { expr = true, silent = true }
-)
+map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
--- Define the keymap for entering find and replace mode
-map('n', '<C-f>', [[:%s/]], true, false, 'Find and Replace')
-map('n', '<M-f>', [[:cdo s/]], true, false, 'Quickfix Find and Replace')
+map('n', '<C-f>', [[:%s/]], { desc = 'Find and Replace' })
+map('n', '<M-f>', [[:cdo s/]], { desc = 'Quickfix Find and Replace' })
 
--- No effect to not conflict with tmux
-map('n', '<c-b>', '<Nop>', true, true, 'None (to not conflict with tmux)')
+map('n', '<c-b>', '<Nop>', { desc = 'None (to not conflict with tmux)' })
 
 -- Remap for quicker <esc> in insert mode
 map('i', 'kj', '<esc>')
 map('i', 'jk', '<esc>')
 
--- Diagnostic keymap
 map(
   'n',
   'dp',
   vim.diagnostic.goto_prev,
-  true,
-  true,
-  'Go to [D]iagnostic [P]revious message'
+  { desc = 'Go to [D]iagnostic [P]revious message' }
 )
 map(
   'n',
   'dn',
   vim.diagnostic.goto_next,
-  true,
-  true,
-  'Go to [D]iagnostic [N]ext message'
+  { desc = 'Go to [D]iagnostic [N]ext message' }
 )
 map(
   'n',
   'do',
   vim.diagnostic.open_float,
-  true,
-  true,
-  '[D]iagnostic [O]pen Float'
+  { desc = '[D]iagnostic [O]pen Float' }
 )
 
 -- Remap for better scrolling
@@ -63,13 +44,13 @@ map('n', '<c-u>', '<c-u>zz')
 map('n', '<c-d>', '<c-d>zz')
 
 -- Remap for closing buffers
-map('n', '<c-c>', ':q<cr>')
+map('n', '<c-q>', ':q<cr>', silent)
 
 -- To move line up/down
-map('n', '<S-Up>', ':m .-2<CR>==', true, true, 'Move line up')
-map('n', '<S-Down>', ':m .+1<CR>==', true, true, 'Move line down')
-map('v', '<S-Up>', ":m '<-2<CR>gv=gv", true, true, 'Move visual select up')
-map('v', '<S-Down>', ":m '>+1<CR>gv=gv", true, true, 'Move visual select down')
+map('n', '<S-Up>', ':m .-2<CR>==', silent)
+map('n', '<S-Down>', ':m .+1<CR>==', silent)
+map('v', '<S-Up>', ":m '<-2<CR>gv=gv", silent)
+map('v', '<S-Down>', ":m '>+1<CR>gv=gv", silent)
 
 -- To shift line left/right
 map('n', '<', '<<')
@@ -81,28 +62,48 @@ map('v', '>', '>gv')
 map('n', 'H', '_')
 map('n', 'L', '$')
 
--- Remap to move through Quickfix list
-map('n', '<leader>qn', '<cmd>cnext<cr>', true, true, '[Q]uickfix [N]ext')
-map(
-  'n',
-  '<leader>qp',
-  '<cmd>cprevious<cr>',
-  true,
-  true,
-  '[Q]uickfix [P]revious'
-)
+-- Toggle hlsearch if it's on, otherwise just do "enter"
+map('n', '<CR>', function()
+  if vim.opt.hlsearch:get() then
+    vim.cmd.nohl()
+    return ''
+  else
+    return vim.keycode('<CR>')
+  end
+end, { expr = true })
 
--- Remap to clear highlighted search results
-map('n', '<esc>', '<cmd>nohlsearch<cr>')
+-- Quick navigation of the quickfix list
+map('n', 'qn', ':cnext<CR>zz', noremap_silent)
+map('n', 'qp', ':cprev<CR>zz', noremap_silent)
+map('n', 'qo', ':botright copen<CR>', noremap_silent)
+map('n', 'qc', ':cclose<CR>', noremap_silent)
 
 -- Keybinds to make split navigation easier
-map('n', '<C-h>', '<C-w><C-h>', true, true, 'Move focus to the left window')
-map('n', '<C-l>', '<C-w><C-l>', true, true, 'Move focus to the right window')
-map('n', '<C-j>', '<C-w><C-j>', true, true, 'Move focus to the lower window')
-map('n', '<C-k>', '<C-w><C-k>', true, true, 'Move focus to the upper window')
+map('n', '<C-h>', '<C-w><C-h>')
+map('n', '<C-l>', '<C-w><C-l>')
+map('n', '<C-j>', '<C-w><C-j>')
+map('n', '<C-k>', '<C-w><C-k>')
+
+-- Easily hit escape in terminal mode.
+map('t', '<esc><esc>', '<c-\\><c-n>')
+
+-- These mappings control the size of splits (height/width)
+map('n', '<M-,>', '<c-w>5<')
+map('n', '<M-.>', '<c-w>5>')
+map('n', '<M-t>', '<C-W>+')
+map('n', '<M-s>', '<C-W>-')
+
+-- Open a terminal at the bottom of the screen with a fixed height.
+map('n', '<c-t>', function()
+  vim.cmd.new()
+  vim.cmd.wincmd('J')
+  vim.api.nvim_win_set_height(0, 10)
+  vim.wo.winfixheight = true
+  vim.cmd.term()
+  vim.cmd.startinsert()
+end)
 
 -- Remap for toggling wordcase
 map({ 'n', 'v' }, 'gu', 'g~')
 
---Remap to clear command line output
-map('n', '<M-c>', '<cmd>:echo ""<cr>', true, true, 'Clear Command line')
+map('n', '<M-c>', '<cmd>:echo ""<cr>', { desc = 'Clear Command line' })

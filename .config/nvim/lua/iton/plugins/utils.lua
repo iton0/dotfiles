@@ -6,17 +6,8 @@ return {
   -- Detect tabstop and shiftwidth automatically
   {
     'nmac427/guess-indent.nvim',
-    event = M.postnew,
+    event = M.prenew,
     opts = {},
-  },
-
-  -- "gc" to comment visual regions/lines
-  {
-    'echasnovski/mini.comment',
-    opts = {},
-    keys = {
-      { 'gc', mode = { 'n', 'v' } },
-    },
   },
 
   -- Surrounding delimiter manipulation
@@ -39,9 +30,7 @@ return {
       'n',
       '<leader>u',
       "<cmd>lua require('undotree').toggle()<cr>",
-      true,
-      true,
-      'Undotree'
+      { desc = 'Undotree' }
     ),
   },
 }

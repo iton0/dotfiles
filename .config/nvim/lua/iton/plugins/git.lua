@@ -24,12 +24,28 @@ return {
     opts = {},
     map(
       'n',
-      '<c-g>',
+      '<leader>gog',
       "<cmd>lua require('neogit').open({ kind = 'split_above' })<cr>",
-      true,
-      true,
-      'Neogit'
+      { desc = 'Git: [O]pen Neo[G]it' }
     ),
+  },
+
+  -- Wrapper for GitHub CLI
+  {
+    'pwntester/octo.nvim',
+    cmd = 'Octo',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim',
+      'nvim-tree/nvim-web-devicons',
+    },
+    opts = {
+      enable_builtin = true,
+      suppress_missing_scope = {
+        projects_v2 = true,
+      },
+    },
+    map('n', '<leader>goo', '<cmd>Octo<cr>', { desc = 'Git: [O]pen [O]cto' }),
   },
 
   -- Wrapper for Git worktree operations
@@ -42,19 +58,16 @@ return {
     opts = {},
     map(
       'n',
-      '<leader>st',
+      '<leader>gwl',
       "<cmd>lua require('telescope').extensions.git_worktree.git_worktrees()<cr>",
-      true,
-      true,
-      '[S]earch Work[T]rees'
+
+      { desc = 'Git: [W]orktree [L]ist' }
     ),
     map(
       'n',
-      '<leader>gw',
+      '<leader>gwa',
       "<cmd>lua require('telescope').extensions.git_worktree.create_git_worktree()<cr>",
-      true,
-      true,
-      '[G]it [W]orktree Create'
+      { desc = 'Git: [W]orktree [A]dd' }
     ),
   },
 }

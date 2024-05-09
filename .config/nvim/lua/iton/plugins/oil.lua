@@ -19,12 +19,7 @@ return {
       show_hidden = true,
     },
   },
-  map(
-    'n',
-    '<leader>o',
-    '<cmd>lua require("oil").open()<CR>',
-    true,
-    true,
-    'Oil.nvim'
-  ),
+  map('n', '-', '<cmd>lua require("oil").open()<CR>'),
+  -- Open parent directory in floating window
+  map('n', '<leader>-', '<cmd> lua require("oil").toggle_float()<cr>'),
 }

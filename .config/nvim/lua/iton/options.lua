@@ -1,6 +1,3 @@
--- Set highlight on search
-vim.o.hlsearch = true
-
 -- Set the minimum number of screen lines to keep above and below the cursor
 vim.o.scrolloff = 10
 
@@ -8,8 +5,8 @@ vim.o.scrolloff = 10
 vim.wo.number = true
 vim.wo.relativenumber = true
 
--- Enable mouse mode
-vim.o.mouse = 'a'
+-- Makes default statusline empty
+vim.o.statusline = ' '
 
 -- Sets how Neovim will display certain whitespace in the editor.
 -- See `:help 'list'` and `:help 'listchars'`
@@ -23,18 +20,12 @@ vim.o.inccommand = 'split'
 -- See `:help 'clipboard'`
 vim.o.clipboard = 'unnamedplus'
 
--- Set wrap behavior
-vim.o.breakindent = true -- Indent wrapped lines
+-- Enable break indent
+vim.o.breakindent = true
 
 -- Enable line wrapping without breaking words
 vim.o.wrap = true
 vim.o.linebreak = true
-
--- Set wrap margin to 0 to ensure lines wrap exactly at the text width
-vim.o.wrapmargin = 0
-
--- Set text width to 80 characters
-vim.o.textwidth = 80
 
 -- Save undo history
 vim.o.undofile = true
@@ -65,12 +56,6 @@ vim.o.guicursor = table.concat({
 
 -- Hide the banner (if you want). To show it temporarily you can use I inside Netrw.
 vim.g.netrw_banner = 0
-
--- Change the copy command. Mostly to enable recursive copy of directories.
-vim.g.netrw_localcopydircmd = 'cp -r'
-
--- Change the behavior to not keep the directory when switching buffers
-vim.g.netrw_keepdir = 0
 
 -- Set the End-of-Buffer (EOB) character to an empty space for a cleaner appearance
 vim.opt.fillchars:append({ eob = ' ' })

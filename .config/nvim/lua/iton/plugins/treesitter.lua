@@ -31,6 +31,8 @@ return {
     indent = { enable = true, disable = { 'ruby' } },
   },
   config = function(_, opts)
+    -- Prefer git instead of curl in order to improve connectivity in some environments
+    require('nvim-treesitter.install').prefer_git = true
     require('nvim-treesitter.configs').setup(opts)
   end,
 }
