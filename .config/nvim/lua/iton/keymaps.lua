@@ -2,10 +2,16 @@
 -- Plugin-specific keymaps will be in
 -- their respective files
 
-local M = require('iton.constants')
+local M = require('iton.globals')
 local map = M.map
 local noremap_silent = M.noremap_silent
 local silent = M.silent
+
+-- Remap for Lazy.nvim functionality
+map('n', '<leader>la', ':Lazy load all<cr>')
+map('n', '<leader>ll', ':Lazy<cr>', silent)
+map('n', '<leader>lp', ':Lazy profile<cr>', silent)
+map('n', '<leader>ls', ':Lazy sync<cr>', silent)
 
 -- Remap for dealing with word wrap
 map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
@@ -14,30 +20,15 @@ map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 map('n', '<C-f>', [[:%s/]], { desc = 'Find and Replace' })
 map('n', '<M-f>', [[:cdo s/]], { desc = 'Quickfix Find and Replace' })
 
-map('n', '<c-b>', '<Nop>', { desc = 'None (to not conflict with tmux)' })
+map('n', '<c-b>', '<Nop>', { desc = 'None (to not conflict with wezterm)' })
 
 -- Remap for quicker <esc> in insert mode
 map('i', 'kj', '<esc>')
 map('i', 'jk', '<esc>')
 
-map(
-  'n',
-  'dp',
-  vim.diagnostic.goto_prev,
-  { desc = 'Go to [D]iagnostic [P]revious message' }
-)
-map(
-  'n',
-  'dn',
-  vim.diagnostic.goto_next,
-  { desc = 'Go to [D]iagnostic [N]ext message' }
-)
-map(
-  'n',
-  'do',
-  vim.diagnostic.open_float,
-  { desc = '[D]iagnostic [O]pen Float' }
-)
+map('n', 'dp', vim.diagnostic.goto_prev, { desc = 'Go to [D]iagnostic [P]revious message' })
+map('n', 'dn', vim.diagnostic.goto_next, { desc = 'Go to [D]iagnostic [N]ext message' })
+map('n', 'do', vim.diagnostic.open_float, { desc = '[D]iagnostic [O]pen Float' })
 
 -- Remap for better scrolling
 map('n', '<c-u>', '<c-u>zz')
