@@ -18,6 +18,8 @@ zstyle ':omz:update' frequency 7
 # Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
 
+ZSH_THEME=robbyrussell
+
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
@@ -27,6 +29,7 @@ plugins=(
     zsh-autosuggestions
     zsh-syntax-highlighting
     gh
+    command-not-found
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -45,7 +48,7 @@ source /usr/share/doc/fzf/examples/completion.zsh
 if [[ -n $SSH_CONNECTION ]]; then
     export EDITOR='nvim'
 else
-    export EDITOR='vim'
+    export EDITOR='vi'
 fi
 
 # Compilation flags
@@ -93,12 +96,40 @@ alias update=' \
 alias fullupdate=' \
     update && \
     nvim-update && \
-    star-update && \
     omz update \
     '
 
-# Alias for updating Starship prompt
-alias star-update='curl -sS https://starship.rs/install.sh | sh'
+# Alias for add/readding dotfiles
+alias add-dot='readd-dot'
+readd-dot() {
+    rm -rf ~/.dotfiles/
+
+    # Clone the repository with the specified branch name
+    git clone --bare --depth 1 --filter=blob:none --branch main git@github.com:iton0/dotfiles.git "$HOME/.dotfiles"
+
+
+    # Setup automatic remote branch tracking for the specific branch
+    # (This allows me to do things like push --force-with-lease which is a safer version of push --force)
+    dot config remote.origin.fetch "+refs/heads/main:refs/remotes/origin/main"
+
+    dot fetch # Update remote references
+    dot checkout --force main # Checkout the specified branch
+
+    # Pull and set upstream to origin/<branch_name>
+    dot pull --set-upstream origin main
+
+    # Configure dotfiles repo to hide untracked files and enable rerere
+    dot config --local status.showUntrackedFiles no
+    dot config --local rerere.enabled true
+
+    # Default strategy for pulling from remote is rebasing (prefer a linear history for my dotfiles)
+    dot config --local pull.rebase true
+
+    # Makes everything faster in git repo
+    dot maintenance start
+    dot restore . # The above command puts the repo as maintainence in the global git config
+                   # This command takes it out of global since it is part of the local dotfiles config
+}
 
 # Alias for updating Neovim version
 alias nvim-update='confirm_nvim_update'
@@ -134,7 +165,6 @@ alias vscpt='cd ~/.local/scripts && vd'
 alias vzsh='v ~/.zshrc'
 alias vgit='v ~/.gitconfig'
 alias vterm='v ~/.config/wezterm/wezterm.lua'
-alias vstar='v ~/.config/starship.toml'
 alias neo='cd ~/.config/nvim/lua/iton'
 alias neod='neo && vd'
 alias fixaudio='systemctl --user restart wireplumber pipewire pipewire-pulse && rm -r ~/.config/pulse && sudo apt install --reinstall alsa-base alsa-utils linux-sound-base libasound2 && sudo apt reinstall libpipewire-0.3-0 libpipewire-0.3-common libpipewire-0.3-modules pipewire pipewire-audio-client-libraries pipewire-bin pipewire-pulse && sudo alsa force-reload && systemctl --user status pipewire && sudo apt update && sudo apt upgrade'
@@ -144,7 +174,7 @@ if command -v nvim &> /dev/null; then
     alias v='/opt/nvim-linux64/bin/nvim'
     alias vd='v .'
 else
-    alias v='/usr/bin/vim'
+    alias v='/usr/bin/vi'
     alias vd='v .'
 fi
 
@@ -154,9 +184,13 @@ fi
 
 # Check if we are not already in a tmux session
 if [[ -z "$TMUX" ]]; then
-    tmux new-session -As home '/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME pull && nvim --headless "+Lazy! sync" "+TSUpdateSync" "+MasonToolsUpdateSync" +qa; $SHELL'
+tmux new-session -As HOME ' \
+    nvim --headless "+Lazy! sync" "+TSUpdateSync" "+MasonToolsUpdateSync" +qa && \
+    echo "" && \
+    /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME fetch && \
+    echo "" && \
+    /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status -sb && \
+    $SHELL \
+    '
     clear
 fi
-
-# Initialize Starship prompt
-eval "$(starship init zsh)"

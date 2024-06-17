@@ -1,3 +1,8 @@
+-- Set <space> as the leader key
+-- NOTE: needs to be done first
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
 -- Set the minimum number of screen lines to keep above and below the cursor
 vim.o.scrolloff = 10
 
@@ -17,8 +22,12 @@ vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 vim.o.inccommand = 'split'
 
 -- Sync clipboard between OS and Neovim.
--- See `:help 'clipboard'`
-vim.o.clipboard = 'unnamedplus'
+--  Schedule the setting after `UiEnter` because it can increase startup-time.
+--  Remove this option if you want your OS clipboard to remain independent.
+--  See `:help 'clipboard'`
+vim.schedule(function()
+  vim.opt.clipboard = 'unnamedplus'
+end)
 
 -- Enable break indent
 vim.o.breakindent = true
@@ -39,13 +48,20 @@ vim.wo.signcolumn = 'yes'
 
 -- Decrease update time
 vim.o.updatetime = 250
-vim.o.timeoutlen = 500
+vim.o.timeoutlen = 350
 
 -- Configure how new splits should be opened
-vim.o.splitright = true
+vim.opt.splitright = true
+vim.opt.splitbelow = true
 
 -- Hide the mode indicator in the command line
 vim.o.showmode = false
+
+-- Disable unused language providers to improve performance
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_node_provider = 0
 
 -- Set the 'guicursor' option to control the cursor appearance in different modes
 vim.o.guicursor = table.concat({
@@ -56,6 +72,3 @@ vim.o.guicursor = table.concat({
 
 -- Hide the banner (if you want). To show it temporarily you can use I inside Netrw.
 vim.g.netrw_banner = 0
-
--- Set the End-of-Buffer (EOB) character to an empty space for a cleaner appearance
-vim.opt.fillchars:append({ eob = ' ' })

@@ -1,26 +1,27 @@
 return {
-  'neanias/everforest-nvim',
-  lazy = false,
+  'slugbyte/lackluster.nvim',
+  dev = true,
   priority = 1000,
-  config = function()
-    require('everforest').setup({
-      transparent_background_level = 2,
-      italics = false,
-      disable_italic_comments = true,
-      sign_column_background = 'none',
-      diagnostic_text_highlight = false,
-      diagnostic_virtual_text = 'coloured',
-      diagnostic_line_highlight = false,
-      float_style = 'dim',
-      inlay_hints_background = 'none',
-      ---You can override specific highlights to use other groups or a hex colour.
-      ---This function will be called with the highlights and colour palette tables.
-      ---@param highlight_groups Highlights
-      ---@param palette Palette
-      on_highlights = function(highlight_groups, palette)
-        highlight_groups.CursorLine = { bg = palette.none }
-      end,
+  init = function()
+    local lackluster = require('lackluster')
+
+    lackluster.setup({
+      tweak_ui = {
+        disable_undercurl = true,
+      },
+      tweak_syntax = {
+        comment = lackluster.color.gray4,
+      },
+      tweak_background = {
+        normal = 'none',
+        telescope = 'none',
+        menu = lackluster.color.gray3,
+      },
     })
-    require('everforest').load()
+
+    vim.cmd.colorscheme('lackluster-hack')
+
+    vim.cmd('highlight TelescopeMatching gui=none')
+    vim.cmd('highlight CursorLine ctermbg=none guibg=none')
   end,
 }

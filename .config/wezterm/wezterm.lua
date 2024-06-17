@@ -8,19 +8,27 @@ wezterm.on('gui-startup', function()
 end)
 
 -- Configuration
-config.color_scheme = 'Everforest Dark Medium (Gogh)'
+config.colors = {}
+config.colors.background = '#101010' -- Neovim colorscheme background
+
+config.allow_square_glyphs_to_overflow_width = 'Always'
+config.warn_about_missing_glyphs = false
 config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
-config.enable_tab_bar = false
-config.font_size = 17
+config.freetype_load_target = 'HorizontalLcd'
+config.font_size = 16.45
+config.color_scheme = 'Nord (base16)'
+
 config.force_reverse_video_cursor = true
 config.animation_fps = 1
 config.cursor_blink_ease_in = 'Constant'
 config.cursor_blink_ease_out = 'Constant'
+
+config.enable_tab_bar = false
 config.window_padding = {
-  left = 0.75 .. 'cell',
-  right = 0 .. 'cell',
-  top = 0 .. 'cell',
-  bottom = 0 .. 'cell',
+  left = 0,
+  right = 0,
+  top = 0,
+  bottom = 0,
 }
 
 return config

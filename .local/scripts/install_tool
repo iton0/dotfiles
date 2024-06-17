@@ -40,8 +40,6 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 # Install nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 
-# Install starship prompt
-curl -sS https://starship.rs/install.sh | sh
 echo "Zsh configured successfully."
 
 # Install Neovim
@@ -58,16 +56,13 @@ echo "Neovim installed successfully."
 rm nvim-linux64.tar.gz
 
 # Create directories
-mkdir -p "$HOME/personal"
+mkdir -p "$HOME/personal/neovim_dev"
 mkdir -p "$HOME/work"
 mkdir -p "$HOME/sandbox"
 
-# Make zsh default shell
-sudo chsh -s $(which zsh)
-
 echo -e "\n---------------------------"
 echo -e "Main installation finished!\n"
-echo ""
 echo -e "[IMPORTANT]\n"
+echo -e "Run 'chsh -s \$(which zsh)' before rebooting\n"
 echo -e "Reboot system and open link in\n"
-echo -e "'Post Install' of ~/README.md\n"
+echo -e "'Post Install' of ~/README.md"

@@ -4,8 +4,9 @@
 > For info look at [wiki](https://github.com/iton0/dotfiles/wiki)
 
 ## Prerequisites
-- Assumes installing on Linux system or WSL distro
-- Copy or move ***.ssh***  folder in $HOME directory to new computer
+- Assumes installing on Linux system
+    - Check [wsl branch](https://github.com/iton0/dotfiles/tree/wsl) for WSL installation
+- Copy or move ***.ssh***  folder to new computer $HOME directory
     - Copy any other important files/folders
 
 ## Installation

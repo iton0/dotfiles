@@ -1,15 +1,3 @@
-local M = {}
-
-M.map = vim.keymap.set
-M.silent = { silent = true }
-M.noremap_silent = { noremap = true, silent = true }
-M.noremap_silent_desc = function(desc)
-  return { noremap = true, silent = true, desc = desc }
-end
-
-M.prenew = { 'BufReadPre', 'BufNewFile' }
-M.postnew = { 'BufReadPost', 'BufNewFile' }
-
 local lsp_excluded_filetypes = {
   [''] = true,
   [' '] = true,
@@ -53,10 +41,21 @@ local lsp_excluded_filetypes = {
   ['netrw'] = true,
   ['TelescopePrompt'] = true,
 }
--- Check if the current filetype is in the LSP excluded list
-M.is_lsp_excluded_filetype = function()
-  local current_filetype = vim.bo.filetype
-  return lsp_excluded_filetypes[current_filetype] or false
-end
 
-return M
+return {
+  map = vim.keymap.set,
+  silent = { silent = true },
+  noremap_silent = { noremap = true, silent = true },
+  noremap_silent_desc = function(desc)
+    return { noremap = true, silent = true, desc = desc }
+  end,
+
+  prenew = { 'BufReadPre', 'BufNewFile' },
+  postnew = { 'BufReadPost', 'BufNewFile' },
+
+  -- Check if the current filetype is in the LSP excluded list
+  is_lsp_excluded_filetype = function()
+    local current_filetype = vim.bo.filetype
+    return lsp_excluded_filetypes[current_filetype] or false
+  end,
+}
