@@ -44,6 +44,9 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 curl -sS https://starship.rs/install.sh | sh
 echo "Zsh configured successfully."
 
+echo "Making zsh default shell"
+chsh -s $(which zsh)
+
 # Install Neovim
 echo "Installing Neovim..."
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
@@ -61,9 +64,6 @@ rm nvim-linux64.tar.gz
 mkdir -p "$HOME/personal"
 mkdir -p "$HOME/work"
 mkdir -p "$HOME/sandbox"
-
-# Make zsh default shell
-sudo chsh -s $(which zsh)
 
 echo -e "\n---------------------------"
 echo -e "Main installation finished!\n"
