@@ -2,21 +2,6 @@ local M = require('iton.constants')
 local map = M.map
 
 return {
-  -- Adds git related signs to the gutter, as well as utilities for managing changes
-  {
-    'lewis6991/gitsigns.nvim',
-    event = 'BufReadPost',
-    opts = {
-      signs = {
-        add = { text = '+' },
-        change = { text = '┆' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-      },
-    },
-  },
-
   -- Neovim Git Interface
   {
     'NeogitOrg/neogit',

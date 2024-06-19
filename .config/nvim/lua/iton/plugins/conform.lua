@@ -17,7 +17,7 @@ return {
       cpp = { 'clang-format' },
       ['_'] = { 'trim_whitespace' },
     },
-    format_on_save = { timeout_ms = 500, lsp_fallback = true },
+    format_on_save = { timeout_ms = 500, lsp_format = 'fallback' },
     notify_on_error = false,
   },
 }
