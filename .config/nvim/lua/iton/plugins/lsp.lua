@@ -220,7 +220,6 @@ return {
         auto_update = true,
         run_on_start = true,
       })
-      require('java').setup() -- TODO: delete if no longer going to use java after 2024
       require('mason-lspconfig').setup({
         handlers = {
           function(server_name)

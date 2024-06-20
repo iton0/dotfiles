@@ -10,13 +10,13 @@ return {
     'antoinemadec/FixCursorHold.nvim',
     'nvim-treesitter/nvim-treesitter',
     -- Add your own adapters here
-    'rcasia/neotest-java',
+    -- 'rcasia/neotest-java',
     -- 'nvim-neotest/neotest-python',
   },
   config = function()
     require('neotest').setup({
       adapters = {
-        ['neotest-java'] = {},
+        -- ['neotest-java'] = {},
         -- require('neotest-python'),
       },
     })
