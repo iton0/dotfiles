@@ -25,13 +25,6 @@ return {
     custom_everforest.command.c = { bg = palette.bg1, fg = palette.grey1 }
     custom_everforest.terminal.c = { bg = palette.bg1, fg = palette.grey1 }
 
-    local mode = {
-      'mode',
-      fmt = function(str)
-        return str:sub(1, 1)
-      end,
-      color = { gui = 'bold' },
-    }
     local branch = {
       'branch',
       icons_enabled = false,
@@ -68,7 +61,7 @@ return {
     local diff = {
       'diff',
       colored = false,
-      padding = { left = 0, right = 0 },
+      padding = { left = 1, right = 0 },
     }
     local lazy = {
       require('lazy.status').updates,
@@ -97,8 +90,8 @@ return {
         disabled_filetypes = { 'lazy', 'mason', 'TelescopePrompt' },
       },
       sections = {
-        lualine_a = { mode },
-        lualine_b = { branch, diff },
+        lualine_a = { branch },
+        lualine_b = { diff },
         lualine_c = { '%=', filetype, filename },
         lualine_x = { diagnostics, lsp },
         lualine_y = { lazy },
