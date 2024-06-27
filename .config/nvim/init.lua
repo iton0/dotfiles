@@ -31,6 +31,7 @@ require('lazy').setup({ import = 'iton.plugins' }, {
   defaults = {
     lazy = true,
   },
+  rocks = { enabled = false }, -- Disable `luarocks` support completely
   install = {
     colorscheme = { 'everforest' },
   },
