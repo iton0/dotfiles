@@ -18,6 +18,8 @@ zstyle ':omz:update' frequency 7
 # Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
 
+ZSH_THEME=robbyrussell
+
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
@@ -93,12 +95,8 @@ alias update=' \
 alias fullupdate=' \
     update && \
     nvim-update && \
-    star-update && \
     omz update \
     '
-
-# Alias for updating Starship prompt
-alias star-update='curl -sS https://starship.rs/install.sh | sh'
 
 # Alias for updating Neovim version
 alias nvim-update='confirm_nvim_update'
@@ -134,7 +132,6 @@ alias vscpt='cd ~/.local/scripts && vd'
 alias vzsh='v ~/.zshrc'
 alias vgit='v ~/.gitconfig'
 alias vterm='v ~/.config/wezterm/wezterm.lua'
-alias vstar='v ~/.config/starship.toml'
 alias neo='cd ~/.config/nvim/lua/iton'
 alias neod='neo && vd'
 alias fixaudio='systemctl --user restart wireplumber pipewire pipewire-pulse && rm -r ~/.config/pulse && sudo apt install --reinstall alsa-base alsa-utils linux-sound-base libasound2 && sudo apt reinstall libpipewire-0.3-0 libpipewire-0.3-common libpipewire-0.3-modules pipewire pipewire-audio-client-libraries pipewire-bin pipewire-pulse && sudo alsa force-reload && systemctl --user status pipewire && sudo apt update && sudo apt upgrade'
@@ -157,6 +154,3 @@ if [[ -z "$TMUX" ]]; then
     tmux new-session -As home '/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME pull && nvim --headless "+Lazy! sync" "+TSUpdateSync" "+MasonToolsUpdateSync" +qa; $SHELL'
     clear
 fi
-
-# Initialize Starship prompt
-eval "$(starship init zsh)"
