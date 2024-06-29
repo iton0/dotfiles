@@ -36,7 +36,6 @@ local lsp_excluded_filetypes = {
   ['NeogitStatus'] = true,
   ['NeogitPopup'] = true,
   ['NeogitCommitView'] = true,
-  ['java'] = true,
   ['yaml'] = true,
   ['html'] = true,
   ['log'] = true,

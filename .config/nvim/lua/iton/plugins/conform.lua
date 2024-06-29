@@ -11,6 +11,8 @@ return {
       javascript = { 'prettierd' },
       html = { 'prettierd' },
       css = { 'prettierd' },
+      java = { 'google-java-format' },
+      xml = { 'xmlformat' },
       typescript = { 'prettierd' },
       c = { 'clang-format' },
       cpp = { 'clang-format' },

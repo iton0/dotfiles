@@ -163,13 +163,6 @@ return {
         -- rust_analyzer = {},
         -- html = { filetypes = { 'html', 'twig', 'hbs'} },
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-        --
-        -- If you use something like typescript, where the tooling is as bad as the language,
-        -- then you might need to install and configure something like this:
-        --    https://github.com/pmizio/typescript-tools.nvim
-        --
-        -- If you only have simple needs for typescript, then you can probably just use tsserver
-        -- tsserver = {},
         lua_ls = {
           -- cmd = {...},
           -- filetypes = { ...},
@@ -185,6 +178,16 @@ return {
                 -- Get the language server to recognize the `vim` global
                 globals = { 'vim' },
               },
+            },
+          },
+        },
+        jdtls = {
+          settings = {
+            java = {
+              configuration = {
+                updateBuildConfiguration = 'automatic',
+              },
+              format = { enabled = false },
             },
           },
         },
@@ -205,15 +208,18 @@ return {
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        'stylua', -- For Neovim
-        'lua_ls',
-        'clang-format', -- C/C++
-        'clangd',
-        'black', -- Python
-        'pyright',
+        'lua_ls', -- Neovim/Lua
+        'stylua',
+        'clangd', -- C/C++
+        'clang-format',
+        'pyright', -- Python
+        'black',
         'typescript-language-server', -- Web Dev
         'prettierd',
         'beautysh', -- Shell/Bash/Zsh
+        'jdtls', -- Java (NOTE: use VS Code for more advanced usage)
+        'google-java-format',
+        'xmlformatter',
       })
       require('mason-tool-installer').setup({
         ensure_installed = ensure_installed,
