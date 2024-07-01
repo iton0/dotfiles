@@ -1,4 +1,4 @@
-local M = require('iton.constants')
+local M = require('iton.globals')
 local noremap_silent = M.noremap_silent
 
 local autocmd = vim.api.nvim_create_autocmd

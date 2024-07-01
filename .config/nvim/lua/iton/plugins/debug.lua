@@ -1,4 +1,4 @@
-local M = require('iton.constants')
+local M = require('iton.globals')
 local map = M.map
 
 return {
