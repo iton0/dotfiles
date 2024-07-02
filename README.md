@@ -1,8 +1,3 @@
-# Next BIANNUAL TODOs:
- - Additionally, give user option to pick install for Linux vs. WSL system
-
-----------
-
 # Dotfiles Setup (This branch is for installing on WSL)
 
 > [!NOTE]
