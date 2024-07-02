@@ -2,22 +2,11 @@
 
 set -e
 
-# Configure system to use APT repo for wezterm
-curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
-echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
-
-#Configure system to use APT repo for Github CLI
-(type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y)) \
-    && sudo mkdir -p -m 755 /etc/apt/keyrings \
-    && wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
-    && sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
-    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-
 # Update dependencies
 sudo apt update
 
 # Define list of packages to install
-packages=("unzip" "wmctrl" "gh" "wezterm-nightly" "make" "tmux" "zsh" "fzf" "sed" "ripgrep" "xclip" "gcc" "python3.10-venv")
+packages=("unzip" "make" "tmux" "zsh" "fzf" "sed" "ripgrep" "xclip" "gcc" "python3.10-venv")
 
 # Install all packages
 sudo apt install -y "${packages[@]}"
@@ -27,9 +16,6 @@ echo "Tools installed successfully..."
 # Upgrade packages
 sudo apt upgrade -y
 
-# Set Wezterm as default terminal
-sudo ln -sf /usr/bin/wezterm /etc/alternatives/x-terminal-emulator
-
 # Install oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
 
@@ -37,13 +23,10 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
-# Install nvm
+# Install nvm and install latest available version
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 
 echo "Zsh configured successfully."
-
-echo "Making zsh default shell"
-chsh -s $(which zsh)
 
 # Install Neovim
 echo "Installing Neovim..."
@@ -65,7 +48,7 @@ mkdir -p "$HOME/sandbox"
 
 echo -e "\n---------------------------"
 echo -e "Main installation finished!\n"
-echo ""
 echo -e "[IMPORTANT]\n"
+echo -e "Run 'chsh -s \$(which zsh)' before rebooting\n"
 echo -e "Reboot system and open link in\n"
-echo -e "'Post Install' of ~/README.md\n"
+echo -e "'Post Install' of ~/README.md"

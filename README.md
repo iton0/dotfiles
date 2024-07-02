@@ -1,10 +1,4 @@
-# Next BIANNUAL TODOs:
-- Update install_tool for setup on WSL systems
- - Additionally, give user option to pick install for Linux vs. WSL system
-
-----------
-
-# Dotfiles Setup
+# Dotfiles Setup (This branch is for installing on WSL)
 
 > [!NOTE]
 > For info look at [wiki](https://github.com/iton0/dotfiles/wiki)

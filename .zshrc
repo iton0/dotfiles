@@ -87,8 +87,7 @@ alias update=' \
     sudo apt upgrade -y && \
     sudo apt autoremove -y && \
     sudo apt autoclean -y && \
-    sudo apt clean -y && \
-    flatpak update -y \
+    sudo apt clean -y \
     '
 
 # Alias for biannual laptop maintainence
@@ -131,10 +130,8 @@ alias scpt='cd ~/.local/scripts'
 alias vscpt='cd ~/.local/scripts && vd'
 alias vzsh='v ~/.zshrc'
 alias vgit='v ~/.gitconfig'
-alias vterm='v ~/.config/wezterm/wezterm.lua'
 alias neo='cd ~/.config/nvim/lua/iton'
 alias neod='neo && vd'
-alias fixaudio='systemctl --user restart wireplumber pipewire pipewire-pulse && rm -r ~/.config/pulse && sudo apt install --reinstall alsa-base alsa-utils linux-sound-base libasound2 && sudo apt reinstall libpipewire-0.3-0 libpipewire-0.3-common libpipewire-0.3-modules pipewire pipewire-audio-client-libraries pipewire-bin pipewire-pulse && sudo alsa force-reload && systemctl --user status pipewire && sudo apt update && sudo apt upgrade'
 
 # Set an alias 'v' for Neovim if available; otherwise, fallback to Vim
 if command -v nvim &> /dev/null; then
@@ -151,6 +148,14 @@ fi
 
 # Check if we are not already in a tmux session
 if [[ -z "$TMUX" ]]; then
-    tmux new-session -As home '/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME pull && nvim --headless "+Lazy! sync" "+TSUpdateSync" "+MasonToolsUpdateSync" +qa; $SHELL'
+tmux new-session -As home ' \
+    sudo apt update && \
+    sudo apt upgrade -y && \
+    sudo apt autoremove -y && \
+    sudo apt autoclean -y && \
+    sudo apt clean -y && \
+    /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME pull origin wsl && \
+    nvim --headless "+Lazy! sync" "+TSUpdateSync" "+MasonToolsUpdateSync" +qa; $SHELL \
+    '
     clear
 fi

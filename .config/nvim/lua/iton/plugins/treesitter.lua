@@ -14,6 +14,7 @@ return {
       'html',
       'lua',
       'luadoc',
+      'query',
       'markdown',
       'vim',
       'vimdoc',
