@@ -1,9 +1,3 @@
-# Next BIANNUAL TODOs:
-- Update install_tool for setup on WSL systems
- - Additionally, give user option to pick install for Linux vs. WSL system
-
-----------
-
 # Dotfiles Setup
 
 > [!NOTE]
