@@ -29,6 +29,7 @@ plugins=(
     zsh-autosuggestions
     zsh-syntax-highlighting
     gh
+    command-not-found
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -47,7 +48,7 @@ source /usr/share/doc/fzf/examples/completion.zsh
 if [[ -n $SSH_CONNECTION ]]; then
     export EDITOR='nvim'
 else
-    export EDITOR='vim'
+    export EDITOR='vi'
 fi
 
 # Compilation flags
@@ -97,6 +98,38 @@ alias fullupdate=' \
     omz update \
     '
 
+# Alias for add/readding dotfiles
+alias add-dot='readd-dot'
+readd-dot() {
+    rm -rf ~/.dotfiles/
+
+    # Clone the repository with the specified branch name
+    git clone --bare --depth 1 --filter=blob:none --branch wsl git@github.com:iton0/dotfiles.git "$HOME/.dotfiles"
+
+
+    # Setup automatic remote branch tracking for the specific branch
+    # (This allows me to do things like push --force-with-lease which is a safer version of push --force)
+    dot config remote.origin.fetch "+refs/heads/wsl:refs/remotes/origin/wsl"
+
+    dot fetch # Update remote references
+    dot checkout --force wsl # Checkout the specified branch
+
+    # Pull and set upstream to origin/<branch_name>
+    dot pull --set-upstream origin wsl
+
+    # Configure dotfiles repo to hide untracked files and enable rerere
+    dot config --local status.showUntrackedFiles no
+    dot config --local rerere.enabled true
+
+    # Default strategy for pulling from remote is rebasing (prefer a linear history for my dotfiles)
+    dot config --local pull.rebase true
+
+    # Makes everything faster in git repo
+    dot maintenance start
+    dot restore . # The above command puts the repo as maintainence in the global git config
+                   # This command takes it out of global since it is part of the local dotfiles config
+}
+
 # Alias for updating Neovim version
 alias nvim-update='confirm_nvim_update'
 confirm_nvim_update() {
@@ -138,7 +171,7 @@ if command -v nvim &> /dev/null; then
     alias v='/opt/nvim-linux64/bin/nvim'
     alias vd='v .'
 else
-    alias v='/usr/bin/vim'
+    alias v='/usr/bin/vi'
     alias vd='v .'
 fi
 
@@ -148,14 +181,18 @@ fi
 
 # Check if we are not already in a tmux session
 if [[ -z "$TMUX" ]]; then
-tmux new-session -As home ' \
+tmux new-session -As HOME ' \
     sudo apt update && \
     sudo apt upgrade -y && \
     sudo apt autoremove -y && \
     sudo apt autoclean -y && \
     sudo apt clean -y && \
-    /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME pull origin wsl && \
-    nvim --headless "+Lazy! sync" "+TSUpdateSync" "+MasonToolsUpdateSync" +qa; $SHELL \
+    nvim --headless "+Lazy! sync" "+TSUpdateSync" "+MasonToolsUpdateSync" +qa && \
+    echo "" && \
+    /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME fetch && \
+    echo "" && \
+    /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status -sb && \
+    $SHELL \
     '
     clear
 fi

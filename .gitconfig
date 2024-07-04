@@ -14,7 +14,7 @@
 [branch]
   sort = committerdate
 [alias]
-  bclone = clone --bare --filter=blob:none
+  bclone = "!f() { ~/.local/scripts/git-bare-clone \"$@\"; }; f"
   wa = worktree add
   wd = worktree remove
   wl = worktree list
@@ -27,7 +27,9 @@
   p = push
   pf = push --force-with-lease; a safe force push
   pl = pull
+  rb = rebase
   rbi = rebase -i
+  rbir = rebase -i --root ; rebase all reachable commits up to the root(s)
   st = status -sb ; provides more concise output
   cm = commit -v ; commit with diff in core editor
   ch = checkout
@@ -37,9 +39,9 @@
   bl = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
   rl = remote -v
   df = diff --word-diff
-  se = !git rev-list --all | xargs git grep -F
+  se = !git log --grep
   gl = config --global -l ; outputs the .gitconfig file
   alias = !git config --get-regexp ^alias\\. ; outputs the aliases
   last = !git log -1 HEAD --stat --patch --format='%C(70)%h%Creset - %C(115)%an%Creset, %C(166)%ar%Creset : %C(33)%s%Creset%n%n%b%n%C(75)Changed Files Summary%C(reset)'
-  lg = !git log --format='%C(131)%h%Creset -%C(auto)%d%Creset %C(34)(%cr)%Creset %s %C(69)[%an]' --abbrev-commit -30
+  lg = !git log --format='%C(131)%h%Creset -%C(auto)%d%Creset %C(34)(%cr)%Creset %s %C(69)[%an]'
   rlg = reflog --format='%C(70)%h%Creset -%C(auto)%d%Creset %C(166)%gd%Creset %C(33)%cr%Creset %C(auto)%gs%Creset'

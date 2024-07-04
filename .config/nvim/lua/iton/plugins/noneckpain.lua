@@ -1,11 +1,11 @@
 local M = require('iton.globals')
-local map = M.map
 
 return {
   'shortcuts/no-neck-pain.nvim',
   event = M.prenew,
+  keys = { { '<leader>n', '<cmd>NoNeckPain<cr>', desc = 'NoNeckPain.nvim' } },
   opts = {
-    width = 80,
+    width = 90,
     autocmds = {
       enableOnVimEnter = true,
     },
@@ -15,5 +15,4 @@ return {
       },
     },
   },
-  map('n', '<leader>n', '<cmd>NoNeckPain<cr>', { desc = 'NoNeckPain.nvim' }),
 }

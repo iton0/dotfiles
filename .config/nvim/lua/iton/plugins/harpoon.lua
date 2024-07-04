@@ -44,7 +44,7 @@ return {
     for _, idx in ipairs({ 1, 2, 3, 4, 5, 6 }) do
       map('n', string.format('<space>%d', idx), function()
         require('harpoon'):list():select(idx)
-      end)
+      end, { desc = 'Harpoon ' .. idx })
     end
   end,
 }
