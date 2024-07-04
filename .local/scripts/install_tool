@@ -42,7 +42,7 @@ echo "Neovim installed successfully."
 rm nvim-linux64.tar.gz
 
 # Create directories
-mkdir -p "$HOME/personal"
+mkdir -p "$HOME/personal/neovim_dev"
 mkdir -p "$HOME/work"
 mkdir -p "$HOME/sandbox"
 

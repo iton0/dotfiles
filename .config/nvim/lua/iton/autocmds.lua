@@ -6,27 +6,25 @@ local autocmd = vim.api.nvim_create_autocmd
 -- Highlight on yank
 -- See `:help vim.highlight.on_yank()`
 autocmd('TextYankPost', {
-  group = vim.api.nvim_create_augroup(
-    'kickstart-highlight-yank',
-    { clear = true }
-  ),
+  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
     vim.highlight.on_yank()
   end,
 })
 
+-- Disable New Line Comment with o/O
+autocmd('FileType', {
+  pattern = '*',
+  callback = function()
+    vim.opt.formatoptions:remove({ 'o' })
+  end,
+})
+
 -- Better initial navigation when using netrw
 autocmd('FileType', {
+  pattern = 'netrw',
   callback = function()
-    if vim.bo.filetype == 'netrw' then
-      vim.api.nvim_buf_set_keymap(
-        0,
-        'n',
-        '<C-l>',
-        ':wincmd l<CR>',
-        noremap_silent
-      )
-    end
+    vim.api.nvim_buf_set_keymap(0, 'n', '<C-l>', ':wincmd l<CR>', noremap_silent)
   end,
 })
 

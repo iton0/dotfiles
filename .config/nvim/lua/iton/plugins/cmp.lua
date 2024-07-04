@@ -4,14 +4,11 @@ return {
   dependencies = {
     {
       'L3MON4D3/LuaSnip',
-      build = vim.fn.has('win32') ~= 0
-        or vim.fn.executable('make') ~= 1 and 'make install_jsregexp'
-        or nil,
+      build = vim.fn.has('win32') ~= 0 or vim.fn.executable('make') ~= 1 and 'make install_jsregexp' or nil,
     },
     'saadparwaiz1/cmp_luasnip',
 
-    -- Adds LSP completion capabilities
-    'hrsh7th/cmp-nvim-lsp',
+    -- Adds file path completion capabilities
     'hrsh7th/cmp-path',
 
     -- Adds a number of user-friendly snippets
@@ -37,10 +34,6 @@ return {
         completeopt = 'menu,menuone,noinsert',
       },
 
-      window = {
-        documentation = cmp.config.window.bordered(),
-      },
-
       mapping = cmp.mapping.preset.insert({
         -- Select the [n]ext item
         ['<C-n>'] = cmp.mapping.select_next_item(),
@@ -52,8 +45,6 @@ return {
         --  This will auto-import if your LSP supports it.
         --  This will expand snippets if the LSP sent a snippet.
         ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-        -- Manually trigger a completion from nvim-cmp
-        ['<C-Space>'] = cmp.mapping.complete({}),
         -- Think of <c-l> as moving to the right of your snippet expansion.
         --  So if you have a snippet that's like:
         --  function $name($args)
@@ -74,6 +65,11 @@ return {
         end, { 'i', 's' }),
       }),
       sources = {
+        {
+          name = 'lazydev',
+          -- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
+          group_index = 0,
+        },
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
         { name = 'path' },
