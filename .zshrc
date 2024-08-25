@@ -43,6 +43,11 @@ source /usr/share/doc/fzf/examples/completion.zsh
 
 # User configuration
 
+# Load environment variables from .env file
+if [ -f ~/.env ]; then
+    source ~/.env
+fi
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # Preferred editor for local and remote sessions
@@ -156,19 +161,65 @@ confirm_nvim_update() {
     nvim --headless "+Lazy! sync" "+TSUpdateSync" "+MasonToolsUpdateSync" +qa # Syncs neovim plugins in headless mode
 }
 
-# Aliases for convenient terminal commands:
+# Aliases for ssh commands:
 alias ssh-start='sudo systemctl start ssh'
 alias ssh-stop='sudo systemctl stop ssh'
 alias ssh-status='sudo systemctl status ssh'
-alias ssh-att='wezterm ssh iton-darter'
+alias ssh-att='wakeup'
+wakeup() {
+    # Check if the server is awake
+    if nc -z -w 5 $WOL_IP_ADDRESS $SSH_PORT > /dev/null 2>&1; then
+        echo "Server is awake. Connecting via SSH..."
+        wezterm ssh iton-darter
+        return 0
+    else
+        echo "Server is not awake. Sending WoL packet..."
+        sudo wakeonlan -i $WOL_IP_ADDRESS -p $WOL_PORT $WOL_MAC_ADDRESS
+
+        # First wait period (10 seconds)
+        echo "Waiting for 10 seconds before first check..."
+        sleep 10
+        if nc -z -w 5 $WOL_IP_ADDRESS $SSH_PORT > /dev/null 2>&1; then
+            echo "Server is now awake after first wait period. Connecting via SSH..."
+            wezterm ssh iton-darter
+            return 0
+        fi
+
+        # Second wait period (5 seconds)
+        echo "Waiting for 5 seconds before second check..."
+        sleep 5
+        if nc -z -w 5 $WOL_IP_ADDRESS $SSH_PORT > /dev/null 2>&1; then
+            echo "Server is now awake after second wait period. Connecting via SSH..."
+            wezterm ssh iton-darter
+            return 0
+        fi
+
+        # Final wait period (5 seconds)
+        echo "Waiting for 5 seconds before final check..."
+        sleep 5
+        if nc -z -w 5 $WOL_IP_ADDRESS $SSH_PORT > /dev/null 2>&1; then
+            echo "Server is now awake after final wait period. Connecting via SSH..."
+            wezterm ssh iton-darter
+            return 0
+        fi
+
+        # If the server is still not awake after all checks
+        echo "Server is still not awake after all attempts. Please check the server status."
+        return 1
+    fi
+}
+
+# Aliases for convenient terminal commands:
 alias ud='cd ..'
 alias cl='clear'
 alias hocl='cd && clear'
+alias venv='v ~/.env'
 alias scpt='cd ~/.local/scripts'
 alias vscpt='cd ~/.local/scripts && vd'
 alias vzsh='v ~/.zshrc'
 alias vgit='v ~/.gitconfig'
-alias vterm='v ~/.config/wezterm/wezterm.lua'
+alias wez='cd ~/.config/wezterm'
+alias wezd='wez && vd'
 alias neo='cd ~/.config/nvim/lua/iton'
 alias neod='neo && vd'
 alias fixaudio='systemctl --user restart wireplumber pipewire pipewire-pulse && rm -r ~/.config/pulse && sudo apt install --reinstall alsa-base alsa-utils linux-sound-base libasound2 && sudo apt reinstall libpipewire-0.3-0 libpipewire-0.3-common libpipewire-0.3-modules pipewire pipewire-audio-client-libraries pipewire-bin pipewire-pulse && sudo alsa force-reload && systemctl --user status pipewire && sudo apt update && sudo apt upgrade'
