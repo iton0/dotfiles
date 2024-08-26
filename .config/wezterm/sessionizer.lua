@@ -62,7 +62,7 @@ M.open = function(window, pane)
           wezterm.log_info('Selected ' .. label)
           win:perform_action(
             act.SwitchToWorkspace({
-              name = label:match('([^/]+)$'),
+              name = label:match('([^/]+)$'):upper(),
               spawn = { cwd = home .. label },
             }),
             pane

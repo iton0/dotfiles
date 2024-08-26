@@ -34,9 +34,9 @@ config.window_padding = {
 
 -- Tmux-like configuration
 config.default_workspace = 'HOME'
-wezterm.on('update-right-status', function(window, _, _)
+wezterm.on('update-status', function(window, _, _)
   window:set_left_status(' ' .. window:active_workspace() .. ' ')
-  local date = wezterm.strftime('%I:%M:%p ┃ %b-%d-%Y ')
+  local date = wezterm.strftime('%I:%M %p ┃ %b %d %Y ')
   window:set_right_status(wezterm.format({
     { Text = date },
   }))
