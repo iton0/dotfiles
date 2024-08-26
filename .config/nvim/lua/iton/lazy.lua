@@ -16,10 +16,6 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require('iton.options')
-require('iton.autocmds')
-require('iton.keymaps')
-
 -- [[ Plugins ]]
 require('lazy').setup({ import = 'iton.plugins' }, {
   defaults = {

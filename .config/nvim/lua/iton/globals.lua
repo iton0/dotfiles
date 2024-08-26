@@ -51,9 +51,6 @@ return {
     return { noremap = true, silent = true, desc = desc }
   end,
 
-  prenew = { 'BufReadPre', 'BufNewFile' },
-  postnew = { 'BufReadPost', 'BufNewFile' },
-
   -- Check if the current filetype is in the LSP excluded list
   is_lsp_excluded_filetype = function()
     local current_filetype = vim.bo.filetype

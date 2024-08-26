@@ -19,7 +19,7 @@ return {
   -- LSP Configuration & Plugins
   {
     'neovim/nvim-lspconfig',
-    event = M.prenew,
+    event = 'BufNewFile',
     cmd = { 'Mason', 'MasonToolsUpdateSync', 'MasonToolsInstallSync' },
     dependencies = {
       'williamboman/mason.nvim',
@@ -62,16 +62,14 @@ return {
       vim.api.nvim_create_autocmd('User', {
         pattern = 'MasonToolsUpdateCompleted',
         callback = function()
-          vim.defer_fn(function()
-            if not M.is_lsp_excluded_filetype() then
-              vim.cmd('LspStart')
-              vim.defer_fn(function()
-                if next(vim.lsp.get_clients({ bufnr = vim.fn.bufnr('%') })) == nil then
-                  vim.cmd('LspInstall')
-                end
-              end, 250)
-            end
-          end, 250)
+          if not M.is_lsp_excluded_filetype() then
+            vim.cmd('LspStart')
+            vim.defer_fn(function()
+              if next(vim.lsp.get_clients({ bufnr = vim.fn.bufnr('%') })) == nil then
+                vim.cmd('LspInstall')
+              end
+            end, 750)
+          end
         end,
       })
 
@@ -81,36 +79,29 @@ return {
         callback = function(event)
           -- In this case, we create a function that lets us more easily define mappings specific
           -- for LSP related items. It sets the mode, buffer and description for us each time.
-          local map = function(mode, keys, func, desc)
+          local map = function(keys, func, desc, mode)
+            mode = mode or 'n'
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
-          map('n', 'gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
-          map('n', 'gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-          map('n', 'gi', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-          map('n', 'gd', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
-          map('n', '<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-          map('n', '<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+          map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+          map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+          map('gi', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+          map('gd', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
+          map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+          map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
-          map('n', 'gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+          map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
           -- Rename the variable under your cursor
-          map('n', '<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+          map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
 
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
-          map({ 'n', 'v' }, '<leader>a', vim.lsp.buf.code_action, 'Code [A]ction')
+          map('<leader>a', vim.lsp.buf.code_action, 'Code [A]ction', { 'n', 'x' })
 
           -- Show the signature of the function you're currently completing.
-          map('n', '<C-s>', vim.lsp.buf.signature_help, '[S]ignature Documentation')
-
-          local client = vim.lsp.get_client_by_id(event.data.client_id)
-
-          if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-            map('n', '<m-h>', function()
-              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
-            end, '[T]oggle Inlay [H]ints')
-          end
+          map('<C-s>', vim.lsp.buf.signature_help, '[S]ignature Documentation')
         end,
       })
 

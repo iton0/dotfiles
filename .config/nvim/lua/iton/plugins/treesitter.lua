@@ -1,9 +1,7 @@
-local M = require('iton.globals')
-
 return {
   -- Highlight, edit, and navigate code
   'nvim-treesitter/nvim-treesitter',
-  event = M.postnew,
+  event = 'BufNewFile',
   cmd = 'TSUpdateSync',
   build = ':TSUpdateSync',
   main = 'nvim-treesitter.configs',

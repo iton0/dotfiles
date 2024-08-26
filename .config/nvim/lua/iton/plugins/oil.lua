@@ -1,6 +1,5 @@
 return {
   'stevearc/oil.nvim',
-  event = 'VimEnter',
   keys = {
     { '-', '<cmd>Oil<cr>', desc = 'Oil' },
     { '<leader>-', '<cmd>Oil --float<cr>', desc = 'Oil float' },

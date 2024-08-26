@@ -10,8 +10,9 @@ vim.o.scrolloff = 10
 vim.wo.number = true
 vim.wo.relativenumber = true
 
--- Makes default statusline empty
-vim.o.statusline = ' '
+-- Make default statusline cleaner for oil.nvim
+vim.o.statusline = '%=%m%=%s'
+vim.o.laststatus = 3
 
 -- Sets how Neovim will display certain whitespace in the editor.
 -- See `:help 'list'` and `:help 'listchars'`
