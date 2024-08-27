@@ -2,7 +2,17 @@ local wezterm = require('wezterm')
 local config = wezterm.config_builder()
 
 wezterm.on('gui-startup', function()
-  local _, _, window = wezterm.mux.spawn_window({})
+  local _, _, window = wezterm.mux.spawn_window({
+    args = {
+      'sh',
+      '-c',
+      'echo "\n\\033[4mDotfiles Status\\033[0m" && '
+        .. '/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME fetch && '
+        .. 'echo "" && '
+        .. '/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status -sb && '
+        .. 'exec $SHELL; ',
+    },
+  })
   window:gui_window():toggle_fullscreen()
   window:active_tab():set_title(' ')
 end)

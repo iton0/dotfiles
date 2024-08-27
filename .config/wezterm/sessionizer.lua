@@ -18,7 +18,6 @@ M.open = function(window, pane)
     fd,
     '-HI',
     '-td',
-    '--max-depth=1',
     '--prune',
     '.',
     neovim_dev,
