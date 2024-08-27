@@ -19,8 +19,6 @@ zstyle ':omz:update' frequency 7
 # Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
 
-# ZSH_THEME=robbyrussell
-
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
@@ -43,19 +41,18 @@ source /usr/share/doc/fzf/examples/completion.zsh
 
 # User configuration
 
+# Paths that may not be on all computer
+if [[ -z $SSH_CONNECTION ]]; then
+    export PATH="$HOME/.zig/zig-linux-x86_64-0.13.0/:$PATH"
+    # Add more paths here
+fi
+
 # Load environment variables from .env file
 if [ -f ~/.env ]; then
     source ~/.env
 fi
 
 # export MANPATH="/usr/local/man:$MANPATH"
-
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-    export EDITOR='nvim'
-else
-    export EDITOR='vi'
-fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -133,7 +130,7 @@ readd-dot() {
 
     # Makes everything faster in git repo
     dot maintenance start
-    dot restore . # The above command puts the repo as maintainence in the global git config
+    dot restore ~/.gitconfig # The above command puts the repo as maintainence in the global git config
                    # This command takes it out of global since it is part of the local dotfiles config
 }
 
@@ -174,7 +171,7 @@ wakeup() {
         return 0
     else
         echo "Server is not awake. Sending WoL packet..."
-        sudo wakeonlan -i $WOL_IP_ADDRESS -p $WOL_PORT $WOL_MAC_ADDRESS
+        wakeonlan -i $WOL_IP_ADDRESS -p $WOL_PORT $WOL_MAC_ADDRESS
 
         # First wait period (10 seconds)
         echo "Waiting for 10 seconds before first check..."
@@ -226,9 +223,11 @@ alias fixaudio='systemctl --user restart wireplumber pipewire pipewire-pulse && 
 
 # Set an alias 'v' for Neovim if available; otherwise, fallback to Vim
 if command -v nvim &> /dev/null; then
+    export EDITOR='nvim'
     alias v='/opt/nvim-linux64/bin/nvim'
     alias vd='v .'
 else
+    export EDITOR='vi'
     alias v='/usr/bin/vi'
     alias vd='v .'
 fi
@@ -237,4 +236,11 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Initialize starship prompt
 eval "$(starship init zsh)"
+
+# Checks if the starship config exists if not use nerd font preset
+# NOTE: this needs to happend after initializing of prompt
+if [ ! -f ~/.config/starship.toml ]; then
+    starship preset nerd-font-symbols -o ~/.config/starship.toml
+fi
