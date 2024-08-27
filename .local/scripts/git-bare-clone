@@ -5,18 +5,18 @@ trap cleanup SIGINT SIGTERM ERR EXIT
 
 usage() {
     cat << EOF
-Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-v] [-l location] repository foldername
+Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-v] [-l location] repository [foldername]
 
 Clone a bare git repo and set up environment for working comfortably and exclusively from worktrees.
 
 Positional arguments:
   repository     URL of the repository to clone
-  foldername     Name of the folder where the repository will be cloned
+  foldername     Name of the folder where the repository will be cloned (optional)
 
 Options:
   -h, --help      Print this help and exit
   -v, --verbose   Print script debug info
-  -l, --location  Location of the bare repo contents
+  -l, --location  Location of the bare repo contents (if not provided, defaults to foldername)
 EOF
     exit
 }
@@ -45,7 +45,6 @@ die() {
 }
 
 parse_params() {
-
     while :; do
         case "${1-}" in
             -h | --help) usage ;;
@@ -61,10 +60,13 @@ parse_params() {
         shift
     done
 
-    [[ $# -ne 2 ]] && die "Invalid number of arguments: expected repository URL and folder name"
+    if [[ $# -lt 1 || $# -gt 2 ]]; then
+        die "Invalid number of arguments: expected repository URL and optionally folder name"
+    fi
 
     repository="${1}"
-    foldername="${2}"
+    foldername="${2:-$(basename "${repository}" .git)}"
+    location="${location:-$foldername}"
 
     return 0
 }
@@ -72,7 +74,7 @@ parse_params() {
 parse_params "$@"
 setup_colors
 
-msg "${YELLOW}Cloning bare repository from ${repository} to $foldername...${NOFORMAT}"
+msg "${YELLOW}Cloning bare repository from ${repository} to ${foldername}...${NOFORMAT}"
 git clone --bare --filter=blob:none "${repository}" "${foldername}"
 pushd "${foldername}" > /dev/null
 msg "${YELLOW}Adjusting origin fetch locations...${NOFORMAT}"
