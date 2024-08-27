@@ -6,9 +6,8 @@ wezterm.on('gui-startup', function()
     args = {
       'sh',
       '-c',
-      'echo "\n\\033[4mDotfiles Status\\033[0m" && '
-        .. '/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME fetch && '
-        .. 'echo "" && '
+      'echo "\n\n\\033[4mDotfiles Status\\033[0m" && '
+        .. '/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME fetch && \n'
         .. '/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status -sb && '
         .. 'exec $SHELL; ',
     },
