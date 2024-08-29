@@ -14,4 +14,4 @@ sleep 2 # NOTE: this must be >= 2
 wmctrl -r "Mozilla Firefox Private Browsing" -t 2
 
 # Launch Wezterm (stays in workspace 1)
-wezterm # INFO: run this last due to weird behavior with wmctrl
+wezterm start -- startup # INFO: run this last due to weird behavior with wmctrl

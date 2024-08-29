@@ -6,8 +6,7 @@
 ## Prerequisites
 - Assumes installing on Linux system
     - Check [wsl branch](https://github.com/iton0/dotfiles/tree/wsl) for WSL installation
-- Copy or move ***.ssh***  folder to new computer $HOME directory and:
-    - ***.env*** file
+- Copy or move ***.ssh***  folder to new computer $HOME directory
     - Copy any other important files/folders
 
 ## Installation

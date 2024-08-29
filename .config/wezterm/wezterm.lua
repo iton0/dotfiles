@@ -1,18 +1,43 @@
 local wezterm = require('wezterm')
 local config = wezterm.config_builder()
 
-wezterm.on('gui-startup', function()
+wezterm.on('gui-startup', function(cmd)
+  local args = {
+    'sh',
+    '-c',
+    'echo "\n\\033[4mDotfiles Status\\033[0m" && '
+      .. '/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME fetch && \n'
+      .. '/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status -sb && '
+      .. 'exec $SHELL; ',
+  }
+  if cmd then
+    if cmd.args[1] == 'startup' then
+      args = {
+        'sh',
+        '-c',
+        'nvim --headless "+Lazy! sync" "+MasonToolsUpdateSync" "+TSUpdateSync"  +qa && '
+          .. 'echo "\n\n\\033[4mDotfiles Status\\033[0m" && '
+          .. '/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME fetch && \n'
+          .. '/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status -sb && '
+          .. 'exec $SHELL; ',
+      }
+    end
+    if cmd.args[1] == 'ssh' then
+      args = {
+        'zsh',
+      }
+    end
+  end
   local _, _, window = wezterm.mux.spawn_window({
-    args = {
-      'sh',
-      '-c',
-      'echo "\n\n\\033[4mDotfiles Status\\033[0m" && '
-        .. '/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME fetch && \n'
-        .. '/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status -sb && '
-        .. 'exec $SHELL; ',
-    },
+    args = args,
   })
-  window:gui_window():toggle_fullscreen()
+  if cmd and cmd.args[1] == 'ssh' then
+    -- Maximize the window for SSH command
+    window:gui_window():maximize()
+  else
+    -- Fullscreen for other commands
+    window:gui_window():toggle_fullscreen()
+  end
   window:active_tab():set_title(' ')
 end)
 

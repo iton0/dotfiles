@@ -2,6 +2,7 @@
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="/opt/nvim-linux64/bin:$PATH"
+export PATH="$HOME/.zig/zig-linux-x86_64-0.13.0/:$PATH"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -40,12 +41,6 @@ source /usr/share/doc/fzf/examples/key-bindings.zsh
 source /usr/share/doc/fzf/examples/completion.zsh
 
 # User configuration
-
-# Paths that may not be on all computer
-if [[ -z $SSH_CONNECTION ]]; then
-    export PATH="$HOME/.zig/zig-linux-x86_64-0.13.0/:$PATH"
-    # Add more paths here
-fi
 
 # Load environment variables from .env file
 if [ -f ~/.env ]; then
@@ -152,65 +147,19 @@ confirm_nvim_update() {
     echo "--------------------------------" &&
     echo "New version:" &&
     /opt/nvim-linux64/bin/nvim --version &&
-    rm nvim-linux64.tar.gz &&
-    echo "--------------------------------" &&
-    echo "" &&
-    nvim --headless "+Lazy! sync" "+TSUpdateSync" "+MasonToolsUpdateSync" +qa # Syncs neovim plugins in headless mode
+    rm nvim-linux64.tar.gz
 }
 
 # Aliases for ssh commands:
 alias ssh-start='sudo systemctl start ssh'
 alias ssh-stop='sudo systemctl stop ssh'
 alias ssh-status='sudo systemctl status ssh'
-alias ssh-att='wakeup'
-wakeup() {
-    # Check if the server is awake
-    if nc -z -w 5 $WOL_IP_ADDRESS $SSH_PORT > /dev/null 2>&1; then
-        echo "Server is awake. Connecting via SSH..."
-        wezterm ssh iton-darter
-        return 0
-    else
-        echo "Server is not awake. Sending WoL packet..."
-        wakeonlan -i $WOL_IP_ADDRESS -p $WOL_PORT $WOL_MAC_ADDRESS
-
-        # First wait period (10 seconds)
-        echo "Waiting for 10 seconds before first check..."
-        sleep 10
-        if nc -z -w 5 $WOL_IP_ADDRESS $SSH_PORT > /dev/null 2>&1; then
-            echo "Server is now awake after first wait period. Connecting via SSH..."
-            wezterm ssh iton-darter
-            return 0
-        fi
-
-        # Second wait period (5 seconds)
-        echo "Waiting for 5 seconds before second check..."
-        sleep 5
-        if nc -z -w 5 $WOL_IP_ADDRESS $SSH_PORT > /dev/null 2>&1; then
-            echo "Server is now awake after second wait period. Connecting via SSH..."
-            wezterm ssh iton-darter
-            return 0
-        fi
-
-        # Final wait period (5 seconds)
-        echo "Waiting for 5 seconds before final check..."
-        sleep 5
-        if nc -z -w 5 $WOL_IP_ADDRESS $SSH_PORT > /dev/null 2>&1; then
-            echo "Server is now awake after final wait period. Connecting via SSH..."
-            wezterm ssh iton-darter
-            return 0
-        fi
-
-        # If the server is still not awake after all checks
-        echo "Server is still not awake after all attempts. Please check the server status."
-        return 1
-    fi
-}
+alias ssh-att='wezterm ssh iton-darter -- ssh'
 
 # Aliases for convenient terminal commands:
 alias ud='cd ..'
 alias cl='clear'
 alias hocl='cd && clear'
-alias venv='v ~/.env'
 alias scpt='cd ~/.local/scripts'
 alias vscpt='cd ~/.local/scripts && vd'
 alias vzsh='v ~/.zshrc'
