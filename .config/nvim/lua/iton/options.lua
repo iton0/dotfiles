@@ -64,6 +64,9 @@ vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_node_provider = 0
 
+-- Disable language related options
+vim.g.zig_fmt_parse_errors = 0
+
 -- Set the 'guicursor' option to control the cursor appearance in different modes
 vim.o.guicursor = table.concat({
   'n-v-c:block-Cursor/lCursor-blinkwait500-blinkon100-blinkoff100', -- Normal mode

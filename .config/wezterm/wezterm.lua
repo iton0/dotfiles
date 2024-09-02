@@ -42,15 +42,18 @@ wezterm.on('gui-startup', function(cmd)
 end)
 
 -- Configuration
-config.colors = {}
-config.colors.background = '#101010' -- Neovim colorscheme background
+config.color_scheme = 'Nord (base16)'
+config.colors = {
+  background = '#1c1c1c',
+  selection_bg = '#2e2e2e',
+  selection_fg = '#b0b0b0',
+}
 
 config.allow_square_glyphs_to_overflow_width = 'Always'
 config.warn_about_missing_glyphs = false
 config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
 config.freetype_load_target = 'HorizontalLcd'
 config.font_size = 16.45
-config.color_scheme = 'Nord (base16)'
 
 config.audible_bell = 'Disabled'
 config.animation_fps = 1

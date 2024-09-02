@@ -12,7 +12,7 @@ return {
         comment = lackluster.color.gray4,
       },
       tweak_background = {
-        normal = 'none',
+        normal = '#1c1c1c',
         telescope = 'none',
         menu = lackluster.color.gray3,
       },
