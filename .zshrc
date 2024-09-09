@@ -18,8 +18,6 @@ zstyle ':omz:update' frequency 7
 # Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
 
-ZSH_THEME=robbyrussell
-
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
@@ -179,6 +177,12 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+eval "$(starship init zsh)"
+
+if [ ! -f ~/.config/starship.toml ]; then
+    starship preset no-nerd-font -o ~/.config/starship.toml
+fi
+
 # Check if we are not already in a tmux session
 if [[ -z "$TMUX" ]]; then
 tmux new-session -As HOME ' \
@@ -196,3 +200,5 @@ tmux new-session -As HOME ' \
     '
     clear
 fi
+
+
