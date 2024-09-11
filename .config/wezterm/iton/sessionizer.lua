@@ -1,15 +1,9 @@
 local wezterm = require('wezterm')
 local act = wezterm.action
-
 local M = {}
 
 local home = os.getenv('HOME') .. '/'
 local fd = home .. '.local/bin/fd'
-
-local work = home .. 'work/'
-local neovim_dev = home .. 'neovim_dev/'
-local personal = home .. 'personal/'
-local sandbox = home .. 'sandbox/'
 
 M.open = function(window, pane)
   local projects = {}
@@ -18,12 +12,9 @@ M.open = function(window, pane)
     fd,
     '-HI',
     '-td',
-    '--prune',
+    '--max-depth=2',
     '.',
-    neovim_dev,
-    work,
-    personal,
-    sandbox,
+    home .. 'Code/',
     -- add more paths here
   })
 
@@ -41,16 +32,6 @@ M.open = function(window, pane)
     table.insert(projects, { label = tostring(label), id = tostring(id) })
   end
 
-  local function tab_title(tab_info)
-    local title = tab_info.tab_title
-    -- if the tab title is explicitly set, take that
-    if title and #title > 0 then
-      return title
-    end
-    -- Otherwise, use an single space string for the title
-    return ' '
-  end
-
   wezterm.GLOBAL.previous_workspace = window:active_workspace()
   window:perform_action(
     act.InputSelector({
@@ -66,12 +47,6 @@ M.open = function(window, pane)
             }),
             pane
           )
-          wezterm.on('format-tab-title', function(tab)
-            local title = tab_title(tab)
-            return {
-              { Text = ' ' .. (tab.tab_index + 1) .. ': ' .. title .. ' ' },
-            }
-          end)
         end
       end),
       fuzzy = true,
