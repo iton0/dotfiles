@@ -11,7 +11,7 @@ vim.wo.number = true
 vim.wo.relativenumber = true
 
 -- Make default statusline cleaner for oil.nvim
-vim.o.statusline = '%=%m%=%s'
+vim.o.statusline = '%=%m%='
 vim.o.laststatus = 3
 
 -- Sets how Neovim will display certain whitespace in the editor.
@@ -73,6 +73,3 @@ vim.o.guicursor = table.concat({
   'i-ci:ver25-Cursor/lCursor-blinkwait500-blinkon100-blinkoff100', -- Insert mode
   'r:hor50-Cursor/lCursor-blinkwait100-blinkon100-blinkoff100', -- Replace mode
 }, ',')
-
--- Hide the banner (if you want). To show it temporarily you can use I inside Netrw.
-vim.g.netrw_banner = 0

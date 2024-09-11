@@ -22,11 +22,11 @@ require('lazy').setup({ import = 'iton.plugins' }, {
     lazy = true,
   },
   dev = {
-    path = '~/neovim_dev/',
+    path = '~/Code/neovim_dev/',
     fallback = true,
   },
   install = { colorscheme = { 'lackluster' } },
-  rocks = { enabled = false }, -- Disable `luarocks` support completely
+  rocks = { enabled = false },
   checker = {
     enabled = true,
     notify = false,
@@ -34,6 +34,32 @@ require('lazy').setup({ import = 'iton.plugins' }, {
   },
   change_detection = {
     notify = false,
+  },
+  ui = {
+    icons = {
+      cmd = ' ',
+      config = ' ',
+      event = ' ',
+      ft = ' ',
+      init = ' ',
+      import = ' ',
+      keys = ' ',
+      lazy = ' ',
+      loaded = '●',
+      not_loaded = '○',
+      plugin = ' ',
+      runtime = ' ',
+      require = ' ',
+      source = ' ',
+      start = ' ',
+      task = '✔ ',
+      list = {
+        '●',
+        '➜',
+        '★',
+        '‒',
+      },
+    },
   },
   performance = {
     rtp = {

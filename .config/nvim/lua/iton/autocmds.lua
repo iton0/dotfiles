@@ -17,9 +17,18 @@ autocmd('FileType', {
   end,
 })
 
+-- Function to check and load plugins
+local function load_plugins(plugins_to_load)
+  for _, plugin in ipairs(plugins_to_load) do
+    local success, _ = pcall(require, plugin)
+    if not success then
+      require('lazy').load({ plugins = { plugin } })
+    end
+  end
+end
+
 -- Only load oil.nvim when starting nvim in directory
 autocmd('VimEnter', {
-  pattern = '*',
   callback = function()
     local filename = vim.fn.expand('%:p')
     if vim.fn.isdirectory(filename) == 1 then
@@ -34,7 +43,6 @@ autocmd('VimEnter', {
 
 -- Conditionally load plugins if the filetype is not 'oil'
 autocmd('BufReadPre', {
-  pattern = '*',
   callback = function()
     -- Check if the filetype is 'oil'
     if vim.bo.filetype ~= 'oil' then
@@ -42,15 +50,15 @@ autocmd('BufReadPre', {
       local plugins_to_load = {
         'nvim-lspconfig',
         'guess-indent.nvim',
+        -- Add more plugins here
       }
 
       -- Load each plugin
-      require('lazy').load({ plugins = plugins_to_load })
+      load_plugins(plugins_to_load)
     end
   end,
 })
 autocmd('BufReadPost', {
-  pattern = '*',
   callback = function()
     -- Check if the filetype is 'oil'
     if vim.bo.filetype ~= 'oil' then
@@ -59,17 +67,45 @@ autocmd('BufReadPost', {
         'nvim-treesitter',
         'gitsigns.nvim',
         'lualine.nvim',
+        -- Add more plugins here
       }
 
       -- Load each plugin
-      require('lazy').load({ plugins = plugins_to_load })
+      load_plugins(plugins_to_load)
+    end
+  end,
+})
+autocmd('BufWritePre', {
+  callback = function()
+    -- Check if the filetype is 'oil'
+    if vim.bo.filetype ~= 'oil' then
+      -- Check if the plugin is not already loaded
+      if not pcall(require, 'conform') then
+        -- Trigger plugin loading
+        require('lazy').load({ plugins = { 'conform.nvim' } })
+        require('conform').format({ timeout = 500, lsp_format = 'fallback' })
+      end
+    end
+  end,
+})
+autocmd('InsertEnter', {
+  callback = function()
+    -- Check if the filetype is 'oil'
+    if vim.bo.filetype ~= 'oil' then
+      -- Define plugins to load
+      local plugins_to_load = {
+        'nvim-cmp',
+        -- Add more plugins here
+      }
+
+      -- Load each plugin
+      load_plugins(plugins_to_load)
     end
   end,
 })
 
 -- Set local settings for terminal buffers
 autocmd('TermOpen', {
-  group = vim.api.nvim_create_augroup('custom-term-open', {}),
   callback = function()
     vim.opt_local.number = false
     vim.opt_local.relativenumber = false

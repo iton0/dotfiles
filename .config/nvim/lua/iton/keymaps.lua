@@ -2,7 +2,7 @@
 -- Plugin-specific keymaps will be in
 -- their respective files
 
-local M = require('iton.globals')
+local M = require('iton.utils')
 local map = M.map
 local noremap_silent = M.noremap_silent
 local silent = M.silent

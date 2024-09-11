@@ -1,9 +1,10 @@
-local M = require('iton.globals')
+local M = require('iton.utils')
 local map = M.map
 
 return {
   'ThePrimeagen/harpoon',
   branch = 'harpoon2',
+  dependencies = 'nvim-lua/plenary.nvim',
   keys = {
     { '<leader>h' },
     { '<leader>1' },
@@ -13,7 +14,6 @@ return {
     { '<leader>5' },
     { '<leader>6' },
   },
-  dependencies = 'nvim-lua/plenary.nvim',
   config = function()
     local harpoon = require('harpoon')
     harpoon:setup({

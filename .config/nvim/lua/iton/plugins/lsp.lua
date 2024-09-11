@@ -1,21 +1,4 @@
-local M = require('iton.globals')
-local keymap = M.map
-
 return {
-  -- Faster Lua LSP setup
-  {
-    'folke/lazydev.nvim',
-    ft = 'lua', -- only load on lua files
-    opts = {
-      library = {
-        -- See the configuration section for more details
-        -- Load luvit types when the `vim.uv` word is found
-        { path = 'luvit-meta/library', words = { 'vim%.uv' } },
-      },
-    },
-  },
-  'Bilal2453/luvit-meta', -- optional `vim.uv` typings
-
   -- LSP Configuration & Plugins
   {
     'neovim/nvim-lspconfig',
@@ -25,6 +8,7 @@ return {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
+      'hrsh7th/cmp-nvim-lsp',
     },
     build = ':MasonToolsUpdateSync',
     config = function()
@@ -44,11 +28,11 @@ return {
 
       vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
         border = _border,
-        title = 'Hover Docs',
+        title = 'HoverDocs',
       })
       vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {
         border = _border,
-        title = 'Signature Docs',
+        title = 'SignatureDocs',
       })
 
       -- LSP servers and clients are able to communicate to each other what features they support.
@@ -57,21 +41,6 @@ return {
       --  So, we create new capabilties with nvim cmp, and then broadcast that to the servers.
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-
-      -- Easier LSP Setup
-      vim.api.nvim_create_autocmd('User', {
-        pattern = 'MasonToolsUpdateCompleted',
-        callback = function()
-          if not M.is_lsp_excluded_filetype() then
-            vim.cmd('LspStart')
-            vim.defer_fn(function()
-              if next(vim.lsp.get_clients({ bufnr = vim.fn.bufnr('%') })) == nil then
-                vim.cmd('LspInstall')
-              end
-            end, 750)
-          end
-        end,
-      })
 
       --  This function gets run when an LSP connects to a particular buffer.
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -101,7 +70,7 @@ return {
           map('<leader>a', vim.lsp.buf.code_action, 'Code [A]ction', { 'n', 'x' })
 
           -- Show the signature of the function you're currently completing.
-          map('<C-s>', vim.lsp.buf.signature_help, '[S]ignature Documentation')
+          map('gs', vim.lsp.buf.signature_help, '[S]ignature Documentation')
         end,
       })
 
@@ -115,11 +84,13 @@ return {
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
         -- gopls = {},
         -- rust_analyzer = {},
         -- html = { filetypes = { 'html', 'twig', 'hbs'} },
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
+        clangd = {},
+        pyright = {},
+        ts_ls = {},
         lua_ls = {
           -- cmd = {...},
           -- filetypes = { ...},
@@ -131,6 +102,7 @@ return {
               },
               diagnostics = {
                 disable = { 'missing-fields' },
+                globals = { 'vim' },
               },
             },
           },
@@ -147,29 +119,18 @@ return {
       }
 
       -- Ensure the servers above are installed
-      require('mason').setup({
-        ui = {
-          border = _border,
-          icons = {
-            package_installed = '✓',
-            package_pending = '',
-            package_uninstalled = '✗',
-          },
-        },
-      })
+      require('mason').setup({})
+
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Neovim/Lua
-        'clangd', -- C/C++
-        'clang-format',
-        'pyright', -- Python
-        'black',
-        'typescript-language-server', -- Web Dev
-        'prettierd',
+        'clang-format', -- C/C++
+        'black', -- Python
+        'prettierd', -- Web Dev
         'beautysh', -- Shell/bash/zsh
-        'google-java-format', -- Java (NOTE: use VS C*** for more advanced usage)
+        'google-java-format', -- Java
       })
       require('mason-tool-installer').setup({
         ensure_installed = ensure_installed,
@@ -189,34 +150,5 @@ return {
         },
       })
     end,
-    -- Check if LSP server is ready. If not, starts LSP or installs LSP.
-    keymap('n', '<M-l>', function()
-      if next(vim.lsp.get_clients({ bufnr = vim.fn.bufnr('%') })) ~= nil then
-        print('LSP Already Installed')
-        vim.defer_fn(function()
-          vim.cmd('echo ""')
-        end, 750)
-      elseif M.is_lsp_excluded_filetype() then
-        local input = vim.fn.input(' ' .. vim.bo.filetype .. ' is excluded from LSP. Proceed? (y/n) ')
-        if input == 'y' then
-          vim.cmd("echo ''")
-          vim.cmd('LspInstall')
-        elseif input == 'n' then
-          vim.cmd("echo ''")
-        else
-          vim.cmd("echo 'Invalid input'")
-          vim.defer_fn(function()
-            vim.cmd("echo ''")
-          end, 750)
-        end
-      else
-        vim.cmd('LspStart')
-        vim.defer_fn(function()
-          if next(vim.lsp.get_clients({ bufnr = vim.fn.bufnr('%') })) == nil then
-            vim.cmd('MasonToolsInstall')
-          end
-        end, 250)
-      end
-    end, { desc = 'LSP Install' }),
   },
 }
