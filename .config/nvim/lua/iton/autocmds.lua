@@ -79,27 +79,9 @@ autocmd('BufWritePre', {
   callback = function()
     -- Check if the filetype is 'oil'
     if vim.bo.filetype ~= 'oil' then
-      -- Check if the plugin is not already loaded
-      if not pcall(require, 'conform') then
-        -- Trigger plugin loading
-        require('lazy').load({ plugins = { 'conform.nvim' } })
-        require('conform').format({ timeout = 500, lsp_format = 'fallback' })
-      end
-    end
-  end,
-})
-autocmd('InsertEnter', {
-  callback = function()
-    -- Check if the filetype is 'oil'
-    if vim.bo.filetype ~= 'oil' then
-      -- Define plugins to load
-      local plugins_to_load = {
-        'nvim-cmp',
-        -- Add more plugins here
-      }
-
-      -- Load each plugin
-      load_plugins(plugins_to_load)
+      -- Trigger plugin loading
+      require('lazy').load({ plugins = { 'conform.nvim' } })
+      require('conform').format({ timeout = 500, lsp_format = 'fallback' })
     end
   end,
 })
