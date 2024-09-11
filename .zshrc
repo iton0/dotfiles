@@ -54,24 +54,23 @@ alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 # and upgrade packages in one command.
 # Additional autoremoves any packages no longer in use.
 # Current package managers: apt and flatpak.
-alias update=' \
-    sudo apt update && \
-    sudo apt upgrade -y && \
-    sudo apt autoremove -y && \
-    sudo apt autoclean -y && \
-    sudo apt clean -y \
-    '
+update() {
+    sudo apt update
+    sudo apt upgrade -y
+    sudo apt autoremove -y
+    sudo apt autoclean -y
+    sudo apt clean -y
+}
 
 # Alias for biannual laptop maintainence
-alias fullupdate=' \
-    update && \
-    nvim-update && \
-    omz update \
-    '
+fullupdate() {
+    update
+    omz update
+    nvim-update
+}
 
 # Alias for add/readding dotfiles
-alias add-dot='readd-dot'
-readd-dot() {
+add-dot() {
     rm -rf ~/.dotfiles/
 
     # Clone the repository with the specified branch name
@@ -97,32 +96,28 @@ readd-dot() {
 
     # Makes everything faster in git repo
     dot maintenance start
-    dot restore . # The above command puts the repo as maintainence in the global git config
-                   # This command takes it out of global since it is part of the local dotfiles config
+    dot restore ~/.gitconfig # The above command puts the repo as maintainence in the global git config
+    # This command takes it out of global since it is part of the local dotfiles config
 }
 
 # Alias for updating Neovim version
-alias nvim-update='confirm_nvim_update'
-confirm_nvim_update() {
-    echo "Installing Neovim" &&
-    echo "Old version:" &&
-    /opt/nvim-linux64/bin/nvim --version &&
-    echo "--------------------------------" &&
-    echo "" &&
-    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz &&
-    sudo rm -rf /opt/nvim-linux64 &&
-    sudo mkdir -p /opt/nvim-linux64 &&
-    sudo chmod a+rX /opt/nvim-linux64 &&
-    sudo tar -C /opt -xzf nvim-linux64.tar.gz &&
+nvim-update() {
+    echo "Installing Neovim"
+    echo "Old version:"
+    /opt/nvim-linux64/bin/nvim --version
+    echo "--------------------------------"
+    echo ""
+    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+    sudo rm -rf /opt/nvim-linux64
+    sudo mkdir -p /opt/nvim-linux64
+    sudo chmod a+rX /opt/nvim-linux64
+    sudo tar -C /opt -xzf nvim-linux64.tar.gz
     # make it available in /usr/local/bin, distro installs to /usr/bin
-    sudo ln -sf /opt/nvim-linux64/bin/nvim /usr/local/bin/ &&
-    echo "--------------------------------" &&
-    echo "New version:" &&
-    /opt/nvim-linux64/bin/nvim --version &&
-    rm nvim-linux64.tar.gz &&
-    echo "--------------------------------" &&
-    echo "" &&
-    nvim --headless "+Lazy! sync" "+TSUpdateSync" "+MasonToolsUpdateSync" +qa # Syncs neovim plugins in headless mode
+    sudo ln -sf /opt/nvim-linux64/bin/nvim /usr/local/bin/
+    echo "--------------------------------"
+    echo "New version:"
+    /opt/nvim-linux64/bin/nvim --version
+    rm nvim-linux64.tar.gz
 }
 
 # Aliases for convenient terminal commands:
@@ -157,7 +152,7 @@ fi
 
 # Check if we are not already in a tmux session
 if [[ -z "$TMUX" ]]; then
-tmux new-session -As HOME ' \
+    tmux new-session -As HOME ' \
     sudo apt update && \
     sudo apt upgrade -y && \
     sudo apt autoremove -y && \
@@ -169,6 +164,6 @@ tmux new-session -As HOME ' \
     echo "" && \
     /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status -sb && \
     $SHELL \
-    '
+        '
     clear
 fi
