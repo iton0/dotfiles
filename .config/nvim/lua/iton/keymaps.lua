@@ -2,12 +2,10 @@
 -- Plugin-specific keymaps will be in
 -- their respective files
 
-local M = require('iton.globals')
+local M = require('iton.utils')
 local map = M.map
 local noremap_silent = M.noremap_silent
 local silent = M.silent
-
-map({ 'n', 'v' }, '<Space>', '<Nop>')
 
 -- Remap for Lazy.nvim functionality
 map('n', '<leader>la', ':Lazy load all<cr>')
@@ -22,7 +20,7 @@ map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 map('n', '<C-f>', [[:%s/]], { desc = 'Find and Replace' })
 map('n', '<M-f>', [[:cdo s/]], { desc = 'Quickfix Find and Replace' })
 
-map('n', '<c-b>', '<Nop>', { desc = 'None (to not conflict with tmux)' })
+map('n', '<c-b>', '<Nop>', { desc = 'None (to not conflict with wezterm)' })
 
 -- Remap for quicker <esc> in insert mode
 map('i', 'kj', '<esc>')

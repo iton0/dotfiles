@@ -8,6 +8,7 @@ return {
     keymaps = {
       ['<C-h>'] = false,
       ['<C-l>'] = false,
+      ['<C-t>'] = false,
     },
     view_options = {
       show_hidden = true,

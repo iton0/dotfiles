@@ -1,6 +1,5 @@
 return {
   'stevearc/conform.nvim',
-  event = 'BufWritePre',
   cmd = 'ConformInfo',
   opts = {
     formatters_by_ft = {
@@ -12,7 +11,6 @@ return {
       html = { 'prettierd' },
       css = { 'prettierd' },
       java = { 'google-java-format' },
-      xml = { 'xmlformat' },
       typescript = { 'prettierd' },
       c = { 'clang-format' },
       cpp = { 'clang-format' },

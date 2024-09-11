@@ -1,10 +1,7 @@
-local M = require('iton.globals')
-
 return {
   'nvim-lualine/lualine.nvim',
-  event = M.postnew,
+  event = 'BufNewFile',
   config = function()
-    -- Custom lualine layout
     local branch = {
       'branch',
       icons_enabled = false,
@@ -21,37 +18,11 @@ return {
       'diagnostics',
       symbols = { error = 'E-', warn = 'W-', info = 'I-', hint = 'H-' },
     }
-    local lsp = {
-      function()
-        local msg = 'No LSP'
-        local clients = vim.lsp.get_clients({ bufnr = 0 })
-
-        return #clients > 0
-            and table.concat(
-              vim.tbl_map(function(client)
-                return client.name
-              end, clients),
-              ','
-            )
-          or msg
-      end,
-      padding = { left = 0, right = 1 },
-    }
-    local diff = {
-      'diff',
-      colored = false,
-      padding = { left = 1, right = 0 },
-    }
     local lazy = {
       require('lazy.status').updates,
       cond = require('lazy.status').has_updates,
       color = { fg = '#ff9e64' },
-      padding = { left = 0, right = 1 },
-    }
-    local filetype = {
-      'filetype',
-      colored = false,
-      padding = { left = 0, right = 1 },
+      padding = { left = 1, right = 1 },
     }
     local location = {
       'location',
@@ -69,10 +40,10 @@ return {
       },
       sections = {
         lualine_a = {},
-        lualine_b = { branch, diff },
+        lualine_b = { branch },
         lualine_c = { '%=', filename },
-        lualine_x = { diagnostics, lsp, filetype },
-        lualine_y = { lazy, location },
+        lualine_x = { diagnostics, lazy },
+        lualine_y = { location },
         lualine_z = {},
       },
     })

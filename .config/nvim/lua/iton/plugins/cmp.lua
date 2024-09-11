@@ -1,23 +1,18 @@
 return {
   'hrsh7th/nvim-cmp',
-  event = 'InsertEnter',
   dependencies = {
     {
       'L3MON4D3/LuaSnip',
-      build = vim.fn.has('win32') ~= 0 or vim.fn.executable('make') ~= 1 and 'make install_jsregexp' or nil,
+      build = 'make install_jsregexp',
     },
+
     'saadparwaiz1/cmp_luasnip',
 
     -- Adds file path completion capabilities
     'hrsh7th/cmp-path',
 
-    -- Adds a number of user-friendly snippets
-    {
-      'rafamadriz/friendly-snippets',
-      config = function()
-        require('luasnip.loaders.from_vscode').lazy_load()
-      end,
-    },
+    -- Adds buffer words completion capabilities
+    'hrsh7th/cmp-buffer',
   },
   config = function()
     local cmp = require('cmp')
@@ -65,14 +60,10 @@ return {
         end, { 'i', 's' }),
       }),
       sources = {
-        {
-          name = 'lazydev',
-          -- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
-          group_index = 0,
-        },
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
         { name = 'path' },
+        { name = 'buffer' },
       },
     })
   end,

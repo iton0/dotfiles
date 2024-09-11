@@ -16,28 +16,26 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require('iton.options')
-require('iton.autocmds')
-require('iton.keymaps')
-
 -- [[ Plugins ]]
 require('lazy').setup({ import = 'iton.plugins' }, {
   defaults = {
     lazy = true,
   },
   dev = {
-    path = '~/neovim_dev/',
+    path = '~/Code/neovim_dev/',
     fallback = true,
   },
-  install = { colorscheme = { 'lackluster', 'default' } },
-  rocks = { enabled = false }, -- Disable `luarocks` support completely
+  install = { colorscheme = { 'lackluster' } },
+  rocks = { enabled = false },
   checker = {
     enabled = true,
     notify = false,
-    frequency = 86400, -- Check for updates every 24 hours
+    frequency = 604800, -- Check for updates once a week
+  },
+  change_detection = {
+    notify = false,
   },
   ui = {
-    border = 'rounded',
     icons = {
       cmd = ' ',
       config = ' ',
@@ -63,12 +61,10 @@ require('lazy').setup({ import = 'iton.plugins' }, {
       },
     },
   },
-  change_detection = {
-    notify = false,
-  },
   performance = {
     rtp = {
       disabled_plugins = {
+        'netrwPlugin',
         'tutor',
         'man',
         'rplugin',

@@ -10,8 +10,9 @@ vim.o.scrolloff = 10
 vim.wo.number = true
 vim.wo.relativenumber = true
 
--- Makes default statusline empty
-vim.o.statusline = ' '
+-- Make default statusline cleaner for oil.nvim
+vim.o.statusline = '%=%m%='
+vim.o.laststatus = 3
 
 -- Sets how Neovim will display certain whitespace in the editor.
 -- See `:help 'list'` and `:help 'listchars'`
@@ -63,12 +64,12 @@ vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_node_provider = 0
 
+-- Disable language related options
+vim.g.zig_fmt_parse_errors = 0
+
 -- Set the 'guicursor' option to control the cursor appearance in different modes
 vim.o.guicursor = table.concat({
   'n-v-c:block-Cursor/lCursor-blinkwait500-blinkon100-blinkoff100', -- Normal mode
   'i-ci:ver25-Cursor/lCursor-blinkwait500-blinkon100-blinkoff100', -- Insert mode
   'r:hor50-Cursor/lCursor-blinkwait100-blinkon100-blinkoff100', -- Replace mode
 }, ',')
-
--- Hide the banner (if you want). To show it temporarily you can use I inside Netrw.
-vim.g.netrw_banner = 0

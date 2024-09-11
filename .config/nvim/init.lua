@@ -1,1 +1,1 @@
-require('iton.lazy')
+require('iton.myinit')

@@ -1,11 +1,9 @@
-local M = require('iton.globals')
-
 return {
   -- Highlight, edit, and navigate code
   'nvim-treesitter/nvim-treesitter',
-  event = M.prenew,
-  cmd = 'TSUpdateSync',
   build = ':TSUpdateSync',
+  cmd = 'TSUpdateSync',
+  event = 'BufNewFile',
   main = 'nvim-treesitter.configs',
   opts = {
     ensure_installed = {
@@ -13,9 +11,9 @@ return {
       'c',
       'diff',
       'html',
+      'query',
       'lua',
       'luadoc',
-      'query',
       'markdown',
       'markdown_inline',
       'vim',
