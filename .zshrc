@@ -10,12 +10,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-zstyle ':omz:update' mode auto      # update automatically without asking
-
-# Uncomment the following line to change how often to auto-update (in days).
+zstyle ':omz:update' mode auto
 zstyle ':omz:update' frequency 7
 
-# Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
 
 # Which plugins would you like to load?
@@ -42,13 +39,6 @@ source /usr/share/doc/fzf/examples/completion.zsh
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-    export EDITOR='nvim'
-else
-    export EDITOR='vi'
-fi
-
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
@@ -57,30 +47,13 @@ fi
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 
-
-# The 'dot' alias simplifies Git commands by using a custom
-# repository location and working directory. It's used to manage
-# configuration files and dotfiles centrally.
-
-alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-
-# Alias Explanation:
-#   - '--git-dir=$HOME/dotfiles/': Custom Git repository path.
-#   - '--work-tree=$HOME': Working directory set to home.
-
-# Example Usage:
-#   - 'dot status': Check repo status.
-#   - 'dot add file.txt': Stage changes.
-#   - 'dot commit -m "Update"': Commit changes.
-#   - 'dot push origin main': Push changes.
-
 # Useful for managing dotfiles across systems.
+alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # Using this alias, you can update package information
 # and upgrade packages in one command.
 # Additional autoremoves any packages no longer in use.
 # Current package managers: apt and flatpak.
-
 alias update=' \
     sudo apt update && \
     sudo apt upgrade -y && \
@@ -153,7 +126,6 @@ confirm_nvim_update() {
 }
 
 # Aliases for convenient terminal commands:
-alias ud='cd ..'
 alias cl='clear'
 alias hocl='cd && clear'
 alias vtmux='v ~/.config/tmux/tmux.conf'
@@ -200,5 +172,3 @@ tmux new-session -As HOME ' \
     '
     clear
 fi
-
-
