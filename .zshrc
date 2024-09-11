@@ -12,12 +12,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-zstyle ':omz:update' mode auto      # update automatically without asking
-
-# Uncomment the following line to change how often to auto-update (in days).
+zstyle ':omz:update' mode auto
 zstyle ':omz:update' frequency 7
 
-# Uncomment the following line to enable command auto-correction.
 ENABLE_CORRECTION="true"
 
 # Which plugins would you like to load?
@@ -42,11 +39,6 @@ source /usr/share/doc/fzf/examples/completion.zsh
 
 # User configuration
 
-# Load environment variables from .env file
-if [ -f ~/.env ]; then
-    source ~/.env
-fi
-
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # Compilation flags
@@ -57,30 +49,13 @@ fi
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 
-
-# The 'dot' alias simplifies Git commands by using a custom
-# repository location and working directory. It's used to manage
-# configuration files and dotfiles centrally.
-
-alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-
-# Alias Explanation:
-#   - '--git-dir=$HOME/dotfiles/': Custom Git repository path.
-#   - '--work-tree=$HOME': Working directory set to home.
-
-# Example Usage:
-#   - 'dot status': Check repo status.
-#   - 'dot add file.txt': Stage changes.
-#   - 'dot commit -m "Update"': Commit changes.
-#   - 'dot push origin main': Push changes.
-
 # Useful for managing dotfiles across systems.
+alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # Using this alias, you can update package information
 # and upgrade packages in one command.
 # Additional autoremoves any packages no longer in use.
 # Current package managers: apt and flatpak.
-
 alias update=' \
     sudo apt update && \
     sudo apt upgrade -y && \
@@ -157,14 +132,13 @@ alias ssh-status='sudo systemctl status ssh'
 alias ssh-att='wezterm ssh iton-darter -- ssh'
 
 # Aliases for convenient terminal commands:
-alias ud='cd ..'
 alias cl='clear'
 alias hocl='cd && clear'
 alias scpt='cd ~/.local/scripts'
 alias vscpt='cd ~/.local/scripts && vd'
 alias vzsh='v ~/.zshrc'
 alias vgit='v ~/.gitconfig'
-alias wez='cd ~/.config/wezterm'
+alias wez='cd ~/.config/wezterm/iton'
 alias wezd='wez && vd'
 alias neo='cd ~/.config/nvim/lua/iton'
 alias neod='neo && vd'
