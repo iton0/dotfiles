@@ -123,7 +123,6 @@ nvim-update() {
 # Aliases for convenient terminal commands:
 alias cl='clear'
 alias hocl='cd && clear'
-alias vtmux='v ~/.config/tmux/tmux.conf'
 alias scpt='cd ~/.local/scripts'
 alias vscpt='cd ~/.local/scripts && vd'
 alias vzsh='v ~/.zshrc'
@@ -148,22 +147,4 @@ eval "$(starship init zsh)"
 
 if [ ! -f ~/.config/starship.toml ]; then
     starship preset no-nerd-font -o ~/.config/starship.toml
-fi
-
-# Check if we are not already in a tmux session
-if [[ -z "$TMUX" ]]; then
-    tmux new-session -As HOME ' \
-    sudo apt update && \
-    sudo apt upgrade -y && \
-    sudo apt autoremove -y && \
-    sudo apt autoclean -y && \
-    sudo apt clean -y && \
-    nvim --headless "+Lazy! sync" "+TSUpdateSync" "+MasonToolsUpdateSync" +qa && \
-    echo "" && \
-    /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME fetch && \
-    echo "" && \
-    /usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status -sb && \
-    $SHELL \
-        '
-    clear
 fi
