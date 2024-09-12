@@ -1,26 +1,23 @@
 return {
-  'slugbyte/lackluster.nvim',
+  'maxmx03/solarized.nvim',
   dev = true,
   init = function()
-    local lackluster = require('lackluster')
-
-    lackluster.setup({
-      tweak_ui = {
-        disable_undercurl = true,
+    require('solarized').setup({
+      transparent = {
+        enabled = true,
+        pmenu = false,
       },
-      tweak_syntax = {
-        comment = lackluster.color.gray6,
-      },
-      tweak_background = {
-        normal = '#1c1c1c',
-        telescope = 'none',
-        menu = lackluster.color.gray3,
+      styles = {
+        types = { italic = false, bold = false },
+        functions = { italic = false, bold = false },
+        parameters = { italic = false, bold = false },
+        comments = { italic = false, bold = false },
+        strings = { italic = false, bold = false },
+        keywords = { italic = false, bold = false },
+        variables = { italic = false, bold = false },
+        constants = { italic = false, bold = false },
       },
     })
-
-    vim.cmd.colorscheme('lackluster-night')
-
-    vim.cmd('highlight TelescopeMatching gui=none')
-    vim.cmd('highlight CursorLine ctermbg=none guibg=none')
+    vim.cmd.colorscheme('solarized')
   end,
 }

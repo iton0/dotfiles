@@ -25,7 +25,7 @@ require('lazy').setup({ import = 'iton.plugins' }, {
     path = '~/Code/neovim_dev/',
     fallback = true,
   },
-  install = { colorscheme = { 'lackluster' } },
+  install = { colorscheme = { 'solarized' } },
   rocks = { enabled = false },
   checker = {
     enabled = true,
@@ -36,6 +36,7 @@ require('lazy').setup({ import = 'iton.plugins' }, {
     notify = false,
   },
   ui = {
+    border = 'rounded',
     icons = {
       cmd = ' ',
       config = ' ',
@@ -47,7 +48,6 @@ require('lazy').setup({ import = 'iton.plugins' }, {
       lazy = ' ',
       loaded = '●',
       not_loaded = '○',
-      plugin = ' ',
       runtime = ' ',
       require = ' ',
       source = ' ',
