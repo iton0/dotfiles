@@ -2,16 +2,9 @@ local M = {}
 
 M.apply = function(config)
   ---
-  local colo_scheme = 'Nord (base16)'
-  local term_background = '#1c1c1c'
 
   -- Colorscheme
-  config.color_scheme = colo_scheme
-  config.colors = {
-    background = term_background,
-    selection_bg = '#2e2e2e',
-    selection_fg = '#b0b0b0',
-  }
+  config.color_scheme = 'Solarized Dark (Gogh)'
 
   -- Visual
   config.allow_square_glyphs_to_overflow_width = 'Always'

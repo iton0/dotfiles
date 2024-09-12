@@ -31,7 +31,6 @@ return {
     }
     require('lualine').setup({
       options = {
-        theme = 'lackluster',
         globalstatus = true,
         always_divide_middle = false,
         component_separators = { left = '', right = '' },
@@ -40,10 +39,10 @@ return {
       },
       sections = {
         lualine_a = {},
-        lualine_b = { branch },
-        lualine_c = { '%=', filename },
-        lualine_x = { diagnostics, lazy },
-        lualine_y = { location },
+        lualine_b = {},
+        lualine_c = { branch, '%=', filename },
+        lualine_x = { diagnostics, lazy, location },
+        lualine_y = {},
         lualine_z = {},
       },
     })

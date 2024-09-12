@@ -73,3 +73,6 @@ vim.o.guicursor = table.concat({
   'i-ci:ver25-Cursor/lCursor-blinkwait500-blinkon100-blinkoff100', -- Insert mode
   'r:hor50-Cursor/lCursor-blinkwait100-blinkon100-blinkoff100', -- Replace mode
 }, ',')
+
+-- Set the End Of Buffer character to a space
+vim.opt.fillchars:append('eob: ')
