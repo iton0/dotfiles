@@ -36,7 +36,6 @@ require('lazy').setup({ import = 'iton.plugins' }, {
     notify = false,
   },
   ui = {
-    border = 'rounded',
     icons = {
       cmd = ' ',
       config = ' ',

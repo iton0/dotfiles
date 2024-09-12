@@ -21,7 +21,7 @@ return {
     local lazy = {
       require('lazy.status').updates,
       cond = require('lazy.status').has_updates,
-      color = { fg = '#ff9e64' },
+      color = { fg = '#d17b00', gui = 'bold' },
       padding = { left = 1, right = 1 },
     }
     local location = {
