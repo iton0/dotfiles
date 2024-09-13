@@ -39,9 +39,9 @@
   bl = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
   rl = remote -v
   df = diff --word-diff
-  se = !git log --grep
-  gl = config --global -l ; outputs the .gitconfig file
-  alias = !git config --get-regexp ^alias\\. ; outputs the aliases
-  last = !git log -1 HEAD --stat --patch --format='%C(70)%h%Creset - %C(115)%an%Creset, %C(166)%ar%Creset : %C(33)%s%Creset%n%n%b%n%C(75)Changed Files Summary%C(reset)'
-  lg = !git log --format='%C(131)%h%Creset -%C(auto)%d%Creset %C(34)(%cr)%Creset %s %C(69)[%an]'
-  rlg = reflog --format='%C(70)%h%Creset -%C(auto)%d%Creset %C(166)%gd%Creset %C(33)%cr%Creset %C(auto)%gs%Creset'
+  se = log --grep
+  gl = config --global -l ; outputs the global .gitconfig file
+  alias = config --get-regexp ^alias\\. ; outputs the aliases
+  last = log -1 HEAD --stat --patch --pretty=format:'%C(auto)%h%Creset %C(bold)%s%Creset %C(green)(%ar)%Creset %C(cyan)[%an]%Creset%n%n%b%n%n%C(bold yellow)Changed Files Summary%Creset%n'
+  lg = log --graph --pretty=format:'%C(auto)%h%Creset%C(auto)%d%Creset %C(bold)%s%Creset %C(green)(%cr)%Creset %C(cyan)[%an]%Creset' --abbrev-commit --date=relative
+  rlg = reflog --format='%C(auto)%h%Creset -%C(auto)%d%Creset %C(green)%gd%Creset %C(bold)%gs%Creset %C(cyan)(%cr)%Creset'
