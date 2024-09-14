@@ -29,13 +29,11 @@ return {
       },
     })
 
-    -- Enable Telescope extensions if installed
     pcall(require('telescope').load_extension, 'fzf')
     pcall(require('telescope').load_extension, 'ui-select')
 
     local builtin = require('telescope.builtin')
 
-    -- Key mappings for Telescope functions
     map('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
     map('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
     map('n', '<leader>sq', builtin.quickfix, { desc = '[S]earch [Q]uickfix' })
