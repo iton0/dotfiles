@@ -20,7 +20,6 @@ return {
           GitSignsChange = { bg = 'NONE' },
           GitSignsDelete = { bg = 'NONE' },
         }
-
         return groups
       end,
       styles = {
@@ -34,20 +33,15 @@ return {
         constants = { italic = false, bold = false },
       },
     })
-    -- Set the initial colorscheme
     vim.cmd.colorscheme('solarized')
 
-    -- Function to toggle background
-    local function toggle_background()
+    vim.keymap.set('n', '<M-t>', function()
       if vim.o.background == 'dark' then
         vim.o.background = 'light'
       else
         vim.o.background = 'dark'
       end
-      vim.cmd.colorscheme('solarized') -- Reload colorscheme to apply the new background
-    end
-
-    -- Set keymap to toggle background
-    vim.keymap.set('n', '<M-t>', toggle_background)
+      vim.cmd.colorscheme('solarized')
+    end)
   end,
 }
