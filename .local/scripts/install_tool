@@ -6,7 +6,7 @@ set -e
 sudo apt update
 
 # Define list of packages to install
-packages=("unzip" "make" "tmux" "zsh" "fzf" "sed" "ripgrep" "xclip" "gcc" "python3.10-venv")
+packages=("unzip" "make" "zsh" "fzf" "sed" "ripgrep" "xclip" "gcc" "python3.10-venv")
 
 # Install all packages
 sudo apt install -y "${packages[@]}"

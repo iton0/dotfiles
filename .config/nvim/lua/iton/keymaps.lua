@@ -1,6 +1,5 @@
 -- This file holds all core keymaps
 -- NOTE: Plugin-specific keymaps will be in their respective files
-
 local M = require('iton.utils')
 local map = M.map
 local noremap_silent = M.noremap_silent
@@ -15,6 +14,7 @@ map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 map('n', '<C-f>', [[:%s/]], { desc = 'Find and Replace' })
+map('v', '<C-f>', [[:s/]], { desc = 'Find and Replace (Visual)' })
 map('n', '<M-f>', [[:cdo s/]], { desc = 'Quickfix Find and Replace' })
 
 map('n', '<c-b>', '<Nop>', { desc = 'None (to not conflict with wezterm)' })
@@ -64,11 +64,6 @@ map('n', '<C-j>', '<C-w><C-j>')
 map('n', '<C-k>', '<C-w><C-k>')
 
 map('t', '<esc><esc>', '<c-\\><c-n>')
-
-map('n', '<M-,>', '<c-w>5<')
-map('n', '<M-.>', '<c-w>5>')
-map('n', '<M-t>', '<C-W>+')
-map('n', '<M-s>', '<C-W>-')
 
 map('n', '<c-t>', function()
   vim.cmd.new()
