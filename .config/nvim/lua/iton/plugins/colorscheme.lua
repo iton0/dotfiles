@@ -1,7 +1,8 @@
 return {
   'maxmx03/solarized.nvim',
-  dev = true,
-  init = function()
+  lazy = false,
+  priority = 1000,
+  config = function()
     require('solarized').setup({
       transparent = {
         pmenu = false,

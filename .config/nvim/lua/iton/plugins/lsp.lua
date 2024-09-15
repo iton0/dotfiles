@@ -4,7 +4,7 @@ return {
     event = 'BufNewFile',
     cmd = { 'Mason', 'MasonToolsUpdateSync', 'MasonToolsInstallSync' },
     dependencies = {
-      'williamboman/mason.nvim',
+      { 'williamboman/mason.nvim', config = true },
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       'hrsh7th/cmp-nvim-lsp',
@@ -84,8 +84,6 @@ return {
           },
         },
       }
-
-      require('mason').setup({})
 
       local ensure_installed = vim.tbl_keys(servers)
       vim.list_extend(ensure_installed, {

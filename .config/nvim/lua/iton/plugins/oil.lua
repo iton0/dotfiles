@@ -5,12 +5,16 @@ return {
     { '<leader>-', '<cmd>Oil --float<cr>', desc = 'Oil float' },
   },
   opts = {
+    columns = {},
+    delete_to_trash = true,
+    constrain_cursor = 'name',
     keymaps = {
       ['<C-h>'] = false,
       ['<C-l>'] = false,
       ['<C-t>'] = false,
     },
     view_options = {
+      natural_order = false,
       show_hidden = true,
     },
   },

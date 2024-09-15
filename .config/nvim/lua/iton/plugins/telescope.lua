@@ -1,5 +1,6 @@
 local M = require('iton.utils')
 local map = M.map
+local HOME = os.getenv('HOME')
 
 return {
   'nvim-telescope/telescope.nvim',
@@ -54,11 +55,11 @@ return {
 
     map('n', '<leader>s.', function()
       builtin.find_files({
-        cwd = os.getenv('HOME'),
+        cwd = HOME,
         prompt_title = 'Dotfiles',
         find_command = {
           'git',
-          '--git-dir=' .. os.getenv('HOME') .. '/.dotfiles',
+          '--git-dir=.dotfiles',
           'ls-tree',
           '-r',
           'HEAD',

@@ -1,21 +1,24 @@
 return {
   'nvim-lualine/lualine.nvim',
-  event = 'BufNewFile',
+  event = 'VeryLazy',
   config = function()
     local branch = {
       'branch',
       icons_enabled = false,
-      color = { gui = 'bold' },
     }
     local filename = {
       'filename',
       path = 4,
       newfile_status = true,
       padding = { left = 0, right = 0 },
-      color = { gui = 'bold' },
     }
     local diagnostics = {
       'diagnostics',
+      diagnostics_color = {
+        warn = 'lualine_c_normal',
+        info = 'lualine_c_normal',
+        hint = 'lualine_c_normal',
+      },
       symbols = { error = 'E-', warn = 'W-', info = 'I-', hint = 'H-' },
     }
     local lazy = {
@@ -27,7 +30,6 @@ return {
     local location = {
       'location',
       left_padding = 2,
-      color = { gui = 'bold' },
     }
     require('lualine').setup({
       options = {
