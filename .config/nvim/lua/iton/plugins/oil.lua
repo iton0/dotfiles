@@ -5,7 +5,6 @@ return {
     { '<leader>-', '<cmd>Oil --float<cr>', desc = 'Oil float' },
   },
   opts = {
-    delete_to_trash = true,
     constrain_cursor = 'name',
     keymaps = {
       ['<C-h>'] = false,

@@ -10,7 +10,6 @@ map('n', '<leader>la', ':Lazy load all<cr>')
 map('n', '<leader>ll', ':Lazy<cr>', silent)
 map('n', '<leader>lr', ':Lazy restore<cr>', silent)
 map('n', '<leader>lp', ':Lazy profile<cr>', silent)
-map('n', '<leader>ls', ':Lazy sync<cr>', silent)
 
 map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
