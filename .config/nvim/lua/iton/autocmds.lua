@@ -22,11 +22,11 @@ autocmd('TermOpen', {
   end,
 })
 
+local filename = vim.fn.expand('%:p')
 local lazy = require('lazy')
 
 autocmd('UIEnter', {
   callback = function()
-    local filename = vim.fn.expand('%:p')
     if vim.fn.isdirectory(filename) == 1 then
       lazy.load({ plugins = { 'oil.nvim' } })
     end

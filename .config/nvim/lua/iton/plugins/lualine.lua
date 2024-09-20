@@ -19,7 +19,7 @@ return {
         info = 'lualine_c_normal',
         hint = 'lualine_c_normal',
       },
-      symbols = { error = 'E-', warn = 'W-', info = 'I-', hint = 'H-' },
+      icons_enabled = false,
     }
     local lazy = {
       require('lazy.status').updates,
