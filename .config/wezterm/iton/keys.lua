@@ -5,9 +5,31 @@ local M = {}
 
 M.apply = function(config)
   ---
+  config.disable_default_key_bindings = true
   config.leader = { key = 'b', mods = 'CTRL', timeout_milliseconds = 500 }
 
   config.keys = {
+    -- General
+    {
+      mods = 'CTRL|SHIFT',
+      key = 'P',
+      action = act.ActivateCommandPalette,
+    },
+    {
+      mods = 'CTRL|SHIFT',
+      key = 'L',
+      action = act.ShowDebugOverlay,
+    },
+    {
+      mods = 'CTRL|SHIFT',
+      key = 'X',
+      action = act.ActivateCopyMode,
+    },
+    {
+      mods = 'CTRL|SHIFT',
+      key = 'V',
+      action = act.PasteFrom('Clipboard'),
+    },
     -- tabs
     {
       mods = 'LEADER',
@@ -71,7 +93,11 @@ M.apply = function(config)
     },
 
     -- Sessions
-    { mods = 'LEADER', key = 'f', action = wezterm.action_callback(require('iton.sessionizer').open) },
+    {
+      mods = 'LEADER',
+      key = 'f',
+      action = wezterm.action_callback(require('iton.sessionizer').open),
+    },
     {
       mods = 'LEADER',
       key = 'h',

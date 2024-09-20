@@ -16,10 +16,11 @@ wezterm.on('gui-startup', function(cmd)
       args = {
         'sh',
         '-c',
-        'nvim --headless "+Lazy! sync" "+MasonToolsUpdateSync" "+TSUpdateSync"  +qa && '
-          .. 'echo "\n\n\\033[4mDotfiles Status\\033[0m" && '
+        -- 'nvim --headless "+Lazy! sync" "+MasonToolsUpdateSync" "+TSUpdateSync"  +qa && ' ..
+        'echo "\n\n\\033[4mDotfiles Status\\033[0m" && '
           .. '/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME fetch && \n'
           .. '/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status -sb && '
+          .. 'echo "\nIf you pull run \\033[4m<leader>lr\\033[0m in Neovim" && '
           .. 'exec $SHELL; ',
       }
     end
