@@ -23,17 +23,9 @@ return {
         }
         return groups
       end,
-      styles = {
-        types = { italic = false, bold = false },
-        functions = { italic = false, bold = false },
-        parameters = { italic = false, bold = false },
-        comments = { italic = false, bold = false },
-        strings = { italic = false, bold = false },
-        keywords = { italic = false, bold = false },
-        variables = { italic = false, bold = false },
-        constants = { italic = false, bold = false },
-      },
+      styles = { enabled = false },
     })
+
     vim.cmd.colorscheme('solarized')
 
     vim.keymap.set('n', '<M-t>', function()

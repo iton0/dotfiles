@@ -24,11 +24,10 @@ autocmd('TermOpen', {
 
 local lazy = require('lazy')
 
-autocmd('VimEnter', {
+autocmd('UIEnter', {
   callback = function()
     local filename = vim.fn.expand('%:p')
     if vim.fn.isdirectory(filename) == 1 then
-      -- Trigger plugin loading
       lazy.load({ plugins = { 'oil.nvim' } })
     end
   end,
@@ -36,24 +35,22 @@ autocmd('VimEnter', {
 
 local loaded_plugins = {}
 
-local pre_plugins_to_load = {
+local buf_pre_plugins = {
   'guess-indent.nvim',
   'nvim-lspconfig',
   -- Add more plugins here
 }
 
-local post_plugins_to_load = {
+local buf_post_plugins = {
   'nvim-treesitter',
   'gitsigns.nvim',
   -- Add more plugins here
 }
 
 local function load_plugins(plugins_to_load)
-  for _, plugin in ipairs(plugins_to_load) do
-    if vim.bo.filetype ~= 'oil' and not loaded_plugins[plugin] then
-      lazy.load({ plugins = { plugin } })
-      loaded_plugins[plugin] = true
-    end
+  if not loaded_plugins[plugins_to_load] and vim.bo.filetype ~= 'oil' then
+    lazy.load({ plugins = plugins_to_load })
+    loaded_plugins[plugins_to_load] = true
   end
 end
 
@@ -69,13 +66,13 @@ autocmd('BufWritePre', {
 
 autocmd('BufReadPre', {
   callback = function()
-    load_plugins(pre_plugins_to_load)
+    load_plugins(buf_pre_plugins)
   end,
 })
 
 autocmd('BufReadPost', {
   callback = function()
-    load_plugins(post_plugins_to_load)
+    load_plugins(buf_post_plugins)
   end,
 })
 

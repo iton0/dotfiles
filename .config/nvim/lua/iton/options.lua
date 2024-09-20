@@ -9,14 +9,10 @@ vim.o.scrolloff = 10
 vim.wo.number = true
 vim.wo.relativenumber = true
 
-vim.o.laststatus = 3
-vim.g.qf_disable_statusline = 1
-
 vim.o.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 vim.o.breakindent = true
-
 vim.o.wrap = true
 vim.o.linebreak = true
 

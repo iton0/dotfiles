@@ -1,5 +1,6 @@
 -- This file holds all core keymaps
 -- NOTE: Plugin-specific keymaps will be in their respective files
+
 local M = require('iton.utils')
 local map = M.map
 local noremap_silent = M.noremap_silent
@@ -7,6 +8,7 @@ local silent = M.silent
 
 map('n', '<leader>la', ':Lazy load all<cr>')
 map('n', '<leader>ll', ':Lazy<cr>', silent)
+map('n', '<leader>lr', ':Lazy restore<cr>', silent)
 map('n', '<leader>lp', ':Lazy profile<cr>', silent)
 map('n', '<leader>ls', ':Lazy sync<cr>', silent)
 
@@ -22,7 +24,12 @@ map('n', '<c-b>', '<Nop>', { desc = 'None (to not conflict with wezterm)' })
 map('i', 'kj', '<esc>')
 map('i', 'jk', '<esc>')
 
-map('n', 'dp', vim.diagnostic.goto_prev, { desc = 'Go to [D]iagnostic [P]revious message' })
+map(
+  'n',
+  'dp',
+  vim.diagnostic.goto_prev,
+  { desc = 'Go to [D]iagnostic [P]revious message' }
+)
 map('n', 'dn', vim.diagnostic.goto_next, { desc = 'Go to [D]iagnostic [N]ext message' })
 map('n', 'do', vim.diagnostic.open_float, { desc = '[D]iagnostic [O]pen Float' })
 
