@@ -16,4 +16,16 @@ return {
     'lewis6991/gitsigns.nvim',
     opts = {},
   },
+  {
+    'mbbill/undotree',
+    keys = {
+      {
+        '<leader>u',
+        function()
+          vim.cmd('UndotreeToggle')
+          vim.cmd('NoNeckPain')
+        end,
+      },
+    },
+  },
 }

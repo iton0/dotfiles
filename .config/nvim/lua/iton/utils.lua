@@ -10,6 +10,8 @@ return {
 
   is_loaded = function(plugin)
     -- API to check if plugin is not loaded
+    -- Use plugin name not plugin module name
+    -- ex) plugin = solarized.nvim vs. solarized
     if require('lazy.core.config').plugins[plugin]._.loaded == nil then
       return false
     else
