@@ -81,7 +81,7 @@ add-dot() {
 
 
     # Setup automatic remote branch tracking for the specific branch
-    # (This allows me to do things like push --force-with-lease which is a safer version of push --force)
+    # (This allows me to do things like push --force-with-lease which is a safer push --force)
     dot config remote.origin.fetch "+refs/heads/main:refs/remotes/origin/main"
 
     dot fetch # Update remote references
@@ -90,8 +90,7 @@ add-dot() {
     # Pull and set upstream to origin/<branch_name>
     dot pull --set-upstream origin main
 
-    # Configure dotfiles repo to hide untracked files and enable rerere
-    dot config --local status.showUntrackedFiles no
+    # Configure dotfiles repo to enable rerere
     dot config --local rerere.enabled true
 
     # Default strategy for pulling from remote is rebasing (prefer a linear history for my dotfiles)
@@ -136,6 +135,7 @@ alias scpt='cd ~/.local/scripts'
 alias vscpt='cd ~/.local/scripts && vd'
 alias vzsh='v ~/.zshrc'
 alias vgit='v ~/.gitconfig'
+alias vign='v ~/.gitignore'
 alias wez='cd ~/.config/wezterm/iton'
 alias wezd='wez && vd'
 alias neo='cd ~/.config/nvim/lua/iton'
