@@ -64,9 +64,9 @@ return {
     sign('DapBreakpoint', { text = '◉' })
     sign('DapBreakpointCondition', { text = '◉' })
 
-    dap.listeners.after.event_initialized['dapui_config'] = dapui.open
-    dap.listeners.before.event_terminated['dapui_config'] = dapui.close
-    dap.listeners.before.event_exited['dapui_config'] = dapui.close
+    -- dap.listeners.after.event_initialized['dapui_config'] = dapui.open
+    -- dap.listeners.before.event_terminated['dapui_config'] = dapui.close
+    -- dap.listeners.before.event_exited['dapui_config'] = dapui.close
 
     -- Basic debugging keymaps, feel free to change to your liking!
     vim.keymap.set('n', '<leader>bs', dap.continue, { desc = 'Debug: Start/Continue' })
@@ -83,8 +83,8 @@ return {
       dap.set_breakpoint(vim.fn.input('Breakpoint condition: '))
     end, { desc = 'Debug: Set Breakpoint' })
     vim.keymap.set('n', '<leader>bt', function()
-      vim.cmd('NoNeckPain')
       dapui.toggle({ reset = true })
+      vim.cmd('NoNeckPain')
     end, { desc = 'Debug: See last session result.' })
 
     -- Install language specific config here

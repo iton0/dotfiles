@@ -20,6 +20,7 @@ return {
         hint = 'lualine_c_normal',
       },
       icons_enabled = false,
+      padding = { left = 0, right = 1 },
     }
     local lazy = {
       require('lazy.status').updates,
@@ -27,10 +28,9 @@ return {
       color = { fg = '#d17b00', gui = 'bold' },
       padding = { left = 1, right = 1 },
     }
-    local location = {
-      'location',
-      left_padding = 2,
-    }
+    local function location()
+      return '%3c:%-4l'
+    end
     require('lualine').setup({
       options = {
         globalstatus = true,

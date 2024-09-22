@@ -1,46 +1,14 @@
 local autocmd = require('iton.utils').autocmd
-
-autocmd('TextYankPost', {
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-})
-
-autocmd('FileType', {
-  pattern = '*',
-  callback = function()
-    vim.opt.formatoptions:remove({ 'o' })
-  end,
-})
-
-autocmd('TermOpen', {
-  callback = function()
-    vim.opt_local.number = false
-    vim.opt_local.relativenumber = false
-    vim.opt_local.scrolloff = 0
-  end,
-})
-
-local filename = vim.fn.expand('%:p')
 local lazy = require('lazy')
-
-autocmd('UIEnter', {
-  callback = function()
-    if vim.fn.isdirectory(filename) == 1 then
-      lazy.load({ plugins = { 'oil.nvim' } })
-    end
-  end,
-})
-
+local filename = vim.fn.expand('%:p')
 local loaded_plugins = {}
 
+local always_plugins = { 'colorscheme.nvim', 'no-neck-pain.nvim' }
 local buf_pre_plugins = {
   'guess-indent.nvim',
   'nvim-lspconfig',
   -- Add more plugins here
 }
-
 local buf_post_plugins = {
   'nvim-treesitter',
   'gitsigns.nvim',
@@ -54,18 +22,26 @@ local function load_plugins(plugins_to_load)
   end
 end
 
-autocmd('BufWritePre', {
+local function load_always_plugins()
+  if not loaded_plugins[always_plugins] then
+    lazy.load({ plugins = always_plugins })
+    vim.schedule(function()
+      vim.cmd('NoNeckPain')
+    end)
+    loaded_plugins[always_plugins] = true
+  end
+end
+
+autocmd('FileType', {
+  pattern = '*',
   callback = function()
-    if not loaded_plugins['conform.nvim'] and vim.bo.filetype ~= 'oil' then
-      lazy.load({ plugins = { 'conform.nvim' } })
-      require('conform').format({ timeout = 500, lsp_format = 'fallback' })
-      loaded_plugins['conform.nvim'] = true
-    end
+    vim.opt.formatoptions:remove({ 'o' })
   end,
 })
 
 autocmd('BufReadPre', {
   callback = function()
+    load_always_plugins()
     load_plugins(buf_pre_plugins)
   end,
 })
@@ -73,6 +49,32 @@ autocmd('BufReadPre', {
 autocmd('BufReadPost', {
   callback = function()
     load_plugins(buf_post_plugins)
+  end,
+})
+
+autocmd('BufNewFile', {
+  callback = function()
+    load_always_plugins()
+    load_plugins({ buf_pre_plugins[2], buf_post_plugins[1] })
+  end,
+})
+
+autocmd('UIEnter', {
+  callback = function()
+    load_always_plugins()
+    if vim.fn.isdirectory(filename) == 1 then
+      lazy.load({ plugins = { 'oil.nvim' } })
+    end
+  end,
+})
+
+autocmd('BufWritePre', {
+  callback = function()
+    if not loaded_plugins['conform.nvim'] and vim.bo.filetype ~= 'oil' then
+      lazy.load({ plugins = { 'conform.nvim' } })
+      require('conform').format({ timeout = 500, lsp_format = 'fallback' })
+      loaded_plugins['conform.nvim'] = true
+    end
   end,
 })
 
@@ -86,3 +88,18 @@ autocmd('BufReadPost', {
 --     end
 --   end,
 -- })
+
+autocmd('TextYankPost', {
+  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})
+
+autocmd('TermOpen', {
+  callback = function()
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+    vim.opt_local.scrolloff = 0
+  end,
+})
