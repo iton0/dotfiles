@@ -1,7 +1,6 @@
 return {
   'maxmx03/solarized.nvim',
-  lazy = false,
-  priority = 1000,
+  name = 'colorscheme.nvim', -- NOTE: keep this setting if switch colorscheme
   config = function()
     require('solarized').setup({
       transparent = {
@@ -28,6 +27,7 @@ return {
 
     vim.cmd.colorscheme('solarized')
 
+    -- NOTE: only works for WSL
     vim.keymap.set('n', '<M-t>', function()
       if vim.o.background == 'dark' then
         vim.o.background = 'light'

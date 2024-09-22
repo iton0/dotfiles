@@ -1,8 +1,8 @@
 return {
   'stevearc/oil.nvim',
   keys = {
-    { '-', '<cmd>Oil<cr>', desc = 'Oil' },
-    { '<leader>-', '<cmd>Oil --float<cr>', desc = 'Oil float' },
+    { '-', '<cmd>Oil<cr>' },
+    { '<leader>-', '<cmd>Oil --float<cr>' },
   },
   opts = {
     constrain_cursor = 'name',

@@ -2,7 +2,6 @@ return {
   'nvim-treesitter/nvim-treesitter',
   build = ':TSUpdateSync',
   cmd = 'TSUpdateSync',
-  event = 'BufNewFile',
   main = 'nvim-treesitter.configs',
   opts = {
     ensure_installed = {

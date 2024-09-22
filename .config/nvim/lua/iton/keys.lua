@@ -70,7 +70,6 @@ map('n', '<C-j>', '<C-w><C-j>')
 map('n', '<C-k>', '<C-w><C-k>')
 
 map('t', '<esc><esc>', '<c-\\><c-n>')
-
 map('n', '<c-t>', function()
   vim.cmd.new()
   vim.cmd.wincmd('J')
@@ -81,5 +80,4 @@ map('n', '<c-t>', function()
 end)
 
 map({ 'n', 'v' }, 'gu', 'g~')
-
 map('n', '<M-c>', '<cmd>:echo ""<cr>', { desc = 'Clear Command line' })
