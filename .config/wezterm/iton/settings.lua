@@ -1,17 +1,18 @@
 local M = {}
+local utils = require('iton.utils')
 
 M.apply = function(config)
   ---
 
   -- Colorscheme
-  config.color_scheme = 'Solarized Dark (Gogh)'
+  config.color_scheme = utils.dark_scheme
 
   -- Visual
   config.allow_square_glyphs_to_overflow_width = 'Always'
   config.warn_about_missing_glyphs = false
   config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
   config.freetype_load_target = 'HorizontalLcd'
-  config.font_size = 16.35
+  config.font_size = 16.4
 
   -- Cursor
   config.audible_bell = 'Disabled'

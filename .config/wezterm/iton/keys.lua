@@ -30,6 +30,26 @@ M.apply = function(config)
       key = 'V',
       action = act.PasteFrom('Clipboard'),
     },
+    {
+      mods = 'ALT',
+      key = 'Enter',
+      action = act.ToggleFullScreen,
+    },
+    {
+      mods = 'CTRL',
+      key = '=',
+      action = act.IncreaseFontSize,
+    },
+    {
+      mods = 'CTRL',
+      key = '-',
+      action = act.DecreaseFontSize,
+    },
+    {
+      mods = 'CTRL',
+      key = '0',
+      action = act.ResetFontSize,
+    },
     -- tabs
     {
       mods = 'LEADER',
@@ -141,6 +161,12 @@ M.apply = function(config)
       mods = 'LEADER',
       key = 's',
       action = act.ShowLauncherArgs({ flags = 'FUZZY|WORKSPACES' }),
+    },
+
+    {
+      mods = 'ALT',
+      key = 't',
+      action = wezterm.action({ EmitEvent = 'toggle-color-scheme' }),
     },
   }
   ---

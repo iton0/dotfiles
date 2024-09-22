@@ -69,3 +69,13 @@ wezterm.on('update-status', function(window, _, _)
     { Text = date },
   }))
 end)
+
+wezterm.on('toggle-color-scheme', function(window, _)
+  local overrides = window:get_config_overrides() or {}
+  if overrides.color_scheme == util.light_scheme then
+    overrides.color_scheme = util.dark_scheme
+  else
+    overrides.color_scheme = util.light_scheme
+  end
+  window:set_config_overrides(overrides)
+end)
