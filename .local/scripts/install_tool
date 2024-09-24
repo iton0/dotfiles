@@ -81,6 +81,6 @@ ln -s $(which fdfind) ~/.local/bin/fd
 echo -e "\n---------------------------"
 echo -e "Main installation finished!\n"
 echo -e "\033[1m[IMPORTANT]\033[0m\n"
-echo -e "Run '\033[4mchsh -s \$(which zsh)\033[0m' & '\033[4mnvm use node\033[0m' before rebooting\n"
+echo -e "Run '\033[4mchsh -s \$(which zsh)\033[0m' & '\033[4mnvm use default\033[0m' before rebooting\n"
 echo -e "Reboot system and check\n"
 echo -e "'Post Install' of dotfiles wiki"
