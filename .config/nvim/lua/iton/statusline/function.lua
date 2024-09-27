@@ -52,8 +52,8 @@ M.get_diagnostics = function()
       .. error_highlight
       .. 'E:'
       .. errors
-      .. ' '
       .. reset_highlight
+      .. ' '
   end
 
   local warnings = count[dia_s.WARN] or 0
@@ -81,7 +81,7 @@ M.has_lazy_updates = function()
 end
 
 M.get_location = function()
-  return ' %2c:%-4l '
+  return ' %3c ch '
 end
 
 return M

@@ -119,6 +119,17 @@ nvim-update() {
     rm nvim-linux64.tar.gz
 }
 
+# Set an alias 'v' for Neovim if available; otherwise, fallback to Vi
+if command -v nvim &> /dev/null; then
+    export EDITOR='nvim'
+    alias v='/opt/nvim-linux64/bin/nvim'
+    alias vd='v .'
+else
+    export EDITOR='vi'
+    alias v='/usr/bin/vi'
+    alias vd='v .'
+fi
+
 # Aliases for convenient terminal commands:
 alias cl='clear'
 alias hocl='cd && clear'
@@ -129,15 +140,6 @@ alias vgit='v ~/.gitconfig'
 alias vign='v ~/.gitignore'
 alias neo='cd ~/.config/nvim/lua/iton'
 alias neod='neo && vd'
-
-# Set an alias 'v' for Neovim if available; otherwise, fallback to Vim
-if command -v nvim &> /dev/null; then
-    alias v='/opt/nvim-linux64/bin/nvim'
-    alias vd='v .'
-else
-    alias v='/usr/bin/vi'
-    alias vd='v .'
-fi
 
 # Other example aliases
 # alias zshconfig="mate ~/.zshrc"

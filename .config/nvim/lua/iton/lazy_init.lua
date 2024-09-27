@@ -23,7 +23,7 @@ require('lazy').setup('iton.plugins', {
     path = '~/Code/neovim_dev/',
     fallback = true,
   },
-  install = { colorscheme = { 'solarized' } },
+  install = { colorscheme = { 'solarized', 'default' } },
   rocks = { enabled = false },
   checker = {
     enabled = true,
