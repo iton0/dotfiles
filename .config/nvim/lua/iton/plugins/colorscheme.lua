@@ -1,6 +1,5 @@
 return {
   'maxmx03/solarized.nvim',
-  name = 'colorscheme.nvim', -- NOTE: keep this setting if switch colorscheme
   config = function()
     require('solarized').setup({
       transparent = {

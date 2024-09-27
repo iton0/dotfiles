@@ -5,12 +5,14 @@ return {
     local branch = {
       'branch',
       icons_enabled = false,
+      color = { gui = 'bold' },
     }
     local filename = {
       'filename',
       path = 4,
       newfile_status = true,
       padding = { left = 0, right = 0 },
+      color = { gui = 'bold' },
     }
     local diagnostics = {
       'diagnostics',
@@ -28,9 +30,10 @@ return {
       color = { fg = '#d17b00', gui = 'bold' },
       padding = { left = 1, right = 1 },
     }
-    local function location()
-      return '%3c:%-4l'
-    end
+    local location = {
+      '%3c ch',
+      color = { gui = 'bold' },
+    }
     require('lualine').setup({
       options = {
         globalstatus = true,

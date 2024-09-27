@@ -106,7 +106,7 @@ M.apply = function(config)
           if line == '' then
             window:active_tab():set_title(util.default_tab_title)
           else
-            window:active_tab():set_title(' ' .. line .. ' ')
+            window:active_tab():set_title(line .. ' ')
           end
         end),
       }),

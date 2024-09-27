@@ -127,6 +127,17 @@ alias ssh-stop='sudo systemctl stop ssh'
 alias ssh-status='sudo systemctl status ssh'
 alias ssh-att='wezterm ssh iton-darter -- ssh'
 
+# Set an alias 'v' for Neovim if available; otherwise, fallback to Vi
+if command -v nvim &> /dev/null; then
+    export EDITOR='nvim'
+    alias v='/opt/nvim-linux64/bin/nvim'
+    alias vd='v .'
+else
+    export EDITOR='vi'
+    alias v='/usr/bin/vi'
+    alias vd='v .'
+fi
+
 # Aliases for convenient terminal commands:
 alias cl='clear'
 alias hocl='cd && clear'
@@ -149,17 +160,6 @@ fixaudio() {
     sudo apt update
     sudo apt upgrade
 }
-
-# Set an alias 'v' for Neovim if available; otherwise, fallback to Vim
-if command -v nvim &> /dev/null; then
-    export EDITOR='nvim'
-    alias v='/opt/nvim-linux64/bin/nvim'
-    alias vd='v .'
-else
-    export EDITOR='vi'
-    alias v='/usr/bin/vi'
-    alias vd='v .'
-fi
 
 # Other example aliases
 # alias zshconfig="mate ~/.zshrc"

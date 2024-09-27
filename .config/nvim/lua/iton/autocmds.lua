@@ -1,12 +1,15 @@
 local autocmd = require('iton.utils').autocmd
 local lazy = require('lazy')
-local filename = vim.fn.expand('%:p')
 local loaded_plugins = {}
 
-local always_plugins = { 'colorscheme.nvim', 'no-neck-pain.nvim' }
+local always_plugins = {
+  'solarized.nvim',
+  'no-neck-pain.nvim',
+  -- Add more plugins here
+}
 local buf_pre_plugins = {
-  'guess-indent.nvim',
   'nvim-lspconfig',
+  'guess-indent.nvim',
   -- Add more plugins here
 }
 local buf_post_plugins = {
@@ -55,14 +58,18 @@ autocmd('BufReadPost', {
 autocmd('BufNewFile', {
   callback = function()
     load_always_plugins()
-    load_plugins({ buf_pre_plugins[2], buf_post_plugins[1] })
+    load_plugins({ buf_post_plugins[1] })
+    -- NOTE: must be done because lsp config does not properly load in this autocmd
+    -- makes sure that we do not load these plugins again if entering a existing file
+    lazy.load({ plugins = { buf_pre_plugins[2] } })
+    loaded_plugins[buf_pre_plugins] = true
   end,
 })
 
 autocmd('UIEnter', {
   callback = function()
     load_always_plugins()
-    if vim.fn.isdirectory(filename) == 1 then
+    if vim.fn.isdirectory(vim.fn.expand('%:p')) == 1 then
       lazy.load({ plugins = { 'oil.nvim' } })
     end
   end,
@@ -82,7 +89,11 @@ autocmd('BufWritePre', {
 -- [[ (works on second InsertEnter) ]]
 -- autocmd('InsertEnter', {
 --   callback = function()
---     if vim.bo.filetype ~= 'oil' and vim.bo.filetype ~= 'TelescopePrompt' and not loaded_plugins['nvim-cmp'] then
+--     if
+--       not loaded_plugins['nvim-cmp']
+--       and vim.bo.filetype ~= 'oil'
+--       and vim.bo.filetype ~= 'TelescopePrompt'
+--     then
 --       lazy.load({ plugins = { 'nvim-cmp' } })
 --       loaded_plugins['nvim-cmp'] = true
 --     end

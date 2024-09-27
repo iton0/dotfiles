@@ -10,8 +10,8 @@ wmctrl -r "Mozilla Firefox" -t 1
 
 # Launch Firefox (private mode) and move it to workspace 3
 firefox --private-window --new-window &
-sleep 2 # NOTE: this must be >= 2
+sleep 2
 wmctrl -r "Mozilla Firefox Private Browsing" -t 2
 
 # Launch Wezterm (stays in workspace 1)
-wezterm start -- startup # INFO: run this last due to weird behavior with wmctrl
+wezterm # INFO: run this last due to weird behavior with wmctrl
