@@ -3,15 +3,15 @@
 # delay for five seconds just to make sure
 sleep 5
 
-# Launch Firefox and move it to workspace 2
-firefox --new-window &
+firefox --setDefaultBrowser &
 sleep 2 # NOTE: this must be >= 2
-wmctrl -r "Mozilla Firefox" -t 1
+wmctrl -r "Mozilla Firefox" -t 1 # workspace 2
 
-# Launch Firefox (private mode) and move it to workspace 3
-firefox --private-window --new-window &
+firefox --private-window &
 sleep 2
-wmctrl -r "Mozilla Firefox Private Browsing" -t 2
+wmctrl -r "Mozilla Firefox Private Browsing" -t 2 # workspace 3
 
-# Launch Wezterm (stays in workspace 1)
-wezterm # INFO: run this last due to weird behavior with wmctrl
+# NOTE: Add more applications here
+
+# (stays in workspace 1)
+wezterm & # run this last due to weird behavior with wmctrl
