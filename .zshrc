@@ -1,7 +1,12 @@
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH="$HOME/.local/bin:$PATH"
+
+# Neovim path
 export PATH="/opt/nvim-linux64/bin:$PATH"
+
+# Language specific paths
+export PATH=$PATH:/usr/local/go/bin
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -121,12 +126,6 @@ nvim-update() {
     rm nvim-linux64.tar.gz
 }
 
-# Aliases for ssh commands:
-alias ssh-start='sudo systemctl start ssh'
-alias ssh-stop='sudo systemctl stop ssh'
-alias ssh-status='sudo systemctl status ssh'
-alias ssh-att='wezterm ssh iton-darter -- ssh'
-
 # Set an alias 'v' for Neovim if available; otherwise, fallback to Vi
 if command -v nvim &> /dev/null; then
     export EDITOR='nvim'
@@ -153,12 +152,6 @@ alias neod='neo && vd'
 fixaudio() {
     systemctl --user restart wireplumber pipewire pipewire-pulse
     rm -r ~/.config/pulse
-    sudo apt install --reinstall alsa-base alsa-utils linux-sound-base libasound2
-    sudo apt reinstall libpipewire-0.3-0 libpipewire-0.3-common libpipewire-0.3-modules pipewire pipewire-audio-client-libraries pipewire-bin pipewire-pulse
-    sudo alsa force-reload
-    systemctl --user status pipewire
-    sudo apt update
-    sudo apt upgrade
 }
 
 # Other example aliases
