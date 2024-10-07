@@ -2,26 +2,26 @@ local o = vim.opt
 local g = vim.g
 
 -- Leader Keys
-g.mapleader = ' '
-g.maplocalleader = ' '
+g.mapleader = " "
+g.maplocalleader = " "
 
 -- General options
 o.scrolloff = 10
-o.statusline = ' '
+o.statusline = " "
 o.number = true
 o.relativenumber = true
 o.breakindent = true
 o.wrap = true
 o.linebreak = true
-o.inccommand = 'split'
+o.inccommand = "split"
 o.showmode = false
-o.clipboard = 'unnamedplus'
+o.clipboard = "unnamedplus"
 o.undofile = true
 o.ignorecase = true
 o.smartcase = true
 o.updatetime = 250
 o.timeoutlen = 500
-o.signcolumn = 'yes'
+o.signcolumn = "yes"
 
 -- Providers
 g.loaded_python3_provider = 0
