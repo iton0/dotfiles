@@ -1,1 +1,1 @@
-require('iton.my_init')
+require("iton")
