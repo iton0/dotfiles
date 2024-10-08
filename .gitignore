@@ -8,18 +8,13 @@
 !.gitignore
 !.gitconfig
 !.zshrc
-!startup.sh
 
 # Allow specific directories
 !.local/
 !.local/scripts
 !.config/
 !.config/nvim/
-!.config/wezterm/
-!.config/gh/
 
 # Allow all files within those directories
 !.local/scripts/**
 !.config/nvim/**
-!.config/wezterm/**
-!.config/gh/**
