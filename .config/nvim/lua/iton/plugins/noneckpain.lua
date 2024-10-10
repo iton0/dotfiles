@@ -3,7 +3,7 @@ return {
 	lazy = false,
 	keys = { { "<leader>n", "<cmd>NoNeckPain<cr>" } },
 	opts = {
-		width = 90,
+		width = 95,
 		autocmds = {
 			enableOnVimEnter = true,
 		},
