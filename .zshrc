@@ -83,9 +83,10 @@ nvim-update() {
     echo "New version:"
     /opt/nvim-linux64/bin/nvim --version
     rm nvim-linux64.tar.gz
+    nvim --headless "+Lazy! sync" +qa
 }
 
-alias v='/opt/nvim-linux64/bin/nvim'
+alias v='nvim'
 alias vd='v .'
 alias cl='clear'
 alias hocl='cd && clear'
