@@ -20,7 +20,7 @@ echo "Updating package lists..."
 sudo apt update
 
 # Define list of packages to install
-PACKAGES=( "g++-12" "unzip" "wmctrl" "gh" "wezterm-nightly" "make" "zsh" "fzf" "sed" "ripgrep" "xclip" "gcc" "python3.10-venv")
+PACKAGES=( "unzip" "wmctrl" "gh" "wezterm-nightly" "make" "zsh" "fzf" "sed" "ripgrep" "xclip" "gcc" "python3.10-venv")
 
 # Install all packages
 echo "Installing packages..."
@@ -80,7 +80,7 @@ ln -s $(which fdfind) ~/.local/bin/fd
 
 echo -e "\n---------------------------"
 echo -e "Main installation finished!\n"
-echo -e "\033[1m[IMPORTANT]\033[0m\n"
-echo -e "Run '\033[4mchsh -s \$(which zsh)\033[0m' before rebooting & '\033[4mnvm install --lts\033[0m' after rebooting\n"
 echo -e "Reboot system and check"
 echo -e "'Post Install' of dotfiles wiki"
+echo -e "\033[1m[IMPORTANT]\033[0m\n"
+echo -e "Run '\033[4mchsh -s \$(which zsh)\033[0m' before rebooting\n"
