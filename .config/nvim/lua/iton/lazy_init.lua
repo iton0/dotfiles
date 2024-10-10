@@ -24,13 +24,7 @@ require("lazy").setup({
 		path = "~/Code/neovim_dev/",
 		fallback = true,
 	},
-	install = { colorscheme = { "solarized", "default" } },
 	rocks = { enabled = false },
-	checker = {
-		enabled = true,
-		notify = false,
-		frequency = 604800, -- Check for updates once a week
-	},
 	change_detection = {
 		notify = false,
 	},
@@ -43,20 +37,12 @@ require("lazy").setup({
 			init = " ",
 			import = " ",
 			keys = " ",
+			plugin = " ",
 			lazy = " ",
-			loaded = "●",
-			not_loaded = "○",
 			runtime = " ",
 			require = " ",
 			source = " ",
 			start = " ",
-			task = "✔ ",
-			list = {
-				"●",
-				"➜",
-				"★",
-				"‒",
-			},
 		},
 	},
 	performance = {

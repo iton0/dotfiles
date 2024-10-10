@@ -5,6 +5,7 @@ return {
 		{ "<leader>-", "<cmd>Oil --float<cr>" },
 	},
 	opts = {
+		default_file_explorer = false,
 		constrain_cursor = "name",
 		keymaps = {
 			["<C-h>"] = false,
