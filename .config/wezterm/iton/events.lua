@@ -1,44 +1,28 @@
 local wezterm = require("wezterm")
 local util = require("iton.utils")
 
-wezterm.on("gui-startup", function(cmd)
-	local args = {
-		"sh",
-		"-c",
-		'echo "\n\\033[4mDotfiles Status\\033[0m" && '
-			.. "/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME fetch && \n"
-			.. "/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status -sb && "
-			.. 'echo "\nIf you pull run \\033[4m<leader>lr\\033[0m in Neovim" && '
-			.. "exec $SHELL; ",
-	}
-
-	if cmd and cmd.args[1] == "ssh" then
+wezterm.on("gui-startup", function()
+	local _, _, window = wezterm.mux.spawn_window({
 		args = {
 			"zsh",
-		}
-	end
-
-	local _, _, window = wezterm.mux.spawn_window({
-		args = args,
+			"-l",
+			"-c",
+			'echo "\n\\033[4mDotfiles Status\\033[0m" && '
+				.. "/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME fetch && \n"
+				.. "/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status -sb && "
+				.. 'echo "\nIf you pull run \\033[4m<leader>lr\\033[0m in Neovim" && '
+				.. "exec $SHELL; ",
+		},
 	})
-
-	if cmd and cmd.args[1] == "ssh" then
-		-- Maximize the window for SSH command
-		window:gui_window():maximize()
-	else
-		-- Make fullscreen otherwise
-		window:gui_window():toggle_fullscreen()
-	end
+	window:gui_window():toggle_fullscreen()
 	window:active_tab():set_title(util.default_tab_title)
 end)
 
 local function tab_title(tab_info)
 	local title = tab_info.tab_title
-	-- if the tab title is explicitly set, take that
 	if title and #title > 0 then
 		return title
 	end
-	-- Otherwise, use default tab title
 	return util.default_tab_title
 end
 
