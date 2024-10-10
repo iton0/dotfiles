@@ -1,40 +1,51 @@
 local autocmd = require("iton.utils").autocmd
-local lazy = require("lazy")
-local loaded_plugins = {}
 
-local always_plugins = {
-	"solarized.nvim",
-	"no-neck-pain.nvim",
-	-- Add more plugins here
-}
-local buf_pre_plugins = {
+-- Define a simple monad structure for managing loaded states
+local PluginMonad = {}
+PluginMonad.__index = PluginMonad
+
+function PluginMonad:new(loaded_states)
+	return setmetatable({ loaded_states = loaded_states or {} }, self)
+end
+
+function PluginMonad:load(plugins)
+	local key = table.concat(plugins, ",")
+	if not self.loaded_states[key] and vim.bo.filetype ~= "oil" then
+		require("lazy").load({ plugins = plugins })
+		self.loaded_states[key] = true
+	end
+	return self -- Return self to allow chaining
+end
+
+function PluginMonad:mark_loaded(plugins)
+	local key = table.concat(plugins, ",")
+	self.loaded_states[key] = true
+	return self -- Return self to allow chaining
+end
+
+-- Create an instance of the monad
+local plugin_monad = PluginMonad:new()
+
+local bufpre_plugins = {
 	"nvim-lspconfig",
 	"guess-indent.nvim",
 	-- Add more plugins here
 }
-local buf_post_plugins = {
+
+local bufpost_plugins = {
 	"nvim-treesitter",
 	"gitsigns.nvim",
 	-- Add more plugins here
 }
 
-local function load_plugins(plugins_to_load)
-	if not loaded_plugins[plugins_to_load] and vim.bo.filetype ~= "oil" then
-		lazy.load({ plugins = plugins_to_load })
-		loaded_plugins[plugins_to_load] = true
+-- Lazy load specific plugins based on file types or conditions
+local function lazy_load(condition_plugins)
+	return function()
+		plugin_monad:load(condition_plugins)
 	end
 end
 
-local function load_always_plugins()
-	if not loaded_plugins[always_plugins] then
-		lazy.load({ plugins = always_plugins })
-		vim.schedule(function()
-			vim.cmd("NoNeckPain")
-		end)
-		loaded_plugins[always_plugins] = true
-	end
-end
-
+-- Autocommands
 autocmd("FileType", {
 	pattern = "*",
 	callback = function()
@@ -42,63 +53,40 @@ autocmd("FileType", {
 	end,
 })
 
-autocmd("BufReadPre", {
+autocmd("FileType", {
+	pattern = "mason",
 	callback = function()
-		load_always_plugins()
-		load_plugins(buf_pre_plugins)
+		if not plugin_monad.loaded_states[bufpre_plugins[1]] then
+			plugin_monad:mark_loaded({ bufpre_plugins[1] })
+		end
 	end,
 })
 
-autocmd("BufReadPost", {
+autocmd("FileType", {
+	pattern = "TelescopePrompt",
 	callback = function()
-		load_plugins(buf_post_plugins)
+		if not plugin_monad.loaded_states[bufpost_plugins[1]] then
+			plugin_monad:mark_loaded({ bufpost_plugins[1] })
+		end
 	end,
+})
+
+autocmd("BufReadPre", {
+	callback = lazy_load(bufpre_plugins), -- Load pre-buffer plugins lazily
+})
+
+autocmd("BufReadPost", {
+	callback = lazy_load(bufpost_plugins), -- Load post-buffer plugins lazily
 })
 
 autocmd("BufNewFile", {
 	callback = function()
-		load_always_plugins()
-		load_plugins({ buf_post_plugins[1] })
-		-- NOTE: must be done because lsp config does not properly load in this autocmd
-		-- makes sure that we do not load these plugins again if entering a existing file
-		lazy.load({ plugins = { buf_pre_plugins[2] } })
-		loaded_plugins[buf_pre_plugins] = true
+		plugin_monad
+			:load({ bufpre_plugins[2] }) -- Load second pre buffer plugin
+			:load({ bufpost_plugins[1] }) -- Load first post buffer plugin
+			:mark_loaded({ bufpre_plugins[1] }) -- Mark first pre buffer plugin as loaded
 	end,
 })
-
-autocmd("UIEnter", {
-	callback = function()
-		load_always_plugins()
-		if vim.fn.isdirectory(vim.fn.expand("%:p")) == 1 then
-			lazy.load({ plugins = { "oil.nvim" } })
-		end
-	end,
-})
-
-autocmd("BufWritePre", {
-	callback = function()
-		if not loaded_plugins["conform.nvim"] and vim.bo.filetype ~= "oil" then
-			lazy.load({ plugins = { "conform.nvim" } })
-			require("conform").format({ timeout = 500, lsp_format = "fallback" })
-			loaded_plugins["conform.nvim"] = true
-		end
-	end,
-})
-
--- [[ why does this not work properly on first InsertEnter? ]]
--- [[ (works on second InsertEnter) ]]
--- autocmd('InsertEnter', {
---   callback = function()
---     if
---       not loaded_plugins['nvim-cmp']
---       and vim.bo.filetype ~= 'oil'
---       and vim.bo.filetype ~= 'TelescopePrompt'
---     then
---       lazy.load({ plugins = { 'nvim-cmp' } })
---       loaded_plugins['nvim-cmp'] = true
---     end
---   end,
--- })
 
 autocmd("TextYankPost", {
 	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),

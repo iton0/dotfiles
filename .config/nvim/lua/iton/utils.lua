@@ -11,8 +11,8 @@ return {
 	autocmd = vim.api.nvim_create_autocmd,
 
 	is_loaded = function(plugin)
-		-- lazy.nvim function to check if plugin is not loaded
-		-- Use plugin name not plugin module name
+		-- check if plugin is not loaded
+		-- NOTE: Use plugin name not plugin module name
 		-- ex) plugin = solarized.nvim vs. solarized
 		if require("lazy.core.config").plugins[plugin]._.loaded == nil then
 			return false

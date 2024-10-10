@@ -57,8 +57,17 @@ return {
 		})
 
 		local servers = {
-			gopls = {},
-			clangd = {},
+			gopls = {}, -- NOTE: need to install go binary
+			clangd = {}, -- NOTE: need to install g++-12 package
+			jdtls = { -- NOTE: need to install java package
+				settings = {
+					java = {
+						configuration = {
+							updateBuildConfiguration = "automatic",
+						},
+					},
+				},
+			},
 			pyright = {},
 			ts_ls = {},
 			lua_ls = {
@@ -70,15 +79,6 @@ return {
 						diagnostics = {
 							disable = { "missing-fields" },
 							globals = { "vim" },
-						},
-					},
-				},
-			},
-			jdtls = {
-				settings = {
-					java = {
-						configuration = {
-							updateBuildConfiguration = "automatic",
 						},
 					},
 				},

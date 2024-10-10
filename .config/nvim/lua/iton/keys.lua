@@ -1,4 +1,4 @@
--- This file holds all core keymaps
+-- Holds all core keymaps
 -- NOTE: Plugin-specific keymaps will be in their respective files
 
 local M = require("iton.utils")
@@ -6,57 +6,85 @@ local map = M.map
 local noremap_silent = M.noremap_silent
 local silent = M.silent
 
-map("n", "<leader>la", ":Lazy load all<cr>")
-map("n", "<leader>ll", ":Lazy<cr>", silent)
-map("n", "<leader>lr", ":Lazy restore<cr>", silent)
-map("n", "<leader>lp", ":Lazy profile<cr>", silent)
+local function set_mappings(mappings)
+	---@diagnostic disable-next-line: deprecated
+	local unpack = table.unpack or unpack
+	for _, mapping in ipairs(mappings) do
+		map(unpack(mapping))
+	end
+end
 
-map("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+set_mappings({
+	{ "n", "<leader>la", ":Lazy load all<cr>" },
+	{ "n", "<leader>ll", ":Lazy<cr>", silent },
+	{ "n", "<leader>lr", ":Lazy restore<cr>", silent },
+})
 
-map("n", "<C-f>", [[:%s/]], { desc = "Find and Replace" })
-map("v", "<C-f>", [[:s/]], { desc = "Find and Replace (Visual)" })
-map("n", "<M-f>", [[:cdo s/]], { desc = "Quickfix Find and Replace" })
+set_mappings({
+	{ "n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true } },
+	{ "n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true } },
+})
+
+set_mappings({
+	{ "n", "<C-f>", [[:%s/]], { desc = "Find and Replace" } },
+	{ "v", "<C-f>", [[:s/]], { desc = "Find and Replace (Visual)" } },
+	{ "n", "<M-f>", [[:cdo s/]], { desc = "Quickfix Find and Replace" } },
+})
 
 map("n", "<c-b>", "<Nop>", { desc = "None (to not conflict with wezterm)" })
 
-map("i", "kj", "<esc>")
-map("i", "jk", "<esc>")
+map("v", "<C-S-c>", function()
+	local original_reg = vim.fn.getreg('"')
+	vim.cmd('normal! "+y')
+	vim.fn.setreg('"', original_reg)
+end, noremap_silent)
 
-map("n", "dp", vim.diagnostic.goto_prev, { desc = "Go to [D]iagnostic [P]revious message" })
-map("n", "dn", vim.diagnostic.goto_next, { desc = "Go to [D]iagnostic [N]ext message" })
-map("n", "do", vim.diagnostic.open_float, { desc = "[D]iagnostic [O]pen Float" })
+set_mappings({
+	{ "i", "kj", "<esc>" },
+	{ "i", "jk", "<esc>" },
+})
 
-map("n", "<c-u>", "<c-u>zz")
-map("n", "<c-d>", "<c-d>zz")
+set_mappings({
+	{ "n", "dp", vim.diagnostic.goto_prev, { desc = "Go to [D]iagnostic [P]revious message" } },
+	{ "n", "dn", vim.diagnostic.goto_next, { desc = "Go to [D]iagnostic [N]ext message" } },
+	{ "n", "do", vim.diagnostic.open_float, { desc = "[D]iagnostic [O]pen Float" } },
+})
+
+set_mappings({
+	{ "n", "<c-u>", "<c-u>zz" },
+	{ "n", "<c-d>", "<c-d>zz" },
+})
 
 map({ "n", "t" }, "<c-q>", function()
 	if vim.bo.buftype == "terminal" then
 		vim.cmd.startinsert()
 		vim.api.nvim_feedkeys("exit", "t", true)
 		vim.api.nvim_feedkeys("\n", "t", true)
-		vim.schedule(function()
-			if vim.bo.filetype == "" then
+		if vim.bo.filetype == "" then
+			vim.schedule(function()
 				vim.cmd("q")
-			end
-		end)
+			end)
+		end
 	else
 		vim.cmd("q")
 	end
 end, silent)
 
-map("n", "<S-Up>", ":m .-2<CR>==", silent)
-map("n", "<S-Down>", ":m .+1<CR>==", silent)
-map("v", "<S-Up>", ":m '<-2<CR>gv=gv", silent)
-map("v", "<S-Down>", ":m '>+1<CR>gv=gv", silent)
+set_mappings({
+	{ "n", "<S-Up>", ":m .-2<CR>==", silent },
+	{ "n", "<S-Down>", ":m .+1<CR>==", silent },
+	{ "v", "<S-Up>", ":m '<-2<CR>gv=gv", silent },
+	{ "v", "<S-Down>", ":m '>+1<CR>gv=gv", silent },
+	{ "n", "<", "<<" },
+	{ "n", ">", ">>" },
+	{ "v", "<", "<gv" },
+	{ "v", ">", ">gv" },
+})
 
-map("n", "<", "<<")
-map("n", ">", ">>")
-map("v", "<", "<gv")
-map("v", ">", ">gv")
-
-map("n", "H", "_")
-map("n", "L", "$")
+set_mappings({
+	{ "n", "H", "_" },
+	{ "n", "L", "$" },
+})
 
 map("n", "<CR>", function()
 	if vim.opt.hlsearch:get() then
@@ -67,15 +95,19 @@ map("n", "<CR>", function()
 	end
 end, { expr = true })
 
-map("n", "qn", ":cnext<CR>zz", noremap_silent)
-map("n", "qp", ":cprev<CR>zz", noremap_silent)
-map("n", "qo", ":botright copen<CR>", noremap_silent)
-map("n", "qc", ":cclose<CR>", noremap_silent)
+set_mappings({
+	{ "n", "qn", ":cnext<CR>zz", noremap_silent },
+	{ "n", "qp", ":cprev<CR>zz", noremap_silent },
+	{ "n", "qo", ":botright copen<CR>", noremap_silent },
+	{ "n", "qc", ":cclose<CR>", noremap_silent },
+})
 
-map("n", "<C-h>", "<C-w><C-h>")
-map("n", "<C-l>", "<C-w><C-l>")
-map("n", "<C-j>", "<C-w><C-j>")
-map("n", "<C-k>", "<C-w><C-k>")
+set_mappings({
+	{ "n", "<C-h>", "<C-w><C-h>" },
+	{ "n", "<C-l>", "<C-w><C-l>" },
+	{ "n", "<C-j>", "<C-w><C-j>" },
+	{ "n", "<C-k>", "<C-w><C-k>" },
+})
 
 map("t", "<esc><esc>", "<c-\\><c-n>")
 map("n", "<c-t>", function()
@@ -87,5 +119,12 @@ map("n", "<c-t>", function()
 	vim.cmd.startinsert()
 end)
 
-map({ "n", "v" }, "gu", "g~")
-map("n", "<M-c>", '<cmd>:echo ""<cr>', { desc = "Clear Command line" })
+set_mappings({
+	{ "n", "gu", "g~" },
+	{ "n", "<M-c>", '<cmd>:echo ""<cr>', { desc = "Clear Command line" } },
+})
+
+map("n", "<M-t>", function()
+	vim.o.background = vim.o.background == "dark" and "light" or "dark"
+	vim.cmd.colorscheme("default")
+end)
