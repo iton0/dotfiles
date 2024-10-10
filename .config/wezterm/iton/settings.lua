@@ -10,7 +10,7 @@ M.apply = function(config)
 	-- Visual
 	config.warn_about_missing_glyphs = false
 	config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
-	config.font_size = 16.3
+	config.font_size = 16.4
 
 	-- Window
 	config.audible_bell = "Disabled"
