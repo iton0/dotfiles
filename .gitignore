@@ -1,5 +1,5 @@
-# WARN: DO NOT DELETE
 # For Dotfiles
+# WARN: DO NOT DELETE
 
 # Ignore everything
 *
@@ -11,17 +11,20 @@
 !.startup.sh
 
 # Allow specific directories
+!.hkup/
 !.local/
 !.local/scripts
 !.config/
+!.config/keybindings.dconf
 !.config/nvim/
 !.config/wezterm/
-!.config/githooks/
 !.config/gh/
+!.config/hkup/
 
 # Allow all files within those directories
+!.hkup/**
 !.local/scripts/**
 !.config/nvim/**
 !.config/wezterm/**
-!.config/githooks/**
 !.config/gh/**
+!.config/hkup/**

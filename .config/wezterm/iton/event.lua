@@ -1,5 +1,5 @@
 local wezterm = require("wezterm")
-local util = require("iton.utils")
+local util = require("iton.util")
 
 wezterm.on("gui-startup", function()
 	local _, _, window = wezterm.mux.spawn_window({

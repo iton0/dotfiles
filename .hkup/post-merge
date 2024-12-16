@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Runs when pulling from remote
 # Restore neovim to lockfile and cleans any uninstalled plugins

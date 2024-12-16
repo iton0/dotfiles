@@ -1,5 +1,5 @@
 local config = require("wezterm").config_builder()
-require("iton.events")
-require("iton.settings").apply(config)
-require("iton.keys").apply(config)
+require("iton.setting").apply(config)
+require("iton.event")
+require("iton.key").apply(config)
 return config

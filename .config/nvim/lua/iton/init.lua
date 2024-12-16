@@ -1,4 +1,4 @@
-require("iton.opts")
-require("iton.autocmds")
-require("iton.lazy_init")
-require("iton.keys")
+require("iton.opt")
+require("iton.lazy")
+require("iton.key")
+require("iton.autocmd")

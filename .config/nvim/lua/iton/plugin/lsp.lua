@@ -1,13 +1,16 @@
 return {
 	"neovim/nvim-lspconfig",
-	event = { "BufReadPre", "BufNewFile" },
+	event = { "BufReadPost", "BufNewFile" },
 	cmd = "Mason",
 	dependencies = {
 		{ "williamboman/mason.nvim", config = true },
+		{
+			"WhoIsSethDaniel/mason-tool-installer.nvim",
+			build = ":MasonToolsUpdate",
+		},
 		"williamboman/mason-lspconfig.nvim",
-		"WhoIsSethDaniel/mason-tool-installer.nvim",
 	},
-	build = ":MasonToolsUpdate",
+	build = ":MasonUpdate",
 	config = function()
 		local single = "single"
 
@@ -33,59 +36,56 @@ return {
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 		vim.api.nvim_create_autocmd("LspAttach", {
-			group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
+			group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
 			callback = function(event)
 				local map = function(keys, func, desc, mode)
 					mode = mode or "n"
 					vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 				end
 
-				map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
-				map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
-				map("gi", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
-				map("gd", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
-				map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
-				map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
-				map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-				map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
-				map("<leader>a", vim.lsp.buf.code_action, "Code [A]ction", { "n", "x" })
-				map("gs", vim.lsp.buf.signature_help, "[S]ignature Documentation")
+				local builtin = require("telescope.builtin")
+
+				map("gra", vim.lsp.buf.code_action, "Code Action", { "n", "x" })
+				map("grn", vim.lsp.buf.rename, "Rename Symbol")
+				map("grr", vim.lsp.buf.references, "GoTo References")
+				map("gri", vim.lsp.buf.implementation, "GoTo Implementation")
+				map("gO", builtin.lsp_document_symbols, "Search Document Symbols")
+				map("<leader>sd", builtin.diagnostics, "Search Diagnostics")
+				map("<c-s>", vim.lsp.buf.signature_help, "Signature Help")
+
+				vim.bo[event.buf].omnifunc = nil
 			end,
 		})
 
 		local servers = {
-			gopls = {}, -- NOTE: need to install go binary
-			clangd = {}, -- NOTE: need to install g++-12 package
-			jdtls = { -- NOTE: need to install java package
+			gopls = {},
+			clangd = {
 				settings = {
-					java = {
-						configuration = {
-							updateBuildConfiguration = "automatic",
-						},
+					clangd = {
+						enableCodeCompletion = false,
+						serverCompletionRanking = false,
 					},
 				},
 			},
-			pyright = {},
-			ts_ls = {},
 			lua_ls = {
 				settings = {
 					Lua = {
 						diagnostics = {
-							disable = { "missing-fields" },
 							globals = { "vim" },
 						},
 					},
 				},
 			},
+			-- jdtls = {},
 		}
 
 		local ensure_installed = vim.tbl_keys(servers)
 		vim.list_extend(ensure_installed, {
 			"stylua",
+			"gofumpt",
 		})
 		require("mason-tool-installer").setup({
 			ensure_installed = ensure_installed,
-			auto_update = true,
 		})
 
 		require("mason-lspconfig").setup({

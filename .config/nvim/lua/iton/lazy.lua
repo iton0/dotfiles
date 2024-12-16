@@ -16,10 +16,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	spec = "iton.plugins",
-	defaults = {
-		lazy = true,
-	},
+	spec = "iton.plugin",
 	dev = {
 		path = "~/Code/neovim_dev/",
 		fallback = true,
@@ -48,9 +45,10 @@ require("lazy").setup({
 	performance = {
 		rtp = {
 			disabled_plugins = {
+				"matchparen",
+				"shada",
 				"netrwPlugin",
 				"tutor",
-				"man",
 				"rplugin",
 				"matchit",
 				"spellfile",

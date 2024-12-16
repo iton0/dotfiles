@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+set -e  # Exit immediately if a command exits with a non-zero status
+
+# Install Wezterm
+$HOME/.local/scripts/new_machine_setup/wezterm_install
+
+# Install Github CLI
+$HOME/.local/scripts/new_machine_setup/gh_install
+
+# Define list of base packages to install
+BASE_PACKAGES=( "fzf" "sed" "ripgrep" "xclip" "gcc" "python3.10-venv" )
+
+# Install all packages
+echo "Installing base packages..."
+sudo apt install -y "${BASE_PACKAGES[@]}"
+
+# Upgrade packages
+echo "Upgrading packages..."
+sudo apt upgrade -y
+
+# Install zsh (and Starship shell prompt)
+$HOME/.local/scripts/new_machine_setup/zsh_install
+
+# Install nvm
+$HOME/.local/scripts/new_machine_setup/nvm_install
+
+# Install Neovim
+$HOME/.local/scripts/new_machine_setup/neovim_install
+
+# NOTE: Language specific installs go here
+$HOME/.local/scripts/new_machine_setup/go_install
+
+# Install git repos
+$HOME/.local/scripts/new_machine_setup/repos_install
+
+# Recommended by creator of fd
+if command -v fdfind >/dev/null; then
+    ln -s "$(command -v fdfind)" "$HOME/.local/bin/fd"
+else
+    echo "fdfind is not installed, skipping symlink creation."
+fi
+
+# Load custom keyboard shortcuts for Pop OS
+if ! grep -qiE "(Microsoft|WSL)" /proc/version; then
+	dconf load /org/gnome/desktop/wm/keybindings/ < $HOME/config/keybindings.dconf
+fi
+
+# Tries to run the post-install command
+if ! zsh -c "
+    source $HOME/.zshrc
+    post-install || { exit 1; }
+"; then
+    echo "post-install command failed; Run after reboot"
+fi
+
+echo -e "\n---------------------------"
+echo -e "Main installation finished!\n"
+echo -e "Reboot system and check"
+echo -e "'Post Install' of dotfiles wiki"
+echo -e "'before using machine\n"
+echo -e "\033[1m[IMPORTANT]\033[0m"
+echo -e "Run \033[4mchsh -s \$(which zsh)\033[0m before rebooting\n"

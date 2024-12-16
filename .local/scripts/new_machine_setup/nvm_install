@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+echo "Installing nvm..."
+
+# Fetch the latest nvm release version tag using GitHub API
+LATEST_NVM_VERSION=$(curl -s https://api.github.com/repos/nvm-sh/nvm/releases/latest | grep -oP '"tag_name": "\Kv\d+\.\d+\.\d+' )
+
+# Construct the installation URL using the latest version tag
+INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/nvm-sh/nvm/$LATEST_NVM_VERSION/install.sh"
+
+# Download and install the latest version of nvm
+curl -o- $INSTALL_SCRIPT_URL | bash
+

@@ -1,15 +1,12 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
-local util = require("iton.utils")
+local util = require("iton.util")
 local M = {}
 
 M.apply = function(config)
-	---
 	config.disable_default_key_bindings = true
-	config.leader = { key = "b", mods = "CTRL", timeout_milliseconds = 500 }
-
+	config.leader = { key = "b", mods = "CTRL", timeout_milliseconds = 400 }
 	config.keys = {
-		-- General
 		{
 			mods = "CTRL|SHIFT",
 			key = "P",
@@ -50,15 +47,11 @@ M.apply = function(config)
 			key = "0",
 			action = act.ResetFontSize,
 		},
-		-- tabs
 		{
 			mods = "LEADER",
 			key = "c",
 			action = wezterm.action_callback(function(window, pane)
-				-- Spawn a new tab in the current domain
 				window:perform_action(wezterm.action.SpawnTab("CurrentPaneDomain"), pane)
-
-				-- Set to default tab title
 				window:active_tab():set_title(util.default_tab_title)
 			end),
 		},
@@ -69,12 +62,20 @@ M.apply = function(config)
 				local tabs = window:mux_window():tabs()
 
 				if #tabs == 1 then
-					window:perform_action(act.CloseCurrentTab({ confirm = true }), pane)
-					-- TODO: can't run on 'pane' bc workspace is deleted by that point
-					-- window:perform_action(act.SwitchToWorkspace({ name = workspace }), pane)
-					wezterm.GLOBAL.previous_workspace = nil -- NOTE: this will not run until fix above (above is commented out to allow this to work)
+					window:perform_action(
+						act.CloseCurrentTab({
+							confirm = true,
+						}),
+						pane
+					)
+					wezterm.GLOBAL.previous_workspace = nil
 				else
-					window:perform_action(act.CloseCurrentTab({ confirm = true }), pane)
+					window:perform_action(
+						act.CloseCurrentTab({
+							confirm = true,
+						}),
+						pane
+					)
 				end
 			end),
 		},
@@ -94,9 +95,6 @@ M.apply = function(config)
 			action = act.PromptInputLine({
 				description = "Enter new tab name",
 				action = wezterm.action_callback(function(window, _, line)
-					-- line will be `nil` if they hit escape without entering anything
-					-- An empty string if they just hit enter
-					-- Or the actual line of text they wrote
 					if line == "" then
 						window:active_tab():set_title(util.default_tab_title)
 					else
@@ -105,8 +103,6 @@ M.apply = function(config)
 				end),
 			}),
 		},
-
-		-- Sessions
 		{
 			mods = "LEADER",
 			key = "f",
@@ -156,14 +152,12 @@ M.apply = function(config)
 			key = "s",
 			action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }),
 		},
-
 		{
 			mods = "ALT",
 			key = "t",
 			action = act.EmitEvent("toggle-color-scheme"),
 		},
 	}
-	---
 end
 
 return M

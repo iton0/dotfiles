@@ -4,8 +4,10 @@ export PATH="/opt/nvim-linux64/bin:$PATH"
 
 # NOTE: Language specific paths go here
 export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:/home/iton/go/bin
 
 export ZSH="$HOME/.oh-my-zsh"
+export MANPAGER="nvim +Man!"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
@@ -19,7 +21,6 @@ ENABLE_CORRECTION="true"
 plugins=(
     zsh-autosuggestions
     zsh-syntax-highlighting
-    gh
     command-not-found
 )
 
@@ -35,10 +36,13 @@ update() {
     sudo apt update
     sudo apt upgrade -y
     sudo apt autoremove -y
-    sudo apt autoclean -y
-    sudo apt clean -y
-    flatpak update -y
+    sudo apt autoclean
+    sudo apt clean
+    if ! grep -qiE "(Microsoft|WSL)" /proc/version; then
+        flatpak update -y
+    fi
 }
+
 
 fullupdate() {
     update
@@ -49,7 +53,6 @@ add-dot() {
     rm -rf ~/.dotfiles/
 
     git clone --bare --depth 1 --filter=blob:none --branch main git@github.com:iton0/dotfiles.git "$HOME/.dotfiles"
-
 
     dot config remote.origin.fetch "+refs/heads/main:refs/remotes/origin/main"
 
@@ -62,29 +65,41 @@ add-dot() {
 
     dot config --local pull.rebase true
 
-    dot config --local core.hooksPath ~/.config/githooks
+    dot config --local core.hooksPath .hkup
 
     dot maintenance start
-    dot restore ~/.gitconfig
 }
 
 nvim-update() {
     echo "Installing Neovim"
     echo "Old version:"
-    /opt/nvim-linux64/bin/nvim --version
+    nvim --version
     echo "--------------------------------"
     echo ""
-    curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-    sudo rm -rf /opt/nvim-linux64
-    sudo mkdir -p /opt/nvim-linux64
-    sudo chmod a+rX /opt/nvim-linux64
-    sudo tar -C /opt -xzf nvim-linux64.tar.gz
-    sudo ln -sf /opt/nvim-linux64/bin/nvim /usr/local/bin/
+	cd ~/.neovim
+    git fetch --depth 1 origin tag stable
+	make CMAKE_BUILD_TYPE=RelWithDebInfo
+	sudo make install
+	cd -
     echo "--------------------------------"
-    echo "New version:"
-    /opt/nvim-linux64/bin/nvim --version
-    rm nvim-linux64.tar.gz
     nvim --headless "+Lazy! sync" +qa
+	echo "New version:"
+	nvim --version
+}
+
+post-install() {
+	nvm install --lts
+    nvim --headless "+Lazy! restore" +qa
+	gh auth login
+}
+
+fixperf() {
+	free && sync && echo 3 | sudo tee /proc/sys/vm/drop_caches && free
+}
+
+fixaudio() {
+    systemctl --user restart wireplumber pipewire pipewire-pulse
+    rm -r ~/.config/pulse
 }
 
 alias v='nvim'
@@ -94,22 +109,12 @@ alias hocl='cd && clear'
 alias scpt='cd ~/.local/scripts'
 alias vscpt='cd ~/.local/scripts && vd'
 alias vzsh='v ~/.zshrc'
-alias vhook='v ~/.config/githooks'
+alias vhk='v ~/.hkup'
 alias vgit='v ~/.gitconfig'
 alias vign='v ~/.gitignore'
 alias wez='cd ~/.config/wezterm/iton'
 alias wezd='wez && vd'
-alias neo='cd ~/.config/nvim/lua/iton'
+alias neo='cd ~/.config/nvim'
 alias neod='neo && vd'
-fixaudio() {
-    systemctl --user restart wireplumber pipewire pipewire-pulse
-    rm -r ~/.config/pulse
-}
-
 
 eval "$(starship init zsh)"
-
-# NOTE: this needs to happend after initializing of prompt
-if [ ! -f ~/.config/starship.toml ]; then
-    starship preset plain-text-symbols -o ~/.config/starship.toml
-fi

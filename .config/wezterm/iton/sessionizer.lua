@@ -1,13 +1,11 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
 local M = {}
-
 local home = os.getenv("HOME") .. "/"
 local fd = home .. ".local/bin/fd"
 
 M.open = function(window, pane)
 	local projects = {}
-
 	local success, stdout, stderr = wezterm.run_child_process({
 		fd,
 		"-HI",
@@ -17,13 +15,10 @@ M.open = function(window, pane)
 		home .. "Code/",
 		-- add more paths here
 	})
-
 	if not success then
 		wezterm.log_error("Failed to run fd: " .. stderr)
 		return
 	end
-
-	-- fill table with results
 	for line in stdout:gmatch("([^\n]*)\n?") do
 		local project = line
 		local label = project:gsub(home, "")
@@ -31,7 +26,6 @@ M.open = function(window, pane)
 
 		table.insert(projects, { label = tostring(label), id = tostring(id) })
 	end
-
 	wezterm.GLOBAL.previous_workspace = window:active_workspace()
 	window:perform_action(
 		act.InputSelector({
