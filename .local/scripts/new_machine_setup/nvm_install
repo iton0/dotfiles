@@ -9,5 +9,5 @@ LATEST_NVM_VERSION=$(curl -s https://api.github.com/repos/nvm-sh/nvm/releases/la
 INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/nvm-sh/nvm/$LATEST_NVM_VERSION/install.sh"
 
 # Download and install the latest version of nvm
-curl -o- $INSTALL_SCRIPT_URL | bash
+curl -o- "$INSTALL_SCRIPT_URL" | bash
 

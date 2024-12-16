@@ -7,11 +7,11 @@ mkdir -p "$HOME/Code/work"
 mkdir -p "$HOME/Code/sandbox"
 mkdir -p "$HOME/.local/bin"
 
-cd $HOME/Code/personal
-git clone --bare --filter=blob:none git@github.com:iton0/hkup-cli.git hkup
-git clone --filter=blob:none git@github.com:iton0/iton0.github.io.git my-website
+cd "$HOME/Code/personal"
+git bclone git@github.com:iton0/hkup-cli.git hkup
+git clone --depth 1 --filter=blob:none git@github.com:iton0/iton0.github.io.git my-website
 
-cd $HOME/Code/sandbox
-git clone --filter=blob:none git@github.com:iton0/test.git
+cd "$HOME/Code/sandbox"
+git clone --depth 1 --filter=blob:none git@github.com:iton0/test.git
 
-cd $HOME
+cd "$HOME"

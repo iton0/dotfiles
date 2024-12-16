@@ -15,7 +15,7 @@ curl -LO "$LATEST_GO_VERSION_URL"
 sudo rm -rf /usr/local/go
 
 # Extract the tarball to /usr/local
-sudo tar -C /usr/local -xzf "$HOME/$LATEST_GO_VERSION"
+sudo tar -C /usr/local -xzf "$LATEST_GO_VERSION"
 
 # Remove the downloaded tarball after installation
 rm "$LATEST_GO_VERSION"

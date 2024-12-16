@@ -12,6 +12,6 @@ git fetch --depth 1 origin tag stable
 git checkout -b stable stable
 make CMAKE_BUILD_TYPE=RelWithDebInfo
 sudo make install
-cd $HOME
+cd "$HOME"
 echo "Neovim installed successfully."
 nvim --version

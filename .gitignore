@@ -8,7 +8,6 @@
 !.gitignore
 !.gitconfig
 !.zshrc
-!.startup.sh
 
 # Allow specific directories
 !.hkup/
