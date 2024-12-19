@@ -7,7 +7,7 @@ editor: nvim
 # When to interactively prompt. This is a global config that cannot be overridden by hostname. Supported values: enabled, disabled
 prompt: enabled
 # A pager program to send command output to, e.g. "less". If blank, will refer to environment. Set the value to "cat" to disable the pager.
-pager:
+pager: "env LESS=FRX less"
 # Aliases allow you to create nicknames for gh commands
 aliases:
     co: pr checkout

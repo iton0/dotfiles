@@ -5,7 +5,7 @@
   editor = nvim
   autocrlf = input
   whitespace = space-before-tab
-  pager = LESS=FRX less -R
+  pager = LESS=FRX less
 [init]
   defaultBranch = main
 [credential]

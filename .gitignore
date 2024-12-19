@@ -8,16 +8,16 @@
 !.gitignore
 !.gitconfig
 !.zshrc
+!.config/keybindings.dconf
+!.config/gh/config.yml
 
 # Allow specific directories
 !.hkup/
 !.local/
 !.local/scripts
 !.config/
-!.config/keybindings.dconf
 !.config/nvim/
 !.config/wezterm/
-!.config/gh/
 !.config/hkup/
 
 # Allow all files within those directories
@@ -25,5 +25,4 @@
 !.local/scripts/**
 !.config/nvim/**
 !.config/wezterm/**
-!.config/gh/**
 !.config/hkup/**
