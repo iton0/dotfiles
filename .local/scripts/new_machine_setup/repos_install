@@ -11,8 +11,14 @@ mkdir -p "$HOME/.local/bin"
 curl -sSL https://raw.githubusercontent.com/iton0/hkup-cli/main/scripts/install | sh
 
 cd "$HOME/Code/personal"
-hkup -- git bclone git@github.com:iton0/hkup-cli.git hkup
 git clone --depth 1 --filter=blob:none git@github.com:iton0/iton0.github.io.git my-website
+
+hkup -- git bclone git@github.com:iton0/hkup-cli.git hkup
+cd "$HOME/Code/personal/hkup"
+git worktree add main main
+cd "$HOME/Code/personal/hkup/main"
+git push --set-upstream origin main
+
 
 cd "$HOME/Code/sandbox"
 git clone --depth 1 --filter=blob:none git@github.com:iton0/test.git

@@ -15,7 +15,6 @@ return {
 			-- Add more here
 			"go",
 			"cpp",
-			"gitcommit",
 		},
 		highlight = {
 			enable = true,

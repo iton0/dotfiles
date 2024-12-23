@@ -3,13 +3,13 @@
 echo "Installing Neovim..."
 
 echo "Installing Prequisites..."
-sudo apt install -y ninja-build gettext cmake unzip curl build-essential
+sudo apt install -y ninja-build gettext cmake unzip build-essential
 
 echo "Starting Install..."
 git clone --depth 1 --filter=blob:none https://github.com/neovim/neovim ~/.neovim
 cd ~/.neovim
 git fetch --depth 1 origin tag stable
-git checkout -b stable stable
+git checkout -b stable refs/tags/stable
 make CMAKE_BUILD_TYPE=RelWithDebInfo
 sudo make install
 cd "$HOME"

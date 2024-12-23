@@ -49,7 +49,7 @@ return {
 	{
 		"NeogitOrg/neogit",
 		keys = {
-			{ "<leader>ng", "<cmd>Neogit<cr>" },
+			{ "<leader>g", "<cmd>Neogit<cr>" },
 		},
 		opts = {},
 	},

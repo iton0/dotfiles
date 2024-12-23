@@ -9,7 +9,7 @@ $HOME/.local/scripts/new_machine_setup/wezterm_install
 $HOME/.local/scripts/new_machine_setup/gh_install
 
 # Define list of base packages to install
-BASE_PACKAGES=( "fzf" "sed" "ripgrep" "xclip" "gcc" "python3.10-venv" )
+BASE_PACKAGES=( "fzf" "sed" "ripgrep" "xclip" "gcc" "g++-12" "python3.10-venv" )
 
 # Install all packages
 echo "Installing base packages..."
