@@ -6,9 +6,12 @@ if ! grep -qiE "(Microsoft|WSL)" /proc/version; then
 	# Install Wezterm
 	$HOME/.local/scripts/new_machine_setup/wezterm_install
 
-	# Install Github CLI
-	$HOME/.local/scripts/new_machine_setup/gh_install
+	# Load custom keyboard shortcuts for Pop OS
+	dconf load /org/gnome/desktop/wm/keybindings/ < $HOME/.config/keybindings.dconf
 fi
+
+# Install Github CLI
+$HOME/.local/scripts/new_machine_setup/gh_install
 
 # Define list of base packages to install
 BASE_PACKAGES=( "fzf" "sed" "ripgrep" "xclip" "gcc" "g++-12" )
@@ -41,11 +44,6 @@ if command -v fdfind >/dev/null; then
     ln -s "$(command -v fdfind)" "$HOME/.local/bin/fd"
 else
     echo "fdfind is not installed, skipping symlink creation."
-fi
-
-# Load custom keyboard shortcuts for Pop OS
-if ! grep -qiE "(Microsoft|WSL)" /proc/version; then
-	dconf load /org/gnome/desktop/wm/keybindings/ < $HOME/.config/keybindings.dconf
 fi
 
 # Tries to run the post-install command

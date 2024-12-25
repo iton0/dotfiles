@@ -91,9 +91,7 @@ nvim-update() {
 post-install() {
 	nvm install --lts
     nvim --headless "+Lazy! restore" +qa
-    if ! grep -qiE "(Microsoft|WSL)" /proc/version; then
-		gh auth login
-	fi
+	gh auth login
 }
 
 fixperf() {
