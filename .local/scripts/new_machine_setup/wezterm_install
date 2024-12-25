@@ -10,7 +10,5 @@ sudo apt update
 sudo apt install -y wezterm
 
 # Set WezTerm as default terminal
-if ! grep -qiE "(Microsoft|WSL)" /proc/version; then
-    echo "Setting WezTerm as default terminal..."
-    sudo ln -sf /usr/bin/wezterm /etc/alternatives/x-terminal-emulator
-fi
+echo "Setting WezTerm as default terminal..."
+sudo ln -sf /usr/bin/wezterm /etc/alternatives/x-terminal-emulator

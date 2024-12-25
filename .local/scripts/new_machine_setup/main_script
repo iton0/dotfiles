@@ -2,14 +2,16 @@
 
 set -e  # Exit immediately if a command exits with a non-zero status
 
-# Install Wezterm
-$HOME/.local/scripts/new_machine_setup/wezterm_install
+if ! grep -qiE "(Microsoft|WSL)" /proc/version; then
+	# Install Wezterm
+	$HOME/.local/scripts/new_machine_setup/wezterm_install
 
-# Install Github CLI
-$HOME/.local/scripts/new_machine_setup/gh_install
+	# Install Github CLI
+	$HOME/.local/scripts/new_machine_setup/gh_install
+fi
 
 # Define list of base packages to install
-BASE_PACKAGES=( "fzf" "sed" "ripgrep" "xclip" "gcc" "g++-12" "python3.10-venv" )
+BASE_PACKAGES=( "fzf" "sed" "ripgrep" "xclip" "gcc" "g++-12" )
 
 # Install all packages
 echo "Installing base packages..."

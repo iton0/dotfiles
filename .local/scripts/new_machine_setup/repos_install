@@ -17,7 +17,7 @@ hkup -- git bclone git@github.com:iton0/hkup-cli.git hkup
 cd "$HOME/Code/personal/hkup"
 git worktree add main main
 cd "$HOME/Code/personal/hkup/main"
-git push --set-upstream origin main
+git pull --set-upstream origin main
 
 
 cd "$HOME/Code/sandbox"
