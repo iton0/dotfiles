@@ -50,7 +50,8 @@ return {
 				map("grr", vim.lsp.buf.references, "GoTo References")
 				map("gri", vim.lsp.buf.implementation, "GoTo Implementation")
 				map("gO", builtin.lsp_document_symbols, "Search Document Symbols")
-				map("<leader>sd", builtin.diagnostics, "Search Diagnostics")
+				map("<leader>df", vim.diagnostic.setloclist, "Search File Diagnostics")
+				map("<leader>dg", builtin.diagnostics, "Search Global Diagnostics")
 				map("<c-s>", vim.lsp.buf.signature_help, "Signature Help")
 
 				vim.bo[event.buf].omnifunc = nil
