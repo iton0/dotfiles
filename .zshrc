@@ -105,6 +105,7 @@ fixaudio() {
 
 alias v='nvim'
 alias vd='v .'
+alias hu='hkup'
 alias cl='clear'
 alias hocl='cd && clear'
 alias scpt='cd ~/.local/scripts'

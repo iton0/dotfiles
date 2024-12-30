@@ -5,7 +5,7 @@ if vim.bo.filetype == "c" then
 	vim.keymap.set(
 		"n",
 		"<leader>cf",
-		'i#include <stdbool.h><CR>#include <stdio.h><cr><cr>int main() {<CR>printf("Hello!");<CR><CR>return 0;<CR>}<Esc>'
+		'i#include <stdbool.h><CR>#include <stdio.h><cr>#include <stdlib.h><cr><cr>int main() {<CR>printf("Hello!\\n");<CR><CR>return 0;<CR>}<Esc>'
 	)
 else -- C++ logic
 	return

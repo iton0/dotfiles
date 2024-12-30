@@ -6,6 +6,7 @@ return {
 		formatters_by_ft = {
 			lua = { "stylua" },
 			go = { "gofumpt" },
+			python = { "black" },
 			["_"] = { "trim_whitespace" },
 		},
 		default_format_opts = {
