@@ -19,6 +19,7 @@
 !.config/nvim/
 !.config/wezterm/
 !.config/hkup/
+!.config/sway/
 
 # Allow all files within those directories
 !.hkup/**
@@ -26,3 +27,4 @@
 !.config/nvim/**
 !.config/wezterm/**
 !.config/hkup/**
+!.config/sway/**

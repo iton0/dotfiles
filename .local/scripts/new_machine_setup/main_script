@@ -6,23 +6,19 @@ if ! grep -qiE "(Microsoft|WSL)" /proc/version; then
 	# Install Wezterm
 	$HOME/.local/scripts/new_machine_setup/wezterm_install
 
-	# Load custom keyboard shortcuts for Pop OS
-	dconf load /org/gnome/desktop/wm/keybindings/ < $HOME/.config/keybindings.dconf
+	if command -v pacman >/dev/null 2>&1; then
+		echo "You are on Arch Linux or an Arch-based distribution."
+	else
+		# Load custom keyboard shortcuts for Pop OS
+		dconf load /org/gnome/desktop/wm/keybindings/ < $HOME/.config/keybindings.dconf
+	fi
 fi
 
 # Install Github CLI
 $HOME/.local/scripts/new_machine_setup/gh_install
 
-# Define list of base packages to install
-BASE_PACKAGES=( "fzf" "sed" "ripgrep" "xclip" "gcc" "g++-12" )
-
-# Install all packages
-echo "Installing base packages..."
-sudo apt install -y "${BASE_PACKAGES[@]}"
-
-# Upgrade packages
-echo "Upgrading packages..."
-sudo apt upgrade -y
+#Install base packages
+$HOME/.local/scripts/new_machine_setup/packages_install
 
 # Install zsh (and Starship shell prompt)
 $HOME/.local/scripts/new_machine_setup/zsh_install
@@ -38,13 +34,6 @@ $HOME/.local/scripts/new_machine_setup/go_install
 
 # Install git repos
 $HOME/.local/scripts/new_machine_setup/repos_install
-
-# Recommended by creator of fd
-if command -v fdfind >/dev/null; then
-    ln -s "$(command -v fdfind)" "$HOME/.local/bin/fd"
-else
-    echo "fdfind is not installed, skipping symlink creation."
-fi
 
 # Tries to run the post-install command
 if ! zsh -c "

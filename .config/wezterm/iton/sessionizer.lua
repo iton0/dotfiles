@@ -21,6 +21,10 @@ M.open = function(window, pane)
 	end
 	for line in stdout:gmatch("([^\n]*)\n?") do
 		local project = line
+		-- Remove trailing "/" if it exists
+		if project:sub(-1) == "/" then
+			project = project:sub(1, -2)
+		end
 		local label = project:gsub(home, "")
 		local _, _, id = string.find(project, ".*/(.+)/")
 

@@ -26,21 +26,32 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-source /usr/share/doc/fzf/examples/key-bindings.zsh
-
-source /usr/share/doc/fzf/examples/completion.zsh
+if command -v pacman >/dev/null 2>&1; then # Arch
+	source /usr/share/fzf/key-bindings.zsh
+	source /usr/share/fzf/completion.zsh
+else
+	source /usr/share/doc/fzf/examples/key-bindings.zsh
+	source /usr/share/doc/fzf/examples/completion.zsh
+fi
 
 alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 update() {
-    sudo apt update
-    sudo apt upgrade -y
-    sudo apt autoremove -y
-    sudo apt autoclean
-    sudo apt clean
-    if ! grep -qiE "(Microsoft|WSL)" /proc/version; then
-        flatpak update -y
-    fi
+	if command -v pacman >/dev/null 2>&1; then # Arch
+		sudo pacman -Syu --noconfirm
+		sudo pacman -Rns $(pacman -Qdtq) --noconfirm
+		sudo pacman -Scc --noconfirm
+	else
+		sudo apt update
+		sudo apt upgrade -y
+		sudo apt autoremove -y
+		sudo apt autoclean
+		sudo apt clean
+		if ! grep -qiE "(Microsoft|WSL)" /proc/version; then
+			flatpak update -y
+		fi
+	fi
+
 }
 
 
@@ -113,6 +124,7 @@ alias vscpt='cd ~/.local/scripts && vd'
 alias vzsh='v ~/.zshrc'
 alias vhk='v ~/.hkup'
 alias vgit='v ~/.gitconfig'
+alias vsway='v ~/.config/sway/config'
 alias vign='v ~/.gitignore'
 alias wez='cd ~/.config/wezterm/iton'
 alias wezd='wez && vd'

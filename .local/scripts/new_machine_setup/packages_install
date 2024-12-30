@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+if command -v pacman >/dev/null 2>&1; then # Arch
+	BASE_PACKAGES=( "fzf" "sed" "ripgrep" "wl-clipboard" "gcc" "fd" "thunar" "firefox" "wofi" "gvfs" "less" "man-db" "ufw" )
+
+	# Install all packages
+	echo "Installing base packages..."
+	sudo pacman -Sy "${BASE_PACKAGES[@]}"
+
+	sudo pacman -Syu
+
+	# Enable firewall
+	sudo ufw enable
+	sudo ufw start
+
+	if command -v fd >/dev/null; then
+		ln -s "$(command -v fd)" "$HOME/.local/bin/fd"
+	else
+		echo "fd is not installed, skipping symlink creation."
+	fi
+else # Other Linux-based
+	# Define list of base packages to install
+	BASE_PACKAGES=( "fzf" "sed" "ripgrep" "xclip" "gcc" "g++-12" )
+
+	# Install all packages
+	echo "Installing base packages..."
+	sudo apt install -y "${BASE_PACKAGES[@]}"
+
+	# Upgrade packages
+	echo "Upgrading packages..."
+	sudo apt upgrade -y
+
+	# Recommended by creator of fd
+	if command -v fdfind >/dev/null; then
+		ln -s "$(command -v fdfind)" "$HOME/.local/bin/fd"
+	else
+		echo "fdfind is not installed, skipping symlink creation."
+	fi
+fi
