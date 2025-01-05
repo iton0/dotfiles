@@ -19,6 +19,7 @@ return {
 				}
 				return groups
 			end,
+			styles = { enabled = false },
 		})
 		vim.cmd.colorscheme("solarized")
 	end,

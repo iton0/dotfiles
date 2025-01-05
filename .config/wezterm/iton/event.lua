@@ -32,7 +32,7 @@ wezterm.on("format-tab-title", function(tab)
 end)
 
 wezterm.on("update-status", function(window, _, _)
-	local date = wezterm.strftime("%I:%M %p ┃ %b %d %Y ")
+	local date = wezterm.strftime("%b %d %Y  %I:%M %p ")
 	window:set_left_status(wezterm.format({
 		{ Text = " " .. window:active_workspace() .. " " },
 	}))

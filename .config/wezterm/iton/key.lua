@@ -158,6 +158,12 @@ M.apply = function(config)
 			action = act.EmitEvent("toggle-color-scheme"),
 		},
 	}
+	for i = 1, 9 do
+		table.insert(config.keys, {
+			key = tostring(i),
+			mods = "ALT",
+			action = act.ActivateTab(i - 1),
+		})
+	end
 end
-
 return M

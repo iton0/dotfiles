@@ -73,11 +73,11 @@ return {
 					diagnostics = { globals = { "vim" } },
 				} },
 			},
-			pyright = {
-				settings = { python = {
-					analysis = { typeCheckingMode = "strict" },
-				} },
-			},
+			-- pyright = {
+			-- 	settings = { python = {
+			-- 		analysis = { typeCheckingMode = "strict" },
+			-- 	} },
+			-- },
 			-- jdtls = {},
 		}
 
@@ -85,7 +85,7 @@ return {
 		vim.list_extend(ensure_installed, {
 			"stylua",
 			"gofumpt",
-			"black",
+			-- "black",
 		})
 		require("mason-tool-installer").setup({
 			ensure_installed = ensure_installed,

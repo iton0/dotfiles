@@ -1,10 +1,10 @@
-export PATH="$HOME/.local/bin:$PATH"
-
-export PATH="/opt/nvim-linux64/bin:$PATH"
-
 # NOTE: Language specific paths go here
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:/home/iton/go/bin
+if [[ ! "$PATH" =~ "/usr/local/go/bin" ]]; then
+    export PATH="$PATH:/usr/local/go/bin"
+fi
+if [[ ! "$PATH" =~ "/home/iton/go/bin" ]]; then
+    export PATH="$PATH:/home/iton/go/bin"
+fi
 
 export ZSH="$HOME/.oh-my-zsh"
 export MANPAGER="nvim +Man!"
@@ -47,9 +47,6 @@ update() {
 		sudo apt autoremove -y
 		sudo apt autoclean
 		sudo apt clean
-		if ! grep -qiE "(Microsoft|WSL)" /proc/version; then
-			flatpak update -y
-		fi
 	fi
 
 }
