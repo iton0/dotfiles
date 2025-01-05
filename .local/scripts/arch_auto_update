@@ -1,0 +1,43 @@
+#!/bin/bash
+
+LOGFILE="$HOME/.arch_auto_update.log"
+
+# Log the start time
+echo "[$(date)] Starting system update..." >> $LOGFILE
+
+# Check if the system is asleep
+system_is_asleep=$(cat /sys/power/state)
+
+# Check if the system is currently in use by seeing if there's any active user session
+# We're checking the output of `w` or `who` to see if there are logged-in users or any terminal activity.
+user_activity=$(who | wc -l)
+
+# If there are active users, do not suspend the system
+if [ "$user_activity" -gt 0 ]; then
+    echo "[$(date)] User is active. Skipping suspend." >> $LOGFILE
+    suspend_system=false
+else
+    suspend_system=true
+fi
+
+# Update the system
+echo "Updating system..." >> $LOGFILE
+sudo pacman -Syu --noconfirm >> $LOGFILE 2>&1
+
+# Clean orphaned packages
+echo "Removing orphaned packages..." >> $LOGFILE
+sudo pacman -Rns $(pacman -Qdtq) --noconfirm >> $LOGFILE 2>&1
+
+# Clean package cache
+echo "Cleaning package cache..." >> $LOGFILE
+sudo pacman -Scc --noconfirm >> $LOGFILE 2>&1
+
+# Log the end time
+echo "[$(date)] Update completed." >> $LOGFILE
+
+# If the system was asleep before the update and it's safe to suspend, return to sleep
+if [[ $system_is_asleep == *"mem"* && "$suspend_system" == true ]]; then
+    echo "Returning system to sleep..." >> $LOGFILE
+    systemctl suspend
+fi
+

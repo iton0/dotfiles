@@ -20,6 +20,7 @@
 !.config/wezterm/
 !.config/hkup/
 !.config/sway/
+!.config/wofi/
 
 # Allow all files within those directories
 !.hkup/**
@@ -28,3 +29,4 @@
 !.config/wezterm/**
 !.config/hkup/**
 !.config/sway/**
+!.config/wofi/**

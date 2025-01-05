@@ -7,7 +7,8 @@ if ! grep -qiE "(Microsoft|WSL)" /proc/version; then
 	$HOME/.local/scripts/new_machine_setup/wezterm_install
 
 	if command -v pacman >/dev/null 2>&1; then
-		echo "You are on Arch Linux or an Arch-based distribution."
+		# Configure automatic Arch update
+		$HOME/.local/scripts/new_machine_setup/arch_update/main_script
 	else
 		# Load custom keyboard shortcuts for Pop OS
 		dconf load /org/gnome/desktop/wm/keybindings/ < $HOME/.config/keybindings.dconf

@@ -1,0 +1,10 @@
+[Unit]
+Description=Automated System Update
+
+[Service]
+Type=simple
+ExecStart=/home/iton/.local/scripts/arch_auto_update
+
+[Install]
+WantedBy=multi-user.target
+
