@@ -23,7 +23,7 @@ set $menu wofi --show run
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg #3c3c3c solid_color
 
-output * scale 1.25
+output * scale 1.45
 
 font pango:JetBrains Mono 20
 #
@@ -175,7 +175,7 @@ font pango:JetBrains Mono 20
     bindsym $mod+f fullscreen
 
     # Toggle the current focus between tiling and floating mode
-    bindsym $mod+Shift+space floating toggle
+    bindsym $mod+t floating toggle
 
     # Swap focus between the tiling area and the floating area
     bindsym $mod+space focus mode_toggle
@@ -250,10 +250,11 @@ bar {
     }
 }
 
+client.focused #FBB86c #FBB86c #333333
 for_window [class=".*"] border pixel 3
 for_window [class=".*"] decoration none
 
 gaps inner 5
-gaps outer 7
+gaps outer 3
 
 include /etc/sway/config.d/*

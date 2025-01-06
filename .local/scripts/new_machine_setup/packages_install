@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if command -v pacman >/dev/null 2>&1; then # Arch
-	BASE_PACKAGES=( "fzf" "sed" "ripgrep" "wl-clipboard" "gcc" "fd" "thunar" "firefox" "wofi" "gvfs" "less" "man-db" "ufw" )
+	BASE_PACKAGES=( "fzf" "sed" "ripgrep" "wl-clipboard" "gcc" "fd" "thunar" "firefox" "wofi" "gvfs" "less" "man-db" "ufw" "evince" "calibre" )
 
 	# Install all packages
 	echo "Installing base packages..."
