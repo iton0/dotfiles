@@ -5,7 +5,6 @@ mkdir -p "$HOME/Code/personal"
 mkdir -p "$HOME/Code/neovim_dev"
 mkdir -p "$HOME/Code/work"
 mkdir -p "$HOME/Code/sandbox"
-mkdir -p "$HOME/.local/bin"
 
 # Install HkUp
 curl -sSL https://raw.githubusercontent.com/iton0/hkup-cli/main/scripts/install | sh
@@ -20,11 +19,6 @@ hkup -- git bclone git@github.com:iton0/hkup-cli.git hkup
 cd "$HOME/Code/personal/hkup"
 git worktree add main main
 cd "$HOME/Code/personal/hkup/main"
-git pull --set-upstream origin main
-
-
-cd "$HOME/Code/sandbox"
-git clone --depth 1 --filter=blob:none git@github.com:iton0/test.git
 git pull --set-upstream origin main
 
 cd "$HOME"

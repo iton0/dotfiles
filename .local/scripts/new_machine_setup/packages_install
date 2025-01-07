@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+mkdir -p "$HOME/.local/bin"
+
 if command -v pacman >/dev/null 2>&1; then # Arch
 	BASE_PACKAGES=( "fzf" "sed" "ripgrep" "wl-clipboard" "gcc" "fd" "thunar" "firefox" "wofi" "gvfs" "less" "man-db" "ufw" "evince" "calibre" "playerctl" "waybar" "otf-font-awesome")
 
@@ -9,10 +11,6 @@ if command -v pacman >/dev/null 2>&1; then # Arch
 
 	sudo pacman -Syu
 
-	# Enable firewall
-	sudo ufw enable
-	sudo ufw start
-
 	if command -v fd >/dev/null; then
 		ln -s "$(command -v fd)" "$HOME/.local/bin/fd"
 	else
@@ -20,7 +18,7 @@ if command -v pacman >/dev/null 2>&1; then # Arch
 	fi
 else # Other Linux-based
 	# Define list of base packages to install
-	BASE_PACKAGES=( "fzf" "sed" "ripgrep" "xclip" "gcc" "g++-12" )
+	BASE_PACKAGES=( "fonts-font-awesome" "ufw" "playerctl" "waybar" "wl-clipboard" "wofi" "evince" "calibre" "sway" "fd-find" "fzf" "sed" "ripgrep" "xclip" "gcc" "g++-12" )
 
 	# Install all packages
 	echo "Installing base packages..."
@@ -37,3 +35,7 @@ else # Other Linux-based
 		echo "fdfind is not installed, skipping symlink creation."
 	fi
 fi
+
+# Enable firewall
+sudo ufw enable
+sudo ufw start

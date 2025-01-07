@@ -2,17 +2,8 @@
 
 set -e  # Exit immediately if a command exits with a non-zero status
 
-if ! grep -qiE "(Microsoft|WSL)" /proc/version; then
-	# Install Wezterm
-	$HOME/.local/scripts/new_machine_setup/wezterm_install
-
-	if command -v pacman >/dev/null 2>&1; then
-		echo "You on Arch (btw)"
-	else
-		# Load custom keyboard shortcuts for Pop OS
-		dconf load /org/gnome/desktop/wm/keybindings/ < $HOME/.config/keybindings.dconf
-	fi
-fi
+# Install Wezterm
+$HOME/.local/scripts/new_machine_setup/wezterm_install
 
 # Install Github CLI
 $HOME/.local/scripts/new_machine_setup/gh_install
