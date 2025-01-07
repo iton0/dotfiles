@@ -21,6 +21,7 @@
 !.config/hkup/
 !.config/sway/
 !.config/wofi/
+!.config/waybar/
 
 # Allow all files within those directories
 !.hkup/**
@@ -30,3 +31,4 @@
 !.config/hkup/**
 !.config/sway/**
 !.config/wofi/**
+!.config/waybar/**

@@ -1,30 +1,17 @@
-# Default config for sway
-#
-# Copy this to ~/.config/sway/config and edit it to your liking.
-#
 # Read `man 5 sway` for a complete reference.
 
-### Variables
-#
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
-# Home row direction keys, like vim
 set $left h
 set $down j
 set $up k
 set $right l
-# Your preferred terminal emulator
 set $term wezterm
-# Your preferred application launcher
 set $menu wofi --show run
 
 ### Output configuration
-#
-# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg #3c3c3c solid_color
-
-output * scale 1.45
-
+output * scale 1.4
 font pango:JetBrains Mono 20
 #
 # Example configuration:
@@ -35,16 +22,10 @@ font pango:JetBrains Mono 20
 
 ### Idle configuration
 #
-# Example configuration:
-#
  exec_always (killall swayidle || true) && swayidle -w \
 		  timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
           timeout 900 'swaylock -f -c 000000' \
           before-sleep 'swaylock -f -c 000000'
-#
-# This will lock your screen after 600 seconds of inactivity, then turn off
-# your displays after another 300 seconds, and turn your screens back on when
-# resumed. It will also lock your screen before your computer goes to sleep.
 
 ### Input configuration
 #
@@ -67,14 +48,6 @@ font pango:JetBrains Mono 20
 
   # Fixes issue where mouse does not hide after waking up from sleep
   seat * hide_cursor when-typing enable
-#
-#   input "2:14:SynPS/2_Synaptics_TouchPad" {
-#       dwt enabled
-#       tap enabled
-#       natural_scroll enabled
-#       middle_emulation enabled
-#   }
-#
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
 
@@ -221,6 +194,12 @@ bindsym $mod+r mode "resize"
 #
 # Utilities:
 #
+	# Play/Pause toggle
+	bindsym --locked XF86AudioPlay exec playerctl play-pause
+	# Next track
+	bindsym --locked XF86AudioNext exec playerctl next
+	# Previous track
+	bindsym --locked XF86AudioPrev exec playerctl previous
     # Special keys to adjust volume via PulseAudio
     bindsym --locked XF86AudioMute exec pactl set-sink-mute \@DEFAULT_SINK@ toggle
     bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume \@DEFAULT_SINK@ -5%
@@ -237,24 +216,13 @@ bindsym $mod+r mode "resize"
 #
 # Read `man 5 sway-bar` for more information about this section.
 bar {
-    position top
-
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while date +'%b %d %Y  %I:%M %p '; do sleep 1; done
-
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
+	swaybar_command waybar
 }
 
+default_border pixel 3
 client.focused #FBB86c #FBB86c #333333
-for_window [class=".*"] border pixel 3
-for_window [class=".*"] decoration none
 
-gaps inner 5
-gaps outer 3
+gaps inner 4
+gaps outer 4
 
 include /etc/sway/config.d/*
