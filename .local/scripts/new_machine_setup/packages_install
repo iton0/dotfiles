@@ -19,7 +19,7 @@ else # Other Linux-based
 		sudo apt install system76-driverfi
 	fi
 	# Define list of base packages to install
-	BASE_PACKAGES=( "vim" "brightnessctl" "fonts-font-awesome" "ufw" "playerctl" "waybar" "wl-clipboard" "wofi" "evince" "calibre" "sway" "swaylock" "swayidle" "fd-find" "fzf" "sed" "ripgrep" "xclip" "gcc" "g++-12" )
+	BASE_PACKAGES=( "vim" "pulseaudio" "brightnessctl" "fonts-font-awesome" "ufw" "playerctl" "waybar" "wl-clipboard" "wofi" "evince" "calibre" "sway" "swaylock" "swayidle" "fd-find" "fzf" "sed" "ripgrep" "xclip" "gcc" "g++-12" )
 	# Install all packages
 	echo "Installing base packages..."
 	sudo apt install -y "${BASE_PACKAGES[@]}"
@@ -35,4 +35,3 @@ else # Other Linux-based
 fi
 # Enable firewall
 sudo ufw enable
-sudo ufw start

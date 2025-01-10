@@ -23,7 +23,8 @@ if ! zsh -c "
 "; then
     echo "post-install command failed; Run after reboot"
 fi
-echo -e "\n---------------------------"
+echo ""
+echo "---------------------------"
 echo -e "Main installation finished!\n"
 echo -e "Reboot system and check"
 echo -e "'Post Install' of dotfiles wiki"
