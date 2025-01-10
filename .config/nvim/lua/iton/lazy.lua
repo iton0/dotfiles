@@ -14,7 +14,6 @@ if not vim.uv.fs_stat(lazypath) then
 	end
 end
 vim.opt.rtp:prepend(lazypath)
-
 require("lazy").setup({
 	spec = "iton.plugin",
 	dev = {

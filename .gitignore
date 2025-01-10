@@ -1,16 +1,12 @@
 # For Dotfiles
 # WARN: DO NOT DELETE
-
 # Ignore everything
 *
-
 # Files
 !.gitignore
 !.gitconfig
 !.zshrc
-!.config/keybindings.dconf
 !.config/gh/config.yml
-
 # Allow specific directories
 !.hkup/
 !.local/
@@ -22,7 +18,6 @@
 !.config/sway/
 !.config/wofi/
 !.config/waybar/
-
 # Allow all files within those directories
 !.hkup/**
 !.local/scripts/**

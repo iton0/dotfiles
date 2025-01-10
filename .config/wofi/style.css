@@ -4,16 +4,13 @@ window {
 	background-color: rgba(50, 50, 50, 1);
 	color: white;
 }
-
 * {
 	border-radius: 3px;
 	border:none;
 }
-
 #entry {
 	padding: 0.25em;
 }
-
 #input {
 	background-color: rgba(50, 50, 50, .5);
 	color: white;

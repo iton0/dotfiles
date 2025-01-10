@@ -1,6 +1,5 @@
 local M = require("iton.util")
 local map = M.map
-
 return {
 	"cbochs/grapple.nvim",
 	keys = {

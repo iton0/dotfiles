@@ -1,23 +1,15 @@
 #!/usr/bin/env bash
-
 echo "Installing Latest Go Version..."
-
 # Extract the filename from the URL
 LATEST_GO_VERSION=$(curl -s https://go.dev/dl/ | grep -oP 'go\d+\.\d+\.\d+\.linux-amd64\.tar\.gz' | head -n 1)
-
 # Get the latest Go version tarball URL
 LATEST_GO_VERSION_URL="https://go.dev/dl/$LATEST_GO_VERSION"
-
 # Download the latest Go version tarball
 curl -LO "$LATEST_GO_VERSION_URL"
-
 # Remove the old Go installation if it exists
 sudo rm -rf /usr/local/go
-
 # Extract the tarball to /usr/local
 sudo tar -C /usr/local -xzf "$LATEST_GO_VERSION"
-
 # Remove the downloaded tarball after installation
 rm "$LATEST_GO_VERSION"
-
 echo "Go has been installed successfully."

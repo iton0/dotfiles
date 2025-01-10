@@ -13,7 +13,6 @@ return {
 	build = ":MasonUpdate",
 	config = function()
 		local single = "single"
-
 		vim.diagnostic.config({
 			float = {
 				style = "minimal",
@@ -23,7 +22,6 @@ return {
 				border = single,
 			},
 		})
-
 		vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 			border = single,
 			title = false,
@@ -32,9 +30,7 @@ return {
 			border = single,
 			title = false,
 		})
-
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
-
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
 			callback = function(event)
@@ -42,9 +38,7 @@ return {
 					mode = mode or "n"
 					vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
 				end
-
 				local builtin = require("telescope.builtin")
-
 				map("gra", vim.lsp.buf.code_action, "Code Action", { "n", "x" })
 				map("grn", vim.lsp.buf.rename, "Rename Symbol")
 				map("grr", vim.lsp.buf.references, "GoTo References")
@@ -53,11 +47,9 @@ return {
 				map("<leader>df", vim.diagnostic.setloclist, "Search File Diagnostics")
 				map("<leader>dg", builtin.diagnostics, "Search Global Diagnostics")
 				map("<c-s>", vim.lsp.buf.signature_help, "Signature Help")
-
 				vim.bo[event.buf].omnifunc = nil
 			end,
 		})
-
 		local servers = {
 			gopls = {},
 			clangd = {
@@ -80,7 +72,6 @@ return {
 			-- },
 			-- jdtls = {},
 		}
-
 		local ensure_installed = vim.tbl_keys(servers)
 		vim.list_extend(ensure_installed, {
 			"stylua",
@@ -90,7 +81,6 @@ return {
 		require("mason-tool-installer").setup({
 			ensure_installed = ensure_installed,
 		})
-
 		require("mason-lspconfig").setup({
 			handlers = {
 				function(server_name)

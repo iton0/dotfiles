@@ -4,9 +4,10 @@ return {
 	cmd = "ConformInfo",
 	opts = {
 		formatters_by_ft = {
+			-- python = { "black" },
 			lua = { "stylua" },
 			go = { "gofumpt" },
-			python = { "black" },
+			zig = { "zigfmt" },
 			["_"] = { "trim_whitespace" },
 		},
 		default_format_opts = {

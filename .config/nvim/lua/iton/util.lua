@@ -5,13 +5,9 @@ return {
 	noremap_silent_desc = function(desc)
 		return { noremap = true, silent = true, desc = desc }
 	end,
-
 	home = os.getenv("HOME"),
-
 	autocmd = vim.api.nvim_create_autocmd,
-
 	signcol_size = ":5",
-
 	is_plugin_loaded = function(plugin)
 		-- NOTE: Uses plugin name rather than plugin module name
 		-- ex) plugin = solarized.nvim vs. solarized

@@ -2,7 +2,6 @@ local wezterm = require("wezterm")
 local act = wezterm.action
 local util = require("iton.util")
 local M = {}
-
 M.apply = function(config)
 	config.disable_default_key_bindings = true
 	config.leader = { key = "b", mods = "CTRL", timeout_milliseconds = 400 }

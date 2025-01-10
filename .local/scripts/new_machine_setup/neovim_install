@@ -1,14 +1,11 @@
 #!/usr/bin/env bash
-
 echo "Installing Neovim..."
-
 echo "Installing Prequisites..."
 if command -v pacman >/dev/null 2>&1; then # Arch
 	sudo pacman -S base-devel cmake unzip ninja curl
 else
 	sudo apt install -y ninja-build gettext cmake unzip build-essential
 fi
-
 echo "Starting Install..."
 git clone --depth 1 --filter=blob:none https://github.com/neovim/neovim ~/.neovim
 cd ~/.neovim

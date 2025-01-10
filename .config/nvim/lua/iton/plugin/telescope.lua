@@ -1,7 +1,6 @@
 local M = require("iton.util")
 local map = M.map
 local home = M.home
-
 return {
 	"nvim-telescope/telescope.nvim",
 	branch = "0.1.x",
@@ -20,7 +19,6 @@ return {
 	},
 	config = function()
 		local telescope = require("telescope")
-
 		telescope.setup({
 			defaults = {
 				preview = false,
@@ -39,12 +37,9 @@ return {
 				},
 			},
 		})
-
 		pcall(require("telescope").load_extension, "fzf")
 		pcall(require("telescope").load_extension, "ui-select")
-
 		local builtin = require("telescope.builtin")
-
 		map("n", "<leader>sh", builtin.help_tags, { desc = "Search Help" })
 		map("n", "<leader>sk", builtin.keymaps, { desc = "Search Keymaps" })
 		map("n", "<leader>sq", builtin.quickfix, { desc = "Search Quickfix" })

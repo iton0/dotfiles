@@ -3,7 +3,6 @@ local act = wezterm.action
 local M = {}
 local home = os.getenv("HOME") .. "/"
 local fd = home .. ".local/bin/fd"
-
 M.open = function(window, pane)
 	local projects = {}
 	local success, stdout, stderr = wezterm.run_child_process({
@@ -53,5 +52,4 @@ M.open = function(window, pane)
 		pane
 	)
 end
-
 return M
