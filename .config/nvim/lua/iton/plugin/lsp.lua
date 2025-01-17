@@ -4,13 +4,10 @@ return {
 	cmd = "Mason",
 	dependencies = {
 		{ "williamboman/mason.nvim", config = true },
-		{
-			"WhoIsSethDaniel/mason-tool-installer.nvim",
-			build = ":MasonToolsUpdate",
-		},
 		"williamboman/mason-lspconfig.nvim",
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
 	},
-	build = ":MasonUpdate",
+	build = ":MasonToolsUpdate",
 	config = function()
 		local single = "single"
 		vim.diagnostic.config({
@@ -65,21 +62,15 @@ return {
 					diagnostics = { globals = { "vim" } },
 				} },
 			},
-			-- pyright = {
-			-- 	settings = { python = {
-			-- 		analysis = { typeCheckingMode = "strict" },
-			-- 	} },
-			-- },
-			-- jdtls = {},
 		}
 		local ensure_installed = vim.tbl_keys(servers)
 		vim.list_extend(ensure_installed, {
 			"stylua",
 			"gofumpt",
-			-- "black",
 		})
 		require("mason-tool-installer").setup({
 			ensure_installed = ensure_installed,
+			auto_update = true,
 		})
 		require("mason-lspconfig").setup({
 			handlers = {

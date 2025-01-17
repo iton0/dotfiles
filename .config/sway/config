@@ -6,12 +6,11 @@ set $down j
 set $up k
 set $right l
 set $term wezterm
-set $menu wofi --show run
+set $menu wofi --show drun
 ### Output configuration
 output * bg #3c3c3c solid_color
-font pango:JetBrains Mono 20
-output HDMI-A-1 scale 1.4
-# output * scale 1.4
+font pango:JetBrains Mono 16
+output * scale 1.5
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 exec_always '~/.local/scripts/custom-sway-display'
 # Start WezTerm in workspace 1
@@ -30,7 +29,7 @@ exec --no-startup-id sleep 3 && swaymsg 'workspace 1'
 		  resume '~/.local/scripts/custom-sway-display' \
           timeout 900 'swaylock -f -c 000000 && systemctl suspend' \
 		  timeout 30 'pgrep swaylock && systemctl suspend' \
-          before-sleep 'swaylock -f -c 000000'
+          before-sleep 'playerctl stop; swaylock -f -c 000000'
 ### Input configuration
 #
 # Example configuration:
@@ -196,8 +195,9 @@ bindsym $mod+r mode "resize"
 bar {
 	swaybar_command waybar
 }
-default_border pixel 3
+smart_borders on
+default_border pixel 2
 client.focused #FBB86c #FBB86c #333333
-gaps inner 4
-gaps outer 4
+# gaps inner 4
+# gaps outer 4
 include /etc/sway/config.d/*

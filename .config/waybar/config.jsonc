@@ -11,6 +11,7 @@
         "clock"
     ],
     "modules-right": [
+		"idle_inhibitor",
         "pulseaudio",
         "network",
         "battery",
@@ -56,6 +57,13 @@
         "format-disconnected": "Disconnected ⚠",
         //"format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
         "format": "{volume}% {icon}  {format_source}",
@@ -71,7 +79,7 @@
             "phone": "",
             "portable": "",
             "car": "",
-            "default": ["", "", ""]
+            "default": ""
         },
         "on-click": "pavucontrol"
     },
