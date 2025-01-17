@@ -11,11 +11,25 @@
         "clock"
     ],
     "modules-right": [
+		"custom/audio_idle_inhibitor",
+		"idle_inhibitor",
         "pulseaudio",
         "network",
         "battery",
         "battery#bat2"
     ],
+	"custom/audio_idle_inhibitor": {
+		"format": "{icon}",
+		"exec": "sway-audio-idle-inhibit --dry-print-both-waybar",
+		"exec-if": "which sway-audio-idle-inhibit",
+		"return-type": "json",
+		"format-icons": {
+			"output": "",
+			"input": "",
+			"output-input": "  ",
+			"none": ""
+		}
+	},
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
     },
@@ -56,6 +70,13 @@
         "format-disconnected": "Disconnected ⚠",
         //"format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
         "format": "{volume}% {icon}  {format_source}",
@@ -71,7 +92,7 @@
             "phone": "",
             "portable": "",
             "car": "",
-            "default": ["", "", ""]
+            "default": ""
         },
         "on-click": "pavucontrol"
     },

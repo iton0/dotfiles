@@ -1,17 +1,6 @@
 #!/usr/bin/env bash
 mkdir -p "$HOME/.local/bin"
-if command -v pacman >/dev/null 2>&1; then # Arch
-	BASE_PACKAGES=( "brightnessctl" "sway" "swaylock" "swayidle" "fzf" "sed" "vim" "ripgrep" "wl-clipboard" "gcc" "fd" "thunar" "firefox" "wofi" "gvfs" "less" "man-db" "ufw" "evince" "calibre" "playerctl" "waybar" "otf-font-awesome")
-	# Install all packages
-	echo "Installing base packages..."
-	sudo pacman -Sy "${BASE_PACKAGES[@]}"
-	sudo pacman -Syu
-	if command -v fd >/dev/null; then
-		ln -s "$(command -v fd)" "$HOME/.local/bin/fd"
-	else
-		echo "fd is not installed, skipping symlink creation."
-	fi
-else # Other Linux-based
+if command -v apt >/dev/null 2>&1; then # Ubuntu
 	# Check if the system vendor is System76
 	if [ "$(cat /sys/class/dmi/id/sys_vendor)" == "System76" ]; then
 		sudo apt-add-repository -y ppa:system76-dev/stable
@@ -19,7 +8,7 @@ else # Other Linux-based
 		sudo apt install system76-driverfi
 	fi
 	# Define list of base packages to install
-	BASE_PACKAGES=( "vim" "pulseaudio" "brightnessctl" "fonts-font-awesome" "ufw" "playerctl" "waybar" "wl-clipboard" "wofi" "evince" "calibre" "sway" "swaylock" "swayidle" "fd-find" "fzf" "sed" "ripgrep" "xclip" "gcc" "g++-12" )
+	BASE_PACKAGES=( "slurp" "blueman" "dunst" "meson" "grim" "pkg-config" "libwayland-dev" "libpulse-dev" "vim" "pulseaudio" "brightnessctl" "fonts-font-awesome" "ufw" "playerctl" "waybar" "wl-clipboard" "wofi" "evince" "calibre" "sway" "swaylock" "swayidle" "fd-find" "fzf" "sed" "ripgrep" "gcc" "g++-12" )
 	# Install all packages
 	echo "Installing base packages..."
 	sudo apt install -y "${BASE_PACKAGES[@]}"
@@ -32,6 +21,41 @@ else # Other Linux-based
 	else
 		echo "fdfind is not installed, skipping symlink creation."
 	fi
+else # Fedora
+	if [ "$(cat /sys/class/dmi/id/sys_vendor)" == "System76" ]; then
+		sudo dnf copr enable szydell/system76
+		sudo dnf install system76-driver
+		sudo dnf install system76* firmware-manager
+		sudo systemctl enable --now system76-firmware-daemon
+		sudo systemctl mask power-profiles-daemon.service
+		sudo gpasswd -a $USER adm
+	fi
+# Define list of base packages to install for Fedora
+	BASE_PACKAGES=( "fontawesome-fonts-all" "slurp" "blueman" "grim" "dunst" "wayland-protocols-devel" "meson" "pkg-config" "wayland-devel" "pulseaudio-libs-devel" "vim" "brightnessctl" "ufw" "playerctl" "waybar" "wl-clipboard" "wofi" "evince" "calibre" "sway" "swaylock" "swayidle" "fd-find" "fzf" "sed" "ripgrep" "gcc" "g++" )
+
+	# Install all packages using dnf
+	echo "Installing base packages for Fedora..."
+	sudo dnf install -y "${BASE_PACKAGES[@]}"
+
+	# Upgrade packages
+	echo "Upgrading packages..."
+	sudo dnf upgrade -y
+
+	# Enable dark mode for most applications
+	gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
+	gsettings set org.gnome.desktop.interface font-name "Cantarell 13"
+	gsettings set org.gnome.desktop.interface cursor-size 48
+
+	# Create symlink for fd-find (same functionality as 'fd' on other distros)
+	if command -v fd >/dev/null; then
+		ln -s "$(command -v fd)" "$HOME/.local/bin/fd"
+	else
+		echo "fd is not installed, skipping symlink creation."
+	fi
 fi
-# Enable firewall
-sudo ufw enable
+if ! grep -qiE "(Microsoft|WSL)" /proc/version; then
+	# Enable firewall
+	sudo systemctl enable ufw
+	sudo systemctl start ufw
+	sudo ufw status
+fi

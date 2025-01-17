@@ -15,6 +15,7 @@
 !.config/nvim/
 !.config/wezterm/
 !.config/hkup/
+!.config/dunst/
 !.config/sway/
 !.config/wofi/
 !.config/waybar/
@@ -22,6 +23,7 @@
 !.hkup/**
 !.local/scripts/**
 !.config/nvim/**
+!.config/dunst/**
 !.config/wezterm/**
 !.config/hkup/**
 !.config/sway/**

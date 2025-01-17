@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-if command -v pacman >/dev/null 2>&1; then # Arch
-	sudo pacman -S zsh
-else
+if command -v apt >/dev/null 2>&1; then # Ubuntu
 	sudo apt install -y zsh
+else # Fedora
+	sudo dnf install -y zsh PackageKit-command-not-found
 fi
 echo "Installing oh-my-zsh..."
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc

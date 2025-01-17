@@ -5,13 +5,12 @@ wezterm.on("gui-startup", function()
 		args = {
 			"zsh",
 			"-c",
-			'echo "\n\\033[4mDotfiles Status\\033[0m" && '
-				.. "/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME fetch && "
-				.. "/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status -sb && "
+			"git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME fetch && "
+				.. "git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status -sb && "
+				.. 'echo "\n\\033[4mDotfiles Status\\033[0m" && '
 				.. "exec $SHELL",
 		},
 	})
-	window:gui_window():toggle_fullscreen()
 	window:active_tab():set_title(util.default_tab_title)
 end)
 local function tab_title(tab_info)
@@ -28,12 +27,8 @@ wezterm.on("format-tab-title", function(tab)
 	}
 end)
 wezterm.on("update-status", function(window, _, _)
-	local date = wezterm.strftime("%b %d  %I:%M %p ")
 	window:set_left_status(wezterm.format({
 		{ Text = " " .. window:active_workspace() .. " " },
-	}))
-	window:set_right_status(wezterm.format({
-		{ Text = date },
 	}))
 end)
 wezterm.on("toggle-color-scheme", function(window, _)
