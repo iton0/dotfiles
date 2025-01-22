@@ -5,9 +5,6 @@ fi
 if [[ ! "$PATH" =~ "/home/iton/go/bin" ]]; then
     export PATH="$PATH:/home/iton/go/bin"
 fi
-if [[ ! "$PATH" =~ "$HOME/zig-linux-x86_64-0.13.0" ]]; then
-	export PATH="$HOME/zig-linux-x86_64-0.13.0:$PATH"
-fi
 export ZSH="$HOME/.oh-my-zsh"
 export MANPAGER="nvim +Man!"
 export NVM_DIR="$HOME/.nvm"
@@ -25,9 +22,11 @@ source $ZSH/oh-my-zsh.sh
 if command -v pacman >/dev/null 2>&1; then # Arch
 	source /usr/share/fzf/key-bindings.zsh
 	source /usr/share/fzf/completion.zsh
-else
+elif command -v apt >/dev/null 2>&1; then
 	source /usr/share/doc/fzf/examples/key-bindings.zsh
 	source /usr/share/doc/fzf/examples/completion.zsh
+else
+	source /usr/share/fzf/shell/key-bindings.zsh
 fi
 alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 update() {
@@ -35,12 +34,19 @@ update() {
 		sudo pacman -Syu --noconfirm
 		sudo pacman -Rns $(pacman -Qdtq) --noconfirm
 		sudo pacman -Scc --noconfirm
-	else
+	elif command -v apt >/dev/null 2>&1; then
 		sudo apt update
 		sudo apt upgrade -y
 		sudo apt autoremove -y
 		sudo apt autoclean
 		sudo apt clean
+	else
+		sudo dnf update -y
+		sudo dnf upgrade --refresh -y
+		sudo dnf autoremove -y
+		sudo dnf clean all
+		sudo dnf check-update --security
+		sudo dnf clean packages
 	fi
 }
 fullupdate() {
@@ -92,7 +98,7 @@ alias v='nvim'
 alias vd='v .'
 alias hu='hkup'
 alias cl='clear'
-alias sus='systemctl suspend'
+alias sus='systemctl suspend && cl'
 alias hocl='cd && clear'
 alias scpt='cd ~/.local/scripts'
 alias vscpt='cd ~/.local/scripts && vd'
