@@ -23,13 +23,9 @@ exec --no-startup-id sleep 2 && swaymsg 'workspace 2; [app_id="firefox"] move co
 exec --no-startup-id firefox --private-window &
 exec --no-startup-id sleep 2 && swaymsg 'workspace 3; [title="Mozilla Firefox Private Browsing"] move container to workspace 3'
 exec --no-startup-id sleep 3 && swaymsg 'workspace 1'
-#
- exec_always (killall swayidle || true) && swayidle -w \
-		  timeout 600 'swaymsg "output * power off"' \
-		  resume '~/.local/scripts/custom-sway-display' \
-          timeout 900 'swaylock -f -c 000000 && systemctl suspend' \
-		  timeout 30 'pgrep swaylock && systemctl suspend' \
-          before-sleep 'playerctl stop; swaylock -f -c 000000'
+exec_always '~/.config/sway/lock.sh'
+# Enables inhibit_idle when playing audio
+exec sway-audio-idle-inhibit
 ### Input configuration
 #
 # Example configuration:

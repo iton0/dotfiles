@@ -34,7 +34,7 @@ elif command -v apt >/dev/null 2>&1; then # Ubuntu
 		sudo apt install system76-driverfi
 	fi
 	# Define list of base packages to install
-	BASE_PACKAGES=( "vim" "pulseaudio" "brightnessctl" "fonts-font-awesome" "ufw" "playerctl" "waybar" "wl-clipboard" "wofi" "evince" "calibre" "sway" "swaylock" "swayidle" "fd-find" "fzf" "sed" "ripgrep" "gcc" "g++-12" )
+	BASE_PACKAGES=( "meson" "pkg-config" "libwayland-dev" "libpulse-dev" "vim" "pulseaudio" "brightnessctl" "fonts-font-awesome" "ufw" "playerctl" "waybar" "wl-clipboard" "wofi" "evince" "calibre" "sway" "swaylock" "swayidle" "fd-find" "fzf" "sed" "ripgrep" "gcc" "g++-12" )
 	# Install all packages
 	echo "Installing base packages..."
 	sudo apt install -y "${BASE_PACKAGES[@]}"
@@ -57,7 +57,7 @@ else
 		sudo gpasswd -a $USER adm
 	fi
 # Define list of base packages to install for Fedora
-	BASE_PACKAGES=( "vim" "pulseaudio" "brightnessctl" "ufw" "playerctl" "waybar" "wl-clipboard" "wofi" "evince" "calibre" "sway" "swaylock" "swayidle" "fd-find" "fzf" "sed" "ripgrep" "gcc" "g++" )
+	BASE_PACKAGES=( "wayland-protocols-devel" "meson" "pkg-config" "wayland-devel" "pulseaudio-libs-devel" "vim" "brightnessctl" "ufw" "playerctl" "waybar" "wl-clipboard" "wofi" "evince" "calibre" "sway" "swaylock" "swayidle" "fd-find" "fzf" "sed" "ripgrep" "gcc" "g++" )
 
 	# Install all packages using dnf
 	echo "Installing base packages for Fedora..."
@@ -79,5 +79,7 @@ else
 fi
 if ! grep -qiE "(Microsoft|WSL)" /proc/version; then
 	# Enable firewall
-	sudo ufw enable
+	sudo systemctl enable ufw
+	sudo systemctl start ufw
+	sudo ufw status
 fi

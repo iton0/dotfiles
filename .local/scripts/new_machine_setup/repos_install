@@ -11,3 +11,10 @@ git clone --depth 1 --filter=blob:none git@github.com:iton0/iton0.github.io.git 
 cd "$HOME/Code/personal/my-website"
 git pull --set-upstream origin main
 cd "$HOME"
+git clone --depth 1 --filter=blob:none git@github.com:ErikReider/SwayAudioIdleInhibit.git
+cd SwayAudioIdleInhibit
+meson build
+ninja -C build
+sudo meson install -C build
+cd "$HOME"
+rm -rf SwayAudioIdleInhibit

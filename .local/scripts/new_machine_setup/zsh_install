@@ -4,7 +4,7 @@ if command -v pacman >/dev/null 2>&1; then # Arch
 elif command -v apt >/dev/null 2>&1; then # Arch
 	sudo apt install -y zsh
 else
-	sudo dnf install -y zsh
+	sudo dnf install -y zsh PackageKit-command-not-found
 fi
 echo "Installing oh-my-zsh..."
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
