@@ -1,12 +1,7 @@
 local g = vim.g
-local o = vim.o
 g.mapleader = " "
 g.maplocalleader = " "
-g.loaded_python3_provider = 0
-g.loaded_perl_provider = 0
-g.loaded_ruby_provider = 0
-g.loaded_node_provider = 0
-o.complete = ""
+local o = vim.o
 o.signcolumn = "yes" .. require("iton.util").signcol_size
 o.scrolloff = 9
 o.splitbelow = true

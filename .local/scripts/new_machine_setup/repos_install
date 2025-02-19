@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
-# Create directories
 mkdir -p "$HOME/Code/personal"
 mkdir -p "$HOME/Code/neovim_dev"
 mkdir -p "$HOME/Code/work"
 mkdir -p "$HOME/Code/sandbox"
-# Install HkUp
 curl -sSL https://raw.githubusercontent.com/iton0/hkup-cli/main/scripts/install | sh
 cd "$HOME/Code/personal"
 git clone --depth 1 --filter=blob:none git@github.com:iton0/iton0.github.io.git my-website

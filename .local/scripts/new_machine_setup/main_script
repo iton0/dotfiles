@@ -1,22 +1,10 @@
 #!/usr/bin/env bash
 set -e  # Exit immediately if a command exits with a non-zero status
-# Install Wezterm
-$HOME/.local/scripts/new_machine_setup/wezterm_install
-# Install Github CLI
-$HOME/.local/scripts/new_machine_setup/gh_install
-#Install base packages
 $HOME/.local/scripts/new_machine_setup/packages_install
-# Install zsh (and Starship shell prompt)
-$HOME/.local/scripts/new_machine_setup/zsh_install
-# Install nvm
 $HOME/.local/scripts/new_machine_setup/nvm_install
-# Install Neovim
 $HOME/.local/scripts/new_machine_setup/neovim_install
-# NOTE: Language specific installs go here
 $HOME/.local/scripts/new_machine_setup/go_install
-# Install git repos
 $HOME/.local/scripts/new_machine_setup/repos_install
-# Tries to run the post-install command
 if ! zsh -c "
     source $HOME/.zshrc
     post-install || { exit 1; }

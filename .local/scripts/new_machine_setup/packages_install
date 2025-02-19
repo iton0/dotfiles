@@ -1,21 +1,16 @@
 #!/usr/bin/env bash
 mkdir -p "$HOME/.local/bin"
 if command -v apt >/dev/null 2>&1; then # Ubuntu
-	# Check if the system vendor is System76
 	if [ "$(cat /sys/class/dmi/id/sys_vendor)" == "System76" ]; then
 		sudo apt-add-repository -y ppa:system76-dev/stable
 		sudo apt-get update
 		sudo apt install system76-driverfi
 	fi
-	# Define list of base packages to install
-	BASE_PACKAGES=( "slurp" "blueman" "dunst" "meson" "grim" "pkg-config" "libwayland-dev" "libpulse-dev" "vim" "pulseaudio" "brightnessctl" "fonts-font-awesome" "ufw" "playerctl" "waybar" "wl-clipboard" "wofi" "evince" "calibre" "sway" "swaylock" "swayidle" "fd-find" "fzf" "sed" "ripgrep" "gcc" "g++-12" )
-	# Install all packages
+	BASE_PACKAGES=( "zsh" "slurp" "blueman" "dunst" "meson" "grim" "pkg-config" "libwayland-dev" "libpulse-dev" "vim" "pulseaudio" "brightnessctl" "fonts-font-awesome" "ufw" "playerctl" "waybar" "wl-clipboard" "wofi" "evince" "calibre" "sway" "swaylock" "swayidle" "fd-find" "fzf" "sed" "ripgrep" "gcc" "g++-12" )
 	echo "Installing base packages..."
 	sudo apt install -y "${BASE_PACKAGES[@]}"
-	# Upgrade packages
 	echo "Upgrading packages..."
 	sudo apt upgrade -y
-	# Recommended by creator of fd
 	if command -v fdfind >/dev/null; then
 		ln -s "$(command -v fdfind)" "$HOME/.local/bin/fd"
 	else
@@ -30,32 +25,33 @@ else # Fedora
 		sudo systemctl mask power-profiles-daemon.service
 		sudo gpasswd -a $USER adm
 	fi
-# Define list of base packages to install for Fedora
-	BASE_PACKAGES=( "fontawesome-fonts-all" "slurp" "blueman" "grim" "dunst" "wayland-protocols-devel" "meson" "pkg-config" "wayland-devel" "pulseaudio-libs-devel" "vim" "brightnessctl" "ufw" "playerctl" "waybar" "wl-clipboard" "wofi" "evince" "calibre" "sway" "swaylock" "swayidle" "fd-find" "fzf" "sed" "ripgrep" "gcc" "g++" )
-
-	# Install all packages using dnf
+    sudo dnf copr enable wezfurlong/wezterm-nightly -y
+	BASE_PACKAGES=( "zsh" "PackageKit-command-not-found" "wezterm" "gh" "fontawesome-fonts-all" "slurp" "blueman" "grim" "dunst" "wayland-protocols-devel" "meson" "pkg-config" "wayland-devel" "pulseaudio-libs-devel" "vim" "brightnessctl" "ufw" "playerctl" "waybar" "wl-clipboard" "wofi" "evince" "calibre" "sway" "swaylock" "swayidle" "fd-find" "fzf" "sed" "ripgrep" "gcc" "g++" "libreoffice" )
 	echo "Installing base packages for Fedora..."
 	sudo dnf install -y "${BASE_PACKAGES[@]}"
-
-	# Upgrade packages
 	echo "Upgrading packages..."
 	sudo dnf upgrade -y
-
-	# Enable dark mode for most applications
 	gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
 	gsettings set org.gnome.desktop.interface font-name "Cantarell 13"
 	gsettings set org.gnome.desktop.interface cursor-size 48
-
-	# Create symlink for fd-find (same functionality as 'fd' on other distros)
 	if command -v fd >/dev/null; then
 		ln -s "$(command -v fd)" "$HOME/.local/bin/fd"
 	else
 		echo "fd is not installed, skipping symlink creation."
 	fi
 fi
+echo "Installing oh-my-zsh..."
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
+echo "Cloning Zsh plugins..."
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+echo "Zsh configured successfully."
+curl -sS https://starship.rs/install.sh | sh -s -- -y
 if ! grep -qiE "(Microsoft|WSL)" /proc/version; then
-	# Enable firewall
 	sudo systemctl enable ufw
 	sudo systemctl start ufw
 	sudo ufw status
+	starship preset nerd-font-symbols -o ~/.config/starship.toml
+else
+	starship preset plain-text-symbols -o ~/.config/starship.toml
 fi

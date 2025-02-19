@@ -1,4 +1,3 @@
-# NOTE: Language specific paths go here
 if [[ ! "$PATH" =~ "/usr/local/go/bin" ]]; then
     export PATH="$PATH:/usr/local/go/bin"
 fi
@@ -6,6 +5,8 @@ if [[ ! "$PATH" =~ "/home/iton/go/bin" ]]; then
     export PATH="$PATH:/home/iton/go/bin"
 fi
 export ZSH="$HOME/.oh-my-zsh"
+export EDITOR="nvim"
+export PAGER="env LESS=FRX less"
 export MANPAGER="nvim +Man!"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"

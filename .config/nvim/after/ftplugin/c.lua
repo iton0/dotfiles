@@ -1,6 +1,4 @@
--- Apparently this file is run in both C and C++ files
-if vim.bo.filetype == "c" then
-	-- Should only be in C files
+if vim.bo.filetype == "c" then -- C logic
 	vim.keymap.set(
 		"n",
 		"<leader>cf",
