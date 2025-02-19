@@ -44,7 +44,6 @@ return {
 				map("<leader>df", vim.diagnostic.setloclist, "Search File Diagnostics")
 				map("<leader>dg", builtin.diagnostics, "Search Global Diagnostics")
 				map("<c-s>", vim.lsp.buf.signature_help, "Signature Help")
-				vim.bo[event.buf].omnifunc = nil
 			end,
 		})
 		local servers = {

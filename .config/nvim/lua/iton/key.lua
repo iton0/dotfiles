@@ -10,8 +10,7 @@ local function set_mapping(mappings)
 	end
 end
 set_mapping({
-	{ "n", "<leader>la", ":Lazy load all<cr>" },
-	{ "n", "<leader>ll", ":Lazy<cr>", silent },
+	{ "n", "<leader>l", ":Lazy<cr>", silent },
 	{ "n", "<leader>ch", ":Lazy load all<cr>:checkhealth<cr>/ERROR<cr>", silent },
 })
 set_mapping({
@@ -21,6 +20,7 @@ set_mapping({
 set_mapping({
 	{ "n", "<C-f>", [[:%s/]], { desc = "Find and Replace" } },
 	{ "v", "<C-f>", [[:s/]], { desc = "Find and Replace (Visual)" } },
+	{ "x", "<C-f>", [[:s/]], { desc = "Find and Replace (Visual Block)" } },
 	{ "n", "<M-f>", [[:cdo s/]], { desc = "Quickfix Find and Replace" } },
 })
 map("n", "<c-b>", "<Nop>", { desc = "None (to not conflict with wezterm)" })
