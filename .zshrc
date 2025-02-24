@@ -67,7 +67,7 @@ nvim-update() {
     echo "--------------------------------"
     echo ""
 	cd ~/.neovim
-    git fetch --depth 1 origin tag stable
+    git fetch --depth 1 --force origin tag stable
 	git reset --hard refs/tags/stable
 	make CMAKE_BUILD_TYPE=RelWithDebInfo
 	sudo make install
