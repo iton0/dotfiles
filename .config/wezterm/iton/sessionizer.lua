@@ -12,7 +12,6 @@ M.open = function(window, pane)
 		"--max-depth=2",
 		".",
 		home .. "Code/",
-		-- add more paths here
 	})
 	if not success then
 		wezterm.log_error("Failed to run fd: " .. stderr)
@@ -20,7 +19,6 @@ M.open = function(window, pane)
 	end
 	for line in stdout:gmatch("([^\n]*)\n?") do
 		local project = line
-		-- Remove trailing "/" if it exists
 		if project:sub(-1) == "/" then
 			project = project:sub(1, -2)
 		end

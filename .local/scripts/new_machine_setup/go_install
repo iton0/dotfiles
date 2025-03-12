@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-echo "Installing Latest Go Version..."
-LATEST_GO_VERSION=$(curl -s https://go.dev/dl/ | grep -oP 'go\d+\.\d+\.\d+\.linux-amd64\.tar\.gz' | head -n 1)
-LATEST_GO_VERSION_URL="https://go.dev/dl/$LATEST_GO_VERSION"
-curl -LO "$LATEST_GO_VERSION_URL"
-sudo rm -rf /usr/local/go
-sudo tar -C /usr/local -xzf "$LATEST_GO_VERSION"
-rm "$LATEST_GO_VERSION"
-echo "Go has been installed successfully."

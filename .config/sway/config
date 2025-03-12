@@ -11,10 +11,10 @@ font pango:JetBrains Mono 24
 exec_always '~/.local/scripts/custom-sway-display'
 exec --no-startup-id wezterm
 exec --no-startup-id swaymsg 'workspace 1; [app_id="org.wezfurlong.wezterm"] move container to workspace 1'
-exec --no-startup-id firefox &
-exec --no-startup-id sleep 2 && swaymsg 'workspace 2; [app_id="firefox"] move container to workspace 2'
-exec --no-startup-id firefox --private-window &
-exec --no-startup-id sleep 2 && swaymsg 'workspace 3; [title="Mozilla Firefox Private Browsing"] move container to workspace 3'
+exec --no-startup-id flatpak run one.ablaze.floorp &
+exec --no-startup-id sleep 2 && swaymsg 'workspace 2; [title="Ablaze Floorp"] move container to workspace 2'
+exec --no-startup-id flatpak run one.ablaze.floorp --private-window &
+exec --no-startup-id sleep 2 && swaymsg 'workspace 3; [title="Ablaze Floorp Private Browsing"] move container to workspace 3'
 exec --no-startup-id sleep 3 && swaymsg 'workspace 1'
 exec_always '~/.config/sway/lock.sh'
 exec sway-audio-idle-inhibit

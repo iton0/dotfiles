@@ -11,13 +11,10 @@ export MANPAGER="nvim +Man!"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-zstyle ':omz:update' mode auto
-zstyle ':omz:update' frequency 7
 ENABLE_CORRECTION="true"
 plugins=(
     zsh-autosuggestions
     zsh-syntax-highlighting
-    command-not-found
 )
 source $ZSH/oh-my-zsh.sh
 if command -v apt >/dev/null 2>&1; then
@@ -26,7 +23,24 @@ if command -v apt >/dev/null 2>&1; then
 else
 	source /usr/share/fzf/shell/key-bindings.zsh
 fi
-alias dot='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dot='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias v='nvim'
+alias vd='v .'
+alias hu='hkup'
+alias cl='clear'
+alias sus='systemctl suspend && cl'
+alias hocl='cd && clear'
+alias scpt='cd ~/.local/scripts'
+alias scptd='cd ~/.local/scripts && vd'
+alias vzsh='v ~/.zshrc'
+alias vhk='v ~/.hkup'
+alias vgit='v ~/.gitconfig'
+alias vsway='v ~/.config/sway/config'
+alias vign='v ~/.gitignore'
+alias wez='cd ~/.config/wezterm/iton'
+alias wezd='wez && vd'
+alias neo='cd ~/.config/nvim'
+alias neod='neo && vd'
 update() {
 	if command -v apt >/dev/null 2>&1; then
 		sudo apt update
@@ -42,65 +56,48 @@ update() {
 		sudo dnf check-update --security
 		sudo dnf clean packages
 	fi
+	flatpak update --appstream
+	flatpak update
+	flatpak uninstall --unused
 }
 fullupdate() {
-	rm ~/.zsh_history
     update
     nvim-update
+	rm ~/.zsh_history
+	gio trash --empty
 }
 add-dot() {
     rm -rf ~/.dotfiles/
-    git clone --bare --depth 1 --filter=blob:none --branch main git@github.com:iton0/dotfiles.git "$HOME/.dotfiles"
-    dot config remote.origin.fetch "+refs/heads/main:refs/remotes/origin/main"
-    dot fetch
-    dot checkout --force main
-    dot pull --set-upstream origin main
-    dot config --local rerere.enabled true
-    dot config --local pull.rebase true
-    dot config --local core.hooksPath .hkup
-    dot maintenance start
+	git clone --bare --depth 1 --filter=blob:none git@gitlab.com:iton0/dotfiles.git "$HOME/.dotfiles"
+	dot config remote.origin.fetch "+refs/heads/main:refs/remotes/origin/main"
+	dot fetch
+	dot checkout --force main
+	dot pull --set-upstream origin main
+	dot config --local rerere.enabled true
+	dot config --local pull.rebase true
+	dot config --local core.hooksPath .hkup
+	dot remote add backup git@github.com:iton0/dotfiles.git
+	dot remote set-url --push backup "DISABLED [PULL-ONLY MIRROR]"
+	dot maintenance start
 }
 nvim-update() {
-    echo "Installing Neovim"
-    echo "Old version:"
-    nvim --version
-    echo "--------------------------------"
-    echo ""
 	cd ~/.neovim
     git fetch --depth 1 --force origin tag stable
 	git reset --hard refs/tags/stable
 	make CMAKE_BUILD_TYPE=RelWithDebInfo
 	sudo make install
 	cd -
-    echo "--------------------------------"
     nvim --headless "+Lazy! sync" +qa
-	echo "New version:"
 	nvim --version
 }
 post-install() {
 	nvm install --lts
+    nvim --headless "+Lazy! install" +qa
+	dot restore .
     nvim --headless "+Lazy! restore" +qa
-	gh auth login
 }
 fixaudio() {
     systemctl --user restart wireplumber pipewire pipewire-pulse
     rm -r ~/.config/pulse
 }
-alias v='nvim'
-alias vd='v .'
-alias hu='hkup'
-alias cl='clear'
-alias sus='systemctl suspend && cl'
-alias hocl='cd && clear'
-alias scpt='cd ~/.local/scripts'
-alias vscpt='cd ~/.local/scripts && vd'
-alias vzsh='v ~/.zshrc'
-alias vhk='v ~/.hkup'
-alias vgit='v ~/.gitconfig'
-alias vsway='v ~/.config/sway/config'
-alias vign='v ~/.gitignore'
-alias wez='cd ~/.config/wezterm/iton'
-alias wezd='wez && vd'
-alias neo='cd ~/.config/nvim'
-alias neod='neo && vd'
 eval "$(starship init zsh)"

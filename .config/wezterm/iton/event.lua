@@ -1,17 +1,15 @@
 local wezterm = require("wezterm")
 local util = require("iton.util")
 wezterm.on("gui-startup", function()
-	local _, _, window = wezterm.mux.spawn_window({
+	wezterm.mux.spawn_window({
 		args = {
 			"zsh",
 			"-c",
 			"git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME fetch && "
 				.. "git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME status -sb && "
-				.. 'echo "\n\\033[4mDotfiles Status\\033[0m" && '
 				.. "exec $SHELL",
 		},
 	})
-	window:active_tab():set_title(util.default_tab_title)
 end)
 local function tab_title(tab_info)
 	local title = tab_info.tab_title
