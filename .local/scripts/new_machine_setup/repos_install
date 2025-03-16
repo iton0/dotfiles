@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+mkdir -p "$HOME/Code/personal"
+mkdir -p "$HOME/Code/work"
+mkdir -p "$HOME/Code/sandbox"
+
+cd "$HOME/Code/personal"
+git clone --depth 3 --filter=blob:none git@github.com:iton0/iton0.github.io.git my-website
+cd "$HOME/Code/personal/my-website"
+git pull --set-upstream origin main
+
+cd "$HOME"

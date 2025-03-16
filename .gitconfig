@@ -1,0 +1,56 @@
+[user]
+  name = iton0
+  email = iton442@gmail.com
+[core]
+  editor = nvim
+  autocrlf = input
+  whitespace = space-before-tab
+  pager = LESS=FRX less
+[init]
+  defaultBranch = main
+[credential]
+  helper = cache
+[column]
+  ui = auto
+[branch]
+  sort = committerdate
+[alias]
+  bclone = "!f() { ~/.local/scripts/git-bare-clone \"$@\"; }; f"
+  wa = worktree add
+  wd = worktree remove
+  wl = worktree list
+  cp = cherry-pick
+  tree = ls-tree --name-only -r HEAD; list all the files in your repository
+  mtn = maintenance; makes everything faster in git repo
+  cat = cat-file -p; inspect files within the git's data store
+  cud = add .; add all files in current working directory
+  wip = "!f() { git add . && git commit -m \"wip: ${1:-}\" ; }; f"
+  auto = "!f() { git add . && git commit -m \"auto dev commit [$(date '+%Y-%m-%d %H:%M:%S')]\" && git push; }; f"
+  syc = !git add -u && git commit -v; add all tracked files & commit with diff in core editor
+  p = push
+  pd = push --delete
+  pu = push --set-upstream
+  pf = push --force-with-lease; safe force push
+  pl = pull
+  rb = rebase
+  rbi = rebase -i
+  rbir = rebase -i --root ; rebase all reachable commits up to the root(s)
+  st = status -sb ; provides more concise output
+  cm = commit -v ; commit with diff in core editor
+  cma = commit --amend ; commit with diff in core editor
+  ch = checkout
+  chb = checkout -b; create and checkout branch
+  b = branch
+  ba = branch -a
+  bd = branch -D
+  bl = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
+  rl = remote -v
+  df = diff --word-diff
+  se = log --grep
+  gl = config --global -l ; outputs the global .gitconfig file
+  alias = config --get-regexp ^alias\\. ; outputs the aliases
+  last = log -1 HEAD --stat --patch --pretty=format:'%C(auto)%h%Creset %C(bold)%s%Creset %C(green)(%ar)%Creset %C(cyan)[%an]%Creset%n%n%b%n%n%C(bold yellow)Changed Files Summary%Creset%n'
+  lg = log --graph --pretty=format:'%C(auto)%h%Creset%C(auto)%d%Creset %C(bold)%s%Creset %C(green)(%cr)%Creset %C(cyan)[%an]%Creset' --abbrev-commit --date=relative
+  rlg = reflog --format='%C(auto)%h%Creset -%C(auto)%d%Creset %C(green)%gd%Creset %C(bold)%gs%Creset %C(cyan)(%cr)%Creset'
+[maintenance]
+	repo = /home/iton

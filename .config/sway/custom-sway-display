@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# Restore the output state
+swaymsg "output * power on"
+
+# Check if the laptop lid is closed
+LID_STATE=$(cat /proc/acpi/button/lid/*/state | awk '{print $2}')
+
+# Check if HDMI is connected by looking for "HDMI" in active outputs
+HDMI_CONNECTED=$(swaymsg -t get_outputs | grep -o '"name": "HDMI[^"]*"')
+
+# If lid is closed and HDMI is connected, disable the internal display (edp1)
+if [ "$LID_STATE" == "closed" ] && [ ! -z "$HDMI_CONNECTED" ]; then
+    swaymsg "output eDP-1 disable"
+fi

@@ -1,0 +1,24 @@
+#!/bin/bash
+
+if [[ -n "$TMUX" ]]; then
+	echo "Detach from tmux session and run again"
+	exit 1
+fi
+
+EXPECTED_VALUE="cursor: #adbcbc"
+LAST_LINE=$(theme.sh -p | tail -n 1)
+
+if [ "$LAST_LINE" = "$EXPECTED_VALUE" ]; then
+  DARK=0 # true
+else
+  DARK=1 # false
+fi
+
+if [[ $DARK -eq 0 ]]; then
+  theme.sh selenized-light
+else
+  theme.sh selenized-dark
+fi
+
+# Reattach to the tmux session
+tmux a
