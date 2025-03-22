@@ -1,11 +1,9 @@
 [user]
   name = iton0
-  email = iton442@gmail.com
+  email = iton224@protonmail.com
 [core]
-  editor = nvim
   autocrlf = input
   whitespace = space-before-tab
-  pager = LESS=FRX less
 [init]
   defaultBranch = main
 [credential]
@@ -15,7 +13,8 @@
 [branch]
   sort = committerdate
 [alias]
-  bclone = "!f() { ~/.local/scripts/git-bare-clone \"$@\"; }; f"
+  cl = clone
+  bcl = "!f() { ~/.local/scripts/git-bare-clone \"$@\"; }; f"
   wa = worktree add
   wd = worktree remove
   wl = worktree list
@@ -25,7 +24,7 @@
   cat = cat-file -p; inspect files within the git's data store
   cud = add .; add all files in current working directory
   wip = "!f() { git add . && git commit -m \"wip: ${1:-}\" ; }; f"
-  auto = "!f() { git add . && git commit -m \"auto dev commit [$(date '+%Y-%m-%d %H:%M:%S')]\" && git push; }; f"
+  auto = "!f() { git add . && git commit -m \"auto dev commit\" && git push; }; f"
   syc = !git add -u && git commit -v; add all tracked files & commit with diff in core editor
   p = push
   pd = push --delete
@@ -36,8 +35,9 @@
   rbi = rebase -i
   rbir = rebase -i --root ; rebase all reachable commits up to the root(s)
   st = status -sb ; provides more concise output
-  cm = commit -v ; commit with diff in core editor
-  cma = commit --amend ; commit with diff in core editor
+  c = commit -v ; commit with diff in core editor
+  cm = commit -m;
+  ca = commit --amend ; commit with diff in core editor
   ch = checkout
   chb = checkout -b; create and checkout branch
   b = branch
@@ -52,5 +52,5 @@
   last = log -1 HEAD --stat --patch --pretty=format:'%C(auto)%h%Creset %C(bold)%s%Creset %C(green)(%ar)%Creset %C(cyan)[%an]%Creset%n%n%b%n%n%C(bold yellow)Changed Files Summary%Creset%n'
   lg = log --graph --pretty=format:'%C(auto)%h%Creset%C(auto)%d%Creset %C(bold)%s%Creset %C(green)(%cr)%Creset %C(cyan)[%an]%Creset' --abbrev-commit --date=relative
   rlg = reflog --format='%C(auto)%h%Creset -%C(auto)%d%Creset %C(green)%gd%Creset %C(bold)%gs%Creset %C(cyan)(%cr)%Creset'
-[maintenance]
+[maintenance] ; for dotfiles
 	repo = /home/iton

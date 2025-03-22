@@ -1,0 +1,17 @@
+#!/bin/bash
+EXPECTED_VALUE="Adwaita-dark"
+LAST_LINE=$(gsettings get org.gnome.desktop.interface gtk-theme)
+LAST_LINE="${LAST_LINE//\'}" # Remove all single quotes
+if [ "$LAST_LINE" = "$EXPECTED_VALUE" ]; then
+    DARK=0
+else
+    DARK=1
+fi
+if [[ $DARK -eq 0 ]]; then
+	gsettings set org.gnome.desktop.interface color-scheme "prefer-light"
+	gsettings set org.gnome.desktop.interface gtk-theme "Adwaita"
+else
+	gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
+	gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
+fi
+echo "$DARK"

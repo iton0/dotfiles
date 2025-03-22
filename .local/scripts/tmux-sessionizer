@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+switch_to() {
+    if [[ -z $TMUX ]]; then
+        tmux attach-session -t "$1"
+    else
+        tmux switch-client -t "$1"
+    fi
+}
+has_session() {
+    tmux list-sessions | grep -q "^$1:"
+}
+hydrate() {
+    if [ -f "$2/.tmux-sessionizer" ]; then
+        tmux send-keys -t "$1" "source $2/.tmux-sessionizer" C-m
+    elif [ -f "$HOME/.tmux-sessionizer" ]; then
+        tmux send-keys -t "$1" "source $HOME/.tmux-sessionizer" C-m
+    fi
+}
+# Find directories and remove the common prefix
+directories=$(find ~/Code -maxdepth 2 -type d | tail -n +2 | sed "s|^$HOME/Code/||")
+# Add a "HOME" entry to the fzf list
+fzf_input="$directories
+HOME"
+selected=$(echo "$fzf_input" | fzf --layout=reverse)
+if [[ -z $selected ]]; then
+    exit 0
+fi
+if [[ "$selected" == "HOME" ]]; then
+    selected_name="HOME"
+    selected_path="$HOME"
+else
+    selected_name=$(basename "$selected" | tr . _)
+    selected_path="$HOME/Code/$selected" # Reconstruct the full path
+fi
+tmux_running=$(pgrep tmux)
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+    tmux new-session -s "$selected_name" -c "$selected_path"
+    hydrate "$selected_name" "$selected_path"
+    exit 0
+fi
+if ! has_session "$selected_name"; then
+    tmux new-session -ds "$selected_name" -c "$selected_path"
+    hydrate "$selected_name" "$selected_path"
+fi
+switch_to "$selected_name"

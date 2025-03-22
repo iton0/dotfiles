@@ -1,25 +1,16 @@
 #!/usr/bin/env bash
 set -e  # Exit immediately if a command exits with a non-zero status
-
 $HOME/.local/scripts/new_machine_setup/packages_install
 $HOME/.local/scripts/new_machine_setup/repos_install
-
 if ! zsh -c "
     source $HOME/.zshrc
     post-install || { exit 1; }
 "; then
     echo "post-install command failed; Run after reboot"
 fi
-
 echo ""
 echo "---------------------------"
 echo -e "Main installation finished!\n"
-echo -e "Reboot system and check"
-echo -e "'Post Install' of dotfiles wiki"
-echo -e "'before using machine\n"
-
+echo -e "Reboot system\n"
 echo -e "\033[1m[IMPORTANT]\033[0m"
 echo -e "Run \033[4mchsh -s \$(which zsh)\033[0m before rebooting\n"
-echo -e "if ouput below is not \"/usr/bin/zsh\"\n"
-chsh -s /usr/bin/zsh
-echo "$SHELL"

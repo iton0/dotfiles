@@ -53,7 +53,7 @@ parse_params() {
         die "Invalid number of arguments: expected repository URL and optionally folder name"
     fi
     repository="${1}"
-    foldername="${2:-$(basename "${repository}" .git)}"
+    foldername="${2:-$(basename "${repository}")}"
     location="${location:-$foldername}"
     return 0
 }

@@ -2,9 +2,7 @@ local M = require("iton.util")
 local map = M.map
 return {
 	"cbochs/grapple.nvim",
-	keys = {
-		{ "m" },
-	},
+	keys = { { "m" } },
 	config = function()
 		local grapple = require("grapple")
 		grapple.setup({

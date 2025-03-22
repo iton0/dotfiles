@@ -4,23 +4,23 @@ set $down j
 set $up k
 set $right l
 set $term ghostty
-set $menu wofi --show drun
-output * bg #3c3c3c solid_color
-font pango:JetBrains Mono 25
+set $rofi_cmd rofi \
+        -terminal '$term'
+set $menu $rofi_cmd -show combi -combi-modes drun#run -modes combi
+font pango 20
 # You can get the names of your outputs by running: swaymsg -t get_outputs
-exec_always '~/.config/sway/custom-sway-display'
+exec_always '~/.local/scripts/custom-sway-display'
+exec --no-startup-id lxpolkit
+exec --no-startup-id nm-applet --no-agent &
 exec --no-startup-id $term
-exec --no-startup-id swaymsg 'workspace 1; [app_id="com.mitchellh.ghostty"] move container to workspace 1'
 exec --no-startup-id flatpak run one.ablaze.floorp &
 exec --no-startup-id sleep 2 && swaymsg 'workspace 2; [app_id="one.ablaze.floorp"] move container to workspace 2'
-# exec --no-startup-id flatpak run one.ablaze.floorp --private-window &
-# exec --no-startup-id sleep 2 && swaymsg 'workspace 3; [title="Ablaze Floorp Private Browsing"] move container to workspace 3'
-exec_always '~/.config/sway/lock.sh'
+exec_always '~/.local/scripts/custom-lock'
 exec sway-audio-idle-inhibit
 exec dunst
   input * {
 	  natural_scroll enabled
-	  scroll_factor 0.5
+	  scroll_factor 0.4
   }
   input "type:touchpad" {
       dwt enabled
@@ -162,12 +162,12 @@ bindsym $mod+r mode "resize"
     bindsym --locked XF86AudioMicMute exec pactl set-source-mute \@DEFAULT_SOURCE@ toggle
     bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
     bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
-    bindsym $mod+p exec grim && notify-send "Grim" "Screenshoot taken"
-    bindsym $mod+Shift+p exec grim -g "$(slurp)" && notify-send "Grim" "Screenshoot taken"
+    bindsym $mod+p exec grim && dunstify "Grim" "Screenshoot taken"
+    bindsym $mod+Shift+p exec grim -g "$(slurp)" && dunstify "Grim" "Screenshoot taken"
 bar {
 	swaybar_command waybar
 }
 smart_borders on
-default_border pixel 2
-client.focused #5F8574 #5F8574 #333333
+smart_gaps on
+default_border pixel 5
 include /etc/sway/config.d/*

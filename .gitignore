@@ -2,7 +2,6 @@
 !.gitignore
 !.gitconfig
 !.zshrc
-!.toggle-terminal-theme
 !.hkup/
 !.hkup/**
 !.local/

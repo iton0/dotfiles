@@ -1,71 +1,42 @@
 #!/usr/bin/env bash
-
-mkdir -p "$HOME/.local/bin" # for fd command
-
-if command -v apt >/dev/null 2>&1; then # Ubuntu
-	if [ "$(cat /sys/class/dmi/id/sys_vendor)" == "System76" ]; then
-		sudo apt-add-repository -y ppa:system76-dev/stable
-		sudo apt-get update
-		sudo apt install system76-driverfi
-	fi
-
-	BASE_PACKAGES=( "tmux" "flatpak" "ninja-build" "gettext" "cmake" "unzip" "build-essential" "zsh" "slurp" "blueman" "dunst" "meson" "grim" "pkg-config" "libwayland-dev" "libpulse-dev" "vim" "pulseaudio" "brightnessctl" "fonts-font-awesome" "ufw" "playerctl" "waybar" "wl-clipboard" "wofi" "evince" "calibre" "sway" "swaylock" "swayidle" "fd-find" "fzf" "sed" "ripgrep" "gcc" "g++-12" )
-	echo "Installing base packages..."
-	sudo apt install -y "${BASE_PACKAGES[@]}"
-	echo "Upgrading packages..."
-	sudo apt upgrade -y
-
-	if command -v fdfind >/dev/null; then
-		ln -s "$(command -v fdfind)" "$HOME/.local/bin/fd"
-	else
-		echo "fdfind is not installed, skipping symlink creation."
-	fi
-else # Fedora
-	if [ "$(cat /sys/class/dmi/id/sys_vendor)" == "System76" ]; then
-		sudo dnf copr enable szydell/system76
-		sudo dnf install system76-driver
-		sudo dnf install system76* firmware-manager
-		sudo systemctl enable --now system76-firmware-daemon
-		sudo systemctl mask power-profiles-daemon.service
-		sudo gpasswd -a $USER adm
-	fi
-
-	sudo dnf copr enable pgdev/ghostty -y
-	BASE_PACKAGES=( "ghostty" "firewalld" "tmux" "flatpak" "ninja-build" "cmake" "make" "gettext" "glibc-gconv-extra" "zsh" "fontawesome-fonts-all" "slurp" "blueman" "grim" "dunst" "wayland-protocols-devel" "meson" "pkg-config" "wayland-devel" "pulseaudio-libs-devel" "vim" "brightnessctl" "playerctl" "waybar" "wl-clipboard" "wofi" "evince" "calibre" "sway" "swaylock" "swayidle" "fd-find" "fzf" "sed" "ripgrep" "gcc" "g++" "libreoffice" )
-	echo "Installing base packages for Fedora..."
-	sudo dnf install -y "${BASE_PACKAGES[@]}"
-	echo "Upgrading packages..."
-	sudo dnf upgrade -y
-
-	gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
-	gsettings set org.gnome.desktop.interface font-name "Cantarell 32"
-	gsettings set org.gnome.desktop.interface cursor-size 48
-	gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
-
-	sudo systemctl unmask firewalld
-	sudo systemctl start firewalld
-	sudo systemctl enable firewalld
-
-	if command -v fd >/dev/null; then
-		ln -s "$(command -v fd)" "$HOME/.local/bin/fd"
-	else
-		echo "fd is not installed, skipping symlink creation."
-	fi
-
-	sudo curl -Lo /usr/local/bin/theme.sh 'https://git.io/JM70M' && sudo chmod +x /usr/local/bin/theme.sh
+if [ "$(cat /sys/class/dmi/id/sys_vendor)" == "System76" ]; then
+	sudo dnf copr enable szydell/system76 -y
+	sudo dnf install -y kernel-devel system76-driver
+	sudo dnf install -y "system76*" firmware-manager
+	sudo systemctl enable --now system76-firmware-daemon
+	sudo systemctl mask power-profiles-daemon.service
+	sudo gpasswd -a $USER adm
+	sudo systemctl enable com.system76.PowerDaemon.service system76-power-wake
+	sudo systemctl start com.system76.PowerDaemon.service
+	sudo systemctl enable dkms
 fi
-
-echo "Installing Neovim..."
-git clone --depth 1 --filter=blob:none https://github.com/neovim/neovim ~/.neovim
-cd ~/.neovim
-git fetch --depth 1 origin tag stable
-git checkout -b stable refs/tags/stable
-make CMAKE_BUILD_TYPE=RelWithDebInfo
-sudo make install
-cd "$HOME"
-echo "Neovim installed successfully."
-nvim --version
-
+sudo dnf copr enable pgdev/ghostty -y
+PACKAGE_FILE="$HOME/.local/scripts/new_machine_setup/packages.txt"
+if [[ ! -f "$PACKAGE_FILE" ]]; then
+  echo "Error: Package list file '$PACKAGE_FILE' not found."
+else
+  echo "Reading package list from $PACKAGE_FILE..."
+fi
+mapfile -t BASE_PACKAGES < <(grep -vE '^\s*#|^\s*$' "$PACKAGE_FILE")
+if [[ ${#BASE_PACKAGES[@]} -eq 0 ]]; then
+  echo "No packages found in $PACKAGE_FILE. Nothing to install."
+fi
+sudo dnf install -y "${BASE_PACKAGES[@]}"
+echo "Upgrading packages..."
+sudo dnf upgrade -y
+gsettings set org.gnome.desktop.interface font-name "Cantarell 18"
+gsettings set org.gnome.desktop.interface cursor-size 32
+export PATH="$PATH:/var/lib/flatpak/exports/bin"
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak install --noninteractive flathub one.ablaze.floorp
+if command -v fd >/dev/null; then
+	mkdir -p "$HOME/.local/bin"
+	ln -s "$(command -v fd)" "$HOME/.local/bin/fd"
+else
+	echo "fd is not installed, skipping symlink creation."
+fi
+echo 'theme = light:"Builtin Solarized Light",dark:"Builtin Solarized Dark"' >> "$HOME/.config/ghostty/config"
+curl -sSL https://raw.githubusercontent.com/iton0/hkup-cli/main/scripts/install | sh
 echo "Installing Latest Go Version..."
 LATEST_GO_VERSION=$(curl -s https://go.dev/dl/ | grep -oP 'go\d+\.\d+\.\d+\.linux-amd64\.tar\.gz' | head -n 1)
 LATEST_GO_VERSION_URL="https://go.dev/dl/$LATEST_GO_VERSION"
@@ -74,32 +45,20 @@ sudo rm -rf /usr/local/go
 sudo tar -C /usr/local -xzf "$LATEST_GO_VERSION"
 rm "$LATEST_GO_VERSION"
 echo "Go has been installed successfully."
-
 echo "Installing nvm..."
 LATEST_NVM_VERSION=$(curl -s https://api.github.com/repos/nvm-sh/nvm/releases/latest | grep -oP '"tag_name": "\Kv\d+\.\d+\.\d+' )
 INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/nvm-sh/nvm/$LATEST_NVM_VERSION/install.sh"
 curl -o- "$INSTALL_SCRIPT_URL" | bash
-
-git clone --depth 1 --filter=blob:none git@github.com:ErikReider/SwayAudioIdleInhibit.git
+git clone --depth 1 --filter=blob:none https://github.com/ErikReider/SwayAudioIdleInhibit.git
 cd SwayAudioIdleInhibit
 meson build
 ninja -C build
 sudo meson install -C build
 cd "$HOME"
 rm -rf SwayAudioIdleInhibit
-
-curl -sSL https://raw.githubusercontent.com/iton0/hkup-cli/main/scripts/install | sh
-
 echo "Installing oh-my-zsh..."
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
 echo "Cloning Zsh plugins..."
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+git clone --depth 1 --filter=blob:none https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 echo "Zsh configured successfully."
 curl -sS https://starship.rs/install.sh | sh -s -- -y
-starship preset plain-text-symbols -o ~/.config/starship.toml
-
-if ! grep -qiE "(Microsoft|WSL)" /proc/version; then
-    flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-	flatpak install flathub one.ablaze.floorp
-fi

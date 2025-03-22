@@ -1,3 +1,5 @@
 #!/bin/sh
+tmux source-file ~/.config/tmux/tmux.conf
 swaymsg reload
 nvim --headless "+Lazy! restore" "+Lazy! clean" +qa
+exec zsh # NOTE: needs to happen last

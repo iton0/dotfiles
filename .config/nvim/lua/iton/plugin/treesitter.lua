@@ -1,7 +1,7 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
 	event = { "BufReadPost", "BufNewFile" },
-	build = ":TSUpdate",
+	build = ":TSUpdateSync",
 	main = "nvim-treesitter.configs",
 	opts = {
 		ensure_installed = {
@@ -13,7 +13,6 @@ return {
 			"markdown",
 			"markdown_inline",
 			"go",
-			"cpp",
 		},
 		highlight = {
 			enable = true,
