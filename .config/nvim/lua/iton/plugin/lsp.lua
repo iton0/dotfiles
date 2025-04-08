@@ -47,23 +47,14 @@ return {
 			end,
 		})
 		local servers = {
+			pyright = {},
 			gopls = {},
-			clangd = {
-				settings = {
-					clangd = {
-						enableCodeCompletion = false,
-						serverCompletionRanking = false,
-					},
-				},
-			},
-			lua_ls = {
-				settings = { Lua = {
-					diagnostics = { globals = { "vim" } },
-				} },
-			},
+			clangd = {},
+			lua_ls = {},
 		}
 		local ensure_installed = vim.tbl_keys(servers)
 		vim.list_extend(ensure_installed, {
+			"black",
 			"stylua",
 		})
 		require("mason-tool-installer").setup({

@@ -20,6 +20,3 @@ echo -e "'before using machine\n"
 
 echo -e "\033[1m[IMPORTANT]\033[0m"
 echo -e "Run \033[4mchsh -s \$(which zsh)\033[0m before rebooting\n"
-echo -e "if ouput below is not \"/usr/bin/zsh\"\n"
-chsh -s /usr/bin/zsh
-echo "$SHELL"

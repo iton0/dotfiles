@@ -8,7 +8,7 @@ return {
 		default_file_explorer = false,
 		constrain_cursor = "name",
 		win_options = {
-			signcolumn = "yes" .. require("iton.util").signcol_size,
+			signcolumn = require("iton.util").signcol_size,
 		},
 		keymaps = {
 			["<C-h>"] = false,

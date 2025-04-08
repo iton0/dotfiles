@@ -2,10 +2,8 @@
   name = iton0
   email = iton224@protonmail.com
 [core]
-  editor = nvim
   autocrlf = input
   whitespace = space-before-tab
-  pager = LESS=FRX less
 [init]
   defaultBranch = main
 [credential]
@@ -52,5 +50,5 @@
   last = log -1 HEAD --stat --patch --pretty=format:'%C(auto)%h%Creset %C(bold)%s%Creset %C(green)(%ar)%Creset %C(cyan)[%an]%Creset%n%n%b%n%n%C(bold yellow)Changed Files Summary%Creset%n'
   lg = log --graph --pretty=format:'%C(auto)%h%Creset%C(auto)%d%Creset %C(bold)%s%Creset %C(green)(%cr)%Creset %C(cyan)[%an]%Creset' --abbrev-commit --date=relative
   rlg = reflog --format='%C(auto)%h%Creset -%C(auto)%d%Creset %C(green)%gd%Creset %C(bold)%gs%Creset %C(cyan)(%cr)%Creset'
-[maintenance]
+[maintenance] ; for dotfiles
 	repo = /home/iton

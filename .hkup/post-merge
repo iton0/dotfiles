@@ -1,3 +1,4 @@
 #!/bin/sh
 swaymsg reload
+exec zsh
 nvim --headless "+Lazy! restore" "+Lazy! clean" +qa
