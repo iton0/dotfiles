@@ -13,7 +13,6 @@ return {
 			"markdown",
 			"markdown_inline",
 			"go",
-			"cpp",
 		},
 		highlight = {
 			enable = true,

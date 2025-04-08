@@ -7,5 +7,5 @@ return {
 	end,
 	home = os.getenv("HOME"),
 	autocmd = vim.api.nvim_create_autocmd,
-	signcol_size = ":5",
+	signcol_size = "yes:5",
 }
