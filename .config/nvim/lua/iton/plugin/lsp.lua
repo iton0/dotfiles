@@ -41,25 +41,23 @@ return {
 				map("grr", vim.lsp.buf.references, "GoTo References")
 				map("gri", vim.lsp.buf.implementation, "GoTo Implementation")
 				map("gO", builtin.lsp_document_symbols, "Search Document Symbols")
+				map("<leader>ss", builtin.lsp_dynamic_workspace_symbols, "Search Document Symbols")
 				map("<leader>df", vim.diagnostic.setloclist, "Search File Diagnostics")
 				map("<leader>dg", builtin.diagnostics, "Search Global Diagnostics")
 				map("<c-s>", vim.lsp.buf.signature_help, "Signature Help")
 			end,
 		})
 		local servers = {
-			pyright = {},
 			gopls = {},
 			clangd = {},
 			lua_ls = {},
 		}
 		local ensure_installed = vim.tbl_keys(servers)
 		vim.list_extend(ensure_installed, {
-			"black",
 			"stylua",
 		})
 		require("mason-tool-installer").setup({
 			ensure_installed = ensure_installed,
-			auto_update = true,
 		})
 		require("mason-lspconfig").setup({
 			handlers = {

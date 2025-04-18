@@ -12,7 +12,7 @@
 		"custom/audio_idle_inhibitor",
         "idle_inhibitor",
         "pulseaudio",
-        "network",
+        //"network",
         "battery",
         "tray"
     ],

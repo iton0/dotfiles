@@ -7,6 +7,7 @@ g.loaded_node_provider = 0
 g.loaded_python_provider = 0
 g.loaded_python3_provider = 0
 local o = vim.o
+o.colorcolumn = "80"
 o.signcolumn = require("iton.util").signcol_size
 o.scrolloff = 10
 o.tabstop = 4

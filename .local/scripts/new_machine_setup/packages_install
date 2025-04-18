@@ -10,33 +10,27 @@ if [ "$(cat /sys/class/dmi/id/sys_vendor)" == "System76" ]; then
 	sudo systemctl start com.system76.PowerDaemon.service
 	sudo systemctl enable dkms
 fi
-
 sudo dnf copr enable pgdev/ghostty -y
-BASE_PACKAGES=( "neovim" "ghostty" "tmux" "flatpak" "ninja-build" "zsh" "slurp" "blueman" "grim" "dunst" "wayland-protocols-devel" "meson" "pkg-config" "wayland-devel" "pulseaudio-libs-devel" "brightnessctl" "playerctl" "waybar" "wl-clipboard" "wofi" "evince" "calibre" "sway" "swaylock" "swayidle" "fd-find" "fzf" "sed" "ripgrep" "gcc" "g++" "libreoffice" )
+BASE_PACKAGES=( "neovim" "ghostty" "tmux" "flatpak" "ninja-build" "zsh" "slurp" "blueman" "grim" "dunst" "wayland-protocols-devel" "meson" "pkg-config" "wayland-devel" "cmake" "pulseaudio-libs-devel" "brightnessctl" "playerctl" "waybar" "wl-clipboard" "wofi" "evince" "calibre" "sway" "swaylock" "swayidle" "fd-find" "fzf" "sed" "ripgrep" "gcc" "g++" "libreoffice" )
 echo "Installing base packages for Fedora..."
 sudo dnf install -y "${BASE_PACKAGES[@]}"
 echo "Upgrading packages..."
 sudo dnf upgrade -y
-
 gsettings set org.gnome.desktop.interface font-name "Cantarell 18"
 gsettings set org.gnome.desktop.interface cursor-size 32
-gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
-
+gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
+gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
 export PATH="$PATH:/var/lib/flatpak/exports/bin"
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak install --noninteractive flathub one.ablaze.floorp
-
 if command -v fd >/dev/null; then
 	mkdir -p "$HOME/.local/bin"
 	ln -s "$(command -v fd)" "$HOME/.local/bin/fd"
 else
 	echo "fd is not installed, skipping symlink creation."
 fi
-
 sudo curl -Lo /usr/local/bin/theme.sh 'https://git.io/JM70M' && sudo chmod +x /usr/local/bin/theme.sh
-
 curl -sSL https://raw.githubusercontent.com/iton0/hkup-cli/main/scripts/install | sh
-
 echo "Installing Latest Go Version..."
 LATEST_GO_VERSION=$(curl -s https://go.dev/dl/ | grep -oP 'go\d+\.\d+\.\d+\.linux-amd64\.tar\.gz' | head -n 1)
 LATEST_GO_VERSION_URL="https://go.dev/dl/$LATEST_GO_VERSION"
@@ -45,12 +39,10 @@ sudo rm -rf /usr/local/go
 sudo tar -C /usr/local -xzf "$LATEST_GO_VERSION"
 rm "$LATEST_GO_VERSION"
 echo "Go has been installed successfully."
-
 echo "Installing nvm..."
 LATEST_NVM_VERSION=$(curl -s https://api.github.com/repos/nvm-sh/nvm/releases/latest | grep -oP '"tag_name": "\Kv\d+\.\d+\.\d+' )
 INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/nvm-sh/nvm/$LATEST_NVM_VERSION/install.sh"
 curl -o- "$INSTALL_SCRIPT_URL" | bash
-
 git clone --depth 1 --filter=blob:none https://github.com/ErikReider/SwayAudioIdleInhibit.git
 cd SwayAudioIdleInhibit
 meson build
@@ -58,7 +50,6 @@ ninja -C build
 sudo meson install -C build
 cd "$HOME"
 rm -rf SwayAudioIdleInhibit
-
 echo "Installing oh-my-zsh..."
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
 echo "Cloning Zsh plugins..."

@@ -52,6 +52,12 @@ fullupdate() {
     nvim --headless "+Lazy! sync" +qa
     gio trash --empty
 }
+autodot() {
+	pushd $HOME
+    dot auto
+    dot push
+	popd
+}
 post-install() {
     nvm install --lts
     nvim --headless "+Lazy! install" +qa

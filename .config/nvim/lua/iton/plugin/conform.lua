@@ -4,7 +4,6 @@ return {
 	cmd = "ConformInfo",
 	opts = {
 		formatters_by_ft = {
-			python = { "black" },
 			lua = { "stylua" },
 			["_"] = { "trim_whitespace" },
 		},
