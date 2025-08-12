@@ -1,0 +1,4 @@
+return {
+  ["mini.nvim"] = "6bd3a01aaf7d248aea1b78aacdd5d44bffa002c1",
+  ["nvim-lint"] = "54c5f839f8b3e3e69afbf2e074be8ac7e5b793b9"
+}

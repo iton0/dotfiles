@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+
+set -e
+
+PACKAGE_FILE="$HOME/.local/scripts/new_machine_setup/packages.txt"
+
+if [[ ! -f "$PACKAGE_FILE" ]]; then
+    echo "Error: Package list file $PACKAGE_FILE not found."
+    exit 1
+fi
+
+# Read the base packages from the file, ignoring comments and empty lines.
+mapfile -t BASE_PACKAGES < <(grep -vE '^\s*#|^\s*$' "$PACKAGE_FILE")
+
+# Check if any packages were found.
+if [[ ${#BASE_PACKAGES[@]} -eq 0 ]]; then
+    echo "No packages found in $PACKAGE_FILE. Nothing to install."
+    exit 0
+fi
+
+# Check for System76 hardware and install drivers if detected.
+if [ "$(cat /sys/class/dmi/id/sys_vendor)" == "System76" ]; then
+    echo "System76 hardware detected. Installing System76 drivers and utilities..."
+
+    # Enable the System76 COPR repository.
+    sudo dnf copr enable szydell/system76 -y
+
+    # Install kernel headers which are required for DKMS.
+    # The `uname -r` command gets the current kernel version.
+    sudo dnf install -y "kernel-devel-$(uname -r)"
+
+    # Install core System76 packages. We separate them for clarity and to handle DKMS specifically.
+    sudo dnf install -y system76-driver system76-power firmware-manager
+
+    # Install the DKMS package for open firmware systems.
+    # We use a separate command to ensure the correct DKMS package is installed.
+    sudo dnf install -y system76-acpi-dkms
+
+    # Mask the default power service to avoid conflicts.
+    sudo systemctl mask power-profiles-daemon.service
+
+    # Enable and start the System76 power and firmware services.
+    # The --now flag both enables and starts the service.
+    sudo systemctl enable --now system76-firmware-daemon
+    sudo systemctl enable --now com.system76.PowerDaemon.service system76-power-wake
+
+    # Enable the dkms service, which is required for the DKMS package to function.
+    sudo systemctl enable dkms
+
+    # Add the current user to the `adm` group.
+    # This is necessary for some firmware management tasks.
+    sudo gpasswd -a "$USER" adm
+fi
+
+# Enable the necessary COPR repositories for various tools.
+echo "Enabling COPR repositories..."
+sudo dnf copr enable solopasha/hyprland -y
+sudo dnf copr enable scottames/ghostty -y
+sudo dnf copr enable jdxcode/mise -y
+sudo dnf copr enable erikreider/SwayNotificationCenter -y
+
+# Install all packages from the BASE_PACKAGES array.
+echo "Installing base packages..."
+sudo dnf install -y "${BASE_PACKAGES[@]}"
+
+echo "Cloning and installing SwayAudioIdleInhibit..."
+git clone --depth 1 --filter=blob:none https://github.com/ErikReider/SwayAudioIdleInhibit.git
+cd SwayAudioIdleInhibit
+sudo meson setup build -Dlogind-provider=systemd
+sudo meson compile -C build
+sudo meson install -C build
+cd "$HOME"
+sudo rm -rf SwayAudioIdleInhibit
+
+echo "Cloning antidote plugin manager..."
+git clone --depth 1 --filter=blob:none https://github.com/mattmc3/antidote.git "$HOME"/.config/zsh/antidote
+
+echo 'export ZDOTDIR="'"$HOME"'/.config/zsh"' > "$HOME"/.zshenv
+
+echo "Package installation and initial setup completed."

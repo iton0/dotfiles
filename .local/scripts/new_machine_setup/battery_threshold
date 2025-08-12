@@ -1,0 +1,195 @@
+#!/usr/bin/env bash
+#-----------------------------
+# BATTERY THRESHOLD SCRIPT
+#-----------------------------
+# This script automatically sets battery charge thresholds on a laptop.
+# It handles both System76 hardware using `system76-power` and generic laptops
+# that use kernel sysfs files, and it creates a systemd service to persist settings.
+
+set -Eeuo pipefail
+
+#==============================
+# CONFIGURATION
+#==============================
+# Define the desired charge thresholds.
+START_THRESHOLD=50
+END_THRESHOLD=60
+
+
+#==============================
+# FUNCTIONS
+#==============================
+
+# Function to find the primary battery device (e.g., BAT0).
+find_battery_device() {
+    local battery_device=""
+    for bat_dir in /sys/class/power_supply/BAT*; do
+        if [ -d "$bat_dir" ]; then
+            battery_device=$(basename "$bat_dir")
+            echo "$battery_device"
+            return 0
+        fi
+    done
+    return 1
+}
+
+# Function to identify the correct sysfs threshold files for the battery.
+check_threshold_files() {
+    local battery_device=$1
+    local start_file=""
+    local end_file=""
+
+    # Check for common start threshold file names.
+    if [ -f "/sys/class/power_supply/${battery_device}/charge_control_start_threshold" ]; then
+        start_file="/sys/class/power_supply/${battery_device}/charge_control_start_threshold"
+    elif [ -f "/sys/class/power_supply/${battery_device}/charge_start_threshold" ]; then
+        start_file="/sys/class/power_supply/${battery_device}/charge_start_threshold"
+    fi
+
+    # Check for common end threshold file names.
+    if [ -f "/sys/class/power_supply/${battery_device}/charge_control_end_threshold" ]; then
+        end_file="/sys/class/power_supply/${battery_device}/charge_control_end_threshold"
+    elif [ -f "/sys/class/power_supply/${battery_device}/charge_stop_threshold" ]; then
+        end_file="/sys/class/power_supply/${battery_device}/charge_stop_threshold"
+    fi
+
+    echo "$start_file|$end_file"
+}
+
+
+#==============================
+# MAIN SCRIPT LOGIC
+#==============================
+echo "--- Battery Charge Threshold Setup Script ---"
+
+# 1. Check for System76 hardware
+if [ "$(cat /sys/class/dmi/id/sys_vendor)" == "System76" ]; then
+    echo "System76 hardware detected. Using system76-power tool."
+
+    # Check if system76-power is installed.
+    if ! command -v system76-power &> /dev/null; then
+        echo "Error: 'system76-power' command not found."
+        echo "Please install the system76-power package for your distribution."
+        exit 1
+    fi
+
+    # Set the thresholds using the official tool.
+    echo "Setting thresholds to start at $START_THRESHOLD% and end at $END_THRESHOLD%."
+    if sudo system76-power charge-thresholds "$START_THRESHOLD" "$END_THRESHOLD"; then
+        echo "Successfully set thresholds with system76-power."
+        echo "No custom systemd service is needed, as the system76-power daemon manages this."
+    else
+        echo "Failed to set thresholds with system76-power. Check if the daemon is running or if the command failed."
+        exit 1
+    fi
+
+else # Not a System76 machine
+    echo "Non-System76 hardware detected. Using generic sysfs files."
+
+    # 1. Check for Hardware Support
+    BATTERY_DEVICE=$(find_battery_device)
+    if [ -z "$BATTERY_DEVICE" ]; then
+        echo "Error: Could not find a battery device (e.g., BAT0) in /sys/class/power_supply/."
+        echo "This script might not be suitable for your system or battery."
+        exit 1
+    fi
+    echo "Found battery device: $BATTERY_DEVICE"
+
+    THRESHOLD_FILES=$(check_threshold_files "$BATTERY_DEVICE")
+    START_FILE=$(echo "$THRESHOLD_FILES" | cut -d'|' -f1)
+    END_FILE=$(echo "$THRESHOLD_FILES" | cut -d'|' -f2)
+
+    if [ -z "$START_FILE" ] && [ -z "$END_FILE" ]; then
+        echo "Warning: No charge threshold control files found for $BATTERY_DEVICE."
+        echo "Your laptop might not support setting charge thresholds via the kernel."
+        echo "Consider checking your BIOS/UEFI settings or looking for manufacturer-specific tools (e.g., asusctl)."
+        read -r -p "Do you want to proceed with setting the threshold (it might fail)? (y/N): " proceed_no_support
+        if [[ ! "$proceed_no_support" =~ ^[Yy]$ ]]; then
+            echo "Exiting."
+            exit 0
+        fi
+        # If they proceed, we'll try the common end_threshold as a last resort.
+        END_FILE="/sys/class/power_supply/${BATTERY_DEVICE}/charge_control_end_threshold"
+        echo "Attempting to use default end threshold file: $END_FILE"
+    fi
+
+    if [ -z "$END_FILE" ]; then
+        echo "Error: Could not determine a valid end threshold file. Exiting."
+        exit 1
+    fi
+
+    echo "Identified start threshold file: ${START_FILE:-N/A}"
+    echo "Identified end threshold file: $END_FILE"
+
+    # 2. Setting the Thresholds (Temporarily)
+    echo ""
+    echo "Attempting to set thresholds temporarily..."
+    if [ -n "$START_FILE" ]; then
+        echo "Setting start threshold to $START_THRESHOLD%..."
+        if echo "$START_THRESHOLD" | sudo tee "$START_FILE" > /dev/null; then
+            echo "Successfully set start threshold."
+        else
+            echo "Failed to set start threshold. This might be normal if your device only supports an end threshold."
+        fi
+    fi
+
+    echo "Setting end threshold to $END_THRESHOLD%..."
+    if echo "$END_THRESHOLD" | sudo tee "$END_FILE" > /dev/null; then
+        echo "Successfully set end threshold."
+        echo "Current settings (temporary):"
+        [ -n "$START_FILE" ] && cat "$START_FILE" 2>/dev/null && echo " (start)"
+        cat "$END_FILE" 2>/dev/null && echo " (end)"
+    else
+        echo "Failed to set end threshold. This indicates your hardware might not support this feature or you lack permissions."
+        echo "Please check the output for errors. Exiting."
+        exit 1
+    fi
+
+    echo ""
+    echo "--- Creating Systemd Service ---"
+    SERVICE_FILE="/etc/systemd/system/battery-threshold.service"
+
+    # Determine the ExecStart command based on the identified files.
+    EXEC_START_COMMAND=""
+    if [ -n "$START_FILE" ] && [ -n "$END_FILE" ]; then
+        EXEC_START_COMMAND="echo $START_THRESHOLD | sudo tee $START_FILE > /dev/null && echo $END_THRESHOLD | sudo tee $END_FILE > /dev/null"
+    elif [ -n "$END_FILE" ]; then
+        EXEC_START_COMMAND="echo $END_THRESHOLD | sudo tee $END_FILE > /dev/null"
+    fi
+
+    if [ -z "$EXEC_START_COMMAND" ]; then
+        echo "Error: Could not determine ExecStart command for systemd service. Exiting."
+        exit 1
+    fi
+
+    echo "Creating service file: $SERVICE_FILE"
+    sudo bash -c "cat <<EOF > $SERVICE_FILE
+[Unit]
+Description=Set battery charging thresholds
+After=multi-user.target suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c '$EXEC_START_COMMAND'
+
+[Install]
+WantedBy=multi-user.target
+EOF"
+
+    if [ $? -eq 0 ]; then
+        echo "Service file created successfully."
+        echo "Enabling systemd service..."
+        sudo systemctl daemon-reload
+        sudo systemctl enable battery-threshold.service
+        sudo systemctl start battery-threshold.service
+        if [ $? -eq 0 ]; then
+            echo "Systemd service 'battery-threshold.service' started and enabled."
+        else
+            echo "Failed to enable systemd service. Check system logs for errors."
+        fi
+    else
+        echo "Failed to create service file. Check permissions or disk space."
+    fi
+fi
+
+echo "--- Script Finished ---"

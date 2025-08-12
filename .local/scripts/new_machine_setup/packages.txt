@@ -1,0 +1,101 @@
+# --- Core Development Tools ---
+gcc
+g++
+
+# Build systems and package managers
+mise
+ninja-build
+meson
+pkg-config
+cmake
+# needed for swayaudioidleinhibitor
+systemd-devel
+pulseaudio-libs-devel
+
+# --- Sway Components ---
+sway
+# A wayland session manager
+uwsm
+# A simple idle management daemon
+swayidle
+# A screen locker for Sway
+swaylock
+# PolicyKit authentication agent
+lxqt-policykit
+# A notification center
+SwayNotificationCenter
+
+# --- Core Dependencies & Libraries ---
+# Development files for Wayland protocols
+wayland-protocols-devel
+# Development files for Wayland
+wayland-devel
+
+# --- CLI Applications & Utilities ---
+# A powerful Vim-based text editor
+neovim
+# Terminal multiplexer
+tmux
+# A powerful shell
+zsh
+# Fuzzy finder
+fzf
+# A faster alternative to 'find'
+fd-find
+# A fast line-oriented search tool
+ripgrep
+# A web file downloader
+wget
+# A zip archive extractor
+unzip
+# Stream editor
+sed
+# Wayland clipboard utilities
+wl-clipboard
+# Screen capture
+grim
+# Screen selection utility
+slurp
+# Control screen brightness
+brightnessctl
+# Control media players
+playerctl
+# Network manager applet
+nm-applet
+# PulseAudio volume control
+pavucontrol
+# Bluetooth manager
+blueman
+# Application launcher
+rofi-wayland
+# Terminal fonts for tty
+terminus-fonts-console
+
+# --- GUI Applications ---
+# A lightweight file manager
+thunar
+thunar-archive-plugin
+xarchiver
+
+# Media and document viewers
+# A versatile media player
+mpv
+# Document viewer
+evince
+# E-book management
+calibre
+# ISO image writer
+mediawriter
+# Disk management utility
+gnome-disk-utility
+
+# A highly customizable Wayland bar
+waybar
+# A fast, modern terminal emulator
+ghostty
+
+# --- Misc Utilities & Apps ---
+# look and feel for gtk applications
+nwg-look
+# Manage XDG user directories
+xdg-user-dirs

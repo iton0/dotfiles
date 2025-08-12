@@ -1,0 +1,158 @@
+* {
+    font-family: 'JetBrainsMono Nerd Font', 'Noto Sans Mono', 'Font Awesome 6 Free', 'Font Awesome 6 Brands', monospace;
+    font-size: 24px;
+}
+
+window#waybar {
+    background-color: rgba(60, 60, 60, 0.6); /* Neutral dark, slightly transparent */
+    color: #e0e0e0; /* Light gray text */
+    transition-property: background-color, color;
+    transition-duration: .3s;
+    border-radius: 0;
+    padding: 0.2em 0;
+}
+
+window#waybar.hidden {
+    opacity: 0.8;
+}
+
+window#waybar.termite {
+    background-color: #3F3F3F;
+    color: #eee;
+}
+
+window#waybar.chromium {
+    background-color: #222;
+    color: #eee;
+    border: none;
+}
+
+button {
+    background-color: transparent;
+    color: inherit;
+    border: none;
+    border-radius: 0;
+    padding: 0 0.6em;
+    margin: 0;
+    box-shadow: none;
+}
+
+button:hover {
+    background-color: rgba(255, 255, 255, 0.05); /* Very subtle light hover */
+}
+
+/* ==============================================================================
+   Module Styling (based on your config)
+   ============================================================================== */
+
+/* Grouping common styles for all active modules */
+#clock,
+#battery,
+#pulseaudio,
+#tray,
+#mode,
+#idle_inhibitor,
+#scratchpad {
+    padding: 0 0.8em;
+    color: inherit;
+    background-color: transparent;
+    margin: 0 0.2em;
+    border-radius: 4px;
+}
+
+/* Workspaces Module */
+#workspaces {
+    margin: 0 0.4em;
+    padding: 0;
+}
+
+#workspaces button {
+    padding: 0 0.5em;
+    color: inherit;
+}
+
+#workspaces button:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Subtle light hover */
+    color: #333; /* Make the text dark on hover */
+}
+
+/* Corrected selector for the active/focused workspace */
+#workspaces button.focused {
+    background-color: rgba(255, 255, 255, 0.3); /* Subtle white background */
+    color: #fff; /* White text for contrast */
+    font-weight: bold; /* Keep the bold text */
+}
+
+#workspaces button.focused:hover {
+    background-color: rgba(180, 180, 180, 0.5); /* Slightly lighter focused hover */
+    color: #333; /* Make the text dark on focused hover */
+    font-weight: bold; /* Keep the bold text */
+}
+
+#workspaces button.urgent {
+    background-color: #cc3333;
+    color: #fff;
+}
+
+/* Mode Module */
+#mode {
+    background-color: rgba(120, 120, 120, 0.4);
+    color: #fff;
+    padding: 0 0.8em;
+    margin-left: 0.4em;
+    border-radius: 4px;
+}
+
+/* Battery Module */
+@keyframes blink {
+    to {
+        background-color: #ffdddd;
+        color: #333;
+    }
+}
+
+#battery.critical:not(.charging) {
+    background-color: #ff3333;
+    color: #fff;
+    animation-name: blink;
+    animation-duration: 0.7s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    border-radius: 4px;
+}
+
+/* Pulseaudio Module */
+#pulseaudio.muted {
+    color: #aaa;
+}
+
+/* Tray Module */
+#tray {
+    margin-right: 0.4em;
+}
+
+#tray > .needs-attention {
+    background-color: #ffaa00;
+    color: #333;
+}
+
+/* Idle Inhibitor Module */
+#idle_inhibitor.activated {
+    background-color: #eee;
+    color: #333;
+    border-radius: 4px;
+}
+
+/* Scratchpad Module */
+#scratchpad {
+    background: rgba(0, 0, 0, 0.05);
+    color: inherit;
+    border-radius: 4px;
+    padding: 0 0.6em;
+    margin: 0 0.2em;
+}
+
+#scratchpad.empty {
+    background-color: transparent;
+}

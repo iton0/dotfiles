@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -e
+
+"$HOME"/.local/scripts/new_machine_setup/packages_install
+"$HOME"/.local/scripts/new_machine_setup/repos_install
+"$HOME"/.local/scripts/new_machine_setup/uwsm_setup
+"$HOME"/.local/scripts/new_machine_setup/swaync_setup
+"$HOME"/.local/scripts/new_machine_setup/tty_font
+"$HOME"/.local/scripts/new_machine_setup/nerd_font
+"$HOME"/.local/scripts/new_machine_setup/battery_threshold
+
+if ! zsh -c "
+    source $HOME/.config/zsh/.zshrc
+    post-install || { exit 1; }
+"; then
+    echo "post-install command failed; Run after reboot"
+fi
+
+echo ""
+echo "---------------------------"
+echo -e "Main installation finished!\n"
+echo -e "Reboot system\n"
+echo -e "\033[1m[IMPORTANT]\033[0m"
+echo -e "Run \033[4mchsh -s \$(which zsh)\033[0m before rebooting\n"

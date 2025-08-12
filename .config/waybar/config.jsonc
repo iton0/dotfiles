@@ -1,0 +1,89 @@
+// -*- mode: jsonc -*-
+{
+    "modules-left": [
+        "sway/workspaces",
+        "sway/mode",
+        "sway/scratchpad"
+    ],
+    "modules-center": [
+        "clock",
+        "custom/notification"
+    ],
+    "modules-right": [
+		"idle_inhibitor",
+		"pulseaudio",
+		"tray",
+        "battery"
+    ],
+"custom/notification": {
+"tooltip": false,
+"format": "{icon}",
+"format-icons": {
+"notification": "<span foreground='red'><small><sup>⬤</sup></small></span>",
+"none": " ",
+"dnd-notification": "<span foreground='red'><small><sup>⬤</sup></small></span>",
+"dnd-none": " "
+},
+"return-type": "json",
+"exec-if": "which swaync-client",
+"exec": "swaync-client -swb",
+"on-click": "sleep 0.1 && swaync-client -t -sw",
+"on-click-right": "sleep 0.1 && swaync-client -d -sw",
+"escape": true
+},
+    "sway/scratchpad": {
+        "format": "{icon} {count}",
+        "show-empty": false,
+        "format-icons": ["", ""],
+        "tooltip": true,
+        "tooltip-format": "{app}: {title}"
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },
+    "tray": {
+		"icon-size": 25,
+        "spacing": 10
+    },
+    "clock": {
+		"format": "{:%b %d %I:%M %p}",
+        "tooltip-format": "<big>{calendar}</big>"
+    },
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-full": "{capacity}% {icon}",
+        "format-charging": "{capacity}% ",
+        "format-plugged": "{capacity}% ",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "battery#bat2": {
+        "bat": "BAT2"
+    },
+    "pulseaudio": {
+        "format": "{volume}% {icon} {format_source}",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": " {format_source}",
+        "format-source": "{volume}% ",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+}

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+mkdir -p "$HOME/Code/personal"
+mkdir -p "$HOME/Code/work"
