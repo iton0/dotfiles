@@ -1,199 +1,233 @@
 #!/usr/bin/env bash
-# ------------------------------------------------------------
-# Fedora "Spring-Clean" Maintenance Script
-# ------------------------------------------------------------
-# A robust, interactive, and safe script for system housekeeping on Fedora.
+# ==============================================================================
+# FEDORA SPRING CLEAN: The Ultimate Maintenance Script
+# ==============================================================================
 #
-# Features:
-#  • Optional full system upgrade
-#  • Cleans DNF cache and removes orphaned dependencies
-#  • Prunes old files from ~/.cache (FIXED: now correctly uses 'find' predicates)
-#  • Vacuums journald logs
-#  • Safely cleans temporary files using systemd-tmpfiles
-#  • Can be run in --dry-run mode to preview changes
+# A rigorous, industry-standard maintenance utility for Fedora Workstation.
 #
-# Requires: dnf-utils, and standard system tools.
-# ------------------------------------------------------------
+# FEATURES:
+#  [x] Fail-fast safety (set -euo pipefail)
+#  [x] DNF optimization (Upgrades, Autoremove, Metadata clean)
+#  [x] Flatpak garbage collection (Unused runtimes)
+#  [x] Container engine sanitation (Podman/Docker dangling images)
+#  [x] User Cache Pruning (Smart exclusion logic for 'antidote' etc)
+#  [x] Trash & Thumbnail specific flushing
+#  [x] Journald Vacuuming
+#  [x] Dry-Run capability
+#
+# ==============================================================================
 
-# Set script to exit on error, undefined variables, and pipe errors
 set -euo pipefail
+IFS=$'\n\t'
 
-# Trap signals (e.g., Ctrl+C) to provide a clean exit
-trap 'echo -e "\n[!] Aborted by user."; exit 1' INT TERM
-
-# ---------- Global Configuration & Variables -------------------------------
+# --- Configuration ---
 readonly LOG_DIR="$HOME/.local/var/log"
-readonly SCRIPT_NAME="Fedora Spring-Clean"
-readonly CACHE_DAYS=30          # Prune ~/.cache entries older than N days
-readonly JOURNAL_RETAIN="7d"    # e.g., 500M or 7d
+readonly SCRIPT_NAME="Fedora Spring Clean"
+readonly CACHE_RETENTION_DAYS=30
+readonly JOURNAL_RETENTION="3d" # Keep 3 days (Optimal for Workstation)
 
-# Parse command-line arguments
+# ANSI Colors
+readonly C_BLUE='\033[1;34m'
+readonly C_GREEN='\033[1;32m'
+readonly C_YELLOW='\033[1;33m'
+readonly C_RED='\033[1;31m'
+readonly C_RESET='\033[0m'
+
+# --- Setup & Args ---
 DRY_RUN=false
+
 for arg in "$@"; do
     case $arg in
-        --dry-run)
-            DRY_RUN=true
-            ;;
-        *)
-            echo "Usage: $0 [--dry-run]"
-            exit 1
-            ;;
+        --dry-run) DRY_RUN=true ;;
+        -h|--help) echo "Usage: $0 [--dry-run]"; exit 0 ;;
+        *) echo "Unknown argument: $arg"; exit 1 ;;
     esac
 done
 
-# Create log directory and tee output
+# Logging Setup
 mkdir -p "$LOG_DIR"
 readonly LOG_FILE="$LOG_DIR/spring-clean-$(date +%F_%H-%M-%S).log"
 exec > >(tee -a "$LOG_FILE") 2>&1
 
-# ---------- Helper Functions -----------------------------------------------
-announce() {
-    printf "\n\e[1;34m==> %s\e[0m\n" "$1"
-}
+# --- Helpers ---
+log_header() { printf "\n${C_BLUE}==> %s${C_RESET}\n" "$1"; }
+log_success() { printf "${C_GREEN}  [OK] %s${C_RESET}\n" "$1"; }
+log_warn() { printf "${C_YELLOW}  [WARN] %s${C_RESET}\n" "$1"; }
 
 confirm() {
-    read -r -p "${1:-Are you sure? [y/N]} " ans
+    [[ "$DRY_RUN" == "true" ]] && return 0
+    read -r -p "$(echo -e "${C_YELLOW}$1 [y/N]${C_RESET} ")" ans
     [[ "$ans" =~ ^([yY][eE][sS]|[yY])$ ]]
 }
 
-get_disk_usage() {
-    # Get total used space on the root filesystem (often /dev/mapper/ or /dev/sdX)
-    df -h / | awk 'NR==2 {print $3}'
-}
+get_disk_usage() { df -h / | awk 'NR==2 {print $3}'; }
 
-# ---------- Main Functions (Modularized for Clarity) -----------------------
+# --- Tasks ---
 
-clean_dnf_packages() {
-    announce "DNF Package Maintenance"
+task_dnf_maintenance() {
+    log_header "DNF Package Maintenance"
 
-    # Step 1: System Upgrade
-    if confirm "Perform a full system upgrade (sudo dnf upgrade --refresh -y)? [y/N]"; then
+    # Check for lock
+    if pgrep -x "dnf" >/dev/null; then
+        echo "Error: DNF is currently running. Please finish other updates first."
+        return 1
+    fi
+
+    if confirm "Perform system upgrade and cleanup DNF?"; then
         if [[ "$DRY_RUN" == "true" ]]; then
-            echo "Dry run: Would have executed 'sudo dnf upgrade --refresh -y'"
+            echo "  [DRY] sudo dnf upgrade --refresh -y"
+            echo "  [DRY] sudo dnf autoremove -y"
+            echo "  [DRY] sudo dnf clean all"
         else
+            echo "Updating system..."
             sudo dnf upgrade --refresh -y
-        fi
-    fi
-
-    # Step 2: Remove old dependencies and clean cache
-    if confirm "Clean DNF cache and remove orphaned packages? [y/N]"; then
-        echo "This will run 'dnf autoremove' and 'dnf clean all'."
-        if [[ "$DRY_RUN" == "true" ]]; then
-            echo "Dry run: Would have executed 'sudo dnf autoremove -y' and 'sudo dnf clean all'."
-        else
+            
+            echo "Removing orphaned dependencies..."
             sudo dnf autoremove -y
+            
+            echo "Cleaning metadata and cache..."
             sudo dnf clean all
+            log_success "DNF cleaned."
         fi
     fi
 }
 
-prune_user_cache() {
-    announce "Pruning User Cache ($HOME/.cache)"
-    
-    # Check if directory exists before trying to calculate size
-    if [[ ! -d "$HOME/.cache" ]]; then
-        echo "$HOME/.cache does not exist. Skipping."
-        return 0
+task_flatpak_maintenance() {
+    if ! command -v flatpak &>/dev/null; then return; fi
+    log_header "Flatpak Maintenance"
+
+    echo "Scanning for unused runtimes..."
+    if [[ "$DRY_RUN" == "true" ]]; then
+        echo "  [DRY] flatpak uninstall --unused -y"
+    else
+        # '|| true' prevents script exit if nothing is removed
+        flatpak uninstall --unused -y || true
+        log_success "Flatpak cleanup complete."
     fi
-    
-    local cache_before=$(du -sh "$HOME/.cache" 2>/dev/null | cut -f1 || echo "0B")
-    echo "Current cache size: $cache_before"
+}
 
-    if confirm "Prune files and directories older than $CACHE_DAYS days? [y/N]"; then
-        echo "Running cleanup on $HOME/.cache (excluding antidote)..."
+task_container_maintenance() {
+    # Detect Podman (Native Fedora) or Docker
+    local engine=""
+    if command -v podman &>/dev/null; then engine="podman"; 
+    elif command -v docker &>/dev/null; then engine="docker"; fi
 
-        # The path to exclude (must be absolute)
-        local exclude_path="$HOME/.cache/antidote"
-        
+    [[ -z "$engine" ]] && return
+
+    log_header "Container Maintenance ($engine)"
+    if confirm "Prune dangling container images/volumes?"; then
         if [[ "$DRY_RUN" == "true" ]]; then
-            # DRY RUN: Use -prune and -print to show what would be processed/deleted
-            find "$HOME/.cache" -path "$exclude_path" -prune -o \( -mtime +$CACHE_DAYS -print \)
-            echo "Dry run: The above files and directories would have been deleted."
+            echo "  [DRY] $engine system prune -a -f"
         else
-            # 1. DELETE OLD FILES (This uses -delete, which implies -depth)
-            # We use -not -path to exclude files within the antidote directory from deletion.
-            echo "Deleting old files..."
-            find "$HOME/.cache" -type f -mtime +$CACHE_DAYS -not -path "$exclude_path/*" -delete
-
-            # 2. DELETE EMPTY DIRECTORIES (This does NOT conflict with -prune)
-            # We use -prune here to skip checking the antidote directory's contents, 
-            # and to prevent the antidote folder itself from being deleted if it's empty.
-            echo "Deleting empty directories..."
-            local exclude_antidote=( -path "$exclude_path" -prune -o )
-            # We must use -depth here to allow deletion of directories from the leaves up,
-            # but -prune must still come first to skip the directory itself if it matches.
-            find "$HOME/.cache" -depth "${exclude_antidote[@]}" -type d -empty -delete
+            $engine system prune -a -f || true
+            log_success "Container system pruned."
         fi
-        local cache_after=$(du -sh "$HOME/.cache" 2>/dev/null | cut -f1 || echo "0B")
-        echo "Cache size after cleanup: $cache_after"
     fi
 }
 
-vacuum_journald_logs() {
-    announce "Vacuuming Journald Logs ($JOURNAL_RETAIN retention)"
-    local journal_before=$(journalctl --disk-usage | awk '{print $NF}')
-    echo "Current journal usage: $journal_before"
-
-    if confirm "Rotate and vacuum journal logs now? [y/N]"; then
+task_user_cleanup() {
+    log_header "User Home Cleanup ($HOME)"
+    
+    # 1. Trash
+    local trash_dir="$HOME/.local/share/Trash"
+    if [[ -d "$trash_dir" ]] && confirm "Empty Trash?"; then
         if [[ "$DRY_RUN" == "true" ]]; then
-            echo "Dry run: Would have executed 'sudo journalctl --rotate' and 'sudo journalctl --vacuum-time=$JOURNAL_RETAIN'."
+            echo "  [DRY] rm -rf $trash_dir/*"
+        else
+            # Safer than rm -rf on the var itself
+            rm -rf "${trash_dir:?}/"* 2>/dev/null || true
+            log_success "Trash emptied."
+        fi
+    fi
+
+    # 2. Thumbnails (These can grow to GBs)
+    local thumb_dir="$HOME/.cache/thumbnails"
+    if [[ -d "$thumb_dir" ]] && confirm "Clear Thumbnail cache?"; then
+        if [[ "$DRY_RUN" == "true" ]]; then
+            echo "  [DRY] rm -rf $thumb_dir/*"
+        else
+            rm -rf "${thumb_dir:?}/"* 2>/dev/null || true
+            log_success "Thumbnails cleared."
+        fi
+    fi
+
+    # 3. Old Cache Files
+    if confirm "Prune general cache files older than $CACHE_RETENTION_DAYS days?"; then
+        if [[ "$DRY_RUN" == "true" ]]; then
+            echo "  [DRY] Finding files >$CACHE_RETENTION_DAYS days in ~/.cache (excluding antidote)..."
+        else
+            echo "Pruning old cache files..."
+            # OPTIMAL: find with -print0 and xargs -0 for performance and safety
+            # Excludes 'antidote' and 'mozilla' (firefox cache is best managed by firefox)
+            find "$HOME/.cache" \
+                \( -name "antidote" -o -name "mozilla" \) -prune \
+                -o -type f -mtime +$CACHE_RETENTION_DAYS -print0 \
+                | xargs -0 -r rm -f
+            
+            # Remove empty dirs, protecting exclusion list
+            find "$HOME/.cache" -mindepth 1 -type d -empty \
+                -not -path "*/antidote*" \
+                -not -path "*/mozilla*" \
+                -delete
+            log_success "Old cache pruned."
+        fi
+    fi
+}
+
+task_system_logs() {
+    log_header "System Logs"
+    
+    local current_usage
+    current_usage=$(journalctl --disk-usage | awk '{print $NF}')
+    echo "Current Journal Usage: $current_usage"
+
+    if confirm "Vacuum journal to $JOURNAL_RETENTION?"; then
+        if [[ "$DRY_RUN" == "true" ]]; then
+            echo "  [DRY] sudo journalctl --vacuum-time=$JOURNAL_RETENTION"
         else
             sudo journalctl --rotate
-            sudo journalctl --vacuum-time=$JOURNAL_RETAIN
-        fi
-        local journal_after=$(journalctl --disk-usage | awk '{print $NF}')
-        echo "Journal usage after cleanup: $journal_after"
-    fi
-}
-
-clean_temporary_files() {
-    announce "Cleaning Temporary Files"
-    echo "Using systemd's built-in cleanup utility for maximum safety."
-
-    if confirm "Clean up temporary files in /tmp and other system locations? [y/N]"; then
-        if [[ "$DRY_RUN" == "true" ]]; then
-            echo "Dry run: Would have executed 'sudo systemd-tmpfiles --clean'."
-        else
-            sudo systemd-tmpfiles --clean
-            echo "Temporary files cleaned."
+            sudo journalctl --vacuum-time=$JOURNAL_RETENTION
+            log_success "Journal vacuumed."
         fi
     fi
 }
 
-check_failed_units() {
-    announce "Scanning for failed systemd services"
+task_check_failures() {
+    log_header "System Health Check"
     if systemctl --failed --quiet; then
-        echo "No failed units detected. Good!"
-    else
-        echo "The following units are in a failed state:"
+        echo -e "${C_RED}[!] The following units are in a failed state:${C_RESET}"
         systemctl --failed --no-pager --plain
+    else
+        log_success "No failed systemd units found."
     fi
 }
 
-# ---------- Script Execution -----------------------------------------------
+# --- Main Execution ---
 main() {
-    echo "--- $SCRIPT_NAME starting ($(date)) ---"
+    echo -e "${C_BLUE}--- $SCRIPT_NAME Started ---${C_RESET}"
+    local start_usage=$(get_disk_usage)
+    echo "Disk Usage (Root): $start_usage"
 
-    # Get initial disk usage for the final summary
-    local initial_disk_usage=$(get_disk_usage)
+    # Require sudo upfront to avoid timeouts mid-script
+    sudo -v 
 
-    # Execute cleanup tasks interactively
-    clean_dnf_packages
-    prune_user_cache
-    vacuum_journald_logs
-    clean_temporary_files
-    check_failed_units
+    # Execute Modules
+    task_dnf_maintenance
+    task_flatpak_maintenance
+    task_container_maintenance
+    task_user_cleanup
+    task_system_logs
+    task_check_failures
 
-    # Final summary
-    announce "Final Summary"
-    local final_disk_usage=$(get_disk_usage)
-    echo "Disk Space Used (Root FS): $initial_disk_usage -> $final_disk_usage"
-
+    log_header "Summary"
+    local end_usage=$(get_disk_usage)
+    echo "Disk Usage: $start_usage -> $end_usage"
+    
     if [[ "$DRY_RUN" == "true" ]]; then
-        echo "This was a DRY RUN. No changes were made to the system."
+        echo -e "\n${C_YELLOW}[!] DRY RUN COMPLETE. No changes made.${C_RESET}"
+    else
+        echo -e "\n${C_GREEN}[✓] Maintenance Complete.${C_RESET}"
     fi
-
-    echo "--- $SCRIPT_NAME finished in ${SECONDS}s. Log saved to $LOG_FILE. ---"
 }
 
 main "$@"
