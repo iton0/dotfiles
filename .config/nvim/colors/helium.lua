@@ -10,41 +10,42 @@ if g.syntax_on then
 end
 g.colors_name = "helium"
 
--- 2. Palette Selection
-local is_light = vim.o.background == "light"
-local c = is_light and {
-	bg = "#f1e9d2",
-	subtle_bg = "#e5ddc6",
-	selection = "#d8cfb7",
-	fg = "#343c41",
-	teal = "#1e858a",
-	muted = "#859296",
-	green = "#448100",
-	blue = "#2b70af",
-	magenta = "#a14f96",
-	red = "#ba1a31",
-	orange = "#a85600",
-	yellow = "#846200",
-	diff_add = "#e1eddb",
-	diff_remove = "#f2e1e1",
-} or {
-	bg = "#002d38",
-	subtle_bg = "#0d3844",
-	selection = "#214a56",
-	fg = "#b6c4c6",
-	teal = "#00a89b",
-	muted = "#606e6e",
-	green = "#73a43b",
-	blue = "#4da1ff",
-	magenta = "#d082df",
-	red = "#fb757a",
-	orange = "#e18b4a",
-	yellow = "#bda043",
-	diff_add = "#1a3d31",
-	diff_remove = "#441a1a",
-}
+-- Palette
+local c = is_light
+		and {
+			bg = "#f1e9d2",
+			subtle_bg = "#e5ddc6",
+			selection = "#d8cfb7",
+			fg = "#343c41",
+			teal = "#1e858a",
+			green = "#527d2c",
+			magenta = "#9b5692",
+			muted = "#859296",
+			blue = "#2b70af",
+			red = "#ba1a31",
+			orange = "#a85600",
+			yellow = "#846200",
+			diff_add = "#e1eddb",
+			diff_remove = "#f2e1e1",
+		}
+	or {
+		bg = "#0d2b30",
+		subtle_bg = "#16363c",
+		selection = "#214a56",
+		fg = "#b6c4c6",
+		teal = "#469d96",
+		green = "#83ad61",
+		magenta = "#b692bc",
+		muted = "#606e6e",
+		blue = "#72a7e2",
+		red = "#e68084",
+		orange = "#d69466",
+		yellow = "#bda043",
+		diff_add = "#1a3d31",
+		diff_remove = "#441a1a",
+	}
 
--- 3. Core UI
+-- Core UI
 hl(0, "Normal", { fg = c.fg, bg = c.bg })
 hl(0, "NormalNC", { link = "Normal" })
 hl(0, "Cursor", { fg = c.bg, bg = c.fg })
@@ -65,27 +66,26 @@ hl(0, "Whitespace", { link = "NonText" })
 hl(0, "SpecialKey", { link = "NonText" })
 hl(0, "Conceal", { fg = c.blue })
 
--- 4. Selection & Search
+-- Selection & Search
 hl(0, "Visual", { bg = c.selection })
 hl(0, "VisualNOS", { link = "Visual" })
 hl(0, "Search", { fg = c.yellow, bg = "NONE", reverse = true })
 hl(0, "CurSearch", { fg = c.orange, bg = "NONE", reverse = true, bold = true })
 hl(0, "IncSearch", { link = "CurSearch" })
 hl(0, "Substitute", { fg = c.bg, bg = c.yellow })
-hl(0, "MatchParen", { underline = true })
 hl(0, "SpellBad", { sp = c.magenta, undercurl = true })
 
--- 5. Menus & Navigation
+-- Menus & Navigation
 hl(0, "Pmenu", { fg = c.fg, bg = c.subtle_bg })
 hl(0, "PmenuSel", { fg = c.bg, bg = c.fg })
 hl(0, "PmenuExtra", { fg = c.muted, bg = c.subtle_bg })
-hl(0, "PmenuExtraSel", { fg = c.bg, bg = c.muted })
+hl(0, "PmenuExtraSel", { fg = c.bg, bg = c.fg })
 hl(0, "PmenuSbar", { bg = c.subtle_bg })
 hl(0, "PmenuThumb", { bg = c.muted })
 hl(0, "WildMenu", { link = "PmenuSel" })
 hl(0, "Directory", { fg = c.blue })
 
--- 6. Floats & Messages
+-- Floats & Messages
 hl(0, "NormalFloat", { link = "Pmenu" })
 hl(0, "FloatBorder", { fg = c.muted, bg = c.subtle_bg })
 hl(0, "FloatTitle", { fg = c.yellow, bold = true })
@@ -105,17 +105,17 @@ hl(0, "ErrorMsg", { fg = c.red })
 hl(0, "Question", { fg = c.magenta })
 hl(0, "Title", { fg = c.fg, bold = true })
 
--- 7. Syntax Base
-hl(0, "Comment", { fg = c.green })
-hl(0, "String", { fg = c.teal })
-hl(0, "Number", { fg = c.fg })
+-- Syntax Base
+hl(0, "Comment", { fg = c.orange })
+hl(0, "String", { fg = c.green })
+hl(0, "Number", { link = "String" })
 hl(0, "Boolean", { link = "Number" })
 hl(0, "Constant", { link = "Number" })
-hl(0, "Type", { fg = c.fg })
-hl(0, "Keyword", { fg = c.fg })
+hl(0, "Type", { fg = c.teal })
+hl(0, "Keyword", { fg = c.magenta })
 hl(0, "Statement", { link = "Keyword" })
 hl(0, "PreProc", { link = "Keyword" })
-hl(0, "Include", { link = "Keyword" })
+hl(0, "Include", { fg = c.fg })
 hl(0, "Function", { fg = c.fg })
 hl(0, "Identifier", { fg = c.fg })
 hl(0, "Operator", { fg = c.fg })
@@ -124,7 +124,7 @@ hl(0, "Special", { fg = c.fg })
 hl(0, "Todo", { fg = c.bg, bg = c.green })
 hl(0, "Error", { fg = c.red, reverse = true })
 
--- 8. TreeSitter & LSP
+-- TreeSitter & LSP
 hl(0, "@variable", { fg = c.fg })
 hl(0, "@variable.builtin", { link = "@variable" })
 hl(0, "@variable.parameter", { link = "@variable" })
@@ -156,7 +156,7 @@ hl(0, "@string.escape", { link = "String" })
 hl(0, "@comment", { link = "Comment" })
 hl(0, "@lsp.type.comment", { link = "Comment" })
 
--- 9. Diagnostics
+-- Diagnostics
 hl(0, "DiagnosticOk", { fg = c.green })
 hl(0, "DiagnosticError", { fg = c.red, bold = true })
 hl(0, "DiagnosticWarn", { fg = c.yellow })
@@ -171,7 +171,7 @@ hl(0, "DiagnosticUnderlineWarn", { sp = c.yellow, undercurl = true })
 hl(0, "DiagnosticUnderlineInfo", { sp = c.blue, undercurl = true })
 hl(0, "DiagnosticUnderlineHint", { sp = c.green, undercurl = true })
 
--- 10. Diff & Plugins
+-- Diff
 hl(0, "DiffAdd", { fg = c.green, bg = c.diff_add })
 hl(0, "DiffDelete", { fg = c.red, bg = c.diff_remove })
 hl(0, "DiffChange", { fg = c.yellow, bg = c.subtle_bg })
@@ -181,5 +181,7 @@ hl(0, "@diff.minus", { link = "DiffDelete" })
 hl(0, "diffAdded", { link = "DiffAdd" })
 hl(0, "diffRemoved", { link = "DiffDelete" })
 hl(0, "diffChanged", { link = "DiffChange" })
+
+-- Plugins
 hl(0, "MiniPickMatchCurrent", { bg = c.selection })
 hl(0, "MiniPickMatchRanges", { fg = c.blue })
