@@ -6,18 +6,30 @@ CURRENT_THEME=$(gsettings get org.gnome.desktop.interface color-scheme | tr -d "
 if [ "$CURRENT_THEME" = "prefer-dark" ]; then
     NEW_SCHEME="prefer-light"
     GTK_THEME="Adwaita"
+    NVIM_BG="light"
 else
     NEW_SCHEME="prefer-dark"
     GTK_THEME="Adwaita-dark"
+    NVIM_BG="dark"
 fi
 
-# 1. Update GTK/GNOME settings (still useful for many apps)
+# 1. Update GTK/GNOME settings
 gsettings set org.gnome.desktop.interface color-scheme "$NEW_SCHEME"
 gsettings set org.gnome.desktop.interface gtk-theme "$GTK_THEME"
 
-# 2. Update XDG Portal (The Wayland Standard)
-# This ensures that apps listening to the portal see the change immediately
+# 2. Update XDG Portal
 dbus-send --session --type=method_call --dest=org.freedesktop.impl.portal.Desktop.Gtk \
     /org/freedesktop/portal/desktop \
     org.freedesktop.impl.portal.Settings.ReadAll \
     array:string:"org.freedesktop.appearance"
+
+# 3. Update the Cache
+echo "$NVIM_BG" > ~/.cache/nvim_theme
+
+# 4. Broadcast to Neovim 0.11
+# We look for the pipes in the standard XDG runtime directory
+for socket in "${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"/nvim.*.0; do
+    if [ -S "$socket" ]; then
+        nvim --server "$socket" --remote-send ":set background=$NVIM_BG<CR>"
+    fi
+done
