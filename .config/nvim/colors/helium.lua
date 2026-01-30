@@ -1,16 +1,11 @@
--- Helium (Zhao): OKLab-perceptual balance for Selenzied-level system focus
+--- Helium (Zhao): OKLab-perceptual balance for Selenized-level system focus
 local hl = vim.api.nvim_set_hl
-local cmd = vim.api.nvim_command
-local g = vim.g
 local is_light = vim.o.background == "light"
 
-cmd("highlight clear")
-if g.syntax_on then
-	cmd("syntax reset")
-end
-g.colors_name = "helium"
+vim.cmd("highlight clear")
+vim.g.colors_name = "helium"
 
--- Palette
+--- Palette ---
 local c = is_light
 		and {
 			bg = "#f1e9d2",
@@ -44,6 +39,8 @@ local c = is_light
 		diff_add = "#1a3d31",
 		diff_remove = "#441a1a",
 	}
+
+--- Highlight Groups ---
 
 -- Core UI
 hl(0, "Normal", { fg = c.fg, bg = c.bg })

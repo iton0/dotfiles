@@ -1,12 +1,18 @@
-local now, now_if_args, later, autocmd = _G.MyConfig.now, _G.MyConfig.now_if_args, _G.MyConfig.later,
-	_G.MyConfig.new_autocmd
+-- local add, build = vim.pack.add, _G.MyConfig.on_packchanged
+local now, now_if_args, later, autocmd =
+	_G.MyConfig.now, _G.MyConfig.now_if_args, _G.MyConfig.later, _G.MyConfig.new_autocmd
 
--- TODO: remove once nvim 0.12.x lands on fedora (will need to replace add
--- command
-now(function() require("mini.deps").setup() end)
+-- TODO: Switch to vim.pack.add when 0.12.x lands
+-- remove below code block and uncomment the first line in this file
+now(function()
+	require("mini.deps").setup()
+end)
 local add = MiniDeps.add
 
-now(function() add({ source = "https://github.com/nvim-mini/mini.nvim" }) end)
+-- Core Mini.nvim modules
+now_if_args(function()
+	add("https://github.com/nvim-mini/mini.nvim")
+end)
 
 now_if_args(function()
 	require("mini.files").setup({ content = { prefix = function() end } })
@@ -17,9 +23,8 @@ later(function()
 	pick.setup({
 		window = {
 			config = function()
-				local height = math.floor(0.618 * vim.o.lines)
-				local width = math.floor(0.618 * vim.o.columns)
-
+				local height = math.floor(0.618 * vim.o.lines) -- Golden ratio height
+				local width = math.floor(0.618 * vim.o.columns) -- Golden ratio width
 				return {
 					anchor = "NW",
 					height = height,
@@ -27,14 +32,15 @@ later(function()
 					row = math.floor(0.5 * (vim.o.lines - height)),
 					col = math.floor(0.5 * (vim.o.columns - width)),
 				}
-			end
+			end,
 		},
 		source = { show = pick.default_show },
 	})
 end)
 
+-- Linting
 later(function()
-	add({ source = "https://codeberg.org/mfussenegger/nvim-lint" })
+	add("https://codeberg.org/mfussenegger/nvim-lint")
 	local lint = require("lint")
 
 	lint.linters_by_ft = {
@@ -44,12 +50,7 @@ later(function()
 		elixir = { "credo" },
 	}
 
-	autocmd(
-		"BufWritePost",
-		"*",
-		function()
-			lint.try_lint()
-		end,
-		{ desc = "Trigger linting on save" }
-	)
+	autocmd("BufWritePost", "*", function()
+		lint.try_lint()
+	end, { desc = "Trigger linting" })
 end)
