@@ -24,12 +24,15 @@ dbus-send --session --type=method_call --dest=org.freedesktop.impl.portal.Deskto
     array:string:"org.freedesktop.appearance"
 
 # 3. Update the Cache
-echo "$NVIM_BG" > ~/.cache/nvim_theme
+echo "$NVIM_BG" > "${XDG_CACHE_HOME:-$HOME/.cache}/nvim_theme"
 
-# 4. Broadcast to Neovim 0.11
-# We look for the pipes in the standard XDG runtime directory
-for socket in "${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"/nvim.*.0; do
+# 4. Broadcast to Neovim
+SOCKET_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+
+for socket in "$SOCKET_DIR"/nvim.*.0; do
     if [ -S "$socket" ]; then
-        nvim --server "$socket" --remote-send ":set background=$NVIM_BG<CR>"
+        timeout 0.1s nvim --server "$socket" --remote-send "<C-\><C-n>:set background=$NVIM_BG<CR>" > /dev/null 2>&1 &
     fi
 done
+
+wait
