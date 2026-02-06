@@ -1,2 +1,3 @@
-theme = light:helium-light,dark:helium-dark
+theme = light:fovea-light,dark:fovea-dark
 font-feature = -calt, -liga, -dlig
+bold-is-bright = false

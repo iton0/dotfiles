@@ -1,0 +1,40 @@
+# Fovea Light Terminal Palette
+# Strategy: Ink-on-Paper Stability + APCA Contrast Compliance
+
+background           = #faf8f5
+foreground           = #373b41
+cursor-color         = #007197
+selection-background = #e9e5d6
+selection-foreground = #373b41
+
+# 0/8: Black / Bright Black (Ink & Metadata)
+palette = 0=#373b41
+palette = 8=#8a8a8a
+
+# 1/9: Red (Diagnostics/Error)
+palette = 1=#d02c2c
+palette = 9=#e85a5a
+
+# 2/10: Green (Data Layer - Forest Green shift)
+palette = 2=#3d7a34
+palette = 10=#62ad56
+
+# 3/11: Yellow (Warning/Highlight)
+palette = 3=#8c5e00
+palette = 11=#c28a00
+
+# 4/12: Blue (Information)
+palette = 4=#005da3
+palette = 12=#007acc
+
+# 5/13: Magenta (Logic/Action)
+palette = 5=#8631ef
+palette = 13=#a25cf5
+
+# 6/14: Teal/Cyan (Structural Layer)
+palette = 6=#006a8d
+palette = 14=#008fad
+
+# 7/15: White / Bright White (Background levels)
+palette = 7=#faf8f5
+palette = 15=#ffffff

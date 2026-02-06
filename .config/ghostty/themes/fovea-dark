@@ -1,0 +1,40 @@
+# Fovea Terminal Palette
+# Strategy: Perceptual Uniformity + Low-Halo Background
+
+background           = #1a1b26
+foreground           = #cfc9c2
+cursor-color         = #7ad9e5
+selection-background = #2e3c64
+selection-foreground = #cfc9c2
+
+# 0/8: Black / Bright Black (Gutter & Muted Text)
+palette = 0=#1a1b26
+palette = 8=#565f89
+
+# 1/9: Red (Diagnostics/Error)
+palette = 1=#f7768e
+palette = 9=#ff9cac
+
+# 2/10: Green (Data Layer - Balanced for low fatigue)
+palette = 2=#a6d388
+palette = 10=#b9e28c
+
+# 3/11: Yellow (Warning/Highlight)
+palette = 3=#e0af68
+palette = 11=#ffcc8b
+
+# 4/12: Blue (Information)
+palette = 4=#7aa2f7
+palette = 12=#a9c1ff
+
+# 5/13: Magenta (Logic/Action)
+palette = 5=#bb9af7
+palette = 13=#d2b4ff
+
+# 6/14: Cyan (Structure/Built-ins)
+palette = 6=#7ad9e5
+palette = 14=#a3eaf2
+
+# 7/15: White / Bright White (Foreground levels)
+palette = 7=#cfc9c2
+palette = 15=#f9f4ee
