@@ -11,6 +11,5 @@ return {
 		"selene.toml",
 		"selene.yml",
 		".git",
-		"init.lua",
 	},
 }

@@ -1,143 +1,76 @@
-local map = function(mode, lhs, rhs, opts)
-	opts = opts or {}
-	vim.keymap.set(mode, lhs, rhs, opts)
+local map_set = vim.keymap.set
+local function map_toggle_set(char, expr, desc)
+	map_set("n", "yo" .. char, expr, { desc = "[Y]ield [O]ption " .. desc })
 end
 
--- Navigation & Visual
-map("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-map("x", "<", "<gv") -- Indent and keep selection
-map("x", ">", ">gv") -- Outdent and keep selection
-
--- Line manipulation
-map("n", "<M-k>", "<cmd>m .-2<cr>==", { desc = "Move line up" })
-map("n", "<M-j>", "<cmd>m .+1<cr>==", { desc = "Move line down" })
-map("x", "<M-k>", ":m '<-2<cr>gv=gv", { desc = "Move selection up" })
-map("x", "<M-j>", ":m '>+1<cr>gv=gv", { desc = "Move selection down" })
-
--- System Clipboard
-map("x", "<C-y>", '"+y', { desc = "Yank to system clipboard" })
-
--- Search & Replace
-map("n", "<BS>", "<cmd>nohlsearch<cr>", { desc = "Clear highlights" })
-map("n", "<leader>r", ":%s/\\v", { desc = "Global replace (Magic)" })
-map("x", "<leader>r", ":s/\\v", { desc = "Selection replace (Magic)" })
-map("n", "<M-r>", ":cdo s/\\v", { desc = "Quickfix replace (Magic)" })
-
--- Splits & Terminal
-local directions = { h = "left", j = "bottom", k = "top", l = "right" }
-for key, dir in pairs(directions) do
-	map("n", "<C-" .. key .. ">", "<C-w>" .. key, { desc = "Focus " .. dir })
-	map("t", "<C-" .. key .. ">", [[<C-\><C-n><C-w>]] .. key, { desc = "Focus " .. dir })
-end
-map("t", "<Esc><Esc>", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
-map("n", "<C-space>", "<Nop>", { desc = "Tmux conflict prevention" })
-
--- LSP & Diagnostics
-map("i", "<C-c>", "<C-x><C-o>", { desc = "Manual completion" })
-map("n", "<C-f>", function()
-	vim.lsp.buf.format({ async = true })
-end, { desc = "Format" })
-map("n", "<M-h>", function()
+map_toggle_set("h", function()
 	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-end, { desc = "Toggle Inlay Hints" })
+end, "Hints")
+map_toggle_set("q", function()
+	local qf_win = vim.fn.getqflist({ winid = 0 }).winid
+	vim.cmd(qf_win ~= 0 and "cclose" or "copen")
+end, "Quickfix")
+map_toggle_set("l", function()
+	local loc_win = vim.fn.getloclist(0, { winid = 0 }).winid
+	vim.cmd(loc_win ~= 0 and "lclose" or "lopen")
+end, "Loclist")
+map_toggle_set("d", function()
+	require("mini.diff").toggle_overlay(0)
+end, "Diff Overlay")
 
--- List Toggles (Quickfix & Loclist)
-map("n", "<leader>l", function()
-	local qf = vim.fn.getloclist(0, { winid = 0, items = 0 })
-	if qf.winid ~= 0 then
-		vim.cmd.lclose()
-	elseif #qf.items > 0 then
-		vim.cmd.lopen()
-	else
-		vim.notify("Location list empty", 3)
-	end
-end, { desc = "Toggle Location List" })
+map_set({ "n", "x" }, "gy", '"+y', { desc = "Copy to system" })
+map_set("n", "gp", '"+p', { desc = "Paste from system" })
+map_set("x", "gp", '"+P', { desc = "Paste from system (No register overwrite)" })
 
-map("n", "<leader>q", function()
-	local qf = vim.fn.getqflist({ winid = 0, items = 0 })
-	if qf.winid ~= 0 then
-		vim.cmd.cclose()
-	elseif #qf.items > 0 then
-		vim.cmd.copen()
-	else
-		vim.notify("Quickfix list empty", 3)
-	end
-end, { desc = "Toggle Quickfix List" })
+map_set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
+map_set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
+map_set("x", "<", "<gv")
+map_set("x", ">", ">gv")
+map_set("n", "<BS>", "<cmd>nohlsearch<cr>")
 
-map("n", "<leader>w", vim.diagnostic.setqflist, { desc = "Workspace Diagnostics -> QF" })
-map("n", "<leader>e", vim.diagnostic.setloclist, { desc = "File Diagnostics -> Loclist" })
+map_set("n", "<C-d>", "<C-d>zz")
+map_set("n", "<C-u>", "<C-u>zz")
+map_set("n", "n", "nzzzv")
+map_set("n", "N", "Nzzzv")
 
--- Mini.nvim integrations
-map("n", "-", "<cmd>lua MiniFiles.open(vim.api.nvim_buf_get_name(0), false)<cr>", { desc = "Explorer" })
-map("n", "<leader><leader>", "<cmd>lua MiniPick.builtin.resume()<cr>", { desc = "Resume Picker" })
-map("n", "<leader>/", "<cmd>lua MiniPick.builtin.grep_live()<cr>", { desc = "Grep Search" })
-map("n", "<leader>f", "<cmd>lua MiniPick.builtin.files()<cr>", { desc = "Find Files" })
-map("n", "<leader>g", "<cmd>lua MiniPick.builtin.files({ tool = 'git' })<cr>", { desc = "Git Files" })
-
--- Debugger (DAP)
-local dap_map = {
-	d = {
-		function()
-			require("dap").toggle_breakpoint()
-		end,
-		"Breakpoint",
-	},
-	t = {
-		function()
-			require("dap").set_breakpoint(vim.fn.input("Condition: "))
-		end,
-		"Cond Breakpoint",
-	},
-	p = {
-		function()
-			require("dap").set_breakpoint(nil, nil, vim.fn.input("Log: "))
-		end,
-		"Log Point",
-	},
-	c = {
-		function()
-			require("dap").continue()
-		end,
-		"Continue",
-	},
-	i = {
-		function()
-			require("dap").step_into()
-		end,
-		"Step Into",
-	},
-	n = {
-		function()
-			require("dap").step_over()
-		end,
-		"Step Over",
-	},
-	o = {
-		function()
-			require("dap").step_out()
-		end,
-		"Step Out",
-	},
-	r = {
-		function()
-			require("dap").restart()
-		end,
-		"Restart",
-	},
-	x = {
-		function()
-			require("dap").terminate()
-		end,
-		"Terminate",
-	},
-	v = {
-		function()
-			require("dap-view").toggle()
-		end,
-		"Toggle UI",
-	},
-}
-for k, v in pairs(dap_map) do
-	map("n", "<leader>d" .. k, v[1], { desc = "Debug: " .. v[2] })
+for target_tab, key in ipairs({
+	"h",
+	"j",
+	"k",
+	"l",
+	";",
+}) do
+	map_set("n", "gt" .. key, target_tab .. "gt", {
+		desc = "Jump to Tab " .. target_tab,
+	})
 end
+
+for key, dir in pairs({ h = "left", j = "bottom", k = "top", l = "right" }) do
+	map_set("n", "<C-" .. key .. ">", "<C-w>" .. key, { desc = "Focus " .. dir })
+	map_set("t", "<C-" .. key .. ">", [[<C-\><C-n><C-w>]] .. key)
+end
+map_set("t", "<Esc><Esc>", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
+map_set("n", "<C-space>", "<Nop>")
+
+map_set("i", "<CR>", function()
+	if vim.fn.pumvisible() ~= 0 and vim.fn.complete_info()["selected"] ~= -1 then
+		return "<C-y>"
+	end
+	return "<CR>"
+end, { expr = true })
+map_set("n", "<leader>d", function()
+	vim.diagnostic.setqflist()
+end, { desc = "Project Diagnostics -> Quickfix" })
+
+map_set("n", "-", function()
+	MiniFiles.open(vim.api.nvim_buf_get_name(0))
+end, { desc = "Explorer (mini.files)" })
+map_set("n", "<leader>f", function()
+	MiniPick.builtin.files()
+end)
+map_set("n", "<leader>g", function()
+	MiniExtra.pickers.git_files()
+end)
+map_set("n", "<leader>/", function()
+	MiniPick.builtin.grep_live()
+end)
