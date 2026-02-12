@@ -101,6 +101,93 @@ post-install() {
     nvim --headless -c "lua MiniDeps.later(function() MiniDeps.snap_load(); MiniDeps.clean({ force = true }); vim.cmd('qa') end); vim.wait(120000, function() return false end)"
 }
 
+# Utility Functions
+
+# yt-dlp Music Downloader Function
+ytdl-music() {
+    local url="$1"
+    local dry_run=false
+
+    # 1. ARGUMENT HANDLING
+    if [[ "$1" == "--dry" ]]; then
+        dry_run=true
+        url="$2"
+    fi
+
+    if [[ -z "$url" ]]; then
+        echo -e "\033[1;33m[Usage]\033[0m ytdl-music [--dry] <URL>"
+        return 1
+    fi
+
+    # 2. PATH SETUP
+    local archive_file="${HOME}/.ytdl_music_archive.txt"
+    local dest_dir="${HOME}/Music"
+    if command -v xdg-user-dir &>/dev/null; then
+        dest_dir="$(xdg-user-dir MUSIC)"
+    fi
+    mkdir -p "$dest_dir"
+
+    # 3. DEPENDENCY CHECK
+    local use_aria2=false
+    command -v aria2c &>/dev/null && use_aria2=true
+    
+    if ! command -v ffmpeg &>/dev/null; then
+        echo -e "\033[1;31m[Error]\033[0m FFmpeg not found. Required for conversion."
+        return 1
+    fi
+
+    # 4. COMMAND CONSTRUCTION
+    local cmd=(yt-dlp)
+
+    # --- STABILITY & BYPASS ---
+    cmd+=(--ignore-config --no-warnings --ignore-errors --no-mtime)
+    cmd+=(--download-archive "$archive_file")
+    
+    # --- ANTI-THROTTLE (2026 Strategy) ---
+    cmd+=(--sleep-requests 3 --sleep-interval 5 --max-sleep-interval 15)
+    cmd+=(--extractor-args "youtube:player_client=ios,android,web;player_skip=webpage")
+
+    # --- UNIVERSAL AUDIO FORMAT (iOS/Android/VLC) ---
+    # We choose 'm4a' because it's native to Apple and Android
+    cmd+=(-f "bestaudio[ext=m4a]/bestaudio/best")
+    cmd+=(--extract-audio --audio-format m4a --audio-quality 0)
+
+    # --- METADATA & TAGGING ---
+    cmd+=(--embed-thumbnail --embed-metadata --embed-chapters)
+    # Using jpg for thumbnails as it's more compatible with older Android car displays
+    cmd+=(--convert-thumbnails jpg)
+    cmd+=(--sponsorblock-remove "music_offtopic,intro,outro,selfpromo")
+    cmd+=(--parse-metadata "playlist_index:%(track_number)s")
+
+    # --- DOWNLOADER OPTIMIZATION ---
+    if [[ "$use_aria2" == "true" ]]; then
+        echo -e "\033[1;36m[Mode]\033[0m Turbo (Aria2)"
+        cmd+=(--downloader aria2c --downloader-args "aria2c:-x 16 -k 1M")
+    else
+        echo -e "\033[1;33m[Mode]\033[0m Standard (Native)"
+        cmd+=(--concurrent-fragments 10)
+    fi
+
+    # --- OUTPUT TEMPLATE (FIXED) ---
+    cmd+=(--paths "$dest_dir")
+    # Fixes the '02d' error and organizes by Album/Playlist
+    cmd+=(-o "%(album,playlist_title|Single Songs)s/%(playlist_index&{:02d} - |)s%(title)s.%(ext)s")
+    # Restrict filenames is GOOD for mobile transfers (prevents URL encoding errors)
+    cmd+=(--restrict-filenames)
+
+    # 5. EXECUTION
+    if [[ "$dry_run" == "true" ]]; then
+        echo -e "\033[1;35m[Dry Run]\033[0m Simulating destination path..."
+        "${cmd[@]}" --simulate --print filename "$url"
+    else
+        echo -e "\033[1;34m[Syncing]\033[0m $url"
+        "${cmd[@]}" "$url"
+        local exit_status=$?
+        [[ $exit_status -eq 0 ]] && echo -e "\033[1;32m[Success]\033[0m Sync complete."
+        return $exit_status
+    fi
+}
+
 # ------------------------------------------------------------------------------
 # 5. TMUX AUTO-START (Safe Guarded)
 # ------------------------------------------------------------------------------
