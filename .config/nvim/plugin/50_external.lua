@@ -3,7 +3,7 @@ local plugins = {
 	"https://codeberg.org/mfussenegger/nvim-lint", -- linter
 }
 
-local add_plugin = (vim.pack or MiniDeps).add
+local add_plugin = MiniDeps.add
 for _, plugin in ipairs(plugins) do
 	add_plugin(plugin)
 end
@@ -50,4 +50,5 @@ require("lint").linters_by_ft = {
 	elixir = { "credo" },
 	c = { "cppcheck" },
 	cpp = { "cppcheck" },
+	typescript = { "oxlint", "eslint_d" },
 }

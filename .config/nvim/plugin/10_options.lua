@@ -1,5 +1,5 @@
 local global = vim.g
-local opt = vim.o
+local option = vim.o
 
 -- Global Leader Key
 global.mapleader = " "
@@ -29,7 +29,7 @@ global.loaded_zip = 1
 global.loaded_zipPlugin = 1
 
 -- Set background
-local bg_to_apply = "light" -- default/fallback
+local background_var = "light" -- default/fallback
 local theme_path = vim.fs.normalize((vim.env.XDG_CACHE_HOME or (vim.fn.expand("~") .. "/.cache")) .. "/nvim_theme")
 
 local f = io.open(theme_path, "r")
@@ -39,21 +39,22 @@ if f then
 	if content then
 		local clean_bg = content:gsub("%s+", "")
 		if clean_bg == "dark" or clean_bg == "light" then
-			bg_to_apply = clean_bg
+			background_var = clean_bg
 		end
 	end
 end
 
 -- UI and Appearance
-opt.background = bg_to_apply -- Editor background color
-opt.signcolumn = "yes:5" -- Fixed width signcolumn
-opt.pumheight = 10 -- Popup menu max height
-opt.winborder = "bold" -- Border style
-opt.helpheight = 0 -- Auto-size help
-opt.shortmess = "CFOWacoI" -- Minimize messages
-opt.fillchars = "eob: " -- Don't show `~` outside of buffer
-opt.showmode = false -- Don't show mode in command line
-opt.smoothscroll = true -- Pixel-perfect scrolling
+option.background = background_var -- Editor background color
+option.signcolumn = "yes:5" -- Fixed width signcolumn
+option.confirm = true -- Prompt to save on exit
+option.pumheight = 10 -- Popup menu max height
+option.winborder = "bold" -- Border style
+option.helpheight = 0 -- Auto-size help
+option.shortmess = "CFOWacoI" -- Minimize messages
+option.fillchars = "eob: " -- Don't show `~` outside of buffer
+option.showmode = false -- Don't show mode in command line
+option.smoothscroll = true -- Pixel-perfect scrolling
 
 -- Custom tabline
 local function my_custom_tabline()
@@ -100,45 +101,45 @@ local function my_custom_tabline()
 end
 
 _G.MyTabline = my_custom_tabline
-opt.tabline = "%!v:lua.MyTabline()"
+option.tabline = "%!v:lua.MyTabline()"
 
 -- Editor Behavior
-opt.completeopt = "menuone,noselect,noinsert,fuzzy" -- Completion style
-opt.wildmode = "noselect,full" -- Command line completion style
-opt.wildoptions = "pum,fuzzy" -- Enable fuzzy matching in native menus
-opt.virtualedit = "block" -- Free cursor in visual block
-opt.formatoptions = "rqnl1j" -- Formatting logic
-opt.textwidth = 80 -- Max width
-opt.wrap = false -- Global no-wrap
-opt.scrolloff = 999 -- Vertical padding
-opt.sidescrolloff = 10 -- Horizontal padding
-opt.splitbelow = true -- Split horizontal below
-opt.splitright = true -- Split vertical right
-opt.splitkeep = "screen" -- Stable scroll on split
+option.completeopt = "menu,menuone,noselect,noinsert,fuzzy" -- Completion style
+option.wildmode = "noselect,full" -- Command line completion style
+option.wildoptions = "pum,fuzzy" -- Enable fuzzy matching in native menus
+option.virtualedit = "block" -- Free cursor in visual block
+option.formatoptions = "rqnl1j" -- Formatting logic
+option.textwidth = 80 -- Max width
+option.wrap = false -- Global no-wrap
+option.scrolloff = 10 -- Vertical padding
+option.sidescrolloff = 10 -- Horizontal padding
+option.splitbelow = true -- Split horizontal below
+option.splitright = true -- Split vertical right
+option.splitkeep = "screen" -- Stable scroll on split
 
 -- Tabs and Indent
-opt.expandtab = true -- Use spaces
-opt.softtabstop = 8 -- Edit-time tab size
-opt.shiftwidth = 8 -- Indent size
-opt.tabstop = 8 -- Visual tab size
+option.expandtab = true -- Use spaces
+option.softtabstop = 8 -- Edit-time tab size
+option.shiftwidth = 8 -- Indent size
+option.tabstop = 8 -- Visual tab size
 
 -- Search and Command Line
-opt.ignorecase = true -- Case-insensitive search
-opt.smartcase = true -- Case-sensitive if caps present
-opt.inccommand = "split" -- Live substitute preview
-opt.infercase = true -- Match case in completion
+option.ignorecase = true -- Case-insensitive search
+option.smartcase = true -- Case-sensitive if caps present
+option.inccommand = "split" -- Live substitute preview
+option.infercase = true -- Match case in completion
 
 -- System and Performance
-opt.updatetime = 1000 -- CursorHold delay
-opt.timeoutlen = 500 -- Mapping wait
-opt.ttimeoutlen = 0 -- Key code wait
-opt.undofile = true -- Persistent undo
-opt.swapfile = false -- No swap
-opt.writebackup = false -- No backup
-opt.shada = "'100,<50,s10,:100" -- History limits
-opt.mouse = "" -- Disable mouse
-opt.maxmempattern = 20000 -- Regex memory
-opt.synmaxcol = 300 -- Syntax limit
+option.updatetime = 250 -- CursorHold delay
+option.timeoutlen = 500 -- Mapping wait
+option.ttimeoutlen = 0 -- Key code wait
+option.undofile = true -- Persistent undo
+option.swapfile = false -- No swap
+option.writebackup = false -- No backup
+option.shada = "'100,<50,s10,:100" -- History limits
+option.mouse = "" -- Disable mouse
+option.maxmempattern = 20000 -- Regex memory
+option.synmaxcol = 300 -- Syntax limit
 
 -- Diagnostics
 vim.diagnostic.config({

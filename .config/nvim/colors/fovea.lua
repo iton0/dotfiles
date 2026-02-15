@@ -2,16 +2,16 @@
 -- Strategy: Foveal Attention + Pre-attentive Meta-Filtering
 -- Criteria: APCA-Contrast + OKLCH Perceptual Balance
 
-local p = {
+local palette = {
 	dark = {
 		-- Base & Neutral
-		bg = "#1a1b26",
-		fg = "#cfc9c2",
+		background = "#1a1b26",
+		foreground = "#cfc9c2",
 
-		-- Semantic Pillars (Balanced for Scaffolding)
+		-- Semantic Pillars
 		keyword = "#bb9af7",
-		type = "#7ad9e5", -- High Acuity Cyan
-		string = "#a6d388", -- Muted Green (The "Elite" Fix)
+		type = "#7ad9e5",
+		string = "#a6d388",
 		comment = "#565f89",
 
 		-- Diagnostics & UI
@@ -22,32 +22,32 @@ local p = {
 		surface = "#24283b",
 		gutter = "#1f2335",
 		border = "#3b4261",
-		accent = "#2e3c64", -- Stable Selection Anchor
+		accent = "#2e3c64",
 
 		diff_add = "#283b26",
 		diff_del = "#3f2d3d",
 		diff_chg = "#3e3723",
 	},
 	light = {
-		-- Base & Neutral (Ink on Paper)
-		bg = "#faf8f5",
-		fg = "#373b41",
+		-- Base & Neutral
+		background = "#faf8f5",
+		foreground = "#373b41",
 
-		-- Semantic Pillars (Deepened for Legibility)
+		-- Semantic Pillars
 		keyword = "#8631ef",
-		type = "#006a8d", -- Adjusted: Slightly deeper Teal for APCA LC80+
-		string = "#3d7a34", -- Adjusted: "Forest" shift to prevent "Neon-on-White" fatigue
-		comment = "#8a8a8a", -- Adjusted: Darker grey (Ghost Grey was too low contrast)
+		type = "#006a8d",
+		string = "#3d7a34",
+		comment = "#8a8a8a",
 
 		-- Diagnostics & UI
 		error = "#d02c2c",
-		warn = "#8c5e00", -- Deepened for better visibility on white
+		warn = "#8c5e00",
 		info = "#005da3",
 		hint = "#007a66",
 		surface = "#f0ede9",
 		gutter = "#e8e5e1",
 		border = "#d1d1d1",
-		accent = "#d8d5d1", -- Neutral Muted selection
+		accent = "#d8d5d1",
 
 		diff_add = "#e1f0e1",
 		diff_del = "#f0e1e1",
@@ -55,46 +55,46 @@ local p = {
 	},
 }
 
-local c = vim.o.background == "light" and p.light or p.dark
+local color = vim.o.background == "light" and palette.light or palette.dark
 
-local groups = {
-	-- === CORE UI (Achromatic Isolation) ===
-	Normal = { fg = c.fg, bg = c.bg },
-	NormalFloat = { fg = c.fg, bg = c.surface },
-	FloatBorder = { fg = c.border, bg = c.surface },
-	CursorLine = { bg = c.surface },
-	LineNr = { fg = c.comment },
-	Title = { fg = c.fg, bg = c.surface, bold = true },
-	CursorLineNr = { fg = c.type, bold = true },
-	VertSplit = { fg = c.border },
-	WinSeparator = { fg = c.border },
-	Pmenu = { fg = c.fg, bg = c.surface },
-	PmenuSel = { fg = c.type, bg = c.accent, bold = true },
-	Search = { fg = c.bg, bg = c.warn },
-	Visual = { bg = c.accent },
-	Folded = { fg = c.comment, bg = c.surface },
-	Question = { fg = c.type },
-	MoreMsg = { fg = c.type, bold = true },
-	WarningMsg = { fg = c.warn, bold = true },
-	ErrorMsg = { fg = c.error, bold = true },
-	CurSearch = { fg = c.bg, bg = c.keyword, bold = true },
+local highlight_groups = {
+	-- === CORE UI ===
+	Normal = { fg = color.foreground, bg = color.background },
+	NormalFloat = { fg = color.foreground, bg = color.surface },
+	FloatBorder = { fg = color.border, bg = color.surface },
+	CursorLine = { bg = color.surface },
+	LineNr = { fg = color.comment },
+	Title = { fg = color.foreground, bg = color.surface, bold = true },
+	CursorLineNr = { fg = color.type, bold = true },
+	VertSplit = { fg = color.border },
+	WinSeparator = { fg = color.border },
+	Pmenu = { fg = color.foreground, bg = color.surface },
+	PmenuSel = { fg = color.type, bg = color.accent, bold = true },
+	Search = { fg = color.background, bg = color.warn },
+	Visual = { bg = color.accent },
+	Folded = { fg = color.comment, bg = color.surface },
+	Question = { fg = color.type },
+	MoreMsg = { fg = color.type, bold = true },
+	WarningMsg = { fg = color.warn, bold = true },
+	ErrorMsg = { fg = color.error, bold = true },
+	CurSearch = { fg = color.background, bg = color.keyword, bold = true },
 	IncSearch = { link = "CurSearch" },
-	MatchParen = { fg = c.type, bold = true, underline = true },
-	ModeMsg = { fg = c.fg, bold = true },
-	MsgArea = { fg = c.fg },
-	Directory = { fg = c.type, bold = true },
-	StatusLine = { fg = c.type, bg = c.surface, bold = true },
-	StatusLineNC = { fg = c.comment, bg = c.gutter },
-	TabLine = { fg = c.comment, bg = c.gutter },
-	TabLineFill = { bg = c.bg },
-	TabLineSel = { fg = c.bg, bg = c.type, bold = true },
-	NonText = { fg = c.gutter },
+	MatchParen = { fg = color.type, bold = true, underline = true },
+	ModeMsg = { fg = color.foreground, bold = true },
+	MsgArea = { fg = color.foreground },
+	Directory = { fg = color.type, bold = true },
+	StatusLine = { fg = color.type, bg = color.surface, bold = true },
+	StatusLineNC = { fg = color.comment, bg = color.gutter },
+	TabLine = { fg = color.comment, bg = color.gutter },
+	TabLineFill = { bg = color.background },
+	TabLineSel = { fg = color.background, bg = color.type, bold = true },
+	NonText = { fg = color.gutter },
 	EndOfBuffer = { link = "NonText" },
-	SignColumn = { bg = c.bg },
-	FoldColumn = { bg = c.bg },
+	SignColumn = { bg = color.background },
+	FoldColumn = { bg = color.background },
 
 	-- === THE 4 SEMANTIC PILLARS ===
-	Keyword = { fg = c.keyword },
+	Keyword = { fg = color.keyword },
 	Statement = { link = "Keyword" },
 	Conditional = { link = "Keyword" },
 	Repeat = { link = "Keyword" },
@@ -102,53 +102,53 @@ local groups = {
 	Operator = { link = "Keyword" },
 	Exception = { link = "Keyword" },
 
-	Type = { fg = c.type },
+	Type = { fg = color.type },
 	StorageClass = { link = "Type" },
 	Structure = { link = "Type" },
 	Typedef = { link = "Type" },
 
-	String = { fg = c.string },
+	String = { fg = color.string },
 	Character = { link = "String" },
 	Number = { link = "String" },
 	Boolean = { link = "String" },
 	Float = { link = "String" },
 	Constant = { link = "String" },
 
-	Comment = { fg = c.comment, italic = true },
-	Special = { fg = c.comment }, -- Muted punctuation (brackets, delimiters)
-	Debug = { fg = c.keyword },
-	Delimiter = { fg = c.comment },
+	Comment = { fg = color.comment, italic = true },
+	Special = { fg = color.comment },
+	Debug = { fg = color.keyword },
+	Delimiter = { fg = color.comment },
 
-	-- Identifier/Functions (Neutral context)
-	Identifier = { fg = c.fg },
-	Function = { fg = c.fg },
-	PreProc = { fg = c.keyword },
-	Include = { fg = c.keyword },
-	Define = { fg = c.keyword },
-	Macro = { fg = c.keyword },
-	Tag = { fg = c.keyword },
+	-- Identifier/Functions
+	Identifier = { fg = color.foreground },
+	Function = { fg = color.foreground },
+	PreProc = { fg = color.keyword },
+	Include = { fg = color.keyword },
+	Define = { fg = color.keyword },
+	Macro = { fg = color.keyword },
+	Tag = { fg = color.keyword },
 
 	-- === DIAGNOSTICS ===
-	DiagnosticOk = { fg = c.hint },
+	DiagnosticOk = { fg = color.hint },
 	DiagnosticUnnecessary = { link = "DiagnosticDeprecated" },
-	DiagnosticError = { fg = c.error, bold = true },
-	DiagnosticWarn = { fg = c.warn },
-	DiagnosticInfo = { fg = c.info },
-	DiagnosticHint = { fg = c.hint },
-	DiagnosticUnderlineError = { sp = c.error, undercurl = true },
-	DiagnosticUnderlineWarn = { sp = c.warn, undercurl = true },
-	DiagnosticUnderlineInfo = { sp = c.info, undercurl = true },
-	DiagnosticUnderlineHint = { sp = c.hint, undercurl = true },
-	DiagnosticVirtualTextError = { fg = c.error, bg = c.surface },
-	DiagnosticVirtualTextWarn = { fg = c.warn, bg = c.surface },
-	DiagnosticVirtualTextInfo = { fg = c.info, bg = c.surface },
-	DiagnosticVirtualTextHint = { fg = c.hint, bg = c.surface },
+	DiagnosticError = { fg = color.error, bold = true },
+	DiagnosticWarn = { fg = color.warn },
+	DiagnosticInfo = { fg = color.info },
+	DiagnosticHint = { fg = color.hint },
+	DiagnosticUnderlineError = { sp = color.error, undercurl = true },
+	DiagnosticUnderlineWarn = { sp = color.warn, undercurl = true },
+	DiagnosticUnderlineInfo = { sp = color.info, undercurl = true },
+	DiagnosticUnderlineHint = { sp = color.hint, undercurl = true },
+	DiagnosticVirtualTextError = { fg = color.error, bg = color.surface },
+	DiagnosticVirtualTextWarn = { fg = color.warn, bg = color.surface },
+	DiagnosticVirtualTextInfo = { fg = color.info, bg = color.surface },
+	DiagnosticVirtualTextHint = { fg = color.hint, bg = color.surface },
 
 	-- === DIFF MODE ===
-	DiffAdd = { bg = c.diff_add },
-	DiffDelete = { bg = c.diff_del },
-	DiffChange = { bg = c.diff_chg },
-	DiffText = { bg = c.type, fg = c.bg },
+	DiffAdd = { bg = color.diff_add },
+	DiffDelete = { bg = color.diff_del },
+	DiffChange = { bg = color.diff_chg },
+	DiffText = { bg = color.type, fg = color.background },
 	["@diff.plus"] = { link = "DiffAdd" },
 	["@diff.minus"] = { link = "DiffDelete" },
 	["diffAdded"] = { link = "DiffAdd" },
@@ -156,30 +156,30 @@ local groups = {
 	["diffChanged"] = { link = "DiffChange" },
 
 	-- === QUICKFIX ===
-	QuickFixLine = { bg = c.accent, bold = true },
-	qfFileName = { fg = c.type },
-	qfLineNr = { fg = c.comment },
-	qfError = { fg = c.error },
+	QuickFixLine = { bg = color.accent, bold = true },
+	qfFileName = { fg = color.type },
+	qfLineNr = { fg = color.comment },
+	qfError = { fg = color.error },
 
 	-- === TREESITTER & LSP ===
-	["@variable"] = { fg = c.fg },
-	["@variable.builtin"] = { fg = c.keyword },
-	["@variable.parameter"] = { fg = c.fg },
-	["@variable.member"] = { fg = c.fg },
-	["@property"] = { fg = c.fg },
+	["@variable"] = { fg = color.foreground },
+	["@variable.builtin"] = { fg = color.keyword },
+	["@variable.parameter"] = { fg = color.foreground },
+	["@variable.member"] = { fg = color.foreground },
+	["@property"] = { fg = color.foreground },
 
 	["@constant"] = { link = "Constant" },
 	["@constant.builtin"] = { link = "Constant" },
 	["@constant.macro"] = { link = "Macro" },
 
-	["@module"] = { fg = c.fg },
-	["@module.builtin"] = { fg = c.type },
+	["@module"] = { fg = color.foreground },
+	["@module.builtin"] = { fg = color.type },
 	["@label"] = { link = "Label" },
 
 	["@string"] = { link = "String" },
-	["@string.documentation"] = { fg = c.string, italic = true },
-	["@string.regexp"] = { fg = c.warn },
-	["@string.escape"] = { fg = c.keyword },
+	["@string.documentation"] = { fg = color.string, italic = true },
+	["@string.regexp"] = { fg = color.warn },
+	["@string.escape"] = { fg = color.keyword },
 	["@string.special"] = { link = "Special" },
 	["@character"] = { link = "String" },
 	["@character.special"] = { link = "Special" },
@@ -187,8 +187,8 @@ local groups = {
 	["@type"] = { link = "Type" },
 	["@type.builtin"] = { link = "Type" },
 	["@type.definition"] = { link = "Typedef" },
-	["@attribute"] = { fg = c.keyword },
-	["@attribute.builtin"] = { fg = c.keyword },
+	["@attribute"] = { fg = color.keyword },
+	["@attribute.builtin"] = { fg = color.keyword },
 
 	["@function"] = { link = "Function" },
 	["@function.builtin"] = { link = "Function" },
@@ -196,7 +196,7 @@ local groups = {
 	["@function.macro"] = { link = "Macro" },
 	["@function.method"] = { link = "Function" },
 	["@function.method.call"] = { link = "Function" },
-	["@constructor"] = { fg = c.type },
+	["@constructor"] = { fg = color.type },
 
 	["@keyword"] = { link = "Keyword" },
 	["@keyword.function"] = { link = "Keyword" },
@@ -210,9 +210,9 @@ local groups = {
 
 	["@markup.strong"] = { bold = true },
 	["@markup.italic"] = { italic = true },
-	["@markup.heading"] = { fg = c.keyword, bold = true },
-	["@markup.raw"] = { bg = c.surface },
-	["@markup.link.url"] = { fg = c.info, underline = true },
+	["@markup.heading"] = { fg = color.keyword, bold = true },
+	["@markup.raw"] = { bg = color.surface },
+	["@markup.link.url"] = { fg = color.info, underline = true },
 
 	["@lsp.type.class"] = { link = "Structure" },
 	["@lsp.type.decorator"] = { link = "@attribute" },
@@ -230,44 +230,47 @@ local groups = {
 	["@lsp.type.typeParameter"] = { link = "Type" },
 	["@lsp.type.variable"] = { link = "@variable" },
 
-	["@lsp.mod.readonly"] = { fg = c.string },
-	["@lsp.mod.typeHint"] = { fg = c.comment },
-	["@lsp.mod.defaultLibrary"] = { fg = c.type },
+	["@lsp.mod.readonly"] = { fg = color.string },
+	["@lsp.mod.typeHint"] = { fg = color.comment },
+	["@lsp.mod.defaultLibrary"] = { fg = color.type },
 	["@lsp.mod.deprecated"] = { strikethrough = true },
 
-	LspReferenceText = { bg = c.accent },
-	LspReferenceRead = { bg = c.accent },
-	LspReferenceWrite = { bg = c.accent, bold = true, underline = true },
-	LspReferenceTarget = { fg = c.bg, bg = c.type },
-	LspInlayHint = { fg = c.comment, italic = true },
-	LspCodeLens = { fg = c.comment },
-	LspCodeLensSeparator = { fg = c.border },
-	LspSignatureActiveParameter = { fg = c.type, bold = true, underline = true },
+	LspReferenceText = { bg = color.accent },
+	LspReferenceRead = { bg = color.accent },
+	LspReferenceWrite = { bg = color.accent, bold = true, underline = true },
+	LspReferenceTarget = { fg = color.background, bg = color.type },
+	LspInlayHint = { fg = color.comment, italic = true },
+	LspCodeLens = { fg = color.comment },
+	LspCodeLensSeparator = { fg = color.border },
+	LspSignatureActiveParameter = { fg = color.type, bold = true, underline = true },
 
 	-- === MINI.NVIM ECOSYSTEM ===
 	MiniFilesBorder = { link = "FloatBorder" },
 	MiniFilesDirectory = { link = "Directory" },
-	MiniFilesFile = { fg = c.fg },
+	MiniFilesFile = { fg = color.foreground },
 
-	MiniDiffSignAdd = { fg = c.hint },
-	MiniDiffSignChange = { fg = c.warn },
-	MiniDiffSignDelete = { fg = c.error },
-	MiniDiffOverAdd = { bg = c.diff_add },
-	MiniDiffOverChange = { bg = c.diff_chg },
-	MiniDiffOverDelete = { bg = c.diff_del },
-	MiniDiffOverContext = { bg = c.surface },
+	MiniDiffSignAdd = { fg = color.hint },
+	MiniDiffSignChange = { fg = color.warn },
+	MiniDiffSignDelete = { fg = color.error },
+	MiniDiffOverAdd = { bg = color.diff_add },
+	MiniDiffOverChange = { bg = color.diff_chg },
+	MiniDiffOverDelete = { bg = color.diff_del },
+	MiniDiffOverContext = { bg = color.surface },
 
 	MiniPickBorder = { link = "FloatBorder" },
-	MiniPickHeader = { fg = c.keyword, bold = true },
-	MiniPickMatchCurrent = { bg = c.accent },
-	MiniPickMatchMarked = { bg = c.diff_add },
-	MiniPickPrompt = { fg = c.type, bg = c.surface, bold = true },
-	MiniPickMatchRanges = { fg = c.keyword, bold = true },
+	MiniPickHeader = { fg = color.keyword, bold = true },
+	MiniPickMatchCurrent = { bg = color.accent },
+	MiniPickMatchMarked = { bg = color.diff_add },
+	MiniPickPrompt = { fg = color.type, bg = color.surface, bold = true },
+	MiniPickMatchRanges = { fg = color.keyword, bold = true },
 }
 
-local set_hl = vim.api.nvim_set_hl
-for group, settings in pairs(groups) do
-	set_hl(0, group, settings)
+local set_global_highlight = function(highlight_group, highlight_settings)
+	local global_namespace = 0
+	vim.api.nvim_set_hl(global_namespace, highlight_group, highlight_settings)
+end
+for highlight_group, highlight_settings in pairs(highlight_groups) do
+	set_global_highlight(highlight_group, highlight_settings)
 end
 
 vim.g.colors_name = "fovea"

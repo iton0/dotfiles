@@ -1,76 +1,79 @@
-local map_set = vim.keymap.set
-local function map_toggle_set(char, expr, desc)
-	map_set("n", "yo" .. char, expr, { desc = "[Y]ield [O]ption " .. desc })
+local keymap_set = vim.keymap.set
+local function keymap_toggle_set(char, expr, desc)
+	keymap_set("n", "yo" .. char, expr, { desc = "[Y]ield [O]ption " .. desc })
 end
 
-map_toggle_set("h", function()
+keymap_toggle_set("h", function()
 	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end, "Hints")
-map_toggle_set("q", function()
-	local qf_win = vim.fn.getqflist({ winid = 0 }).winid
-	vim.cmd(qf_win ~= 0 and "cclose" or "copen")
+keymap_toggle_set("q", function()
+	local qf_exists = vim.fn.getqflist({ winid = 0 }).winid ~= 0
+	if qf_exists then
+		vim.cmd.cclose()
+	else
+		vim.cmd.copen()
+		vim.cmd.wincmd("p")
+	end
 end, "Quickfix")
-map_toggle_set("l", function()
-	local loc_win = vim.fn.getloclist(0, { winid = 0 }).winid
-	vim.cmd(loc_win ~= 0 and "lclose" or "lopen")
+keymap_toggle_set("l", function()
+	local loc_exists = vim.fn.getloclist(0, { winid = 0 }).winid ~= 0
+	if loc_exists then
+		vim.cmd.lclose()
+	else
+		vim.cmd.lopen()
+		vim.cmd.wincmd("p")
+	end
 end, "Loclist")
-map_toggle_set("d", function()
+keymap_toggle_set("d", function()
 	require("mini.diff").toggle_overlay(0)
 end, "Diff Overlay")
 
-map_set({ "n", "x" }, "gy", '"+y', { desc = "Copy to system" })
-map_set("n", "gp", '"+p', { desc = "Paste from system" })
-map_set("x", "gp", '"+P', { desc = "Paste from system (No register overwrite)" })
+keymap_set("n", "<leader>q", function()
+	vim.diagnostic.setqflist({ open = true })
+	vim.cmd.wincmd("p")
+end, { desc = "Diagnostic [Q]uickfix (Workspace)" })
+keymap_set("n", "<leader>l", function()
+	vim.diagnostic.setloclist({ open = true })
+	vim.cmd.wincmd("p")
+end, { desc = "Diagnostic [L]oclist (Buffer)" })
 
-map_set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
-map_set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
-map_set("x", "<", "<gv")
-map_set("x", ">", ">gv")
-map_set("n", "<BS>", "<cmd>nohlsearch<cr>")
+keymap_set({ "n", "x" }, "gy", '"+y', { desc = "Copy to system" })
+keymap_set("n", "gp", '"+p', { desc = "Paste from system" })
+keymap_set("x", "gp", '"+P', { desc = "Paste from system (No register overwrite)" })
+keymap_set("n", "go", "gO", { remap = true })
 
-map_set("n", "<C-d>", "<C-d>zz")
-map_set("n", "<C-u>", "<C-u>zz")
-map_set("n", "n", "nzzzv")
-map_set("n", "N", "Nzzzv")
+keymap_set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+keymap_set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+keymap_set("x", "J", ":move '>+1<CR>gv=gv", { desc = "Move selection down" })
+keymap_set("x", "K", ":move '<-2<CR>gv=gv", { desc = "Move selection up" })
+keymap_set("x", "<", "<gv")
+keymap_set("x", ">", ">gv")
+keymap_set("n", "<BS>", "<cmd>nohlsearch<cr>")
 
-for target_tab, key in ipairs({
-	"h",
-	"j",
-	"k",
-	"l",
-	";",
-}) do
-	map_set("n", "gt" .. key, target_tab .. "gt", {
-		desc = "Jump to Tab " .. target_tab,
-	})
-end
+keymap_set("n", "<C-d>", "<C-d>zz")
+keymap_set("n", "<C-u>", "<C-u>zz")
+keymap_set("n", "n", "nzzzv")
+keymap_set("n", "N", "Nzzzv")
 
 for key, dir in pairs({ h = "left", j = "bottom", k = "top", l = "right" }) do
-	map_set("n", "<C-" .. key .. ">", "<C-w>" .. key, { desc = "Focus " .. dir })
-	map_set("t", "<C-" .. key .. ">", [[<C-\><C-n><C-w>]] .. key)
+	keymap_set("n", "<C-" .. key .. ">", "<C-w>" .. key, { desc = "Focus " .. dir })
+	keymap_set("t", "<C-" .. key .. ">", [[<C-\><C-n><C-w>]] .. key)
 end
-map_set("t", "<Esc><Esc>", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
-map_set("n", "<C-space>", "<Nop>")
+keymap_set("t", "<Esc><Esc>", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
+keymap_set("n", "<C-space>", "<Nop>")
 
-map_set("i", "<CR>", function()
-	if vim.fn.pumvisible() ~= 0 and vim.fn.complete_info()["selected"] ~= -1 then
-		return "<C-y>"
-	end
-	return "<CR>"
-end, { expr = true })
-map_set("n", "<leader>d", function()
-	vim.diagnostic.setqflist()
-end, { desc = "Project Diagnostics -> Quickfix" })
-
-map_set("n", "-", function()
+keymap_set("n", "-", function()
 	MiniFiles.open(vim.api.nvim_buf_get_name(0))
 end, { desc = "Explorer (mini.files)" })
-map_set("n", "<leader>f", function()
+keymap_set("n", "<leader><leader>", function()
+	MiniPick.builtin.resume()
+end)
+keymap_set("n", "<leader>f", function()
 	MiniPick.builtin.files()
 end)
-map_set("n", "<leader>g", function()
+keymap_set("n", "<leader>g", function()
 	MiniExtra.pickers.git_files()
 end)
-map_set("n", "<leader>/", function()
+keymap_set("n", "<leader>/", function()
 	MiniPick.builtin.grep_live()
 end)
