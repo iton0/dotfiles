@@ -1,39 +1,39 @@
-# Fovea Terminal Palette
-# Strategy: Perceptual Uniformity + Low-Halo Background
+# Fovea Dark Terminal Config (Balanced for APCA + OKLCH)
 
-background           = #1a1b26
-foreground           = #cfc9c2
-cursor-color         = #7ad9e5
-selection-background = #2e3c64
-selection-foreground = #cfc9c2
+background           = "#1a1b26"
+foreground           = "#cfc9c2"
+cursor-color         = "#68def1"
+selection-background = "#2e3c64"
+selection-foreground = "#cfc9c2"
 
-# 0/8: Black / Bright Black (Gutter & Muted Text)
+# 0/8: Black (Background) / Bright Black (Comments - The Receder)
+# Note: 8 is now the new #565f89 for visual depth
 palette = 0=#1a1b26
 palette = 8=#565f89
 
-# 1/9: Red (Diagnostics/Error)
-palette = 1=#f7768e
-palette = 9=#ff9cac
+# 1/9: Red (Error / Diagnostics)
+palette = 1=#fd8493
+palette = 9=#ffb3ba
 
-# 2/10: Green (Data Layer - Balanced for low fatigue)
-palette = 2=#a6d388
-palette = 10=#b9e28c
+# 2/10: Green (Strings / Data)
+palette = 2=#a6d588
+palette = 10=#c2e5ad
 
-# 3/11: Yellow (Warning/Highlight)
-palette = 3=#e0af68
-palette = 11=#ffcc8b
+# 3/11: Yellow (Warnings)
+palette = 3=#f0b86a
+palette = 11=#f8d29a
 
 # 4/12: Blue (Information)
-palette = 4=#7aa2f7
-palette = 12=#a9c1ff
+palette = 4=#b2c7fd
+palette = 12=#d1deff
 
-# 5/13: Magenta (Logic/Action)
-palette = 5=#bb9af7
-palette = 13=#d2b4ff
+# 5/13: Magenta (Keywords / Control Flow)
+palette = 5=#d5befc
+palette = 13=#e5d5ff
 
-# 6/14: Cyan (Structure/Built-ins)
-palette = 6=#7ad9e5
-palette = 14=#a3eaf2
+# 6/14: Cyan (Types / UI Accents)
+palette = 6=#68def1
+palette = 14=#a1edfb
 
 # 7/15: White / Bright White (Foreground levels)
 palette = 7=#cfc9c2

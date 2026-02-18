@@ -8,47 +8,53 @@ local palette = {
 		background = "#1a1b26",
 		foreground = "#cfc9c2",
 
-		-- Semantic Pillars
-		keyword = "#bb9af7",
-		type = "#7ad9e5",
-		string = "#a6d388",
+		-- Balanced Semantic Pillars
+		keyword = "#d5befc",
+		type = "#68def1",
+		string = "#a6d588",
 		comment = "#565f89",
 
-		-- Diagnostics & UI
-		error = "#f7768e",
-		warn = "#e0af68",
-		info = "#7aa2f7",
-		hint = "#1abc9c",
+		-- Balanced Diagnostics
+		error = "#fd8493",
+		warn = "#f0b86a",
+		info = "#b2c7fd",
+		hint = "#4cd7bb",
+
+		-- UI Layering
 		surface = "#24283b",
 		gutter = "#1f2335",
 		border = "#3b4261",
 		accent = "#2e3c64",
 
-		diff_add = "#283b26",
+		-- Diff Layers
+		diff_add = "#283b31",
 		diff_del = "#3f2d3d",
-		diff_chg = "#3e3723",
+		diff_chg = "#4a4430",
 	},
 	light = {
 		-- Base & Neutral
 		background = "#faf8f5",
 		foreground = "#373b41",
 
-		-- Semantic Pillars
-		keyword = "#8631ef",
-		type = "#006a8d",
-		string = "#3d7a34",
-		comment = "#8a8a8a",
+		-- Balanced Semantic Pillars
+		keyword = "#7437cc",
+		type = "#006789",
+		string = "#388e3c",
+		comment = "#8e95b3",
 
-		-- Diagnostics & UI
-		error = "#d02c2c",
-		warn = "#8c5e00",
-		info = "#005da3",
-		hint = "#007a66",
+		-- Balanced Diagnostics
+		error = "#b03038",
+		warn = "#825300",
+		info = "#0065a7",
+		hint = "#007158",
+
+		-- UI Layering
 		surface = "#f0ede9",
 		gutter = "#e8e5e1",
 		border = "#d1d1d1",
 		accent = "#d8d5d1",
 
+		-- Diff Layers
 		diff_add = "#e1f0e1",
 		diff_del = "#f0e1e1",
 		diff_chg = "#f9f0c2",
@@ -60,6 +66,7 @@ local color = vim.o.background == "light" and palette.light or palette.dark
 local highlight_groups = {
 	-- === CORE UI ===
 	Normal = { fg = color.foreground, bg = color.background },
+	NormalNC = { fg = color.comment, bg = color.background },
 	NormalFloat = { fg = color.foreground, bg = color.surface },
 	FloatBorder = { fg = color.border, bg = color.surface },
 	CursorLine = { bg = color.surface },
@@ -79,6 +86,8 @@ local highlight_groups = {
 	ErrorMsg = { fg = color.error, bold = true },
 	CurSearch = { fg = color.background, bg = color.keyword, bold = true },
 	IncSearch = { link = "CurSearch" },
+	Todo = { link = "Comment" },
+	MsgSeparator = { fg = color.border, bg = color.gutter },
 	MatchParen = { fg = color.type, bold = true, underline = true },
 	ModeMsg = { fg = color.foreground, bold = true },
 	MsgArea = { fg = color.foreground },
@@ -99,10 +108,10 @@ local highlight_groups = {
 	Conditional = { link = "Keyword" },
 	Repeat = { link = "Keyword" },
 	Label = { link = "Keyword" },
-	Operator = { link = "Keyword" },
+	Operator = { fg = color.foreground },
 	Exception = { link = "Keyword" },
 
-	Type = { fg = color.type },
+	Type = { fg = color.foreground },
 	StorageClass = { link = "Type" },
 	Structure = { link = "Type" },
 	Typedef = { link = "Type" },
@@ -114,7 +123,7 @@ local highlight_groups = {
 	Float = { link = "String" },
 	Constant = { link = "String" },
 
-	Comment = { fg = color.comment, italic = true },
+	Comment = { fg = color.comment },
 	Special = { fg = color.comment },
 	Debug = { fg = color.keyword },
 	Delimiter = { fg = color.comment },
@@ -148,9 +157,10 @@ local highlight_groups = {
 	DiffAdd = { bg = color.diff_add },
 	DiffDelete = { bg = color.diff_del },
 	DiffChange = { bg = color.diff_chg },
-	DiffText = { bg = color.type, fg = color.background },
+	DiffText = { bg = color.accent, fg = color.fg, bold = true },
 	["@diff.plus"] = { link = "DiffAdd" },
 	["@diff.minus"] = { link = "DiffDelete" },
+	["@diff.delta"] = { link = "DiffChange" },
 	["diffAdded"] = { link = "DiffAdd" },
 	["diffRemoved"] = { link = "DiffDelete" },
 	["diffChanged"] = { link = "DiffChange" },
@@ -173,7 +183,7 @@ local highlight_groups = {
 	["@constant.macro"] = { link = "Macro" },
 
 	["@module"] = { fg = color.foreground },
-	["@module.builtin"] = { fg = color.type },
+	["@module.builtin"] = { fg = color.foreground },
 	["@label"] = { link = "Label" },
 
 	["@string"] = { link = "String" },
@@ -196,7 +206,7 @@ local highlight_groups = {
 	["@function.macro"] = { link = "Macro" },
 	["@function.method"] = { link = "Function" },
 	["@function.method.call"] = { link = "Function" },
-	["@constructor"] = { fg = color.type },
+	["@constructor"] = { link = "Function" },
 
 	["@keyword"] = { link = "Keyword" },
 	["@keyword.function"] = { link = "Keyword" },
@@ -213,6 +223,12 @@ local highlight_groups = {
 	["@markup.heading"] = { fg = color.keyword, bold = true },
 	["@markup.raw"] = { bg = color.surface },
 	["@markup.link.url"] = { fg = color.info, underline = true },
+
+	["@comment"] = { link = "Comment" },
+	["@comment.todo"] = { link = "Comment" },
+	["@comment.note"] = { link = "Comment" },
+	["@comment.error"] = { link = "Comment" },
+	["@comment.warning"] = { link = "Comment" },
 
 	["@lsp.type.class"] = { link = "Structure" },
 	["@lsp.type.decorator"] = { link = "@attribute" },
@@ -232,7 +248,7 @@ local highlight_groups = {
 
 	["@lsp.mod.readonly"] = { fg = color.string },
 	["@lsp.mod.typeHint"] = { fg = color.comment },
-	["@lsp.mod.defaultLibrary"] = { fg = color.type },
+	["@lsp.mod.defaultLibrary"] = { fg = color.foreground },
 	["@lsp.mod.deprecated"] = { strikethrough = true },
 
 	LspReferenceText = { bg = color.accent },
