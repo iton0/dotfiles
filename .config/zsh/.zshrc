@@ -10,7 +10,6 @@ export MANPAGER="nvim +Man!"
 export FZF_DEFAULT_OPTS="--multi --cycle --border=none --style=minimal --layout=reverse"
 
 CENTRAL_MACHINE="iton-darter"
-ZSH_THEME="robbyrussell"
 
 # Disable Oh My Zsh auto-update prompts (handled by your upgrade function)
 zstyle ':omz:update' mode disabled
@@ -47,6 +46,13 @@ source <(fzf --zsh)
 # UV shell completion
 if command -v uv &>/dev/null; then
     eval "$(uv generate-shell-completion zsh)"
+fi
+
+# Starship prompt if installed else robbyrussell
+if command -v starship &>/dev/null; then
+    eval "$(starship init zsh)"
+else 
+    ZSH_THEME="robbyrussell"
 fi
 
 # ------------------------------------------------------------------------------

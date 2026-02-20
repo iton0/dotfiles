@@ -70,6 +70,8 @@ blueman
 rofi-wayland
 # Terminal fonts for tty
 terminus-fonts-console
+# cross-shell prompt
+starship
 
 # --- GUI Applications ---
 # A lightweight file manager

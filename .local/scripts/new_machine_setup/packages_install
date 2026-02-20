@@ -58,6 +58,7 @@ sudo dnf copr enable solopasha/hyprland -y
 sudo dnf copr enable scottames/ghostty -y
 sudo dnf copr enable jdxcode/mise -y
 sudo dnf copr enable erikreider/SwayNotificationCenter -y
+sudo dnf copr enable atim/starship -y
 
 # Install all packages from the BASE_PACKAGES array.
 echo "Installing base packages..."
