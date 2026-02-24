@@ -1,0 +1,13 @@
+/* Styling for the Notification Title/Summary */
+.notification-content .summary {
+    /* Set the font size for the notification title */
+    font-size: 1.1rem; /* Adjust this value (e.g., 1.2rem, 14px, 16px) */
+    font-weight: bold; /* Optional: Make the title stand out */
+    color: #ffffff; /* Example: Change color if desired */
+}
+/* Styling for the Notification Body/Content */
+.notification-content .body {
+    /* Set the font size for the main body text */
+    font-size: 1.0rem; /* Adjust this value to be bigger than the default */
+    color: #cccccc; /* Example: Change color if desired */
+}

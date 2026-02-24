@@ -86,7 +86,6 @@ fullupgrade() {
     # Sync configs based on machine role
     if [[ "$(hostname)" != "$CENTRAL_MACHINE" ]]; then
         dot pl
-        nvim --headless -c "lua MiniDeps.later(function() MiniDeps.snap_load(); MiniDeps.clean({ force = true }); vim.cmd('qa') end); vim.wait(30000, function() return false end)"
     else
         # On Central: Stage changes and push
         dot add .
@@ -101,10 +100,18 @@ fullupgrade() {
 }
 
 post-install() {
-    upgrade
-    mise use -g usage shellcheck lua-language-server
-    mise install
-    nvim --headless -c "lua MiniDeps.later(function() MiniDeps.snap_load(); MiniDeps.clean({ force = true }); vim.cmd('qa') end); vim.wait(120000, function() return false end)"
+    if command -v mise &> /dev/null; then
+        echo "Installing global tools with mise..."
+        mise use -g usage shellcheck lua-language-server
+    else
+        echo "Warning: mise not found. Skipping tool installation."
+    fi
+
+    if command -v starship &> /dev/null; then
+        starship preset plain-text-symbols -o ~/.config/starship.toml
+    else
+        echo "Warning: starship prompt cli not found."
+    fi
 }
 
 # Utility Functions

@@ -7,13 +7,14 @@
 #
 # FEATURES:
 #  [x] Fail-fast safety (set -euo pipefail)
-#  [x] DNF optimization (Upgrades, Autoremove, Metadata clean)
-#  [x] Flatpak garbage collection (Unused runtimes)
+#  [x] Sudo keep-alive daemon (prevents timeouts during long prompts)
+#  [x] DNF4/DNF5 optimization (Upgrades, Autoremove, Metadata clean)
+#  [x] Flatpak garbage collection (System & User runtimes)
 #  [x] Container engine sanitation (Podman/Docker dangling images)
 #  [x] User Cache Pruning (Smart exclusion logic for 'antidote' etc)
-#  [x] Trash & Thumbnail specific flushing
+#  [x] Safe directory flushing (uses 'find -delete' instead of 'rm -rf *')
 #  [x] Journald Vacuuming
-#  [x] Dry-Run capability
+#  [x] Dry-Run & Auto-Yes capability
 #
 # ==============================================================================
 
@@ -21,10 +22,10 @@ set -euo pipefail
 IFS=$'\n\t'
 
 # --- Configuration ---
-readonly LOG_DIR="$HOME/.local/var/log"
+readonly LOG_DIR="$HOME/.local/var/log/spring-clean"
 readonly SCRIPT_NAME="Fedora Spring Clean"
 readonly CACHE_RETENTION_DAYS=30
-readonly JOURNAL_RETENTION="3d" # Keep 3 days (Optimal for Workstation)
+readonly JOURNAL_RETENTION="3d"
 
 # ANSI Colors
 readonly C_BLUE='\033[1;34m'
@@ -35,18 +36,27 @@ readonly C_RESET='\033[0m'
 
 # --- Setup & Args ---
 DRY_RUN=false
+AUTO_YES=false
 
 for arg in "$@"; do
     case $arg in
         --dry-run) DRY_RUN=true ;;
-        -h|--help) echo "Usage: $0 [--dry-run]"; exit 0 ;;
-        *) echo "Unknown argument: $arg"; exit 1 ;;
+        -y|--yes) AUTO_YES=true ;;
+        -h|--help) 
+            echo "Usage: $0 [--dry-run] [-y|--yes]"
+            exit 0 
+            ;;
+        *) 
+            echo "Unknown argument: $arg"
+            exit 1 
+            ;;
     esac
 done
 
 # Logging Setup
 mkdir -p "$LOG_DIR"
-readonly LOG_FILE="$LOG_DIR/spring-clean-$(date +%F_%H-%M-%S).log"
+LOG_FILE="$LOG_DIR/clean-$(date +%F_%H-%M-%S).log"
+readonly LOG_FILE
 exec > >(tee -a "$LOG_FILE") 2>&1
 
 # --- Helpers ---
@@ -55,7 +65,8 @@ log_success() { printf "${C_GREEN}  [OK] %s${C_RESET}\n" "$1"; }
 log_warn() { printf "${C_YELLOW}  [WARN] %s${C_RESET}\n" "$1"; }
 
 confirm() {
-    [[ "$DRY_RUN" == "true" ]] && return 0
+    [[ "$DRY_RUN" == "true" || "$AUTO_YES" == "true" ]] && return 0
+    local ans
     read -r -p "$(echo -e "${C_YELLOW}$1 [y/N]${C_RESET} ")" ans
     [[ "$ans" =~ ^([yY][eE][sS]|[yY])$ ]]
 }
@@ -67,10 +78,10 @@ get_disk_usage() { df -h / | awk 'NR==2 {print $3}'; }
 task_dnf_maintenance() {
     log_header "DNF Package Maintenance"
 
-    # Check for lock
-    if pgrep -x "dnf" >/dev/null; then
-        echo "Error: DNF is currently running. Please finish other updates first."
-        return 1
+    # Check for DNF process lock (covers both dnf4 and dnf5)
+    if pgrep -f "^(/usr/bin/)?dnf" >/dev/null || [[ -f /var/lib/dnf/lock ]] || [[ -f /var/lib/dnf5/lock ]]; then
+        log_warn "DNF is locked or running. Skipping DNF maintenance to prevent corruption."
+        return 0 # Return 0 so the rest of the script continues
     fi
 
     if confirm "Perform system upgrade and cleanup DNF?"; then
@@ -93,26 +104,30 @@ task_dnf_maintenance() {
 }
 
 task_flatpak_maintenance() {
-    if ! command -v flatpak &>/dev/null; then return; fi
+    if ! command -v flatpak &>/dev/null; then return 0; fi
     log_header "Flatpak Maintenance"
 
-    echo "Scanning for unused runtimes..."
-    if [[ "$DRY_RUN" == "true" ]]; then
-        echo "  [DRY] flatpak uninstall --unused -y"
-    else
-        # '|| true' prevents script exit if nothing is removed
-        flatpak uninstall --unused -y || true
-        log_success "Flatpak cleanup complete."
+    if confirm "Remove unused Flatpak runtimes?"; then
+        if [[ "$DRY_RUN" == "true" ]]; then
+            echo "  [DRY] sudo flatpak uninstall --unused -y"
+            echo "  [DRY] flatpak uninstall --unused -y --user"
+        else
+            echo "Cleaning system-wide and user runtimes..."
+            # || true prevents script exit if nothing is removed
+            sudo flatpak uninstall --unused -y || true
+            flatpak uninstall --unused -y --user 2>/dev/null || true
+            log_success "Flatpak cleanup complete."
+        fi
     fi
 }
 
 task_container_maintenance() {
-    # Detect Podman (Native Fedora) or Docker
     local engine=""
-    if command -v podman &>/dev/null; then engine="podman"; 
-    elif command -v docker &>/dev/null; then engine="docker"; fi
+    if command -v podman &>/dev/null; then engine="podman"
+    elif command -v docker &>/dev/null; then engine="docker"
+    fi
 
-    [[ -z "$engine" ]] && return
+    [[ -z "$engine" ]] && return 0
 
     log_header "Container Maintenance ($engine)"
     if confirm "Prune dangling container images/volumes?"; then
@@ -128,47 +143,49 @@ task_container_maintenance() {
 task_user_cleanup() {
     log_header "User Home Cleanup ($HOME)"
     
-    # 1. Trash
+    # 1. Trash (Using safe find -delete to handle spaces and hidden files)
     local trash_dir="$HOME/.local/share/Trash"
     if [[ -d "$trash_dir" ]] && confirm "Empty Trash?"; then
         if [[ "$DRY_RUN" == "true" ]]; then
-            echo "  [DRY] rm -rf $trash_dir/*"
+            echo "  [DRY] find $trash_dir -mindepth 1 -delete"
         else
-            # Safer than rm -rf on the var itself
-            rm -rf "${trash_dir:?}/"* 2>/dev/null || true
+            find "$trash_dir" -mindepth 1 -delete || true
             log_success "Trash emptied."
         fi
     fi
 
-    # 2. Thumbnails (These can grow to GBs)
+    # 2. Thumbnails
     local thumb_dir="$HOME/.cache/thumbnails"
     if [[ -d "$thumb_dir" ]] && confirm "Clear Thumbnail cache?"; then
         if [[ "$DRY_RUN" == "true" ]]; then
-            echo "  [DRY] rm -rf $thumb_dir/*"
+            echo "  [DRY] find $thumb_dir -mindepth 1 -delete"
         else
-            rm -rf "${thumb_dir:?}/"* 2>/dev/null || true
+            find "$thumb_dir" -mindepth 1 -delete || true
             log_success "Thumbnails cleared."
         fi
     fi
 
-    # 3. Old Cache Files
+    # 3. Old Cache Files (Bulletproof exclusionary pruning)
     if confirm "Prune general cache files older than $CACHE_RETENTION_DAYS days?"; then
         if [[ "$DRY_RUN" == "true" ]]; then
-            echo "  [DRY] Finding files >$CACHE_RETENTION_DAYS days in ~/.cache (excluding antidote)..."
+            echo "  [DRY] Pruning >$CACHE_RETENTION_DAYS days in ~/.cache (excluding antidote, mozilla, fontconfig)..."
         else
             echo "Pruning old cache files..."
-            # OPTIMAL: find with -print0 and xargs -0 for performance and safety
-            # Excludes 'antidote' and 'mozilla' (firefox cache is best managed by firefox)
-            find "$HOME/.cache" \
-                \( -name "antidote" -o -name "mozilla" \) -prune \
+            
+            # SAFE PRUNE LOGIC:
+            # -type d \( ... \) -prune -> If it's a directory matching these names, skip it entirely.
+            # -o -type f -mtime +X -print0 -> Otherwise, if it's a file older than X days, delete it.
+            find "$HOME/.cache" -type d \( -name "antidote" -o -name "mozilla" -o -name "fontconfig" \) -prune \
                 -o -type f -mtime +$CACHE_RETENTION_DAYS -print0 \
                 | xargs -0 -r rm -f
             
-            # Remove empty dirs, protecting exclusion list
+            # Remove empty directories leftover, respecting exclusions
             find "$HOME/.cache" -mindepth 1 -type d -empty \
                 -not -path "*/antidote*" \
                 -not -path "*/mozilla*" \
-                -delete
+                -not -path "*/fontconfig*" \
+                -delete 2>/dev/null || true
+                
             log_success "Old cache pruned."
         fi
     fi
@@ -183,6 +200,7 @@ task_system_logs() {
 
     if confirm "Vacuum journal to $JOURNAL_RETENTION?"; then
         if [[ "$DRY_RUN" == "true" ]]; then
+            echo "  [DRY] sudo journalctl --rotate"
             echo "  [DRY] sudo journalctl --vacuum-time=$JOURNAL_RETENTION"
         else
             sudo journalctl --rotate
@@ -205,11 +223,13 @@ task_check_failures() {
 # --- Main Execution ---
 main() {
     echo -e "${C_BLUE}--- $SCRIPT_NAME Started ---${C_RESET}"
-    local start_usage=$(get_disk_usage)
+    local start_usage
+    start_usage=$(get_disk_usage)
     echo "Disk Usage (Root): $start_usage"
 
-    # Require sudo upfront to avoid timeouts mid-script
-    sudo -v 
+    # Require sudo upfront and keep it alive in the background
+    sudo -v
+    ( while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null ) &
 
     # Execute Modules
     task_dnf_maintenance
@@ -220,8 +240,10 @@ main() {
     task_check_failures
 
     log_header "Summary"
-    local end_usage=$(get_disk_usage)
+    local end_usage
+    end_usage=$(get_disk_usage)
     echo "Disk Usage: $start_usage -> $end_usage"
+    echo "Log saved to: $LOG_FILE"
     
     if [[ "$DRY_RUN" == "true" ]]; then
         echo -e "\n${C_YELLOW}[!] DRY RUN COMPLETE. No changes made.${C_RESET}"

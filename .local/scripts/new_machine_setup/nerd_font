@@ -1,38 +1,48 @@
 #!/usr/bin/env bash
-
-# Exit immediately if a command exits with a non-zero status.
 set -euo pipefail
 
+# Configuration
 FONT_NAME="JetBrainsMono"
-FONT_DIR="$HOME/.local/share/fonts"
+FONT_DIR="$HOME/.local/share/fonts/nerd-fonts" # Use a sub-dir to keep ~/.local/share/fonts clean
+# The URL for the latest release usually requires a specific format
 FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/${FONT_NAME}.zip"
-ZIP_FILE="${FONT_NAME}.zip"
 
-# Check for required commands
-if ! command -v wget &> /dev/null; then
-    sudo dnf install -y wget
-fi
-if ! command -v unzip &> /dev/null; then
-    sudo dnf install -y unzip
-fi
+# --- 1. Dependency Check ---
+# Using a loop is a bit more 'idiomatic' for multiple tools
+for cmd in wget unzip; do
+    if ! command -v "$cmd" &> /dev/null; then
+        echo "Installing $cmd..."
+        sudo dnf install -y "$cmd"
+    fi
+done
+
+# --- 2. Download and Extract ---
+# Use mktemp for the zip file too, to keep your current directory clean
+TEMP_DIR=$(mktemp -d)
+ZIP_FILE="$TEMP_DIR/${FONT_NAME}.zip"
 
 echo "Downloading ${FONT_NAME} Nerd Font..."
+# -L is important in case GitHub redirects the download
 wget -q --show-progress "$FONT_URL" -O "$ZIP_FILE"
 
-# Create font directory if it doesn't exist
-echo "Creating font directory: $FONT_DIR"
+echo "Extracting fonts..."
+# Extract directly into a scoped directory within the temp dir
+unzip -q "$ZIP_FILE" -d "$TEMP_DIR/extracted"
+
+# --- 3. Install ---
+echo "Installing fonts to $FONT_DIR..."
 mkdir -p "$FONT_DIR"
 
-echo "Extracting fonts to a temporary directory..."
-TEMP_DIR=$(mktemp -d)
-unzip -q "$ZIP_FILE" -d "$TEMP_DIR"
+# Using 'cp -u' (update) prevents overwriting if files haven't changed
+# and 'find' ensures we grab both OpenType and TrueType fonts
+find "$TEMP_DIR/extracted" -type f \( -name "*.ttf" -o -name "*.otf" \) -exec cp -u {} "$FONT_DIR/" \;
 
-echo "Moving fonts to the correct directory..."
-# Find all font files and move them
-find "$TEMP_DIR" -name "*.[ot]tf" -exec mv -t "$FONT_DIR" {} +
-
-echo "Cleaning up temporary files..."
-rm -rf "$TEMP_DIR" "$ZIP_FILE"
+# --- 4. Cleanup & Cache ---
+echo "Cleaning up..."
+rm -rf "$TEMP_DIR"
 
 echo "Updating font cache..."
-fc-cache -fv
+# -f is only needed if you think the cache is corrupt; usually 'fc-cache' is enough
+fc-cache -f "$FONT_DIR"
+
+echo "${FONT_NAME} Nerd Font installed successfully!"

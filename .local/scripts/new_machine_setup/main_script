@@ -1,25 +1,37 @@
 #!/usr/bin/env bash
 
-set -e
+# -e: stop on error, -u: error on unset vars
+set -euo pipefail
 
-"$HOME"/.local/scripts/new_machine_setup/packages_install
-"$HOME"/.local/scripts/new_machine_setup/repos_install
-"$HOME"/.local/scripts/new_machine_setup/uwsm_setup
-"$HOME"/.local/scripts/new_machine_setup/swaync_setup
-"$HOME"/.local/scripts/new_machine_setup/tty_font
-"$HOME"/.local/scripts/new_machine_setup/nerd_font
-"$HOME"/.local/scripts/new_machine_setup/battery_threshold
+# Define script directory for easier maintenance
+SETUP_DIR="$HOME/.local/scripts/new_machine_setup"
 
-if ! zsh -c "
-    source $HOME/.config/zsh/.zshrc
-    post-install || { exit 1; }
-"; then
-    echo "post-install command failed; Run after reboot"
+echo "Starting Full System Setup..."
+
+# Execute sub-scripts
+# Using 'bash' explicitly ensures they run even if +x permission was lost during git sync
+bash "$SETUP_DIR/packages_install"
+bash "$SETUP_DIR/repos_install"
+bash "$SETUP_DIR/uwsm_setup"
+bash "$SETUP_DIR/nerd_font"
+
+# We might want to let the script continue even if battery_threshold fails 
+# (e.g., if running on a desktop)
+bash "$SETUP_DIR/battery_threshold" || echo "Warning: Battery threshold setup skipped."
+
+# --- Shell Change ---
+if [[ "$SHELL" != "$(which zsh)" ]]; then
+    echo "Changing default shell to zsh..."
+    sudo chsh -s "$(which zsh)" "$USER"
 fi
 
-echo ""
-echo "---------------------------"
-echo -e "Main installation finished!\n"
-echo -e "Reboot system\n"
-echo -e "\033[1m[IMPORTANT]\033[0m"
-echo -e "Run \033[4mchsh -s \$(which zsh)\033[0m before rebooting\n"
+# --- Post-Install Hook ---
+# We use -i to ensure the .zshrc is fully loaded and aliases/functions are available
+echo "Running post-install tasks in ZSH context..."
+if ! zsh -i -c "post-install"; then
+    echo "post-install command failed or not found. You may need to run it manually after reboot."
+fi
+
+echo -e "\n---------------------------"
+echo -e "\033[1;32mMain installation finished!\033[0m"
+echo -e "Please \033[1mreboot\033[0m your system to finalize all changes."

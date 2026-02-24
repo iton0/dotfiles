@@ -1,81 +1,103 @@
 #!/usr/bin/env bash
 
-set -e
+set -euo pipefail
 
 PACKAGE_FILE="$HOME/.local/scripts/new_machine_setup/packages.txt"
 
+# --- 1. Validation ---
 if [[ ! -f "$PACKAGE_FILE" ]]; then
-    echo "Error: Package list file $PACKAGE_FILE not found."
+    echo "Error: Package list file $PACKAGE_FILE not found." >&2
     exit 1
 fi
 
-# Read the base packages from the file, ignoring comments and empty lines.
 mapfile -t BASE_PACKAGES < <(grep -vE '^\s*#|^\s*$' "$PACKAGE_FILE")
 
-# Check if any packages were found.
 if [[ ${#BASE_PACKAGES[@]} -eq 0 ]]; then
     echo "No packages found in $PACKAGE_FILE. Nothing to install."
     exit 0
 fi
 
-# Check for System76 hardware and install drivers if detected.
-if [ "$(cat /sys/class/dmi/id/sys_vendor)" == "System76" ]; then
-    echo "System76 hardware detected. Installing System76 drivers and utilities..."
+# --- 2. System76 Hardware Support ---
+if grep -qi "System76" /sys/class/dmi/id/sys_vendor 2>/dev/null; then
+    echo "System76 hardware detected. Configuring drivers..."
 
-    # Enable the System76 COPR repository.
+    # Idempotent COPR enable
     sudo dnf copr enable szydell/system76 -y
-
-    # Install kernel headers which are required for DKMS.
-    # The `uname -r` command gets the current kernel version.
+    
+    # DNF is naturally idempotent; it won't reinstall if already present
     sudo dnf install -y "kernel-devel-$(uname -r)"
+    sudo dnf install -y system76-driver system76-power firmware-manager system76-acpi-dkms
 
-    # Install core System76 packages. We separate them for clarity and to handle DKMS specifically.
-    sudo dnf install -y system76-driver system76-power firmware-manager
-
-    # Install the DKMS package for open firmware systems.
-    # We use a separate command to ensure the correct DKMS package is installed.
-    sudo dnf install -y system76-acpi-dkms
-
-    # Mask the default power service to avoid conflicts.
+    # Masking is idempotent
     sudo systemctl mask power-profiles-daemon.service
-
-    # Enable and start the System76 power and firmware services.
-    # The --now flag both enables and starts the service.
+    
+    # enable --now is idempotent
     sudo systemctl enable --now system76-firmware-daemon
     sudo systemctl enable --now com.system76.PowerDaemon.service system76-power-wake
-
-    # Enable the dkms service, which is required for the DKMS package to function.
     sudo systemctl enable dkms
 
-    # Add the current user to the `adm` group.
-    # This is necessary for some firmware management tasks.
-    sudo gpasswd -a "$USER" adm
+    # Idempotent group addition: check if user is already in group
+    if ! groups "$USER" | grep -q "\badm\b"; then
+        sudo gpasswd -a "$USER" adm
+    fi
 fi
 
-# Enable the necessary COPR repositories for various tools.
-echo "Enabling COPR repositories..."
-sudo dnf copr enable solopasha/hyprland -y
-sudo dnf copr enable scottames/ghostty -y
-sudo dnf copr enable jdxcode/mise -y
-sudo dnf copr enable erikreider/SwayNotificationCenter -y
-sudo dnf copr enable atim/starship -y
+# --- 3. Repositories & Base Packages ---
+echo "Checking COPR repositories..."
+REPOS=(solopasha/hyprland scottames/ghostty jdxcode/mise erikreider/SwayNotificationCenter atim/starship)
 
-# Install all packages from the BASE_PACKAGES array.
+# To be truly idempotent/fast, check if the repo file already exists in /etc/dnf/
+for repo in "${REPOS[@]}"; do
+    # COPR names are stored as 'user-repo.repo' in dnf
+    REPO_FILENAME="${repo/\//-}"
+    if [[ ! -f "/etc/yum.repos.d/_copr:$REPO_FILENAME.repo" ]]; then
+        echo "Enabling COPR: $repo"
+        sudo dnf copr enable "$repo" -y
+    fi
+done
+
 echo "Installing base packages..."
+# DNF handles idempotency (skips installed)
 sudo dnf install -y "${BASE_PACKAGES[@]}"
 
-echo "Cloning and installing SwayAudioIdleInhibit..."
-git clone --depth 1 --filter=blob:none https://github.com/ErikReider/SwayAudioIdleInhibit.git
-cd SwayAudioIdleInhibit
-sudo meson setup build -Dlogind-provider=systemd
-sudo meson compile -C build
-sudo meson install -C build
-cd "$HOME"
-sudo rm -rf SwayAudioIdleInhibit
+# --- 4. Source Compilations (SwayAudioIdleInhibit) ---
 
-echo "Cloning antidote plugin manager..."
-git clone --depth 1 --filter=blob:none https://github.com/mattmc3/antidote.git "$HOME"/.config/zsh/antidote
+if ! command -v sway-audio-idle-inhibit &> /dev/null; then
+    echo "Building SwayAudioIdleInhibit..."
+    TEMP_BUILD_DIR=$(mktemp -d)
+    git clone --depth 1 https://github.com/ErikReider/SwayAudioIdleInhibit.git "$TEMP_BUILD_DIR"
+    
+    (
+        cd "$TEMP_BUILD_DIR"
+        meson setup build -Dlogind-provider=systemd
+        meson compile -C build
+        sudo meson install -C build
+    )
+    rm -rf "$TEMP_BUILD_DIR"
+else
+    echo "SwayAudioIdleInhibit already installed. Skipping build."
+fi
 
-echo 'export ZDOTDIR="'"$HOME"'/.config/zsh"' > "$HOME"/.zshenv
+# --- 5. Plugin Managers & Environment ---
+ANTIDOTE_DIR="$HOME/.config/zsh/antidote"
+if [[ ! -d "$ANTIDOTE_DIR" ]]; then
+    echo "Cloning antidote plugin manager..."
+    git clone --depth 1 https://github.com/mattmc3/antidote.git "$ANTIDOTE_DIR"
+else
+    # Update if it already exists (This is true idempotency: staying current)
+    echo "Antidote already exists. Updating..."
+    git -C "$ANTIDOTE_DIR" pull
+fi
 
-echo "Package installation and initial setup completed."
+# Use a safer conditional check for .zshenv
+ZSHENV_LINE='export ZDOTDIR="'"$HOME"'/.config/zsh"'
+ZSHENV_FILE="$HOME/.zshenv"
+
+if [[ ! -f "$ZSHENV_FILE" ]]; then
+    echo "$ZSHENV_LINE" > "$ZSHENV_FILE"
+elif ! grep -qF "$ZSHENV_LINE" "$ZSHENV_FILE"; then
+    # Append if the file exists but doesn't have the line
+    echo "$ZSHENV_LINE" >> "$ZSHENV_FILE"
+fi
+
+echo "All tasks completed successfully."

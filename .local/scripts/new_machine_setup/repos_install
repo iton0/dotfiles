@@ -1,4 +1,20 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
-mkdir -p "$HOME/Code/personal"
-mkdir -p "$HOME/Code/work"
+echo "Creating development directory structure..."
+
+# Define project roots
+PROJECT_PATHS=(
+    "$HOME/Code/personal"
+    "$HOME/Code/work"
+    "$HOME/Code/testing"
+)
+
+for path in "${PROJECT_PATHS[@]}"; do
+    if [[ ! -d "$path" ]]; then
+        mkdir -p "$path"
+        echo "  [+] Created $path"
+    fi
+done
+
+echo "Development environment ready."

@@ -1,12 +1,24 @@
 #!/usr/bin/env bash
 
+# 1. Configuration
 LAPTOP_OUTPUT="eDP-1"
-LID_STATE_FILE="/proc/acpi/button/lid/LID0/state"
 
-read -r LS < "$LID_STATE_FILE"
+# 2. Dynamic Lid Detection
+# This finds the lid state file even if it's named LID0, LID, or LIDA
+LID_STATE_FILE=$(find /proc/acpi/button/lid -name state | head -n 1)
 
-case "$LS" in
-*open)    swaymsg output "$LAPTOP_OUTPUT" enable ;;
-*closed)  swaymsg output "$LAPTOP_OUTPUT" disable ;;
-*)        echo "Could not get lid state" >&2 ; exit 1 ;;
-esac
+if [[ -z "$LID_STATE_FILE" ]]; then
+    echo "Error: Lid state file not found." >&2
+    exit 1
+fi
+
+# 3. Logic
+# We use grep -q for a faster, cleaner check than variable reading
+if grep -q "open" "$LID_STATE_FILE"; then
+    swaymsg output "$LAPTOP_OUTPUT" enable
+elif grep -q "closed" "$LID_STATE_FILE"; then
+    swaymsg output "$LAPTOP_OUTPUT" disable
+else
+    echo "Could not determine lid state from $LID_STATE_FILE" >&2
+    exit 1
+fi

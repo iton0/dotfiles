@@ -1,38 +1,29 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
-# This script creates a .desktop file for a Sway session that uses UWSM.
-# It places the file in the /usr/share/wayland-sessions directory,
-# which requires administrative privileges.
-
-# Define the target directory and file name
 DEST_DIR="/usr/share/wayland-sessions"
 DEST_FILE="$DEST_DIR/sway-uwsm.desktop"
 
-# Check if the destination directory exists
-if [ ! -d "$DEST_DIR" ]; then
-    echo "Directory $DEST_DIR does not exist. Creating it..."
+# Ensure the directory exists
+if [[ ! -d "$DEST_DIR" ]]; then
+    echo "Creating wayland-sessions directory..."
     sudo mkdir -p "$DEST_DIR"
-    if [ $? -ne 0 ]; then
-        echo "Failed to create directory. Exiting."
-        exit 1
-    fi
 fi
 
-# Use a here-document to create the content of the .desktop file
-# and write it to the destination using 'sudo tee' to handle permissions.
-cat << EOF | sudo tee "$DEST_FILE" > /dev/null
+echo "Generating Sway UWSM desktop entry..."
+
+# We use 'sudo tee' to write the file, but we use a quoted 'EOF'
+# to prevent the shell from trying to expand variables inside the document.
+sudo tee "$DEST_FILE" > /dev/null << 'EOF'
 [Desktop Entry]
-Name=Sway (with UWSM)
-Comment=The Sway tiling window manager, UWSM session
+Name=Sway (UWSM)
+Comment=An i3-compatible Wayland compositor managed by UWSM
 Exec=uwsm start -- sway.desktop
 Type=Application
+DesktopNames=sway
 EOF
 
-# Check if the file was created successfully
-if [ $? -eq 0 ]; then
-    echo "Successfully created '$DEST_FILE'."
-    echo "You should now see 'Sway (with UWSM)' as a session option on your display manager's login screen."
-else
-    echo "An error occurred while creating the file."
-    exit 1
-fi
+# Ensure permissions are correct (readable by everyone)
+sudo chmod 644 "$DEST_FILE"
+
+echo "Successfully created '$DEST_FILE'."

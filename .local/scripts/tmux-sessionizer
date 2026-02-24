@@ -1,5 +1,16 @@
 #!/usr/bin/env bash
 
+# --- Configuration & Logging ---
+# Mimicking the advanced script's logging style
+TS_LOG_FILE="$HOME/.local/share/tmux-sessionizer/tmux-sessionizer.logs"
+mkdir -p "$(dirname "$TS_LOG_FILE")"
+
+log() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $*" >> "$TS_LOG_FILE"
+}
+
+# --- Helper Functions ---
+
 switch_to() {
     if [[ -z $TMUX ]]; then
         tmux attach-session -t "$1"
@@ -9,49 +20,83 @@ switch_to() {
 }
 
 has_session() {
-    tmux list-sessions | grep -q "^$1:"
+    tmux list-sessions 2>/dev/null | grep -q "^$1:"
 }
 
-hydrate() {
-    if [ -f "$2/.tmux-sessionizer" ]; then
-        tmux send-keys -t "$1" "source $2/.tmux-sessionizer" C-m
-    elif [ -f "$HOME/.tmux-sessionizer" ]; then
-        tmux send-keys -t "$1" "source $HOME/.tmux-sessionizer" C-m
+setup_windows_from_config() {
+    local session_name="$1"
+    local root_path="$2"
+    local config_file="$root_path/.tmux-sessionizer"
+
+    # Default if no config exists
+    if [[ ! -f "$config_file" ]]; then
+        log "No config found for $session_name, using defaults."
+        tmux rename-window -t "$session_name:1" "main"
+        return
     fi
+
+    log "Hydrating session $session_name from $config_file"
+    
+    local first_window=true
+    # Format expected in .tmux-sessionizer: name|subpath|command
+    while IFS='|' read -r name path cmd || [ -n "$name" ]; do
+        [[ -z "$name" || "$name" =~ ^# ]] && continue
+
+        local full_path="$root_path"
+        [[ "$path" != "." && -n "$path" ]] && full_path="$root_path/$path"
+
+        if [ "$first_window" = true ]; then
+            # Reconfigure the default window 1
+            tmux rename-window -t "$session_name:1" "$name"
+            tmux send-keys -t "$session_name:1" "cd $full_path" C-m
+            [[ -n "$cmd" ]] && tmux send-keys -t "$session_name:1" "$cmd" C-m
+            first_window=false
+        else
+            # Create additional windows (api, ui, etc)
+            tmux new-window -t "$session_name" -n "$name" -c "$full_path"
+            [[ -n "$cmd" ]] && tmux send-keys -t "$session_name:$name" "$cmd" C-m
+        fi
+    done < "$config_file"
+
+    tmux select-window -t "$session_name:1"
 }
 
-# Find directories and remove the common prefix
-directories=$(find ~/Code -maxdepth 2 -type d | tail -n +2 | sed "s|^$HOME/Code/||")
+# --- Main Logic ---
 
-# Add a "HOME" entry to the fzf list
+# 1. Find directories
+directories=$(find ~/Code -maxdepth 2 -type d | tail -n +2 | sed "s|^$HOME/Code/||")
 fzf_input="$directories
 HOME"
 
+# 2. Selection via FZF
 selected=$(echo "$fzf_input" | fzf --tmux border-native)
+[[ -z $selected ]] && exit 0
 
-if [[ -z $selected ]]; then
-    exit 0
-fi
-
+# 3. Resolve Path and Name
 if [[ "$selected" == "HOME" ]]; then
     selected_name="HOME"
     selected_path="$HOME"
 else
     selected_name=$(basename "$selected" | tr . _)
-    selected_path="$HOME/Code/$selected" # Reconstruct the full path
+    selected_path="$HOME/Code/$selected"
 fi
 
+# 4. Session Creation
 tmux_running=$(pgrep tmux)
 
 if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-    tmux new-session -s "$selected_name" -c "$selected_path"
-    hydrate "$selected_name" "$selected_path"
+    log "Starting new tmux server with session: $selected_name"
+    tmux new-session -d -s "$selected_name" -c "$selected_path"
+    setup_windows_from_config "$selected_name" "$selected_path"
+    tmux attach-session -t "$selected_name"
     exit 0
 fi
 
 if ! has_session "$selected_name"; then
+    log "Creating new detached session: $selected_name"
     tmux new-session -ds "$selected_name" -c "$selected_path"
-    hydrate "$selected_name" "$selected_path"
+    setup_windows_from_config "$selected_name" "$selected_path"
 fi
 
+# 5. Switch/Attach
 switch_to "$selected_name"

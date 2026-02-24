@@ -68,8 +68,6 @@ pavucontrol
 blueman
 # Application launcher
 rofi-wayland
-# Terminal fonts for tty
-terminus-fonts-console
 # cross-shell prompt
 starship
 
