@@ -157,7 +157,7 @@ local highlight_groups = {
 	DiffAdd = { bg = color.diff_add },
 	DiffDelete = { bg = color.diff_del },
 	DiffChange = { bg = color.diff_chg },
-	DiffText = { bg = color.accent, fg = color.fg, bold = true },
+	DiffText = { bg = color.accent, fg = color.foreground, bold = true },
 	["@diff.plus"] = { link = "DiffAdd" },
 	["@diff.minus"] = { link = "DiffDelete" },
 	["@diff.delta"] = { link = "DiffChange" },
