@@ -25,12 +25,23 @@ if [[ "$SHELL" != "$(which zsh)" ]]; then
     sudo chsh -s "$(which zsh)" "$USER"
 fi
 
-# --- Post-Install Hook ---
-# We use -i to ensure the .zshrc is fully loaded and aliases/functions are available
-echo "Running post-install tasks in ZSH context..."
-if ! zsh -i -c "post-install"; then
-    echo "post-install command failed or not found. You may need to run it manually after reboot."
+# --- Post-Install Tasks ---
+echo "Running post-install tasks..."
+
+if command -v starship &> /dev/null; then
+    echo "Configuring starship with plain text symbols..."
+    starship preset plain-text-symbols -o ~/.config/starship.toml
+else
+    echo "Warning: starship prompt cli not found."
 fi
+
+echo "Starting system cleanup..."
+sudo dnf autoremove -y
+
+echo "Cleaning up dnf cache..."
+sudo dnf clean all
+
+echo "Post-install tasks completed!"
 
 echo -e "\n---------------------------"
 echo -e "\033[1;32mMain installation finished!\033[0m"
