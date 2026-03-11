@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+if command -v fd &> /dev/null; then
+    FD_BIN="fd"
+elif command -v fdfind &> /dev/null; then
+    FD_BIN="fdfind"
+else
+    FD_BIN="find"
+fi
+
+TARGET_DIRS=("${HOME}/Code/personal" "${HOME}/Code/work" "${HOME}/Code/testing")
+
+echo -e "\n\033[1;35m> GIT WORKTREE INTEGRITY & DIRTY STATE SCAN\033[0m"
+echo -e "\033[0;90m--------------------------------------------------\033[0m"
+
+check_status() {
+    local dir="$1"
+    local home_val="$2"
+    
+    if git -C "$dir" rev-parse --is-inside-work-tree &>/dev/null; then
+        if [[ -n "$(git -C "$dir" status --porcelain 2>/dev/null)" ]]; then
+            local display="~${dir#"${home_val}"}"
+            echo -e "[\033[0;31mDIRTY\033[0m] $display"
+        fi
+    fi
+}
+
+for base in "${TARGET_DIRS[@]}"; do
+    [[ ! -d "$base" ]] && continue
+
+    if [[ "$FD_BIN" == "fd" || "$FD_BIN" == "fdfind" ]]; then
+        "$FD_BIN" -H -I -d 4 -t f -t d '^\.git$' "$base" | while IFS='' read -r git_path; do
+            check_status "$(dirname "$git_path")" "$HOME"
+        done
+    else
+        find "$base" -maxdepth 5 -name ".git" -print0 | while IFS='' read -r -d '' git_path; do
+            check_status "$(dirname "$git_path")" "$HOME"
+        done
+    fi
+done
+
+echo -e "\033[0;90m--------------------------------------------------\033[0m\n"

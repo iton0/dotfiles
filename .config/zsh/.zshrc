@@ -49,6 +49,7 @@ alias dot='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias v=$EDITOR
 alias cl='clear -x'
 alias zshx='exec zsh'
+alias dty="$HOME"/.local/scripts/git-dirty-check
 
 run_toggle_system_theme() {
     source "$HOME"/.local/scripts/toggle-system-theme
