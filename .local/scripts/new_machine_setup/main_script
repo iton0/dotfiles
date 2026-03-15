@@ -35,6 +35,9 @@ else
     echo "Warning: starship prompt cli not found."
 fi
 
+echo "Installing global dev tools with mise..."
+mise install
+
 echo "Starting system cleanup..."
 sudo dnf autoremove -y
 
