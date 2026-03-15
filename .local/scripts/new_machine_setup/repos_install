@@ -46,6 +46,10 @@ clone_if_missing "ssh://git@codeberg.org/iton0/pages.git"
 if [[ ! -d "learning.git" ]]; then
     echo "  [+] Cloning learning.git (bare)..."
     git "${GIT_FLAGS[@]}" --bare "ssh://git@codeberg.org/iton0/learning.git"
+    cd learning.git
+    git config remote.origin.fetch "+refs/heads/*:refs/heads/*"
+    git config extensions.worktreeConfig true
+    git fetch --all --prune --tags
 else
     echo "  [-] Skipping learning.git (already exists)"
 fi

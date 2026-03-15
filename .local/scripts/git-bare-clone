@@ -108,7 +108,7 @@ git config extensions.worktreeConfig true
 
 # 3. Optimization: Set up the default 'main' or 'master' tracking
 # This prevents 'git status' from being confused on first checkout.
-git fetch origin
+git fetch --all --prune --tags
 
 msg "${GREEN}Successfully prepared bare repository at: ${PURPLE}$(pwd)${NOFORMAT}"
 msg "${CYAN}Next step: git worktree add main${NOFORMAT}"
