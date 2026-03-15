@@ -14,6 +14,7 @@ global.loaded_ruby_provider = 0
 -- Disable builtin vim plugins (performance)
 global.loaded_netrw = 1
 global.loaded_netrwPlugin = 1
+global.loaded_tutor_mode_plugin = 1
 global.loaded_2html_plugin = 1
 global.loaded_getscript = 1
 global.loaded_getscriptPlugin = 1
