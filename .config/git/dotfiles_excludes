@@ -11,6 +11,7 @@
 
 !.config/tmux/
 !.config/tmux/**
+.config/tmux/plugins
 
 !.config/sway/
 !.config/sway/**
