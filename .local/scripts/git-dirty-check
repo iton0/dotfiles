@@ -10,7 +10,7 @@ fi
 
 TARGET_DIRS=("${HOME}/Code/personal" "${HOME}/Code/work" "${HOME}/Code/testing")
 
-echo -e "\n\033[1;35m> GIT WORKTREE INTEGRITY & DIRTY STATE SCAN\033[0m"
+echo -e "\n\033[1;35m===== GIT DIRTY STATE SCAN =====\033[0m"
 echo -e "\033[0;90m--------------------------------------------------\033[0m"
 
 check_status() {
