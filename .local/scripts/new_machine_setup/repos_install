@@ -1,15 +1,33 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "Creating development directory structure..."
-
-# Define project roots
+# --- Configuration ---
 PROJECT_PATHS=(
     "$HOME/Code/personal"
     "$HOME/Code/work"
     "$HOME/Code/testing"
 )
 
+# Base Git flags for efficient cloning
+GIT_FLAGS=(clone --depth=1 --filter=blob:none)
+
+# --- Functions ---
+clone_if_missing() {
+    local url=$1
+    local target_dir
+    target_dir=$(basename "$url" .git)
+
+    if [[ -d "$target_dir" ]]; then
+        echo "  [-] Skipping $target_dir (already exists)"
+    else
+        echo "  [+] Cloning $target_dir..."
+        git "${GIT_FLAGS[@]}" "$url"
+    fi
+}
+
+# --- Main Script ---
+
+echo "--- Initializing Directory Structure ---"
 for path in "${PROJECT_PATHS[@]}"; do
     if [[ ! -d "$path" ]]; then
         mkdir -p "$path"
@@ -17,4 +35,20 @@ for path in "${PROJECT_PATHS[@]}"; do
     fi
 done
 
-echo "Development environment ready."
+echo -e "\n--- Syncing Repositories ---"
+cd "$HOME/Code/personal"
+
+# Standard repos
+clone_if_missing "ssh://git@codeberg.org/iton0/dev-log.git"
+clone_if_missing "ssh://git@codeberg.org/iton0/pages.git"
+
+# Special case for bare repo
+if [[ ! -d "learning.git" ]]; then
+    echo "  [+] Cloning learning.git (bare)..."
+    git "${GIT_FLAGS[@]}" --bare "ssh://git@codeberg.org/iton0/learning.git"
+else
+    echo "  [-] Skipping learning.git (already exists)"
+fi
+
+cd "$HOME"
+echo -e "\nDevelopment environment ready."
