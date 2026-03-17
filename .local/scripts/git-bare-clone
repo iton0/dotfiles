@@ -102,10 +102,6 @@ msg "${YELLOW}Configuring for worktree-exclusive workflow...${NOFORMAT}"
 # and allows 'git fetch' to work like a normal repo.
 git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
 
-# 2. Enable worktree-specific config:
-# This allows you to have different Git settings per worktree.
-git config extensions.worktreeConfig true
-
 # 3. Optimization: Set up the default 'main' or 'master' tracking
 # This prevents 'git status' from being confused on first checkout.
 git fetch --all --prune --tags
