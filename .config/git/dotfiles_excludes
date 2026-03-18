@@ -18,6 +18,7 @@
 
 !.config/mise/
 !.config/mise/**
+.config/mise/mise.lock
 
 !.config/swaync/
 !.config/swaync/**
