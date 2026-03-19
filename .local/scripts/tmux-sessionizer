@@ -64,9 +64,12 @@ setup_windows_from_config() {
 # --- Main Logic ---
 
 # 1. Find directories
-directories=$(find ~/Code -maxdepth 2 -type d | tail -n +2 | sed "s|^$HOME/Code/||")
+directories=$(find ~/Code -maxdepth 3 -mindepth 1 -type d \
+    \( -exec test -d "{}/.git" \; -prune -print \) -o \
+    \( -exec test -e "{}/HEAD" -a -e "{}/objects" \; -prune -print \) -o \
+    -print | sed "s|^$HOME/Code/||")
 fzf_input="$directories
-HOME"
+\$HOME"
 
 # 2. Selection via FZF
 selected=$(echo "$fzf_input" | fzf --tmux border-native)
