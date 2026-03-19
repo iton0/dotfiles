@@ -17,6 +17,7 @@
 
 [branch]
     sort = committerdate
+    autoSetupMerge = always
 
 [push]
     autoSetupRemote = true
@@ -34,8 +35,6 @@
     wip = "!f() { git add . && git commit -m \"wip: ${1:-}\" ; }; f"
     auto = "!f() { git add . && git commit -m \"auto dev commit\" && git push; }; f"
     p = push
-    pd = push --delete
-    pu = push --set-upstream
     pf = push --force-with-lease --force-if-includes ; safe force push
     pl = pull
     r = rebase
