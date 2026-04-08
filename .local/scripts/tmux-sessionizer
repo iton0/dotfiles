@@ -64,22 +64,19 @@ setup_windows_from_config() {
 # --- Main Logic ---
 
 # 1. Find directories
-directories=$(find ~/Code -maxdepth 2 -type d | tail -n +2 | sed "s|^$HOME/Code/||")
-fzf_input="$directories
-HOME"
+directories=$(find ~/Code -maxdepth 3 -mindepth 1 -type d \
+    \( -exec test -d "{}/.git" \; -prune -print \) -o \
+    \( -exec test -e "{}/HEAD" -a -e "{}/objects" \; -prune -print \) -o \
+    \( -type d -print \) | sed "s|^$HOME/Code/||")
+fzf_input="$directories"
 
 # 2. Selection via FZF
 selected=$(echo "$fzf_input" | fzf --tmux border-native)
 [[ -z $selected ]] && exit 0
 
 # 3. Resolve Path and Name
-if [[ "$selected" == "HOME" ]]; then
-    selected_name="HOME"
-    selected_path="$HOME"
-else
-    selected_name=$(basename "$selected" | tr . _)
-    selected_path="$HOME/Code/$selected"
-fi
+selected_name=$(basename "$selected" | tr . _)
+selected_path="$HOME/Code/$selected"
 
 # 4. Session Creation
 tmux_running=$(pgrep tmux)
