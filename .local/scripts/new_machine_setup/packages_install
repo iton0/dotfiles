@@ -78,26 +78,4 @@ else
     echo "SwayAudioIdleInhibit already installed. Skipping build."
 fi
 
-# --- 5. Plugin Managers & Environment ---
-ANTIDOTE_DIR="$HOME/.config/zsh/antidote"
-if [[ ! -d "$ANTIDOTE_DIR" ]]; then
-    echo "Cloning antidote plugin manager..."
-    git clone --depth 1 https://github.com/mattmc3/antidote.git "$ANTIDOTE_DIR"
-else
-    # Update if it already exists (This is true idempotency: staying current)
-    echo "Antidote already exists. Updating..."
-    git -C "$ANTIDOTE_DIR" pull
-fi
-
-# Use a safer conditional check for .zshenv
-ZSHENV_LINE='export ZDOTDIR="'"$HOME"'/.config/zsh"'
-ZSHENV_FILE="$HOME/.zshenv"
-
-if [[ ! -f "$ZSHENV_FILE" ]]; then
-    echo "$ZSHENV_LINE" > "$ZSHENV_FILE"
-elif ! grep -qF "$ZSHENV_LINE" "$ZSHENV_FILE"; then
-    # Append if the file exists but doesn't have the line
-    echo "$ZSHENV_LINE" >> "$ZSHENV_FILE"
-fi
-
 echo "All tasks completed successfully."
