@@ -37,7 +37,7 @@ neovim
 # Terminal multiplexer
 tmux
 # A powerful shell
-zsh
+fish
 # Fuzzy finder
 fzf
 # A faster alternative to 'find'

@@ -20,9 +20,9 @@ bash "$SETUP_DIR/nerd_font"
 bash "$SETUP_DIR/battery_threshold" || echo "Warning: Battery threshold setup skipped."
 
 # --- Shell Change ---
-if [[ "$SHELL" != "$(which zsh)" ]]; then
-    echo "Changing default shell to zsh..."
-    sudo chsh -s "$(which zsh)" "$USER"
+if [[ "$SHELL" != "$(which fish)" ]]; then
+    echo "Changing default shell to fish..."
+    sudo chsh -s "$(which fish)" "$USER"
 fi
 
 # --- Post-Install Tasks ---

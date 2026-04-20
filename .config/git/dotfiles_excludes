@@ -32,7 +32,7 @@
 !.config/ghostty/
 !.config/ghostty/**
 
-!.config/zsh/
-!.config/zsh/**
-.config/zsh/antidote
-.config/zsh/zsh_plugins.zsh
+!.config/fish/
+!.config/fish/**
+.config/fish/fish_variables
+.config/fish/conf.d/local.fish

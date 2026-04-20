@@ -11,7 +11,7 @@
 #  [x] DNF4/DNF5 optimization (Upgrades, Autoremove, Metadata clean)
 #  [x] Flatpak garbage collection (System & User runtimes)
 #  [x] Container engine sanitation (Podman/Docker dangling images)
-#  [x] User Cache Pruning (Smart exclusion logic for 'antidote' etc)
+#  [x] User Cache Pruning
 #  [x] Safe directory flushing (uses 'find -delete' instead of 'rm -rf *')
 #  [x] Journald Vacuuming
 #  [x] Dry-Run & Auto-Yes capability
@@ -168,20 +168,19 @@ task_user_cleanup() {
     # 3. Old Cache Files (Bulletproof exclusionary pruning)
     if confirm "Prune general cache files older than $CACHE_RETENTION_DAYS days?"; then
         if [[ "$DRY_RUN" == "true" ]]; then
-            echo "  [DRY] Pruning >$CACHE_RETENTION_DAYS days in ~/.cache (excluding antidote, mozilla, fontconfig)..."
+            echo "  [DRY] Pruning >$CACHE_RETENTION_DAYS days in ~/.cache (excluding mozilla, fontconfig)..."
         else
             echo "Pruning old cache files..."
             
             # SAFE PRUNE LOGIC:
             # -type d \( ... \) -prune -> If it's a directory matching these names, skip it entirely.
             # -o -type f -mtime +X -print0 -> Otherwise, if it's a file older than X days, delete it.
-            find "$HOME/.cache" -type d \( -name "antidote" -o -name "mozilla" -o -name "fontconfig" \) -prune \
+            find "$HOME/.cache" -type d \( -name "mozilla" -o -name "fontconfig" \) -prune \
                 -o -type f -mtime +$CACHE_RETENTION_DAYS -print0 \
                 | xargs -0 -r rm -f
             
             # Remove empty directories leftover, respecting exclusions
             find "$HOME/.cache" -mindepth 1 -type d -empty \
-                -not -path "*/antidote*" \
                 -not -path "*/mozilla*" \
                 -not -path "*/fontconfig*" \
                 -delete 2>/dev/null || true
