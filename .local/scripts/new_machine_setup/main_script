@@ -28,13 +28,6 @@ fi
 # --- Post-Install Tasks ---
 echo "Running post-install tasks..."
 
-if command -v starship &> /dev/null; then
-    echo "Configuring starship with plain text symbols..."
-    starship preset plain-text-symbols -o ~/.config/starship.toml
-else
-    echo "Warning: starship prompt cli not found."
-fi
-
 echo "Installing global dev tools with mise..."
 mise install
 

@@ -3,46 +3,47 @@ set -euo pipefail
 
 # Configuration
 FONT_NAME="JetBrainsMono"
-FONT_DIR="$HOME/.local/share/fonts/nerd-fonts" # Use a sub-dir to keep ~/.local/share/fonts clean
-# The URL for the latest release usually requires a specific format
+FONT_DIR="$HOME/.local/share/fonts/nerd-fonts"
 FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/${FONT_NAME}.zip"
 
-# --- 1. Dependency Check ---
-# Using a loop is a bit more 'idiomatic' for multiple tools
-for cmd in wget unzip; do
-    if ! command -v "$cmd" &> /dev/null; then
-        echo "Installing $cmd..."
-        sudo dnf install -y "$cmd"
+# --- 1. Idempotency Check ---
+# Checks if the target directory exists and if any matching font files are inside.
+# -print -quit makes it lightning fast by stopping at the first match.
+if [ -d "$FONT_DIR" ]; then
+    if [ -n "$(find "$FONT_DIR" -type f -iname "*${FONT_NAME}*" -print -quit)" ]; then
+        echo "✅ ${FONT_NAME} Nerd Font is already installed in ${FONT_DIR}."
+        echo "Exiting without making changes."
+        exit 0
     fi
+fi
+
+# --- 2. Dependency Check ---
+# Idiomatic Fedora check (rpm -q) rather than generic binary checks
+for pkg in unzip curl; do
+    rpm -q "$pkg" &>/dev/null || sudo dnf install -y "$pkg"
 done
 
-# --- 2. Download and Extract ---
-# Use mktemp for the zip file too, to keep your current directory clean
+# --- 3. Temp Workspace Setup ---
+# Robust cleanup that triggers automatically on exit, success, or failure (Ctrl+C)
 TEMP_DIR=$(mktemp -d)
-ZIP_FILE="$TEMP_DIR/${FONT_NAME}.zip"
+trap 'rm -rf "$TEMP_DIR"' EXIT
 
-echo "Downloading ${FONT_NAME} Nerd Font..."
-# -L is important in case GitHub redirects the download
-wget -q --show-progress "$FONT_URL" -O "$ZIP_FILE"
+# --- 4. Download & Extract ---
+echo "Downloading $FONT_NAME..."
+# -f fails silently on server errors, -L follows redirects, -o writes to file
+curl -fLo "$TEMP_DIR/font.zip" "$FONT_URL"
 
-echo "Extracting fonts..."
-# Extract directly into a scoped directory within the temp dir
-unzip -q "$ZIP_FILE" -d "$TEMP_DIR/extracted"
+echo "Extracting..."
+unzip -q "$TEMP_DIR/font.zip" -d "$TEMP_DIR"
 
-# --- 3. Install ---
-echo "Installing fonts to $FONT_DIR..."
+# --- 5. Smart Install ---
 mkdir -p "$FONT_DIR"
 
-# Using 'cp -u' (update) prevents overwriting if files haven't changed
-# and 'find' ensures we grab both OpenType and TrueType fonts
-find "$TEMP_DIR/extracted" -type f \( -name "*.ttf" -o -name "*.otf" \) -exec cp -u {} "$FONT_DIR/" \;
+# Optimal move: grabs only font files and batches them into a single 'mv' command
+find "$TEMP_DIR" -type f \( -iname "*.ttf" -o -iname "*.otf" \) -exec mv -t "$FONT_DIR/" {} +
 
-# --- 4. Cleanup & Cache ---
-echo "Cleaning up..."
-rm -rf "$TEMP_DIR"
+# --- 6. Refresh Cache ---
+echo "Refreshing font cache..."
+fc-cache -f
 
-echo "Updating font cache..."
-# -f is only needed if you think the cache is corrupt; usually 'fc-cache' is enough
-fc-cache -f "$FONT_DIR"
-
-echo "${FONT_NAME} Nerd Font installed successfully!"
+echo "$FONT_NAME Nerd Font is ready to use!"

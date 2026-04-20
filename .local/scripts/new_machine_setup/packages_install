@@ -44,7 +44,7 @@ fi
 
 # --- 3. Repositories & Base Packages ---
 echo "Checking COPR repositories..."
-REPOS=(solopasha/hyprland scottames/ghostty jdxcode/mise erikreider/SwayNotificationCenter atim/starship)
+REPOS=(solopasha/hyprland scottames/ghostty jdxcode/mise erikreider/SwayNotificationCenter)
 
 # To be truly idempotent/fast, check if the repo file already exists in /etc/dnf/
 for repo in "${REPOS[@]}"; do

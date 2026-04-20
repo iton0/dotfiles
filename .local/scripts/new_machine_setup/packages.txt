@@ -68,8 +68,6 @@ pavucontrol
 blueman
 # Application launcher
 rofi-wayland
-# cross-shell prompt
-starship
 
 # --- GUI Applications ---
 # A lightweight file manager
