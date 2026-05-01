@@ -89,8 +89,8 @@ gnome-disk-utility
 
 # A highly customizable Wayland bar
 waybar
-# A fast, modern terminal emulator
-ghostty
+# terminal emulator
+foot
 
 # --- Misc Utilities & Apps ---
 # look and feel for gtk applications

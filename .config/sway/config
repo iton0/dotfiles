@@ -21,7 +21,7 @@ set $my_font pango:JetBrainsMono Nerd Font 24
 set $laptop eDP-1
 
 # Your preferred terminal emulator (from your custom config)
-set $term ghostty
+set $term footclient
 
 # Your preferred application launcher (from your custom config)
 # The '$my_font' variable is now correctly defined before it is used here.
@@ -30,7 +30,7 @@ set $menu $rofi_cmd \
     -modes "drun,window" \
     -show drun \
     -font "$my_font" \
-    -run-command "uwsm app -- {cmd}" \
+    -run-command "uwsm app -- {cmd}"
 
 ### Output configuration
 #
@@ -41,10 +41,13 @@ output * bg /usr/share/backgrounds/default.jxl fill
 #
 # `exec` for startup commands.
 # Your custom list of startup applications and services.
-assign [app_id="com.mitchellh.ghostty"] 1
+assign [app_id="footclient"] 1
+# Start the foot terminal server
+exec foot --server
+exec sh -c 'while [ ! -S "${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/foot-${WAYLAND_DISPLAY:-wayland-0}.sock" ]; do sleep 0.01; done; uwsm app -- footclient'
 # Launching applications on specific workspaces (from your custom config)
-exec uwsm app -- $term
 exec swaymsg "workspace 2; exec uwsm app -- firefox"
+
 
 
 ### Idle configuration

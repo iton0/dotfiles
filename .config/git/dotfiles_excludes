@@ -29,8 +29,8 @@
 !.config/git/
 !.config/git/**
 
-!.config/ghostty/
-!.config/ghostty/**
+!.config/foot/
+!.config/foot/**
 
 !.config/fish/
 !.config/fish/**
