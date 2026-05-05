@@ -28,12 +28,15 @@ dbus-send --session --type=method_call --dest=org.freedesktop.impl.portal.Deskto
 # 3. Update the Cache
 echo "$NVIM_BG" > "${XDG_CACHE_HOME:-$HOME/.cache}/nvim_theme"
 
-# 4. Broadcast to Neovim
+
+# 4. Define socket directory
 SOCKET_DIR="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
 
+# 5. Broadcast to all active sockets
 for socket in "$SOCKET_DIR"/nvim.*.0; do
     if [ -S "$socket" ]; then
-        timeout 0.1s nvim --server "$socket" --remote-send "<C-\><C-n>:set background=$NVIM_BG<CR>" > /dev/null 2>&1 &
+        timeout 0.1s nvim --server "$socket" --remote-expr \
+            "luaeval('pcall(function() vim.schedule(function() vim.o.background=\"$NVIM_BG\" end) end)')" > /dev/null 2>&1 &
     fi
 done
 
