@@ -12,7 +12,7 @@ function fullupgrade --description 'Complete system maintenance suite'
     mise prune
     mise install; or return 1
 
-    git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME maintenance run \
+    dot maintenance run \
         --task=commit-graph \
         --task=incremental-repack \
         --task=loose-objects \

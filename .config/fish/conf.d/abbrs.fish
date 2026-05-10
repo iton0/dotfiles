@@ -3,7 +3,6 @@ if not status is-interactive
 end
 
 abbr -a v nvim
-abbr -a dot 'git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 abbr -a cl 'clear -x'
 abbr -a fishx 'exec fish'
 abbr -a .. 'cd ..'
