@@ -1,0 +1,41 @@
+# Fovea Light Terminal Config (Optimized for APCA Legibility)
+
+background           = "#faf8f5"
+foreground           = "#373b41"
+cursor-color         = "#006789"
+selection-background = "#d8d5d1"
+selection-foreground = "#373b41"
+
+# 0/8: UI Accents / Comments (The Cool Receder)
+# 0 is your border/ui color; 8 is your new receding comment color
+palette = 0=#d1d1d1
+palette = 8=#8e95b3
+
+# 1/9: Red (Error / Diagnostics)
+palette = 1=#b03038
+palette = 9=#8e2027
+
+# 2/10: Green (Strings / Success)
+# 2 is your new lighter green; 10 is the "Ink" version for bolding
+palette = 2=#388e3c
+palette = 10=#1a3618
+
+# 3/11: Yellow (Warnings / Ochre)
+palette = 3=#825300
+palette = 11=#633f00
+
+# 4/12: Blue (Information)
+palette = 4=#0065a7
+palette = 12=#004a7a
+
+# 5/13: Magenta (Keywords / Logic)
+palette = 5=#7437cc
+palette = 13=#58299c
+
+# 6/14: Cyan (Types / UI Elements)
+palette = 6=#006789
+palette = 14=#004e68
+
+# 7/15: White / Bright White (Darker Grays for Terminal text)
+palette = 7=#373b41
+palette = 15=#1a1b26

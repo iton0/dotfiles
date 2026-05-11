@@ -7,12 +7,10 @@ if [ "$CURRENT_THEME" = "prefer-dark" ]; then
     NEW_SCHEME="prefer-light"
     GTK_THEME="Adwaita"
     NVIM_BG="light"
-    pkill -USR2 foot
 else
     NEW_SCHEME="prefer-dark"
     GTK_THEME="Adwaita-dark"
     NVIM_BG="dark"
-    pkill -USR1 foot
 fi
 
 # 1. Update GTK/GNOME settings
