@@ -47,7 +47,7 @@
     co = checkout
     cob = checkout -b
     b = branch
-    bl = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
+    bl = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate -a
     rl = remote -v
     df = diff --word-diff
     se = log --grep
