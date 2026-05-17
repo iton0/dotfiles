@@ -34,6 +34,7 @@
     cat = cat-file -p ; inspect files within the git's data store
     wip = "!f() { git add . && git commit -m \"wip: ${1:-}\" ; }; f"
     auto = "!f() { git add . && git commit -m \"auto dev commit\" && git push; }; f"
+    fap = fetch --all --prune
     p = push
     pf = push --force-with-lease --force-if-includes ; safe force push
     pl = pull
@@ -68,3 +69,5 @@
 
 [url "ssh://git@codeberg.org/"]
     insteadOf = "berg:"
+[fetch]
+	followTags = true
