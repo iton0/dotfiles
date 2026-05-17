@@ -3,6 +3,8 @@ set -gx PAGER "less -FRX"
 set -gx FZF_DEFAULT_OPTS "--multi --cycle --border=none --style=minimal --layout=reverse"
 set -gx EDITOR nvim
 set -gx MANPAGER 'nvim +Man!'
+set -gx CLAUDE_CONFIG_DIR "$HOME/.config/claude"
+set -gx CLAUDE_CODE_NO_FLICKER 1
 
 ### INTERACTIVE ONLY
 if not status is-interactive
