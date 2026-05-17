@@ -4,7 +4,4 @@ window-padding-balance = true
 window-inherit-font-size = true
 cursor-style = block
 cursor-style-blink = false
-alpha-blending = linear-corrected
 mouse-hide-while-typing = true
-grapheme-width-method = unicode
-font-synthetic-style = no-bold,no-italic
